@@ -1,0 +1,11 @@
+normal text:
+
+    text-sm md:text-xl
+
+title:
+
+    text-2xl lg:text-5xl
+
+switches:
+
+        text-sm

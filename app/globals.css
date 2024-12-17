@@ -1,0 +1,21 @@
+@import url(@/app/fonts/fonts.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,body {
+    overflow-x: hidden;
+    background-color: white;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar-thumb{
+    background: rgb(0, 0, 0);
+}
+::-webkit-scrollbar{
+    display: none;
+}

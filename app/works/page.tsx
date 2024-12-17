@@ -78,7 +78,7 @@ export default function WorksPage() {
             className="w-screen min-h-svh bg-offwhitebackground text-black font-Lausanne500">
             <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-8">
                 <h1 style={{visibility: "hidden"}} ref={worksRef}
-                    className="flex text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none pb-8">
+                    className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none pb-8 flex">
                     All Works
                     <sup className="text-xs md:text-sm tracking-normal align-top">
                         ({String(works.length).padStart(2, "0")})

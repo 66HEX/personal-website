@@ -160,7 +160,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     </div>
                     <div className="col-span-1 flex flex-col gap-4">
                         {project.description.map((desc, index) => (
-                            <p className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-none" key={index}>{desc}</p>
+                            <p className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-relaxed" key={index}>{desc}</p>
                         ))}
                     </div>
                 </div>

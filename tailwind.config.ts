@@ -9,9 +9,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        offwhitebackground: '#E8E8E8',
-        offwhitetext: '#EFEEEC',
-        offblacktext: '#1c1c1c',
+        offwhitebackground: '#FFF',
+        offwhitetext: '#FFF',
+        offblacktext: '#000',
         accent: '#FF4C24',
       },
       fontFamily: {
@@ -44,7 +44,11 @@ export default {
           "0 0px 20px rgba(255,255, 255, 0.35)",
           "0 0px 65px rgba(255, 255,255, 0.2)"
         ]
-      }
+      },
+      borderRadius: {
+        custom: '2rem',
+
+      },
     },
   },
   plugins: [],

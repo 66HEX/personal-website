@@ -76,7 +76,7 @@ export default function WorksPage() {
     return (
         <div
             className="w-screen min-h-svh bg-offwhitebackground text-black font-Lausanne500">
-            <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-8">
+            <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-24">
                 <h1 style={{visibility: "hidden"}} ref={worksRef}
                     className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none pb-8 flex">
                     All Works
@@ -103,7 +103,7 @@ export default function WorksPage() {
             </div>
 
             {viewMode === "list" ? (
-                <div className="px-4 lg:px-8 pb-16 grid grid-cols-1">
+                <div className="px-4 lg:px-24 pb-32 grid grid-cols-1">
                     <hr className="border border-black opacity-10 mb-4 lg:mb-8"/>
                     {works.map((project, index) => (
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
@@ -133,7 +133,7 @@ export default function WorksPage() {
 
                 </div>
             ) : (
-                <div className="px-4 lg:px-8 pb-32 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="px-4 lg:px-24 pb-32 grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {works.map((project, index) => (
                         <div
                             style={{visibility: "hidden"}}
@@ -143,7 +143,7 @@ export default function WorksPage() {
                             onMouseLeave={() => setActiveIndex(null)}
                         >
                             <TransitionLink href={`/works/${project.id}`}>
-                                <div className="relative overflow-hidden w-full">
+                                <div className="relative overflow-hidden w-full rounded-custom">
                                     <div className="relative w-full h-auto">
                                         <Image
                                             src={project.mainImage}
@@ -155,19 +155,18 @@ export default function WorksPage() {
                                             className="object-cover"
                                         />
                                     </div>
+                                    <div
+                                        className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent rounded-custom overflow-hidden"/>
 
+                                    <div
+                                        className="absolute bottom-0 left-0 flex text-offwhitetext p-4 gap-4 text-sm md:text-xl font-Lausanne300 tracking-tight leading-none">
+                                        <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">{project.title}</p>
+                                        <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">
+                                            {project.year}
+                                        </p>
+                                    </div>
                                 </div>
                             </TransitionLink>
-                            <div
-                                className="flex text-offblacktext mt-4 mb-8 gap-4 text-sm md:text-xl font-Lausanne300 tracking-tight leading-none">
-                                <p className="">{project.title}</p>
-                                <p className="opacity-50">
-                                    {project.type.join(" / ")}
-                                </p>
-                                <p className="opacity-50">
-                                    {project.year}
-                                </p>
-                            </div>
                         </div>
                     ))}
                 </div>

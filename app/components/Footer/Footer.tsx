@@ -9,8 +9,8 @@ export default function Footer() {
             style={{clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)"}}
         >
             <div className='fixed bottom-0 h-[50vh] md:h-[25vh] xl:h-[50vh] w-full bg-offblacktext text-offwhitetext'>
-                <div className='p-4 h-full w-full flex flex-col justify-end'>
-                    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 opacity-50">
+                <div className='p-4 md:p-24 h-full w-full flex flex-col justify-end'>
+                    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
                         <div className="col-span-2 md:col-span-2 h-full">
                             <h1
                                 className="text-fluid font-bold font-Lausanne1000 max-w-prose tracking-tight ">

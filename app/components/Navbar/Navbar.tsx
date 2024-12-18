@@ -10,8 +10,8 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="fixed top-0 left-0 pt-4 bg-offwhitebackground text-offblacktext z-50 w-screen">
-            <div className="flex justify-between text-lg space-x-4 font-Lausanne250 w-full px-4 md:px-8">
+        <nav className="fixed top-2 left-0 text-offwhitetext z-50 w-full px-4 md:px-24">
+            <div className="flex justify-between text-sm md:text-xl space-x-4 font-Lausanne250 w-full bg-offblacktext py-4 px-8 rounded-xl overflow-hidden">
                 <div className="text-2xl font-Lausanne750 tracking-tight leading-none">
                     <TransitionLink
                         href={"/"}
@@ -32,7 +32,6 @@ export default function Navbar() {
                     ))}
                 </div>
             </div>
-            <hr className="border border-black opacity-10 z-50 mt-4"/>
         </nav>
     );
 }

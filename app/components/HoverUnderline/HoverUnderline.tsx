@@ -18,23 +18,23 @@ const HoverUnderline: React.FC<HoverUnderlineProps> = ({ children }) => {
 
         if (!link || !underline) return;
 
-        const handleMouseEnter = () => {
+        const handleMouseLeave = () => {
             hoverAnimation.current?.kill();
             hoverAnimation.current = gsap.fromTo(
                 underline,
                 { width: "0%", left: "0%" },
-                { width: "100%", ease: "power3.out", duration: 0.5 }
+                { width: "100%", left: "0%", ease: "power3.out", duration: 0.5 }
             );
         };
 
-        const handleMouseLeave = () => {
+        const handleMouseEnter = () => {
             hoverAnimation.current?.kill();
             hoverAnimation.current = gsap.fromTo(
                 underline,
                 { width: "100%", left: "0%" },
                 {
                     width: "0%",
-                    left: "100%",
+                    left: "0%",
                     duration: 0.5,
                     ease: "power3.in",
                     immediateRender: false,
@@ -63,9 +63,9 @@ const HoverUnderline: React.FC<HoverUnderlineProps> = ({ children }) => {
                 style={{
                     display: "block",
                     position: "absolute",
-                    bottom: 2,
+                    bottom: -2,
                     left: 0,
-                    width: "0%",
+                    width: "100%",
                     height: "1px",
                     backgroundColor: "black",
                 }}

@@ -1,4 +1,3 @@
-// TransitionLink.tsx
 "use client";
 
 import Link, { LinkProps } from "next/link";
@@ -9,6 +8,7 @@ import { gsap } from "gsap";
 interface TransitionLinkProps extends LinkProps {
     children: React.ReactNode;
     href: string;
+    className?: string;
 }
 
 function sleep(ms: number): Promise<void> {
@@ -18,6 +18,7 @@ function sleep(ms: number): Promise<void> {
 export const TransitionLink: React.FC<TransitionLinkProps> = ({
                                                                   children,
                                                                   href,
+                                                                  className,  // Destructure className
                                                                   ...props
                                                               }) => {
     const router = useRouter();
@@ -29,20 +30,25 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
 
         gsap.to("#page-transition", {
             opacity: 0,
-            duration: 1,
-            filter: "blur(10px)",
+            duration: 0.5,
             ease: "power3.in",
             onComplete: async () => {
                 router.push(href);
-                await sleep(400);
-
+                await sleep(200);
                 gsap.fromTo("#page-transition", { opacity: 0 },
-                    {opacity: 1,
-                            duration: 1,
-                            filter: "blur(0px)",});
+                    { opacity: 1, duration: 0.5 });
             },
         });
     };
 
-    return <Link {...props} href={href} onClick={handleTransition}>{children}</Link>;
+    return (
+        <Link
+            {...props}
+            href={href}
+            onClick={handleTransition}
+            className={className}  // Apply className to the Link component
+        >
+            {children}
+        </Link>
+    );
 };

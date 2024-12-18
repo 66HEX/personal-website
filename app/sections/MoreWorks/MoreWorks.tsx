@@ -40,7 +40,7 @@ export default function SelectedWorks() {
 
     return (
         <div
-            className="w-screen px-4 lg:px-8 py-8 lg:py-24 bg-offwhitebackground text-offblacktext">
+            className="w-screen px-4 lg:px-24 py-8 lg:py-24 bg-offwhitebackground text-offblacktext">
             <div className="w-full flex flex-row justify-between items-end">
                 <h1 className="text-2xl lg:text-5xl font-Lausanne750 uppercase mb-8 tracking-tight leading-none flex items-start">
 
@@ -51,7 +51,7 @@ export default function SelectedWorks() {
                 </h1>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {works
                     .filter(project => project.id !== currentId)
                     .slice(0, 3)
@@ -64,7 +64,7 @@ export default function SelectedWorks() {
                     >
                         <TransitionLink href={`/works/${project.id}`}>
                             <div className="relative overflow-hidden w-full">
-                                <div className="relative w-full h-auto">
+                                <div className="relative w-full h-auto rounded-custom overflow-hidden">
                                     <Image
                                         src={project.mainImage}
                                         alt={project.title}
@@ -75,20 +75,16 @@ export default function SelectedWorks() {
                                         className="object-cover"
                                     />
                                 </div>
-
+                                <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent rounded-custom overflow-hidden"/>
+                                <div
+                                    className="absolute bottom-0 left-0 flex text-offwhitetext p-4 gap-4 text-sm md:text-xl font-Lausanne300 tracking-tight leading-none">
+                                    <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">{project.title}</p>
+                                </div>
                             </div>
                         </TransitionLink>
-                        <div
-                            className="flex text-offblacktext mt-4 mb-8 gap-4 text-sm md:text-xl font-Lausanne300 tracking-tight leading-none">
-                            <p className="">{project.title}</p>
-                            <p className="opacity-50">
-                                {project.type.join(" / ")}
-                            </p>
-                        </div>
                     </div>
-                ))}
+                    ))}
             </div>
-
         </div>
     );
 }

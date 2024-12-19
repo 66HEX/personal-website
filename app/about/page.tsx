@@ -44,7 +44,7 @@ export default function AboutMePage() {
                         <div
                             ref={subtitleRef}
                             style={{visibility: "hidden"}}
-                            className="col-span-1 flex flex-col justify-end"
+                            className="col-span-1 flex flex-col justify-end gap-2"
                         >
                             <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
                                 Name
@@ -56,7 +56,7 @@ export default function AboutMePage() {
                         <div
                             ref={subtitleRef2}
                             style={{ visibility: "hidden" }}
-                            className="col-span-1 flex flex-col justify-end"
+                            className="col-span-1 flex flex-col justify-end gap-2"
                         >
                             <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
                                 Focus Areas

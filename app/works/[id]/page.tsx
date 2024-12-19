@@ -46,7 +46,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                         </div>
                         <div className="col-span-2 lg:col-span-1 flex gap-8 md:grid md:grid-cols-3">
                             <div ref={clientRef} style={{visibility: "hidden"}}
-                                 className="col-span-1 flex flex-col justify-end">
+                                 className="col-span-1 flex flex-col justify-end gap-2">
                                 <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
                                     Client
                                 </p>
@@ -55,7 +55,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                 </p>
                             </div>
                             <div ref={typeRef} style={{visibility: "hidden"}}
-                                 className="col-span-2 md:col-span-1 flex-col justify-end flex">
+                                 className="col-span-2 md:col-span-1 flex-col justify-end flex gap-2">
                                 <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
                                     Services
                                 </p>
@@ -64,7 +64,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                 </p>
                             </div>
                             <div style={{visibility: "hidden"}} ref={yearRef}
-                                 className="col-span-1 flex flex-col justify-end">
+                                 className="col-span-1 flex flex-col justify-end gap-2">
                                 <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
                                     Year
                                 </p>

@@ -24,7 +24,7 @@ export default function WorksPage() {
     }, [viewMode]);
 
     return (
-        <div className="w-screen min-h-svh bg-offwhitebackground text-black font-Lausanne500">
+        <div className="w-screen min-h-svh bg-offwhitebackground text-offblacktext font-Lausanne500">
             <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-24">
                 <h1
                     style={{visibility: "hidden"}}
@@ -56,11 +56,11 @@ export default function WorksPage() {
 
             {viewMode === "list" ? (
                 <div className="px-4 lg:px-24 pb-12 grid grid-cols-1">
-                    <hr className="border border-black opacity-10 mb-4 lg:mb-8"/>
+                    <hr className="border border-offblacktext opacity-10 "/>
                     {works.map((project, index) => (
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div style={{visibility: "hidden"}} className="project-container cursor-pointer">
-                                <div className="grid grid-cols-5 md:grid-cols-6 gap-4  tracking-tight leading-none">
+                                <div className="grid grid-cols-5 md:grid-cols-6 tracking-tight leading-none py-4 lg:py-8">
                                     <div className="col-span-1 text-2xl md:text-5xl font-Lausanne300 justify-start items-center opacity-50 hidden md:flex">
                                         <p>{formatId(project.id)}</p>
                                     </div>
@@ -74,7 +74,8 @@ export default function WorksPage() {
                                         <p>{project.year}</p>
                                     </div>
                                 </div>
-                                {index < works.length - 1 && <hr className="border border-black opacity-10 my-4 lg:my-8"/>}
+                                {index < works.length - 1 && <hr className="border border-offblacktext opacity-10"/>}
+
                             </div>
                         </TransitionLink>
                     ))}

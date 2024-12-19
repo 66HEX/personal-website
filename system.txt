@@ -1,11 +1,11 @@
-normal text:
+normal text: text-sm md:text-xl
 
-    text-sm md:text-xl
+title: text-2xl lg:text-5xl
 
-title:
+switches: text-sm
 
-    text-2xl lg:text-5xl
+margin section sm:12 lg:24
 
-switches:
+margin title 8
 
-        text-sm
+anothe

@@ -9,9 +9,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        offwhitebackground: '#FFF',
-        offwhitetext: '#FFF',
-        offblacktext: '#000',
+        offwhitebackground: '#E3E1DE',
+        offwhitetext: '#E3E1DE',
+        offblacktext: '#131313',
         accent: '#FF4C24',
       },
       fontFamily: {

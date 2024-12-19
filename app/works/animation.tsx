@@ -56,7 +56,7 @@ export const animatePageContent = (worksRef: HTMLElement | null) => {
             y: 0,
             visibility: "visible",
             duration: 0.5,
-            ease: "sine.out",
+            ease: "power3.out",
             stagger: 0.1,
         },
         "<"

@@ -22,18 +22,18 @@ export default function Footer() {
         >
             <div
                 className="fixed bottom-0 h-[32rem] md:h-[24rem] w-full bg-offblacktext text-offwhitetext">
-                <div className="w-full px-4 lg:px-24 py-12 font-Lausanne250">
+                <div className="w-full px-4 lg:px-24 py-12 font-Lausanne300">
                     <h1 className="text-2xl lg:text-5xl font-Lausanne750 tracking-tight leading-none mb-4 opacity-50">
                         /hex
                     </h1>
-                    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-24">
+                    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-24">
                         {/* Left section */}
                         <div className="col-span-2 flex flex-col justify-start">
                             <p className="text-sm lg:text-base leading-relaxed">
                                 Front-end developer with a passion for pushing web technologies to their limits.
                                 Combining modern frameworks, responsive design principles, and creative problem-solving
                                 to deliver exceptional user experiences that exceed expectations and drive results.
-                                <span className="font-Lausanne750 opacity-50"> Always learning, always delivering.</span>
+                                <span className="block md:inline-block ml-1 font-Lausanne750 text-accent "> Always learning, always delivering.</span>
                             </p>
                         </div>
 

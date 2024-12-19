@@ -81,7 +81,7 @@ export default function Navbar() {
         <nav className="fixed top-2 left-0 text-offwhitetext z-50 w-full px-4 md:px-24">
             <div className="flex flex-col bg-offblacktext/70 backdrop-blur-3xl py-4 px-8 rounded-custom overflow-hidden">
                 <div className="flex justify-between items-center w-full">
-                    <div className="text-2xl font-Lausanne750 tracking-tight leading-none">
+                    <div className="text-2xl font-Lausanne300 tracking-tight leading-none">
                         <TransitionLink href="/">/hex</TransitionLink>
                     </div>
 

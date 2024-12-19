@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useRef, ReactNode } from 'react';
-import { gsap } from 'gsap';
+import React, { useRef, ReactNode } from "react";
+import { gsap } from "gsap";
 import { SplitText } from "@/app/utils/gsap/SplitText";
-import {useGSAP} from "@gsap/react";
+import { useGSAP } from "@gsap/react";
 import { CustomEase } from "gsap/CustomEase";
 
-gsap.registerPlugin(SplitText , CustomEase);
+gsap.registerPlugin(SplitText, CustomEase);
 
 interface TextWrapperProps {
     children: ReactNode;
@@ -25,28 +25,34 @@ const AnimatedLink: React.FC<TextWrapperProps> = ({ children, className }) => {
         const textElement = textRef.current;
         const copyElement = copyRef.current;
 
+        if (!textElement || !copyElement) return;
+
         const text = new SplitText(textElement, {
-            type: 'lines',
-            position: 'relative',
+            type: "lines",
+            position: "relative",
         });
         const copy = new SplitText(copyElement, {
-            type: 'lines',
-            position: 'relative',
+            type: "lines",
+            position: "relative",
         });
 
         const timeline = gsap.timeline({ paused: true });
 
         timeline.to(text.lines, {
-            y: '-100%',
+            y: "-100%",
             duration: 0.35,
             ease: "customEase",
         });
 
-        timeline.to(copy.lines, {
-            y: '-100%',
-            duration: 0.35,
-            ease: "customEase",
-        }, 0);
+        timeline.to(
+            copy.lines,
+            {
+                y: "-100%",
+                duration: 0.35,
+                ease: "customEase",
+            },
+            0
+        );
 
         const handleMouseEnter = () => {
             timeline.play();
@@ -58,16 +64,15 @@ const AnimatedLink: React.FC<TextWrapperProps> = ({ children, className }) => {
 
         const parentElement = wrapper?.parentElement;
         if (parentElement) {
-            parentElement.addEventListener('mouseenter', handleMouseEnter);
-            parentElement.addEventListener('mouseleave', handleMouseLeave);
+            parentElement.addEventListener("mouseenter", handleMouseEnter);
+            parentElement.addEventListener("mouseleave", handleMouseLeave);
         }
 
         return () => {
-            if (wrapper) {
-                wrapper.removeEventListener('mouseenter', handleMouseEnter);
-                wrapper.removeEventListener('mouseleave', handleMouseLeave);
+            if (parentElement) {
+                parentElement.removeEventListener("mouseenter", handleMouseEnter);
+                parentElement.removeEventListener("mouseleave", handleMouseLeave);
             }
-            text.revert();
         };
     }, [children]);
 
@@ -79,8 +84,10 @@ const AnimatedLink: React.FC<TextWrapperProps> = ({ children, className }) => {
             <div ref={textRef} className="inline-flex">
                 {children}
             </div>
-            <div ref={copyRef} className="absolute top-0 left-0 inline-flex"
-                 style={{ transform: 'translateY(100%)' }}
+            <div
+                ref={copyRef}
+                className="absolute top-0 left-0 inline-flex"
+                style={{ transform: "translateY(100%)" }}
             >
                 {children}
             </div>

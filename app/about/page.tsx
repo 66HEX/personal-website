@@ -3,117 +3,127 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { SplitText } from "@/app/utils/gsap/SplitText";
-import { gsap } from "gsap/gsap-core";
-import {works} from "@/app/data/worksData";
+import { animateAboutMeDetails } from "./animations";
+import Services from "@/app/sections/Services/Services";
 
-gsap.registerPlugin(SplitText);
-
-export default function About() {
+export default function AboutMePage() {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const subtitleRef = useRef<HTMLHeadingElement>(null);
+    const subtitleRef2 = useRef<HTMLHeadingElement>(null);
     const bioRef = useRef<HTMLParagraphElement>(null);
-    const bio2Ref = useRef<HTMLParagraphElement>(null);
-    const imageRef = useRef(null);
-
+    const bioRef2 = useRef<HTMLParagraphElement>(null);
+    const bioRef3 = useRef<HTMLParagraphElement>(null);
+    const imageRef = useRef<HTMLElement | null>(null);
 
     useGSAP(() => {
-        const childSplit1 = new SplitText(titleRef.current, { type: "lines" });
-        const childSplit2 = new SplitText(subtitleRef.current, { type: "lines" });
-        const childSplit3 = new SplitText(bioRef.current, { type: "lines" });
-        const childSplit4 = new SplitText(bio2Ref.current, { type: "lines" });
-
-        new SplitText(titleRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
+        return animateAboutMeDetails({
+            titleRef: titleRef.current,
+            subtitleRef: subtitleRef.current,
+            subtitleRef2: subtitleRef2.current,
+            bioRef: bioRef.current,
+            bioRef2: bioRef2.current,
+            bioRef3: bioRef3.current,
+            imageRef: imageRef.current,
         });
-        new SplitText(subtitleRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
-        });
-        new SplitText(bioRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
-        });
-        new SplitText(bio2Ref.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden",
-        });
-
-        const title = childSplit1.lines;
-        const subtitle = childSplit2.lines;
-        const bio = childSplit3.lines;
-        const bio2 = childSplit4.lines;
-
-        const tl = gsap.timeline();
-        tl.fromTo(
-            title,
-            { y: "100%", visibility: "hidden" },
-            { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" }
-        );
-        tl.fromTo(
-            subtitle,
-            { y: "100%", visibility: "hidden" },
-            { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-            "<"
-        );
-        tl.fromTo(
-            bio,
-            { y: "100%", visibility: "hidden" },
-            { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-            "<"
-        );
-        tl.fromTo(
-            bio2,
-            { y: "100%", visibility: "hidden" },
-            { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-            "<"
-        );
-        tl.fromTo(
-            imageRef.current,
-            { opacity: 0, scale: 1.1, visibility: "hidden" },
-            { opacity: 1, scale: 1, visibility: "visible", duration: 1, ease: "power3.out" },
-            "<"
-        );
     }, []);
 
     return (
-        <div className="bg-offwhitebackground text-offblacktext px-4 lg:px-8">
-            <div className="w-full h-[30vh] flex justify-between items-end">
-                <h1
-                    className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none pb-8 flex">
-                    About Me
-                </h1>
+        <div className="bg-offwhitebackground text-offblacktext">
+            <div className="w-full h-[30vh] flex items-end px-4 lg:px-24">
+                <div className="grid grid-cols-2 w-full mb-8 gap-8 lg:gap-24">
+                    <div className="col-span-2 lg:col-span-1 flex items-end">
+                        <h1
+                            ref={titleRef}
+                            style={{ visibility: "hidden" }}
+                            className="text-4xl md:text-7xl font-Lausanne750 tracking-tight leading-none"
+                        >
+                            About Me
+                        </h1>
+                    </div>
+                    <div className="col-span-2 lg:col-span-1 flex gap-8 md:grid md:grid-cols-2">
+                        <div
+                            ref={subtitleRef}
+                            style={{visibility: "hidden"}}
+                            className="col-span-1 flex flex-col justify-end"
+                        >
+                            <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
+                                Name
+                            </p>
+                            <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-none opacity-50">
+                                Marek Jóźwiak
+                            </p>
+                        </div>
+                        <div
+                            ref={subtitleRef2}
+                            style={{ visibility: "hidden" }}
+                            className="col-span-1 flex flex-col justify-end"
+                        >
+                            <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
+                                Focus Areas
+                            </p>
+                            <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-none opacity-50">
+                                Frontend Development
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <hr className="border border-black opacity-10 mb-4 lg:mb-8"/>
-            <div className="grid grid-cols-1 lg:grid-cols-2 w-full gap-4">
-                <div className="col-span-1">
-                    <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-none uppercase opacity-50">
-                        Bio
-                    </p>
+
+            <div className="w-screen px-4 lg:px-24 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-24 pb-12 md:pb-24">
+                <div
+                    className="col-span-1 gap-4 lg:gap-8 text-sm leading-tight order-2">
+                    <div className="col-span-1 flex flex-col gap-4 lg:gap-8">
+                        <p
+                            ref={bioRef}
+                            style={{visibility: "hidden"}}
+                            className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-relaxed"
+                        >
+                        I'm an emerging frontend developer with a passion for crafting engaging web experiences.
+                            Over the past 1.5 years, I've immersed myself in modern web development, focusing on
+                            React.js and Next.js ecosystems. My journey in tech is driven by a constant desire to
+                            learn and grow, turning creative concepts into clean, functional, and visually
+                            appealing interfaces.
+                        </p>
+                        <p
+                            ref={bioRef2}
+                            style={{visibility: "hidden"}}
+                            className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-relaxed"
+                        >
+                            While my commercial experience spans several successful projects, I approach each new
+                            challenge with enthusiasm and dedication. I've worked with TypeScript, Tailwind CSS,
+                            and various modern development tools, consistently focusing on writing clean,
+                            maintainable code. My rapid growth in the field demonstrates my ability to quickly
+                            adapt to new technologies and deliver quality results in dynamic environments.
+                        </p>
+                        <p
+                            ref={bioRef3}
+                            style={{visibility: "hidden"}}
+                            className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-relaxed"
+                        >
+                            I'm deeply committed to expanding my skillset and staying current with frontend
+                            development trends. My dedication to continuous learning drives me to explore new
+                            technologies and best practices, while my attention to detail ensures high-quality
+                            deliverables. I approach each project as an opportunity to both contribute value
+                            and enhance my expertise in creating exceptional web experiences.
+                        </p>
+                    </div>
                 </div>
-                <div className="col-span-1">
-                    <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-relaxed">
-                        As a freelance web designer and developer, I bring a unique combination of creativity and
-                        technical expertise to every project. With a keen eye for design and a passion for delivering
-                        user-friendly web experiences, I work closely with clients to understand their needs and bring
-                        their vision to life.
-                    </p>
-                </div>
-                <div className="col-span-1">
-                    <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-none uppercase opacity-50">
-                        INFO
-                    </p>
-                </div>
-                <div className="col-span-1">
-                    <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-relaxed">
-                        As a freelance web designer and developer, I bring a unique combination of creativity and
-                        technical expertise to every project. With a keen eye for design and a passion for delivering
-                        user-friendly web experiences, I work closely with clients to understand their needs and bring
-                        their vision to life.
-                    </p>
+                <div className="col-span-1 h-auto relative overflow-hidden">
+                    <div className="relative w-full h-auto rounded-custom overflow-hidden">
+                        <Image
+                            ref={imageRef}
+                            src="/images/about-photo.png" // Replace with your image path
+                            alt="About Me Image"
+                            layout="intrinsic"
+                            width={2000}
+                            height={1500}
+                            className="object-cover"
+                            style={{visibility: "hidden"}}
+                        />
+                    </div>
                 </div>
             </div>
+            <Services/>
         </div>
     );
 }

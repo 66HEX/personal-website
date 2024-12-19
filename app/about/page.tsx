@@ -13,7 +13,7 @@ export default function AboutMePage() {
     const bioRef = useRef<HTMLParagraphElement>(null);
     const bioRef2 = useRef<HTMLParagraphElement>(null);
     const bioRef3 = useRef<HTMLParagraphElement>(null);
-    const imageRef = useRef<HTMLElement | null>(null);
+    const imageRef = useRef<HTMLImageElement | null>(null);
 
     useGSAP(() => {
         return animateAboutMeDetails({

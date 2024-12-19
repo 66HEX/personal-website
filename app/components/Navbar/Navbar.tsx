@@ -8,8 +8,8 @@ import { gsap } from "gsap";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const menuRef = useRef(null);
-    const linksRef = useRef([]);
+    const menuRef = useRef<HTMLDivElement | null>(null);
+    const linksRef = useRef<(HTMLDivElement | null)[]>([]);
 
     const navLinks = [
         { href: "/", label: "Home" },
@@ -39,7 +39,7 @@ export default function Navbar() {
                 ease: "power3.out",
             })
             .fromTo(
-                linksRef.current,
+                linksRef.current.filter(Boolean), // Filtruje `null` w tablicy
                 { y: 20, opacity: 0 },
                 {
                     y: 0,
@@ -55,13 +55,16 @@ export default function Navbar() {
     const closeMenu = () => {
         const timeline = gsap.timeline();
         timeline
-            .to(linksRef.current, {
-                y: -20,
-                opacity: 0,
-                duration: 0.5,
-                stagger: 0.05,
-                ease: "power3.in",
-            })
+            .to(
+                linksRef.current.filter(Boolean),
+                {
+                    y: -20,
+                    opacity: 0,
+                    duration: 0.5,
+                    stagger: 0.05,
+                    ease: "power3.in",
+                }
+            )
             .to(menuRef.current, {
                 height: 0,
                 duration: 0.5,
@@ -71,7 +74,7 @@ export default function Navbar() {
 
     useEffect(() => {
         gsap.set(menuRef.current, { height: 0 });
-        gsap.set(linksRef.current, { y: -20, opacity: 0 });
+        gsap.set(linksRef.current.filter(Boolean), { y: -20, opacity: 0 });
     }, []);
 
     return (

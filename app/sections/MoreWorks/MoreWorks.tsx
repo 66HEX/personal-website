@@ -58,6 +58,9 @@ export default function SelectedWorks() {
                                     <div
                                         className="absolute bottom-0 left-0 flex text-offwhitetext p-4 gap-4 text-sm md:text-xl font-Lausanne300 tracking-tight leading-none">
                                         <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">{project.title}</p>
+                                        <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">
+                                            {project.year}
+                                        </p>
                                     </div>
                                 </div>
                             </TransitionLink>

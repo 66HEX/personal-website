@@ -37,10 +37,10 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
         <div>
             <div className="bg-offwhitebackground text-offblacktext">
                 <div className="w-full h-[30vh] flex items-end px-4 lg:px-24">
-                    <div className="grid grid-cols-2 w-full mb-4 gap-4">
+                    <div className="grid grid-cols-2 w-full mb-8 gap-4">
                         <div className="col-span-2 lg:col-span-1 flex items-end">
                             <h1 style={{visibility: "hidden"}} ref={titleRef}
-                                className="text-4xl md:text-7xl font-Lausanne750 tracking-tight leading-none lg:mb-0">
+                                className="text-4xl md:text-7xl font-Lausanne750 tracking-tight leading-none ">
                                 {project.title}
                             </h1>
                         </div>
@@ -92,7 +92,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     </div>
                 </div>
                 <div
-                    className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 px-4 lg:px-24 py-12 lg:py-24 text-sm leading-tight">
+                    className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 px-4 lg:px-24 py-8 lg:py-24 text-sm leading-tight">
                     <div className="col-span-1 hidden md:flex">
 
                     </div>
@@ -132,7 +132,6 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     </div>
                 </div>
             </div>
-            <MoreWorks/>
         </div>
     );
 }

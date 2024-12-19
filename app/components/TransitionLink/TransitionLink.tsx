@@ -34,6 +34,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
             ease: "power3.in",
             onComplete: () => {
                 router.push(href);
+                window.scrollTo(0, 0);
                 gsap.fromTo("#page-transition", { opacity: 0 },
                     { opacity: 1, delay: 0.5, duration: 0.5 });
             },

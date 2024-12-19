@@ -1,8 +1,8 @@
 /*!
- * ScrambleTextPlugin 3.1.1
+ * ScrambleTextPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -53,16 +53,14 @@ let gsap, _coreInitted,
 
 
 export const ScrambleTextPlugin = {
-	version:"3.1.1",
+	version:"3.10.4",
 	name:"scrambleText",
 	register(core, Plugin, propTween) {
 		gsap = core;
 		_initCore();
 	},
 	init(target, value, tween, index, targets) {
-		if (!_coreInitted) {
-			_initCore();
-		}
+		_coreInitted ||	_initCore();
 		this.prop = ("innerHTML" in target) ? "innerHTML" : ("textContent" in target) ? "textContent" : 0; // SVG text in IE doesn't have innerHTML, but it does have textContent.
 		if (!this.prop) {
 			return;
@@ -71,7 +69,7 @@ export const ScrambleTextPlugin = {
 		if (typeof(value) !== "object") {
 			value = {text:value};
 		}
-		let text = value.text || value.value,
+		let text = value.text || value.value || "",
 			trim = (value.trim !== false),
 			data = this,
 			delim, maxLength, charset, splitByChars;
@@ -111,7 +109,7 @@ export const ScrambleTextPlugin = {
 			l = text.length,
 			time = tween._time,
 			timeDif = time - prevScrambleTime,
-			i, i2, startText, endText, applyNew, applyOld, str, startClass, endClass;
+			i, i2, startText, endText, applyNew, applyOld, str, startClass, endClass, position, r;
 		if (revealDelay) {
 			if (tween._from) {
 				time = tween._dur - time; //invert the time for from() tweens
@@ -138,6 +136,8 @@ export const ScrambleTextPlugin = {
 			endText = original.join(delimiter);
 		}
 
+		r = tween._from ? ratio : 1 - ratio;
+		position = length + (tweenLength ? tween._from ? r * r * r : 1 - r * r * r : 1) * lengthDif;
 		if (rightToLeft) {
 			if (ratio === 1 && (tween._from || tween.data === "isFromStart")) { //special case for from() tweens
 				startText = "";
@@ -145,9 +145,9 @@ export const ScrambleTextPlugin = {
 			} else {
 				str = text.slice(i).join(delimiter);
 				if (charsHaveEmoji) {
-					startText = emojiSafeSplit(endText).slice(0, ((length + (tweenLength ? 1 - (ratio * ratio * ratio) : 1) * lengthDif) - ((textHasEmoji ? emojiSafeSplit(str) : str).length) + 0.5) | 0).join("");
+					startText = emojiSafeSplit(endText).slice(0, (position - ((textHasEmoji ? emojiSafeSplit(str) : str).length) + 0.5) | 0).join("");
 				} else {
-					startText = endText.substr(0, ((length + (tweenLength ? 1 - (ratio * ratio * ratio) : 1) * lengthDif) - ((textHasEmoji ? emojiSafeSplit(str) : str).length) + 0.5) | 0);
+					startText = endText.substr(0, (position - ((textHasEmoji ? emojiSafeSplit(str) : str).length) + 0.5) | 0);
 				}
 				endText = str;
 			}
@@ -156,9 +156,9 @@ export const ScrambleTextPlugin = {
 			startText = text.slice(0, i).join(delimiter);
 			i2 = (textHasEmoji ? emojiSafeSplit(startText) : startText).length;
 			if (charsHaveEmoji) {
-				endText = emojiSafeSplit(endText).slice(i2, ((length + (tweenLength ? 1 - ((ratio = 1 - ratio) * ratio * ratio * ratio) : 1) * lengthDif) + 0.5) | 0).join("");
+				endText = emojiSafeSplit(endText).slice(i2, (position + 0.5) | 0).join("");
 			} else {
-				endText = endText.substr(i2, ((length + (tweenLength ? 1 - ((ratio = 1 - ratio) * ratio * ratio * ratio) : 1) * lengthDif) - i2 + 0.5) | 0);
+				endText = endText.substr(i2, (position - i2 + 0.5) | 0);
 			}
 		}
 

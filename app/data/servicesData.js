@@ -2,21 +2,21 @@ export const services = [
     {
         id: 1,
         title: "Web Development",
-        description: "We specialize in building responsive, fast, and visually stunning websites that provide an exceptional user experience. Using modern technologies such as React, Vue, or Angular, we ensure your website meets the highest standards of functionality and aesthetics."
+        description: "As a full-stack developer, I build lightning-fast, responsive websites that not only look stunning but work flawlessly. I specialize in React, and Next, allowing me to choose the perfect technology stack for your specific needs and business goals."
     },
     {
         id: 2,
         title: "Branding",
-        description: "Our branding services are designed to help you create a strong and recognizable identity for your business. From logo design and brand strategy to creating cohesive visuals, we ensure your brand stands out in a competitive market."
+        description: "I help brands find their unique voice. Beyond just creating logos and visual elements, I craft a compelling brand story that resonates with your audience. My approach combines creative design with practical business insights to make your brand truly stand out in the market."
     },
     {
         id: 3,
         title: "UI/UX Design",
-        description: "Our team of experts focuses on crafting intuitive and engaging interfaces that captivate users and drive interaction. We leverage research-driven insights to design experiences that are not only visually appealing but also functional and user-centric."
+        description: "I design interfaces that don't just look great - they feel natural to use. Each project starts with thorough user research and testing. This data-driven approach helps me create designs that boost conversion rates and keep users coming back for more. I focus on solving real user problems, not just making things pretty."
     },
     {
         id: 4,
         title: "SEO Optimization",
-        description: "Boost your online visibility with our comprehensive SEO services. From keyword research and on-page optimization to technical audits and backlink strategies, we ensure your website ranks higher on search engines and attracts more organic traffic."
+        description: "I use proven SEO techniques that actually boost your search engine rankings and drive quality traffic to your site. From in-depth keyword research to technical optimizations and content strategy, I handle every aspect of SEO to help your business get found online by the right audience."
     }
 ];

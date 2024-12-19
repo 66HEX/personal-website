@@ -1,12 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "@/app/utils/gsap/SplitText";
 import { services } from "@/app/data/servicesData";
-
-gsap.registerPlugin(ScrollTrigger, SplitText);
+import { animateAccordion } from "./animation";
 
 export default function Services() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -17,36 +13,9 @@ export default function Services() {
         const isOpen = activeIndex === index;
         setActiveIndex(isOpen ? null : index);
 
-        detailsRefs.current.forEach((ref, i) => {
-            if (i === index && ref) {
-                gsap.to(ref, {
-                    height: isOpen ? 0 : ref.scrollHeight,
-                    duration: 1,
-                    ease: "power3.inOut",
-                });
-            } else if (ref) {
-                gsap.to(ref, {
-                    height: 0,
-                    duration: 1,
-                    ease: "power3.inOut",
-                });
-            }
-        });
-
-        arrowRefs.current.forEach((arrow, i) => {
-            if (i === index && arrow) {
-                gsap.to(arrow, {
-                    rotate: isOpen ? 0 : 180,
-                    duration: 0.5,
-                    ease: "power3.inOut",
-                });
-            } else if (arrow) {
-                gsap.to(arrow, {
-                    rotate: 0,
-                    duration: 0.5,
-                    ease: "power3.inOut",
-                });
-            }
+        animateAccordion(index, isOpen, {
+            detailsRefs: detailsRefs.current,
+            arrowRefs: arrowRefs.current,
         });
     };
 
@@ -69,8 +38,8 @@ export default function Services() {
                             onClick={() => toggleAccordion(index)}
                         >
                             <div className="flex justify-between gap-8 tracking-tight leading-none">
-                                <div className="col-span-4 lg:col-span-3 flex flex-col justify-start items-start">
-                                    <p className="text-2xl md:text-5xl font-Lausanne750">
+                                <div className="flex flex-col justify-start items-start">
+                                    <p className="text-2xl lg:text-5xl font-Lausanne750">
                                         {service.title}
                                     </p>
                                 </div>
@@ -78,7 +47,7 @@ export default function Services() {
                                     <svg
                                         ref={(el) => (arrowRefs.current[index] = el)}
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6 md:w-10 md:h-10 transform transition-transform"
+                                        className="w-6 h-6 md:w-10 md:h-10"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"

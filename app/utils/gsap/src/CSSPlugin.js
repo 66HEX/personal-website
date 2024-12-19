@@ -1,15 +1,15 @@
 /*!
- * CSSPlugin 3.1.1
+ * CSSPlugin 3.10.4
  * https://greensock.com
  *
- * Copyright 2008-2020, GreenSock. All rights reserved.
+ * Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
 */
 /* eslint-disable */
 
-import {gsap, _getProperty, _numExp, getUnit, _isString, _isUndefined, _renderComplexString, _relExp, _forEachName, _sortPropTweensByPriority, _colorStringFilter, _checkPlugin, _replaceRandom, _plugins, GSCache, PropTween, _config, _ticker, _round, _missingPlugin, _getSetter, _getCache,
+import {gsap, _getProperty, _numExp, _numWithUnitExp, getUnit, _isString, _isUndefined, _renderComplexString, _relExp, _forEachName, _sortPropTweensByPriority, _colorStringFilter, _checkPlugin, _replaceRandom, _plugins, GSCache, PropTween, _config, _ticker, _round, _missingPlugin, _getSetter, _getCache, _colorExp, _parseRelative,
 	_setDefaults, _removeLinkedListItem //for the commented-out className feature.
 } from "./gsap-core.js";
 
@@ -21,13 +21,12 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 	_atan2 = Math.atan2,
 	_bigNum = 1e8,
 	_capsExp = /([A-Z])/g,
-	_numWithUnitExp = /[-+=\.]*\d+[\.e-]*\d*[a-z%]*/g,
-	_horizontalExp = /(?:left|right|width|margin|padding|x)/i,
+	_horizontalExp = /(left|right|width|margin|padding|x)/i,
 	_complexExp = /[\s,\(]\S/,
 	_propertyAliases = {autoAlpha:"opacity,visibility", scale:"scaleX,scaleY", alpha:"opacity"},
-	_renderCSSProp = (ratio, data) => data.set(data.t, data.p, (~~((data.s + data.c * ratio) * 1000) / 1000) + data.u, data),
-	_renderPropWithEnd = (ratio, data) => data.set(data.t, data.p, ratio === 1 ? data.e : (~~((data.s + data.c * ratio) * 1000) / 1000) + data.u, data),
-	_renderCSSPropWithBeginning = (ratio, data) => data.set(data.t, data.p, ratio ? (~~((data.s + data.c * ratio) * 1000) / 1000) + data.u : data.b, data), //if units change, we need a way to render the original unit/value when the tween goes all the way back to the beginning (ratio:0)
+	_renderCSSProp = (ratio, data) => data.set(data.t, data.p, (Math.round((data.s + data.c * ratio) * 10000) / 10000) + data.u, data),
+	_renderPropWithEnd = (ratio, data) => data.set(data.t, data.p, ratio === 1 ? data.e : (Math.round((data.s + data.c * ratio) * 10000) / 10000) + data.u, data),
+	_renderCSSPropWithBeginning = (ratio, data) => data.set(data.t, data.p, ratio ? (Math.round((data.s + data.c * ratio) * 10000) / 10000) + data.u : data.b, data), //if units change, we need a way to render the original unit/value when the tween goes all the way back to the beginning (ratio:0)
 	_renderRoundedCSSProp = (ratio, data) => {
 		let value = data.s + data.c * ratio;
 		data.set(data.t, data.p, ~~(value + (value < 0 ? -.5 : .5)) + data.u, data);
@@ -60,11 +59,11 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		return cs[property] || cs.getPropertyValue(property.replace(_capsExp, "-$1").toLowerCase()) || cs.getPropertyValue(property) || (!skipPrefixFallback && _getComputedProperty(target, _checkPropPrefix(property) || property, 1)) || ""; //css variables may not need caps swapped out for dashes and lowercase.
 	},
 	_prefixes = "O,Moz,ms,Ms,Webkit".split(","),
-	_checkPropPrefix = (property, element) => {
+	_checkPropPrefix = (property, element, preferPrefix) => {
 		let e = element || _tempDiv,
 			s = e.style,
 			i = 5;
-		if (property in s) {
+		if (property in s && !preferPrefix) {
 			return property;
 		}
 		property = property.charAt(0).toUpperCase() + property.substr(1);
@@ -72,14 +71,14 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		return (i < 0) ? null : ((i === 3) ? "ms" : (i >= 0) ? _prefixes[i] : "") + property;
 	},
 	_initCore = () => {
-		if (_windowExists()) {
+		if (_windowExists() && window.document) {
 			_win = window;
 			_doc = _win.document;
 			_docElement = _doc.documentElement;
 			_tempDiv = _createElement("div") || {style:{}};
 			_tempDivStyler = _createElement("div");
 			_transformProp = _checkPropPrefix(_transformProp);
-			_transformOriginProp = _checkPropPrefix(_transformOriginProp);
+			_transformOriginProp = _transformProp + "Origin";
 			_tempDiv.style.cssText = "border-width:0;line-height:0;position:absolute;padding:0"; //make sure to override certain properties that may contaminate measurements, in case the user has overreaching style sheets.
 			_supports3D = !!_checkPropPrefix("perspective");
 			_pluginInitted = 1;
@@ -103,10 +102,12 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		} else if (this._gsapBBox) {
 			bbox = this._gsapBBox();
 		}
-		if (oldSibling) {
-			oldParent.insertBefore(this, oldSibling);
-		} else {
-			oldParent.appendChild(this);
+		if (oldParent) {
+			if (oldSibling) {
+				oldParent.insertBefore(this, oldSibling);
+			} else {
+				oldParent.appendChild(this);
+			}
 		}
 		_docElement.removeChild(svg);
 		this.style.cssText = oldCSS;
@@ -127,6 +128,7 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		} catch (error) {
 			bounds = _getBBoxHack.call(target, true);
 		}
+		(bounds && (bounds.width || bounds.height)) || target.getBBox === _getBBoxHack || (bounds = _getBBoxHack.call(target, true));
 		//some browsers (like Firefox) misreport the bounds if the element has zero width and height (it just assumes it's at x:0, y:0), thus we need to manually grab the position in that case.
 		return (bounds && !bounds.width && !bounds.x && !bounds.y) ? {x: +_getAttributeFallbacks(target, ["x","cx","x1"]) || 0, y:+_getAttributeFallbacks(target, ["y","cy","y1"]) || 0, width:0, height:0} : bounds;
 	},
@@ -134,7 +136,7 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 	_removeProperty = (target, property) => {
 		if (property) {
 			let style = target.style;
-			if (property in _transformProps) {
+			if (property in _transformProps && property !== _transformOriginProp) {
 				property = _transformProp;
 			}
 			if (style.removeProperty) {
@@ -166,13 +168,16 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 			measureProperty = (isRootSVG ? "client" : "offset") + (horizontal ? "Width" : "Height"),
 			amount = 100,
 			toPixels = unit === "px",
+			toPercent = unit === "%",
 			px, parent, cache, isSVG;
 		if (unit === curUnit || !curValue || _nonConvertibleUnits[unit] || _nonConvertibleUnits[curUnit]) {
 			return curValue;
 		}
+		(curUnit !== "px" && !toPixels) && (curValue = _convertToUnit(target, property, value, "px"));
 		isSVG = target.getCTM && _isSVG(target);
-		if (unit === "%" && (_transformProps[property] || ~property.indexOf("adius"))) { //transforms and borderRadius are relative to the size of the element itself!
-			return _round(curValue / (isSVG ? target.getBBox()[horizontal ? "width" : "height"] : target[measureProperty]) * amount);
+		if ((toPercent || curUnit === "%") && (_transformProps[property] || ~property.indexOf("adius"))) {
+			px = isSVG ? target.getBBox()[horizontal ? "width" : "height"] : target[measureProperty];
+			return _round(toPercent ? curValue / px * amount : curValue / 100 * px);
 		}
 		style[horizontal ? "width" : "height"] = amount + (toPixels ? curUnit : unit);
 		parent = (~property.indexOf("adius") || (unit === "em" && target.appendChild && !isRootSVG)) ? target : target.parentNode;
@@ -183,27 +188,26 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 			parent = _doc.body;
 		}
 		cache = parent._gsap;
-		if (cache && unit === "%" && cache.width && horizontal && cache.time === _ticker.time) {
+		if (cache && toPercent && cache.width && horizontal && cache.time === _ticker.time) {
 			return _round(curValue / cache.width * amount);
 		} else {
+			(toPercent || curUnit === "%") && (style.position = _getComputedProperty(target, "position"));
 			(parent === target) && (style.position = "static"); // like for borderRadius, if it's a % we must have it relative to the target itself but that may not have position: relative or position: absolute in which case it'd go up the chain until it finds its offsetParent (bad). position: static protects against that.
 			parent.appendChild(_tempDiv);
 			px = _tempDiv[measureProperty];
 			parent.removeChild(_tempDiv);
 			style.position = "absolute";
-			if (horizontal && unit === "%") {
+			if (horizontal && toPercent) {
 				cache = _getCache(parent);
 				cache.time = _ticker.time;
 				cache.width = parent[measureProperty];
 			}
 		}
-		return _round(toPixels ? px * curValue / amount : amount / px * curValue);
+		return _round(toPixels ? px * curValue / amount : px && curValue ? amount / px * curValue : 0);
 	},
 	_get = (target, property, unit, uncache) => {
 		let value;
-		if (!_pluginInitted) {
-			_initCore();
-		}
+		_pluginInitted || _initCore();
 		if ((property in _propertyAliases) && property !== "transform") {
 			property = _propertyAliases[property];
 			if (~property.indexOf(",")) {
@@ -212,24 +216,34 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		}
 		if (_transformProps[property] && property !== "transform") {
 			value = _parseTransform(target, uncache);
-			value = (property !== "transformOrigin") ? value[property] : _firstTwoOnly(_getComputedProperty(target, _transformOriginProp)) + value.zOrigin + "px";
+			value = (property !== "transformOrigin") ? value[property] : value.svg ? value.origin : _firstTwoOnly(_getComputedProperty(target, _transformOriginProp)) + " " + value.zOrigin + "px";
 		} else {
 			value = target.style[property];
 			if (!value || value === "auto" || uncache || ~(value + "").indexOf("calc(")) {
 				value = (_specialProps[property] && _specialProps[property](target, property, unit)) || _getComputedProperty(target, property) || _getProperty(target, property) || (property === "opacity" ? 1 : 0); // note: some browsers, like Firefox, don't report borderRadius correctly! Instead, it only reports every corner like  borderTopLeftRadius
 			}
 		}
-		return unit && !~(value + "").indexOf(" ") ? _convertToUnit(target, property, value, unit) + unit : value;
+		return unit && !~(value + "").trim().indexOf(" ") ? _convertToUnit(target, property, value, unit) + unit : value;
 
 	},
-	_tweenComplexCSSString = function(target, prop, start, end) { //note: we call _tweenComplexCSSString.call(pluginInstance...) to ensure that it's scoped properly. We may call it from within a plugin too, thus "this" would refer to the plugin.
+	_tweenComplexCSSString = function(target, prop, start, end) { // note: we call _tweenComplexCSSString.call(pluginInstance...) to ensure that it's scoped properly. We may call it from within a plugin too, thus "this" would refer to the plugin.
+		if (!start || start === "none") { // some browsers like Safari actually PREFER the prefixed property and mis-report the unprefixed value like clipPath (BUG). In other words, even though clipPath exists in the style ("clipPath" in target.style) and it's set in the CSS properly (along with -webkit-clip-path), Safari reports clipPath as "none" whereas WebkitClipPath reports accurately like "ellipse(100% 0% at 50% 0%)", so in this case we must SWITCH to using the prefixed property instead. See https://greensock.com/forums/topic/18310-clippath-doesnt-work-on-ios/
+			let p = _checkPropPrefix(prop, target, 1),
+				s = p && _getComputedProperty(target, p, 1);
+			if (s && s !== start) {
+				prop = p;
+				start = s;
+			} else if (prop === "borderColor") {
+				start = _getComputedProperty(target, "borderTopColor"); // Firefox bug: always reports "borderColor" as "", so we must fall back to borderTopColor. See https://greensock.com/forums/topic/24583-how-to-return-colors-that-i-had-after-reverse/
+			}
+		}
 		let pt = new PropTween(this._pt, target.style, prop, 0, 1, _renderComplexString),
 			index = 0,
 			matchIndex = 0,
-			a, result,	startValues, startNum, color, startValue, endValue, endNum, chunk, endUnit, startUnit, relative, endValues;
+			a, result,	startValues, startNum, color, startValue, endValue, endNum, chunk, endUnit, startUnit, endValues;
 		pt.b = start;
 		pt.e = end;
-		start += ""; //ensure values are strings
+		start += ""; // ensure values are strings
 		end += "";
 		if (end === "auto") {
 			target.style[prop] = end;
@@ -237,18 +251,9 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 			target.style[prop] = start;
 		}
 		a = [start, end];
-		_colorStringFilter(a); //pass an array with the starting and ending values and let the filter do whatever it needs to the values.
+		_colorStringFilter(a); // pass an array with the starting and ending values and let the filter do whatever it needs to the values. If colors are found, it returns true and then we must match where the color shows up order-wise because for things like boxShadow, sometimes the browser provides the computed values with the color FIRST, but the user provides it with the color LAST, so flip them if necessary. Same for drop-shadow().
 		start = a[0];
 		end = a[1];
-		startValue = start.indexOf("rgba(");
-		endValue = end.indexOf("rgba(");
-		if (!!startValue !== !!endValue) { // for things like boxShadow, sometimes the browser provides the computed values with the color FIRST, but the user provides it with the color LAST, so flip them if necessary.
-			if (startValue) {
-				start = start.substr(startValue) + " " + start.substr(0, startValue - 1);
-			} else {
-				end = end.substr(endValue) + " " + end.substr(0, endValue - 1);
-			}
-		}
 		startValues = start.match(_numWithUnitExp) || [];
 		endValues = end.match(_numWithUnitExp) || [];
 		if (endValues.length) {
@@ -263,10 +268,7 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 				if (endValue !== (startValue = startValues[matchIndex++] || "")) {
 					startNum = parseFloat(startValue) || 0;
 					startUnit = startValue.substr((startNum + "").length);
-					relative = (endValue.charAt(1) === "=") ? +(endValue.charAt(0) + "1") : 0;
-					if (relative) {
-						endValue = endValue.substr(2);
-					}
+					(endValue.charAt(1) === "=") && (endValue = _parseRelative(startNum, endValue) + startUnit);
 					endNum = parseFloat(endValue);
 					endUnit = endValue.substr((endNum + "").length);
 					index = _numWithUnitExp.lastIndex - endUnit.length;
@@ -280,13 +282,13 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 					if (startUnit !== endUnit) {
 						startNum = _convertToUnit(target, prop, startValue, endUnit) || 0;
 					}
-					//these nested PropTweens are handled in a special way - we'll never actually call a render or setter method on them. We'll just loop through them in the parent complex string PropTween's render method.
+					// these nested PropTweens are handled in a special way - we'll never actually call a render or setter method on them. We'll just loop through them in the parent complex string PropTween's render method.
 					pt._pt = {
-						_next:pt._pt,
-						p:(chunk || (matchIndex === 1)) ? chunk : ",", //note: SVG spec allows omission of comma/space when a negative sign is wedged between two numbers, like 2.5-5.3 instead of 2.5,-5.3 but when tweening, the negative value may switch to positive, so we insert the comma just in case.
-						s:startNum,
-						c:relative ? relative * endNum : endNum - startNum,
-						m:(color && color < 4) ? Math.round : 0
+						_next: pt._pt,
+						p: (chunk || (matchIndex === 1)) ? chunk : ",", //note: SVG spec allows omission of comma/space when a negative sign is wedged between two numbers, like 2.5-5.3 instead of 2.5,-5.3 but when tweening, the negative value may switch to positive, so we insert the comma just in case.
+						s: startNum,
+						c: endNum - startNum,
+						m: (color && color < 4) || prop === "zIndex" ? Math.round : 0
 					};
 				}
 			}
@@ -294,9 +296,7 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		} else {
 			pt.r = prop === "display" && end === "none" ? _renderNonTweeningValueOnlyAtEnd : _renderNonTweeningValue;
 		}
-		if (_relExp.test(end)) {
-			pt.e = 0; //if the end string contains relative values or dynamic random(...) values, delete the end it so that on the final render we don't actually set it to the string with += or -= characters (forces it to use the calculated value).
-		}
+		_relExp.test(end) && (pt.e = 0); //if the end string contains relative values or dynamic random(...) values, delete the end it so that on the final render we don't actually set it to the string with += or -= characters (forces it to use the calculated value).
 		this._pt = pt; //start the linked list with this new PropTween. Remember, we call _tweenComplexCSSString.call(pluginInstance...) to ensure that it's scoped properly. We may call it from within another plugin too, thus "this" would refer to the plugin.
 		return pt;
 	},
@@ -319,6 +319,7 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 			let target = data.t,
 				style = target.style,
 				props = data.u,
+				cache = target._gsap,
 				prop, clearTransforms, i;
 			if (props === "all" || props === true) {
 				style.cssText = "";
@@ -337,12 +338,10 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 			}
 			if (clearTransforms) {
 				_removeProperty(target, _transformProp);
-				clearTransforms = target._gsap;
-				if (clearTransforms) {
-					if (clearTransforms.svg) {
-						target.removeAttribute("transform");
-					}
+				if (cache) {
+					cache.svg && target.removeAttribute("transform");
 					_parseTransform(target, 1); // force all the cached values back to "normal"/identity, otherwise if there's another tween that's already set to render transforms on this element, it could display the wrong values.
+					cache.uncache = 1;
 				}
 			}
 		}
@@ -441,7 +440,7 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		return _isNullTransform(matrixString) ? _identity2DMatrix : matrixString.substr(7).match(_numExp).map(_round);
 	},
 	_getMatrix = (target, force2D) => {
-		let cache = target._gsap,
+		let cache = target._gsap || _getCache(target),
 			style = target.style,
 			matrix = _getComputedTransformMatrixAsArray(target),
 			parent, nextSibling, temp, addedToDOM;
@@ -454,25 +453,15 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 			temp = style.display;
 			style.display = "block";
 			parent = target.parentNode;
-			if (!parent || !target.offsetParent) {
+			if (!parent || !target.offsetParent) { // note: in 3.3.0 we switched target.offsetParent to _doc.body.contains(target) to avoid [sometimes unnecessary] MutationObserver calls but that wasn't adequate because there are edge cases where nested position: fixed elements need to get reparented to accurately sense transforms. See https://github.com/greensock/GSAP/issues/388 and https://github.com/greensock/GSAP/issues/375
 				addedToDOM = 1; //flag
 				nextSibling = target.nextSibling;
 				_docElement.appendChild(target); //we must add it to the DOM in order to get values properly
 			}
 			matrix = _getComputedTransformMatrixAsArray(target);
-			if (temp) {
-				style.display = temp;
-			} else {
-				_removeProperty(target, "display");
-			}
+			temp ? (style.display = temp) : _removeProperty(target, "display");
 			if (addedToDOM) {
-				if (nextSibling) {
-					parent.insertBefore(target, nextSibling);
-				} else if (parent) {
-					parent.appendChild(target);
-				} else {
-					_docElement.removeChild(target);
-				}
+				nextSibling ? parent.insertBefore(target, nextSibling) : parent ? parent.appendChild(target) : _docElement.removeChild(target);
 			}
 		}
 		return (force2D && matrix.length > 6) ? [matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]] : matrix;
@@ -524,6 +513,7 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 			_addNonTweeningPT(pluginToAddPropTweensTo, cache, "xOffset", xOffsetOld, cache.xOffset);
 			_addNonTweeningPT(pluginToAddPropTweensTo, cache, "yOffset", yOffsetOld, cache.yOffset);
 		}
+		target.setAttribute("data-svg-origin", xOrigin + " " + yOrigin);
 	},
 	_parseTransform = (target, uncache) => {
 		let cache = target._gsap || new GSCache(target);
@@ -532,20 +522,21 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		}
 		let style = target.style,
 			invertedScaleX = cache.scaleX < 0,
-			xOrigin = cache.xOrigin || 0,
-			yOrigin = cache.yOrigin || 0,
 			px = "px",
 			deg = "deg",
 			origin = _getComputedProperty(target, _transformOriginProp) || "0",
-			x, y, z, scaleX, scaleY, rotation, rotationX, rotationY, skewX, skewY, perspective,
+			x, y, z, scaleX, scaleY, rotation, rotationX, rotationY, skewX, skewY, perspective, xOrigin, yOrigin,
 			matrix, angle, cos, sin, a, b, c, d, a12, a22, t1, t2, t3, a13, a23, a33, a42, a43, a32;
 		x = y = z = rotation = rotationX = rotationY = skewX = skewY = perspective = 0;
 		scaleX = scaleY = 1;
 		cache.svg = !!(target.getCTM && _isSVG(target));
 		matrix = _getMatrix(target, cache.svg);
 		if (cache.svg) {
-			_applySVGOrigin(target, origin, cache.originIsAbsolute, cache.smooth !== false, matrix);
+			t1 = (!cache.uncache || origin === "0px 0px") && !uncache && target.getAttribute("data-svg-origin"); // if origin is 0,0 and cache.uncache is true, let the recorded data-svg-origin stay. Otherwise, whenever we set cache.uncache to true, we'd need to set element.style.transformOrigin = (cache.xOrigin - bbox.x) + "px " + (cache.yOrigin - bbox.y) + "px". Remember, to work around browser inconsistencies we always force SVG elements' transformOrigin to 0,0 and offset the translation accordingly.
+			_applySVGOrigin(target, t1 || origin, !!t1 || cache.originIsAbsolute, cache.smooth !== false, matrix);
 		}
+		xOrigin = cache.xOrigin || 0;
+		yOrigin = cache.yOrigin || 0;
 		if (matrix !== _identity2DMatrix) {
 			a = matrix[0]; //a11
 			b = matrix[1]; //a21
@@ -560,12 +551,13 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 				scaleY = Math.sqrt(d * d + c * c);
 				rotation = (a || b) ? _atan2(b, a) * _RAD2DEG : 0; //note: if scaleX is 0, we cannot accurately measure rotation. Same for skewX with a scaleY of 0. Therefore, we default to the previously recorded value (or zero if that doesn't exist).
 				skewX = (c || d) ? _atan2(c, d) * _RAD2DEG + rotation : 0;
+				skewX && (scaleY *= Math.abs(Math.cos(skewX * _DEG2RAD)));
 				if (cache.svg) {
 					x -= xOrigin - (xOrigin * a + yOrigin * c);
 					y -= yOrigin - (xOrigin * b + yOrigin * d);
 				}
 
-				//3D matrix
+			//3D matrix
 			} else {
 				a32 = matrix[6];
 				a42 = matrix[7];
@@ -634,9 +626,9 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 			}
 
 			if (cache.svg) { //sense if there are CSS transforms applied on an SVG element in which case we must overwrite them when rendering. The transform attribute is more reliable cross-browser, but we can't just remove the CSS ones because they may be applied in a CSS rule somewhere (not just inline).
-				matrix = target.getAttribute("transform");
+				t1 = target.getAttribute("transform");
 				cache.forceCSS = target.setAttribute("transform", "") || (!_isNullTransform(_getComputedProperty(target, _transformProp)));
-				matrix && target.setAttribute("transform", matrix);
+				t1 && target.setAttribute("transform", t1);
 			}
 		}
 
@@ -650,9 +642,9 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 				skewX += (skewX <= 0) ? 180 : -180;
 			}
 		}
-
-		cache.x = ((cache.xPercent = (x && Math.round(target.offsetWidth / 2) === Math.round(-x)) ? -50 : 0) ? 0 : x) + px;
-		cache.y = ((cache.yPercent = (y && Math.round(target.offsetHeight / 2) === Math.round(-y)) ? -50 : 0) ? 0 : y) + px;
+		uncache = uncache || cache.uncache;
+		cache.x = x - ((cache.xPercent = x && ((!uncache && cache.xPercent) || (Math.round(target.offsetWidth / 2) === Math.round(-x) ? -50 : 0))) ? target.offsetWidth * cache.xPercent / 100 : 0) + px;
+		cache.y = y - ((cache.yPercent = y && ((!uncache && cache.yPercent) || (Math.round(target.offsetHeight / 2) === Math.round(-y) ? -50 : 0))) ? target.offsetHeight * cache.yPercent / 100 : 0) + px;
 		cache.z = z + px;
 		cache.scaleX = _round(scaleX);
 		cache.scaleY = _round(scaleY);
@@ -787,15 +779,13 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		}
 		temp = "matrix(" + a11 + "," + a21 + "," + a12 + "," + a22 + "," + tx + "," + ty + ")";
 		target.setAttribute("transform", temp);
-		if (forceCSS) { //some browsers prioritize CSS transforms over the transform attribute. When we sense that the user has CSS transforms applied, we must overwrite them this way (otherwise some browser simply won't render the  transform attribute changes!)
-			target.style[_transformProp] = temp;
-		}
+		forceCSS && (target.style[_transformProp] = temp); //some browsers prioritize CSS transforms over the transform attribute. When we sense that the user has CSS transforms applied, we must overwrite them this way (otherwise some browser simply won't render the  transform attribute changes!)
 	},
-	_addRotationalPropTween = function(plugin, target, property, startNum, endValue, relative) {
+	_addRotationalPropTween = function(plugin, target, property, startNum, endValue) {
 		let cap = 360,
 			isString = _isString(endValue),
 			endNum = parseFloat(endValue) * ((isString && ~endValue.indexOf("rad")) ? _RAD2DEG : 1),
-			change = relative ? endNum * relative : endNum - startNum,
+			change = endNum - startNum,
 			finalValue = (startNum + change) + "deg",
 			direction, pt;
 		if (isString) {
@@ -818,15 +808,30 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 		plugin._props.push(property);
 		return pt;
 	},
+	_assign = (target, source) => { // Internet Explorer doesn't have Object.assign(), so we recreate it here.
+		for (let p in source) {
+			target[p] = source[p];
+		}
+		return target;
+	},
 	_addRawTransformPTs = (plugin, transforms, target) => { //for handling cases where someone passes in a whole transform string, like transform: "scale(2, 3) rotate(20deg) translateY(30em)"
-		let style = _tempDivStyler.style,
-			startCache = target._gsap,
+		let startCache = _assign({}, target._gsap),
 			exclude = "perspective,force3D,transformOrigin,svgOrigin",
+			style = target.style,
 			endCache, p, startValue, endValue, startNum, endNum, startUnit, endUnit;
-		style.cssText = getComputedStyle(target).cssText + ";position:absolute;display:block;"; //%-based translations will fail unless we set the width/height to match the original target (and padding/borders can affect it)
-		style[_transformProp] = transforms;
-		_doc.body.appendChild(_tempDivStyler);
-		endCache = _parseTransform(_tempDivStyler, 1);
+		if (startCache.svg) {
+			startValue = target.getAttribute("transform");
+			target.setAttribute("transform", "");
+			style[_transformProp] = transforms;
+			endCache = _parseTransform(target, 1);
+			_removeProperty(target, _transformProp);
+			target.setAttribute("transform", startValue);
+		} else {
+			startValue = getComputedStyle(target)[_transformProp];
+			style[_transformProp] = transforms;
+			endCache = _parseTransform(target, 1);
+			style[_transformProp] = startValue;
+		}
 		for (p in _transformProps) {
 			startValue = startCache[p];
 			endValue = endCache[p];
@@ -835,12 +840,12 @@ let _win, _doc, _docElement, _pluginInitted, _tempDiv, _tempDivStyler, _recentSe
 				endUnit = getUnit(endValue);
 				startNum = (startUnit !== endUnit) ? _convertToUnit(target, p, startValue, endUnit) : parseFloat(startValue);
 				endNum = parseFloat(endValue);
-				plugin._pt = new PropTween(plugin._pt, startCache, p, startNum, endNum - startNum, _renderCSSProp);
+				plugin._pt = new PropTween(plugin._pt, endCache, p, startNum, endNum - startNum, _renderCSSProp);
 				plugin._pt.u = endUnit || 0;
 				plugin._props.push(p);
 			}
 		}
-		_doc.body.removeChild(_tempDivStyler);
+		_assign(endCache, startCache);
 	};
 
 // handle splitting apart padding, margin, borderWidth, and borderRadius into their 4 components. Firefox, for example, won't report borderRadius correctly - it will only do borderTopLeftRadius and the other corners. We also want to handle paddingTop, marginLeft, borderRightWidth, etc.
@@ -866,24 +871,23 @@ _forEachName("padding,margin,Width,Radius", (name, index) => {
 
 
 export const CSSPlugin = {
-	name:"css",
-	register:_initCore,
+	name: "css",
+	register: _initCore,
 	targetTest(target) {
 		return target.style && target.nodeType;
 	},
 	init(target, vars, tween, index, targets) {
 		let props = this._props,
 			style = target.style,
+			startAt = tween.vars.startAt,
 			startValue, endValue, endNum, startNum, type, specialProp, p, startUnit, endUnit, relative, isTransformRelated, transformPropTween, cache, smooth, hasPriority;
-		if (!_pluginInitted) {
-			_initCore();
-		}
+		_pluginInitted || _initCore();
 		for (p in vars) {
 			if (p === "autoRound") {
 				continue;
 			}
 			endValue = vars[p];
-			if (_plugins[p] && _checkPlugin(p, vars, tween, index, target, targets)) { //plugins
+			if (_plugins[p] && _checkPlugin(p, vars, tween, index, target, targets)) { // plugins
 				continue;
 			}
 			type = typeof(endValue);
@@ -896,18 +900,30 @@ export const CSSPlugin = {
 				endValue = _replaceRandom(endValue);
 			}
 			if (specialProp) {
-				if (specialProp(this, target, p, endValue, tween)) {
-					hasPriority = 1;
-				}
+				specialProp(this, target, p, endValue, tween) && (hasPriority = 1);
 			} else if (p.substr(0,2) === "--") { //CSS variable
-				this.add(style, "setProperty", getComputedStyle(target).getPropertyValue(p) + "", endValue + "", index, targets, 0, 0, p);
-			} else {
-				startValue = _get(target, p);
-				startNum = parseFloat(startValue);
-				relative = (type === "string" && endValue.charAt(1) === "=") ? +(endValue.charAt(0) + "1") : 0;
-				if (relative) {
-					endValue = endValue.substr(2);
+				startValue = (getComputedStyle(target).getPropertyValue(p) + "").trim();
+				endValue += "";
+				_colorExp.lastIndex = 0;
+				if (!_colorExp.test(startValue)) { // colors don't have units
+					startUnit = getUnit(startValue);
+					endUnit = getUnit(endValue);
 				}
+				endUnit ? startUnit !== endUnit && (startValue = _convertToUnit(target, p, startValue, endUnit) + endUnit) : startUnit && (endValue += startUnit);
+				this.add(style, "setProperty", startValue, endValue, index, targets, 0, 0, p);
+				props.push(p);
+			} else if (type !== "undefined") {
+				if (startAt && p in startAt) { // in case someone hard-codes a complex value as the start, like top: "calc(2vh / 2)". Without this, it'd use the computed value (always in px)
+					startValue = typeof(startAt[p]) === "function" ? startAt[p].call(tween, index, target, targets) : startAt[p];
+					_isString(startValue) && ~startValue.indexOf("random(") && (startValue = _replaceRandom(startValue));
+					getUnit(startValue + "") || (startValue += _config.units[p] || getUnit(_get(target, p)) || ""); // for cases when someone passes in a unitless value like {x: 100}; if we try setting translate(100, 0px) it won't work.
+					(startValue + "").charAt(1) === "=" && (startValue = _get(target, p)); // can't work with relative values
+				} else {
+					startValue = _get(target, p);
+				}
+				startNum = parseFloat(startValue);
+				relative = (type === "string" && endValue.charAt(1) === "=") && endValue.substr(0, 2);
+				relative && (endValue = endValue.substr(2));
 				endNum = parseFloat(endValue);
 				if (p in _propertyAliases) {
 					if (p === "autoAlpha") { //special case where we control the visibility along with opacity. We still allow the opacity value to pass through and get tweened.
@@ -918,9 +934,7 @@ export const CSSPlugin = {
 					}
 					if (p !== "scale" && p !== "transform") {
 						p = _propertyAliases[p];
-						if (~p.indexOf(",")) {
-							p = p.split(",")[0];
-						}
+						~p.indexOf(",") && (p = p.split(",")[0]);
 					}
 				}
 
@@ -930,13 +944,13 @@ export const CSSPlugin = {
 				if (isTransformRelated) {
 					if (!transformPropTween) {
 						cache = target._gsap;
-						cache.renderTransform || _parseTransform(target); // if, for example, gsap.set(... {transform:"translateX(50vw)"}), the _get() call doesn't parse the transform, thus cache.renderTransform won't be set yet so force the parsing of the transform here.
+						(cache.renderTransform && !vars.parseTransform) || _parseTransform(target, vars.parseTransform); // if, for example, gsap.set(... {transform:"translateX(50vw)"}), the _get() call doesn't parse the transform, thus cache.renderTransform won't be set yet so force the parsing of the transform here.
 						smooth = (vars.smoothOrigin !== false && cache.smooth);
 						transformPropTween = this._pt = new PropTween(this._pt, style, _transformProp, 0, 1, cache.renderTransform, cache, 0, -1); //the first time through, create the rendering PropTween so that it runs LAST (in the linked list, we keep adding to the beginning)
 						transformPropTween.dep = 1; //flag it as dependent so that if things get killed/overwritten and this is the only PropTween left, we can safely kill the whole tween.
 					}
 					if (p === "scale") {
-						this._pt = new PropTween(this._pt, cache, "scaleY", cache.scaleY, relative ? relative * endNum : endNum - cache.scaleY);
+						this._pt = new PropTween(this._pt, cache, "scaleY", cache.scaleY, ((relative ? _parseRelative(cache.scaleY, relative + endNum) : endNum) - cache.scaleY) || 0);
 						props.push("scaleY", p);
 						p += "X";
 					} else if (p === "transformOrigin") {
@@ -944,10 +958,8 @@ export const CSSPlugin = {
 						if (cache.svg) {
 							_applySVGOrigin(target, endValue, 0, smooth, 0, this);
 						} else {
-							endUnit = parseFloat(endValue.split(" ")[2]); //handle the zOrigin separately!
-							if (endUnit !== cache.zOrigin) {
-								_addNonTweeningPT(this, cache, "zOrigin", cache.zOrigin, endUnit);
-							}
+							endUnit = parseFloat(endValue.split(" ")[2]) || 0; //handle the zOrigin separately!
+							endUnit !== cache.zOrigin && _addNonTweeningPT(this, cache, "zOrigin", cache.zOrigin, endUnit);
 							_addNonTweeningPT(this, style, p, _firstTwoOnly(startValue), _firstTwoOnly(endValue));
 						}
 						continue;
@@ -955,7 +967,7 @@ export const CSSPlugin = {
 						_applySVGOrigin(target, endValue, 1, smooth, 0, this);
 						continue;
 					} else if (p in _rotationalProperties) {
-						_addRotationalPropTween(this, cache, p, startNum, endValue, relative);
+						_addRotationalPropTween(this, cache, p, startNum, relative ? _parseRelative(startNum, relative + endValue) : endValue);
 						continue;
 
 					} else if (p === "smoothOrigin") {
@@ -974,40 +986,39 @@ export const CSSPlugin = {
 
 				if (isTransformRelated || ((endNum || endNum === 0) && (startNum || startNum === 0) && !_complexExp.test(endValue) && (p in style))) {
 					startUnit = (startValue + "").substr((startNum + "").length);
-					endUnit = (endValue + "").substr((endNum + "").length) || ((p in _config.units) ? _config.units[p] : startUnit);
-					if (startUnit !== endUnit) {
-						startNum = _convertToUnit(target, p, startValue, endUnit);
-					}
-					this._pt = new PropTween(this._pt, isTransformRelated ? cache : style, p, startNum, relative ? relative * endNum : endNum - startNum, (endUnit === "px" && vars.autoRound !== false && !isTransformRelated) ? _renderRoundedCSSProp : _renderCSSProp);
+					endNum || (endNum = 0); // protect against NaN
+					endUnit = getUnit(endValue) || ((p in _config.units) ? _config.units[p] : startUnit);
+					startUnit !== endUnit && (startNum = _convertToUnit(target, p, startValue, endUnit));
+					this._pt = new PropTween(this._pt, isTransformRelated ? cache : style, p, startNum, (relative ? _parseRelative(startNum, relative + endNum) : endNum) - startNum, (!isTransformRelated && (endUnit === "px" || p === "zIndex") && vars.autoRound !== false) ? _renderRoundedCSSProp : _renderCSSProp);
 					this._pt.u = endUnit || 0;
-					if (startUnit !== endUnit) { //when the tween goes all the way back to the beginning, we need to revert it to the OLD/ORIGINAL value (with those units). We record that as a "b" (beginning) property and point to a render method that handles that. (performance optimization)
+					if (startUnit !== endUnit && endUnit !== "%") { //when the tween goes all the way back to the beginning, we need to revert it to the OLD/ORIGINAL value (with those units). We record that as a "b" (beginning) property and point to a render method that handles that. (performance optimization)
 						this._pt.b = startValue;
 						this._pt.r = _renderCSSPropWithBeginning;
 					}
 				} else if (!(p in style)) {
 					if (p in target) { //maybe it's not a style - it could be a property added directly to an element in which case we'll try to animate that.
-						this.add(target, p, target[p], endValue, index, targets);
+						this.add(target, p, startValue || target[p], relative ? relative + endValue : endValue, index, targets);
 					} else {
 						_missingPlugin(p, endValue);
 						continue;
 					}
 				} else {
-					_tweenComplexCSSString.call(this, target, p, startValue, endValue);
+					_tweenComplexCSSString.call(this, target, p, startValue, relative ? relative + endValue : endValue);
 				}
 				props.push(p);
 			}
 		}
-		if (hasPriority) {
-			_sortPropTweensByPriority(this);
-		}
+		hasPriority && _sortPropTweensByPriority(this);
 
 	},
-	get:_get,
-	aliases:_propertyAliases,
+	get: _get,
+	aliases: _propertyAliases,
 	getSetter(target, property, plugin) { //returns a setter function that accepts target, property, value and applies it accordingly. Remember, properties like "x" aren't as simple as target.style.property = value because they've got to be applied to a proxy object and then merged into a transform string in a renderer.
-		property = _propertyAliases[property] || property;
+		let p = _propertyAliases[property];
+		(p && p.indexOf(",") < 0) && (property = p);
 		return (property in _transformProps && property !== _transformOriginProp && (target._gsap.x || _get(target, "x"))) ? (plugin && _recentSetterPlugin === plugin ? (property === "scale" ? _setterScale : _setterTransform) : (_recentSetterPlugin = plugin || {}) && (property === "scale" ? _setterScaleWithRender : _setterTransformWithRender)) : target.style && !_isUndefined(target.style[property]) ? _setterCSSStyle : ~property.indexOf("-") ? _setterCSSProp : _getSetter(target, property);
-	}
+	},
+	core: { _removeProperty, _getMatrix }
 
 };
 

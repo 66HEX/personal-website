@@ -1,8 +1,8 @@
 /*!
- * InertiaPlugin 3.1.1
+ * InertiaPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -22,6 +22,7 @@ var gsap,
     _getCache,
     _checkPointRatio,
     _clamp,
+    _processingVars,
     _getTracker = VelocityTracker.getByTarget,
     _getGSAP = function _getGSAP() {
   return gsap || typeof window !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap;
@@ -58,6 +59,17 @@ _isArray = Array.isArray,
   }
 
   return obj;
+},
+    _deepClone = function _deepClone(obj) {
+  var copy = {},
+      p,
+      v;
+
+  for (p in obj) {
+    copy[p] = _isObject(v = obj[p]) && !_isArray(v) ? _deepClone(v) : v;
+  }
+
+  return copy;
 },
     _getClosest = function _getClosest(n, values, max, min, radius) {
   var i = values.length,
@@ -105,7 +117,7 @@ _isArray = Array.isArray,
 
   return values[closest];
 },
-    _parseEnd = function _parseEnd(curProp, end, max, min, name, radius) {
+    _parseEnd = function _parseEnd(curProp, end, max, min, name, radius, velocity) {
   if (curProp.end === "auto") {
     return curProp;
   }
@@ -118,7 +130,7 @@ _isArray = Array.isArray,
 
   if (_isObject(end)) {
     //for objects, like {x, y} where they're linked and we must pass an object to the function or find the closest value in an array.
-    adjustedEnd = end.calculated ? end : (_isFunction(endVar) ? endVar(end) : _getClosest(end, endVar, max, min, radius)) || end;
+    adjustedEnd = end.calculated ? end : (_isFunction(endVar) ? endVar(end, velocity) : _getClosest(end, endVar, max, min, radius)) || end;
 
     if (!end.calculated) {
       for (p in adjustedEnd) {
@@ -130,7 +142,7 @@ _isArray = Array.isArray,
 
     adjustedEnd = adjustedEnd[name];
   } else {
-    adjustedEnd = _isFunction(endVar) ? endVar(end) : _isArray(endVar) ? _getClosest(end, endVar, max, min, radius) : parseFloat(endVar);
+    adjustedEnd = _isFunction(endVar) ? endVar(end, velocity) : _isArray(endVar) ? _getClosest(end, endVar, max, min, radius) : parseFloat(endVar);
   }
 
   if (adjustedEnd > max) {
@@ -211,9 +223,7 @@ _isArray = Array.isArray,
     recordEnd = 0;
   }
 
-  if (_isString(target)) {
-    target = _toArray(target)[0];
-  }
+  _isString(target) && (target = _toArray(target)[0]);
 
   if (!target) {
     return 0;
@@ -270,9 +280,10 @@ _isArray = Array.isArray,
         end = curVal + _calculateChange(curVelocity, curDuration);
 
         if ("end" in curProp) {
-          curProp = _parseEnd(curProp, linkedProps && p in linkedProps ? linkedProps : end, curProp.max, curProp.min, p, inertiaVars.radius);
+          curProp = _parseEnd(curProp, linkedProps && p in linkedProps ? linkedProps : end, curProp.max, curProp.min, p, inertiaVars.radius, curVelocity);
 
           if (recordEnd) {
+            _processingVars === vars && (_processingVars = inertiaVars = _deepClone(vars));
             inertiaVars[p] = _extend(curProp, inertiaVars[p], "end");
           }
         }
@@ -297,21 +308,14 @@ _isArray = Array.isArray,
           }
         }
 
-        if (curClippedDuration > duration) {
-          duration = curClippedDuration;
-        }
+        curClippedDuration > duration && (duration = curClippedDuration);
       }
 
-      if (curDuration > duration) {
-        duration = curDuration;
-      }
+      curDuration > duration && (duration = curDuration);
     }
   }
 
-  if (duration > clippedDuration) {
-    duration = clippedDuration;
-  }
-
+  duration > clippedDuration && (duration = clippedDuration);
   return duration > maxDuration ? maxDuration : duration < minDuration ? minDuration : duration;
 },
     _initCore = function _initCore() {
@@ -330,7 +334,9 @@ _isArray = Array.isArray,
       resistance: 100,
       unitFactors: {
         time: 1000,
-        totalTime: 1000
+        totalTime: 1000,
+        progress: 1000,
+        totalProgress: 1000
       }
     });
     _config = gsap.config();
@@ -340,7 +346,7 @@ _isArray = Array.isArray,
 };
 
 export var InertiaPlugin = {
-  version: "3.1.1",
+  version: "3.10.4",
   name: "inertia",
   register: function register(core) {
     gsap = core;
@@ -348,9 +354,7 @@ export var InertiaPlugin = {
     _initCore();
   },
   init: function init(target, vars, tween, index, targets) {
-    if (!_coreInitted) {
-      _initCore();
-    }
+    _coreInitted || _initCore();
 
     var tracker = _getTracker(target);
 
@@ -365,6 +369,7 @@ export var InertiaPlugin = {
 
     this.target = target;
     this.tween = tween;
+    _processingVars = vars; // gets swapped inside _calculateTweenDuration() if there's a function-based value encountered (to avoid double-calling it)
 
     var cache = target._gsap,
         getVal = cache.get,
@@ -372,7 +377,7 @@ export var InertiaPlugin = {
         durIsObj = _isObject(dur),
         preventOvershoot = vars.preventOvershoot || durIsObj && dur.overshoot === 0,
         resistance = _getNumOrDefault(vars, "resistance", _config.resistance),
-        duration = _isNumber(dur) ? dur : _calculateTweenDuration(target, vars, durIsObj && dur.max || 10, durIsObj && dur.min || 0.2, durIsObj && "overshoot" in dur ? +dur.overshoot : preventOvershoot ? 0 : 1),
+        duration = _isNumber(dur) ? dur : _calculateTweenDuration(target, vars, durIsObj && dur.max || 10, durIsObj && dur.min || 0.2, durIsObj && "overshoot" in dur ? +dur.overshoot : preventOvershoot ? 0 : 1, true),
         p,
         curProp,
         curVal,
@@ -381,18 +386,17 @@ export var InertiaPlugin = {
         change1,
         end,
         change2,
-        linkedProps; //when there are linkedProps (typically "x,y" where snapping has to factor in multiple properties, we must first populate an object with all of those end values, then feed it to the function that make any necessary alterations. So the point of this first loop is to simply build an object (like {x:100, y:204.5}) for feeding into that function which we'll do later in the "real" loop.
+        linkedProps;
 
+    vars = _processingVars;
+    _processingVars = 0; //when there are linkedProps (typically "x,y" where snapping has to factor in multiple properties, we must first populate an object with all of those end values, then feed it to the function that make any necessary alterations. So the point of this first loop is to simply build an object (like {x:100, y:204.5}) for feeding into that function which we'll do later in the "real" loop.
 
     linkedProps = _processLinkedProps(target, vars, getVal, resistance);
 
     for (p in vars) {
       if (!_reservedProps[p]) {
         curProp = vars[p];
-
-        if (_isFunction(curProp)) {
-          curProp = curProp(index, target, targets);
-        }
+        _isFunction(curProp) && (curProp = curProp(index, target, targets));
 
         if (_isNumber(curProp)) {
           velocity = curProp;
@@ -416,7 +420,7 @@ export var InertiaPlugin = {
           end = curVal + change1;
 
           if ("end" in curProp) {
-            curProp = _parseEnd(curProp, linkedProps && p in linkedProps ? linkedProps : end, curProp.max, curProp.min, p, vars.radius);
+            curProp = _parseEnd(curProp, linkedProps && p in linkedProps ? linkedProps : end, curProp.max, curProp.min, p, vars.radius, velocity);
           }
 
           if ("max" in curProp && +curProp.max < end) {

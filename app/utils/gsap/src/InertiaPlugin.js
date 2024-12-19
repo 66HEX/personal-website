@@ -1,8 +1,8 @@
 /*!
- * InertiaPlugin 3.1.1
+ * InertiaPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -11,7 +11,7 @@
 
 import { VelocityTracker } from "./utils/VelocityTracker.js";
 
-let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTween, _getCache,	_checkPointRatio, _clamp,
+let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTween, _getCache,	_checkPointRatio, _clamp, _processingVars,
 	_getTracker = VelocityTracker.getByTarget,
 	_getGSAP = () => gsap || (typeof(window) !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap),
 	_isString = value => typeof(value) === "string",
@@ -32,6 +32,14 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 			}
 		}
 		return obj;
+	},
+	_deepClone = obj => {
+		let copy = {},
+			p, v;
+		for (p in obj) {
+			copy[p] = _isObject(v = obj[p]) && !_isArray(v) ? _deepClone(v) : v;
+		}
+		return copy;
 	},
 	_getClosest = (n, values, max, min, radius) => {
 		let i = values.length,
@@ -69,7 +77,7 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 		}
 		return values[closest];
 	},
-	_parseEnd = (curProp, end, max, min, name, radius) => {
+	_parseEnd = (curProp, end, max, min, name, radius, velocity) => {
 		if (curProp.end === "auto") {
 			return curProp;
 		}
@@ -78,7 +86,7 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 		max = isNaN(max) ? _bigNum : max;
 		min = isNaN(min) ? -_bigNum : min;
 		if (_isObject(end)) { //for objects, like {x, y} where they're linked and we must pass an object to the function or find the closest value in an array.
-			adjustedEnd = end.calculated ? end : (_isFunction(endVar) ? endVar(end) : _getClosest(end, endVar, max, min, radius)) || end;
+			adjustedEnd = end.calculated ? end : (_isFunction(endVar) ? endVar(end, velocity) : _getClosest(end, endVar, max, min, radius)) || end;
 			if (!end.calculated) {
 				for (p in adjustedEnd) {
 					end[p] = adjustedEnd[p];
@@ -87,7 +95,7 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 			}
 			adjustedEnd = adjustedEnd[name];
 		} else {
-			adjustedEnd = _isFunction(endVar) ? endVar(end) : _isArray(endVar) ? _getClosest(end, endVar, max, min, radius) : parseFloat(endVar);
+			adjustedEnd = _isFunction(endVar) ? endVar(end, velocity) : _isArray(endVar) ? _getClosest(end, endVar, max, min, radius) : parseFloat(endVar);
 		}
 		if (adjustedEnd > max) {
 			adjustedEnd = max;
@@ -123,9 +131,7 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 		}
 	},
 	_calculateTweenDuration = (target, vars, maxDuration = 10, minDuration = 0.2, overshootTolerance = 1, recordEnd = 0) => {
-		if (_isString(target)) {
-			target = _toArray(target)[0];
-		}
+		_isString(target) && (target = _toArray(target)[0]);
 		if (!target) {
 			return 0;
 		}
@@ -165,8 +171,9 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 					curVal = parseFloat(getVal(target, p)) || 0;
 					end = curVal + _calculateChange(curVelocity, curDuration);
 					if ("end" in curProp) {
-						curProp = _parseEnd(curProp, (linkedProps && p in linkedProps) ? linkedProps : end, curProp.max, curProp.min, p, inertiaVars.radius);
+						curProp = _parseEnd(curProp, (linkedProps && p in linkedProps) ? linkedProps : end, curProp.max, curProp.min, p, inertiaVars.radius, curVelocity);
 						if (recordEnd) {
+							(_processingVars === vars) && (_processingVars = inertiaVars = _deepClone(vars));
 							inertiaVars[p] = _extend(curProp, inertiaVars[p], "end");
 						}
 					}
@@ -187,20 +194,13 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 						}
 					}
 
-					if (curClippedDuration > duration) {
-						duration = curClippedDuration;
-					}
+					(curClippedDuration > duration) && (duration = curClippedDuration);
 				}
 
-				if (curDuration > duration) {
-					duration = curDuration;
-				}
-
+				(curDuration > duration) && (duration = curDuration);
 			}
 		}
-		if (duration > clippedDuration) {
-			duration = clippedDuration;
-		}
+		(duration > clippedDuration) &&	(duration = clippedDuration);
 		return (duration > maxDuration) ? maxDuration : (duration < minDuration) ? minDuration : duration;
 	},
 
@@ -217,7 +217,7 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 			_power3 = _parseEase("power3");
 			_checkPointRatio = _power3(0.05);
 			PropTween = gsap.core.PropTween;
-			gsap.config({resistance:100, unitFactors:{time:1000, totalTime:1000}});
+			gsap.config({resistance:100, unitFactors:{time: 1000, totalTime: 1000, progress: 1000, totalProgress: 1000}});
 			_config = gsap.config();
 			gsap.registerPlugin(VelocityTracker);
 			_coreInitted = 1;
@@ -227,16 +227,14 @@ let gsap, _coreInitted, _parseEase, _toArray, _power3, _config, _getUnit, PropTw
 
 
 export const InertiaPlugin = {
-	version:"3.1.1",
-	name:"inertia",
+	version: "3.10.4",
+	name: "inertia",
 	register(core) {
 		gsap = core;
 		_initCore();
 	},
 	init(target, vars, tween, index, targets) {
-		if (!_coreInitted) {
-			_initCore();
-		}
+		_coreInitted || _initCore();
 		let tracker = _getTracker(target);
 		if (vars === "auto") {
 			if (!tracker) {
@@ -247,23 +245,24 @@ export const InertiaPlugin = {
 		}
 		this.target = target;
 		this.tween = tween;
+		_processingVars = vars; // gets swapped inside _calculateTweenDuration() if there's a function-based value encountered (to avoid double-calling it)
 		let cache = target._gsap,
 			getVal = cache.get,
 			dur = vars.duration,
 			durIsObj = _isObject(dur),
 			preventOvershoot = vars.preventOvershoot || (durIsObj && dur.overshoot === 0),
 			resistance = _getNumOrDefault(vars, "resistance", _config.resistance),
-			duration = _isNumber(dur) ? dur : _calculateTweenDuration(target, vars, (durIsObj && dur.max) || 10, (durIsObj && dur.min) || 0.2, (durIsObj && "overshoot" in dur) ? +dur.overshoot : preventOvershoot ? 0 : 1),
+			duration = _isNumber(dur) ? dur : _calculateTweenDuration(target, vars, (durIsObj && dur.max) || 10, (durIsObj && dur.min) || 0.2, (durIsObj && "overshoot" in dur) ? +dur.overshoot : preventOvershoot ? 0 : 1, true),
 			p, curProp, curVal, unit, velocity, change1, end, change2, linkedProps;
+		vars = _processingVars;
+		_processingVars = 0;
 		//when there are linkedProps (typically "x,y" where snapping has to factor in multiple properties, we must first populate an object with all of those end values, then feed it to the function that make any necessary alterations. So the point of this first loop is to simply build an object (like {x:100, y:204.5}) for feeding into that function which we'll do later in the "real" loop.
 		linkedProps = _processLinkedProps(target, vars, getVal, resistance);
 
 		for (p in vars) {
 			if (!_reservedProps[p]) {
 				curProp = vars[p];
-				if (_isFunction(curProp)) {
-					curProp = curProp(index, target, targets);
-				}
+				_isFunction(curProp) && (curProp = curProp(index, target, targets));
 				if (_isNumber(curProp)) {
 					velocity = curProp;
 				} else if (_isObject(curProp) && !isNaN(curProp.velocity)) {
@@ -283,7 +282,7 @@ export const InertiaPlugin = {
 				if (_isObject(curProp)) {
 					end = curVal + change1;
 					if ("end" in curProp) {
-						curProp = _parseEnd(curProp, (linkedProps && p in linkedProps) ? linkedProps : end, curProp.max, curProp.min, p, vars.radius);
+						curProp = _parseEnd(curProp, (linkedProps && p in linkedProps) ? linkedProps : end, curProp.max, curProp.min, p, vars.radius, velocity);
 					}
 					if (("max" in curProp) && +curProp.max < end) {
 						if (preventOvershoot || curProp.preventOvershoot) {

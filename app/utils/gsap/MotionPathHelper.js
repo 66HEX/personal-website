@@ -1,8 +1,8 @@
 /*!
- * MotionPathHelper 3.1.1
+ * MotionPathHelper 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -92,9 +92,7 @@ _selectorExp = /(^[#\.][a-z]|[a-y][a-z])/i,
 
           _copyElement.blur();
 
-          if (onComplete) {
-            onComplete(target);
-          }
+          onComplete && onComplete(target);
         } catch (err) {
           console.warn("Copy didn't work; this browser doesn't permit that.");
         }
@@ -148,9 +146,7 @@ _selectorExp = /(^[#\.][a-z]|[a-y][a-z])/i,
   }
 };
 
-export var MotionPathHelper =
-/*#__PURE__*/
-function () {
+export var MotionPathHelper = /*#__PURE__*/function () {
   function MotionPathHelper(targetOrTween, vars) {
     if (vars === void 0) {
       vars = {};
@@ -236,7 +232,8 @@ function () {
         _body.appendChild(svg);
 
         svg.setAttribute("viewBox", "0 0 100 100");
-        svg.style.cssText = "overflow:visible; background-color: transparent; position:absolute; width:100px; height:100px; top:" + position.top + "px; left:" + position.left + "px;";
+        svg.setAttribute("class", "motion-path-helper");
+        svg.style.cssText = "overflow:visible; background-color: transparent; position:absolute; z-index:5000; width:100px; height:100px; top:" + (position.top - startY) + "px; left:" + (position.left - startX) + "px;";
       }
 
       temp = _isString(path) && !_selectorExp.test(path) ? path : _getInitialPath(startX, startY);
@@ -273,10 +270,9 @@ function () {
     };
 
     refreshPath = function refreshPath() {
-      var m = _getConsolidatedMatrix(path);
-
-      animation.vars.motionPath.offsetX = m.e - offset.x;
-      animation.vars.motionPath.offsetY = m.f - offset.y;
+      //let m = _getConsolidatedMatrix(path);
+      //animation.vars.motionPath.offsetX = m.e - offset.x;
+      //animation.vars.motionPath.offsetY = m.f - offset.y;
       animation.invalidate();
       animationToScrub.restart();
     };
@@ -312,11 +308,12 @@ function () {
           path: path,
           start: vars.start || 0,
           end: "end" in vars ? vars.end : 1,
-          autoRotate: "autoRotate" in vars ? vars.autoRotate : false //align: path
-
+          autoRotate: "autoRotate" in vars ? vars.autoRotate : false,
+          align: path,
+          alignOrigin: vars.alignOrigin
         },
         duration: vars.duration || 5,
-        ease: vars.ease || "Power1.easeInOut",
+        ease: vars.ease || "power1.inOut",
         repeat: -1,
         repeatDelay: 1,
         paused: !vars.path
@@ -340,5 +337,9 @@ MotionPathHelper.create = function (target, vars) {
   return new MotionPathHelper(target, vars);
 };
 
-MotionPathHelper.version = "3.1.1";
+MotionPathHelper.editPath = function (path, vars) {
+  return PathEditor.create(path, vars);
+};
+
+MotionPathHelper.version = "3.10.4";
 export { MotionPathHelper as default };

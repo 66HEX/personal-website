@@ -1,15 +1,12 @@
 'use client';
 
 import { useState, useRef, useEffect } from "react";
-import { gsap } from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import { works } from "@/app/data/worksData";
 import { useGSAP } from "@gsap/react";
+import { works } from "@/app/data/worksData";
 import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import Image from "next/image";
-
-gsap.registerPlugin(ScrollTrigger);
+import { animateProjectImage, initializeButtonAnimation } from "./animation";
 
 export default function SelectedWorks() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -17,45 +14,12 @@ export default function SelectedWorks() {
     const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     useGSAP(() => {
-        imageRefs.current.forEach((image, index) => {
-            if (image) {
-                if (index === activeIndex) {
-                    gsap.to(image, {
-                        scale: 1,
-                        duration: 1,
-                        ease: "power3.out",
-                    });
-                } else {
-                    gsap.to(image, {
-                        scale: 1.05,
-                        duration: 1,
-                        ease: "power3.out",
-                    });
-                }
-            }
-        });
+        animateProjectImage(imageRefs.current, activeIndex);
     }, [activeIndex]);
 
     useEffect(() => {
-        if (buttonRef.current) {
-                        buttonRef.current.addEventListener('mouseenter', () => {
-                gsap.to(buttonRef.current, {
-                    color: '#ffffff',  // text color change
-                    backgroundColor: '#000000',  // background color change
-                    duration: 0.5,
-                    ease: "power3.out",
-                });
-            });
-
-            buttonRef.current.addEventListener('mouseleave', () => {
-                gsap.to(buttonRef.current, {
-                    color: '#000000',  // reset text color
-                    backgroundColor: 'transparent',  // reset background
-                    duration: 0.5,
-                    ease: "power3.in",
-                });
-            });
-        }
+        const cleanup = initializeButtonAnimation(buttonRef.current);
+        return cleanup;
     }, []);
 
     return (
@@ -67,7 +31,7 @@ export default function SelectedWorks() {
                 </h1>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
                 {works
                     .slice(0, 3)
                     .map((project, index) => (
@@ -79,7 +43,7 @@ export default function SelectedWorks() {
                         >
                             <TransitionLink href={`/works/${project.id}`}>
                                 <div className="relative overflow-hidden w-full rounded-custom">
-                                    <div className="relative w-full h-auto">
+                                    <div className="relative w-full h-auto rounded-custom overflow-hidden">
                                         <Image
                                             src={project.mainImage}
                                             alt={project.title}
@@ -87,7 +51,7 @@ export default function SelectedWorks() {
                                             width={1000}
                                             height={1000}
                                             ref={(el) => (imageRefs.current[index] = el)}
-                                            className="object-cover"
+                                            className="object-cover rounded-custom overflow-hidden"
                                         />
                                     </div>
                                     <div

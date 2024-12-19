@@ -1,8 +1,8 @@
 /*!
- * MotionPathPlugin 3.1.1
+ * MotionPathPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -12,8 +12,8 @@
 import { getRawPath, cacheRawPathMeasurements, getPositionOnPath, pointsToSegment, flatPointsToSegment, sliceRawPath, stringToRawPath, rawPathToString, transformRawPath, convertToPath as _convertToPath } from "./utils/paths.js";
 import { getGlobalMatrix } from "./utils/matrix.js";
 
-var _xProps = ["x", "translateX", "left", "marginLeft"],
-    _yProps = ["y", "translateY", "top", "marginTop"],
+var _xProps = "x,translateX,left,marginLeft,xPercent".split(","),
+    _yProps = "y,translateY,top,marginTop,yPercent".split(","),
     _DEG2RAD = Math.PI / 180,
     gsap,
     PropTween,
@@ -23,13 +23,15 @@ var _xProps = ["x", "translateX", "left", "marginLeft"],
   return gsap || typeof window !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap;
 },
     _populateSegmentFromArray = function _populateSegmentFromArray(segment, values, property, mode) {
-  //mode: 0 = x but don't fill y yet, 1 = y.
+  //mode: 0 = x but don't fill y yet, 1 = y, 2 = x and fill y with 0.
   var l = values.length,
-      si = mode,
-      i = 0;
+      si = mode === 2 ? 0 : mode,
+      i = 0,
+      v;
 
   for (; i < l; i++) {
-    segment[si] = parseFloat(values[i][property]);
+    segment[si] = v = parseFloat(values[i][property]);
+    mode === 2 && (segment[si + 1] = 0);
     si += 2;
   }
 
@@ -48,39 +50,117 @@ var _xProps = ["x", "translateX", "left", "marginLeft"],
     y = segment[i + 1] += y;
   }
 },
-    _segmentToRawPath = function _segmentToRawPath(plugin, segment, target, x, y, slicer, vars) {
+    // feed in an array of quadratic bezier points like [{x: 0, y: 0}, ...] and it'll convert it to cubic bezier
+// _quadToCubic = points => {
+// 	let cubic = [],
+// 		l = points.length - 1,
+// 		i = 1,
+// 		a, b, c;
+// 	for (; i < l; i+=2) {
+// 		a = points[i-1];
+// 		b = points[i];
+// 		c = points[i+1];
+// 		cubic.push(a, {x: (2 * b.x + a.x) / 3, y: (2 * b.y + a.y) / 3}, {x: (2 * b.x + c.x) / 3, y: (2 * b.y + c.y) / 3});
+// 	}
+// 	cubic.push(points[l]);
+// 	return cubic;
+// },
+_segmentToRawPath = function _segmentToRawPath(plugin, segment, target, x, y, slicer, vars, unitX, unitY) {
   if (vars.type === "cubic") {
     segment = [segment];
   } else {
-    segment.unshift(_getPropNum(target, x, vars.unitX), y ? _getPropNum(target, y, vars.unitY) : 0);
-
-    if (vars.relative) {
-      _relativize(segment);
-    }
-
+    vars.fromCurrent !== false && segment.unshift(_getPropNum(target, x, unitX), y ? _getPropNum(target, y, unitY) : 0);
+    vars.relative && _relativize(segment);
     var pointFunc = y ? pointsToSegment : flatPointsToSegment;
     segment = [pointFunc(segment, vars.curviness)];
   }
 
   segment = slicer(_align(segment, target, vars));
 
-  _addDimensionalPropTween(plugin, target, x, segment, "x", vars.unitX);
+  _addDimensionalPropTween(plugin, target, x, segment, "x", unitX);
 
-  if (y) {
-    _addDimensionalPropTween(plugin, target, y, segment, "y", vars.unitY);
-  }
-
+  y && _addDimensionalPropTween(plugin, target, y, segment, "y", unitY);
   return cacheRawPathMeasurements(segment, vars.resolution || (vars.curviness === 0 ? 20 : 12)); //when curviness is 0, it creates control points right on top of the anchors which makes it more sensitive to resolution, thus we change the default accordingly.
 },
     _emptyFunc = function _emptyFunc(v) {
   return v;
 },
+    _numExp = /[-+\.]*\d+\.?(?:e-|e\+)?\d*/g,
+    _originToPoint = function _originToPoint(element, origin, parentMatrix) {
+  // origin is an array of normalized values (0-1) in relation to the width/height, so [0.5, 0.5] would be the center. It can also be "auto" in which case it will be the top left unless it's a <path>, when it will start at the beginning of the path itself.
+  var m = getGlobalMatrix(element),
+      x = 0,
+      y = 0,
+      svg;
+
+  if ((element.tagName + "").toLowerCase() === "svg") {
+    svg = element.viewBox.baseVal;
+    svg.width || (svg = {
+      width: +element.getAttribute("width"),
+      height: +element.getAttribute("height")
+    });
+  } else {
+    svg = origin && element.getBBox && element.getBBox();
+  }
+
+  if (origin && origin !== "auto") {
+    x = origin.push ? origin[0] * (svg ? svg.width : element.offsetWidth || 0) : origin.x;
+    y = origin.push ? origin[1] * (svg ? svg.height : element.offsetHeight || 0) : origin.y;
+  }
+
+  return parentMatrix.apply(x || y ? m.apply({
+    x: x,
+    y: y
+  }) : {
+    x: m.e,
+    y: m.f
+  });
+},
+    _getAlignMatrix = function _getAlignMatrix(fromElement, toElement, fromOrigin, toOrigin) {
+  var parentMatrix = getGlobalMatrix(fromElement.parentNode, true, true),
+      m = parentMatrix.clone().multiply(getGlobalMatrix(toElement)),
+      fromPoint = _originToPoint(fromElement, fromOrigin, parentMatrix),
+      _originToPoint2 = _originToPoint(toElement, toOrigin, parentMatrix),
+      x = _originToPoint2.x,
+      y = _originToPoint2.y,
+      p;
+
+  m.e = m.f = 0;
+
+  if (toOrigin === "auto" && toElement.getTotalLength && toElement.tagName.toLowerCase() === "path") {
+    p = toElement.getAttribute("d").match(_numExp) || [];
+    p = m.apply({
+      x: +p[0],
+      y: +p[1]
+    });
+    x += p.x;
+    y += p.y;
+  }
+
+  if (p || toElement.getBBox && fromElement.getBBox && toElement.ownerSVGElement === fromElement.ownerSVGElement) {
+    p = m.apply(toElement.getBBox());
+    x -= p.x;
+    y -= p.y;
+  }
+
+  m.e = x - fromPoint.x;
+  m.f = y - fromPoint.y;
+  return m;
+},
     _align = function _align(rawPath, target, _ref) {
   var align = _ref.align,
       matrix = _ref.matrix,
       offsetX = _ref.offsetX,
-      offsetY = _ref.offsetY;
-  var x, y, tween, targetMatrix, alignTarget, alignPath, alignMatrix, invertedMatrix, tx, ty, m;
+      offsetY = _ref.offsetY,
+      alignOrigin = _ref.alignOrigin;
+
+  var x = rawPath[0][0],
+      y = rawPath[0][1],
+      curX = _getPropNum(target, "x"),
+      curY = _getPropNum(target, "y"),
+      alignTarget,
+      m,
+      p;
 
   if (!rawPath || !rawPath.length) {
     return getRawPath("M0,0L0,0");
@@ -88,53 +168,22 @@ var _xProps = ["x", "translateX", "left", "marginLeft"],
 
   if (align) {
     if (align === "self" || (alignTarget = _toArray(align)[0] || target) === target) {
-      x = _getPropNum(target, "x") - rawPath[0][0];
-      y = _getPropNum(target, "y") - rawPath[0][1];
-      transformRawPath(rawPath, 1, 0, 0, 1, x, y);
+      transformRawPath(rawPath, 1, 0, 0, 1, curX - x, curY - y);
     } else {
-      tween = gsap.to(target, {
-        xPercent: 0,
-        yPercent: 0,
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotation: 0,
-        skewX: 0,
-        skewY: 0
-      }).progress(1); //get rid of transforms, otherwise they'll throw off the measurements.
-
-      targetMatrix = getGlobalMatrix(target); //we cannot use something like getScreenCTM() because of a major bug in Firefox that has existed for years and prevents values from being reported correctly when an ancestor element has transforms applied. Our proprietary getGlobalMatrix() works across all browsers.
-
-      tween.render(-1).kill();
-
-      if (alignTarget.getTotalLength && alignTarget.tagName.toLowerCase() === "path") {
-        //path
-        alignPath = getRawPath(alignTarget);
-        alignMatrix = getGlobalMatrix(alignTarget.parentNode);
-        m = alignTarget.transform;
-        m = m && m.baseVal.length && m.baseVal.consolidate().matrix || {
-          e: 0,
-          f: 0
-        };
-        x = alignPath[0][0] + m.e;
-        y = alignPath[0][1] + m.f;
+      if (alignOrigin && alignOrigin[2] !== false) {
+        gsap.set(target, {
+          transformOrigin: alignOrigin[0] * 100 + "% " + alignOrigin[1] * 100 + "%"
+        });
       } else {
-        alignMatrix = getGlobalMatrix(alignTarget);
-        x = 0;
-        y = 0;
+        alignOrigin = [_getPropNum(target, "xPercent") / -100, _getPropNum(target, "yPercent") / -100];
       }
 
-      tx = alignMatrix.a * x + alignMatrix.c * y + alignMatrix.e - targetMatrix.e;
-      ty = alignMatrix.b * x + alignMatrix.d * y + alignMatrix.f - targetMatrix.f;
-      invertedMatrix = getGlobalMatrix(target.parentNode, true);
-      x = invertedMatrix.a * tx + invertedMatrix.c * ty;
-      y = invertedMatrix.b * tx + invertedMatrix.d * ty;
-      tx = rawPath[0][0];
-      ty = rawPath[0][1];
-      alignMatrix.multiply(invertedMatrix);
-      x -= alignMatrix.a * tx + alignMatrix.c * ty;
-      y -= alignMatrix.b * tx + alignMatrix.d * ty;
-      transformRawPath(rawPath, alignMatrix.a, alignMatrix.b, alignMatrix.c, alignMatrix.d, x, y);
+      m = _getAlignMatrix(target, alignTarget, alignOrigin, "auto");
+      p = m.apply({
+        x: x,
+        y: y
+      });
+      transformRawPath(rawPath, m.a, m.b, m.c, m.d, curX + m.e - (p.x - m.e), curY + m.f - (p.y - m.f));
     }
   }
 
@@ -149,7 +198,8 @@ var _xProps = ["x", "translateX", "left", "marginLeft"],
     _addDimensionalPropTween = function _addDimensionalPropTween(plugin, target, property, rawPath, pathProperty, forceUnit) {
   var cache = target._gsap,
       harness = cache.harness,
-      prop = harness && harness.aliases && harness.aliases[property] || property,
+      alias = harness && harness.aliases && harness.aliases[property],
+      prop = alias && alias.indexOf(",") < 0 ? alias : property,
       pt = plugin._pt = new PropTween(plugin._pt, target, prop, 0, 0, _emptyFunc, 0, cache.set(target, prop, plugin));
   pt.u = _getUnit(cache.get(target, prop, forceUnit)) || 0;
   pt.path = rawPath;
@@ -164,7 +214,7 @@ var _xProps = ["x", "translateX", "left", "marginLeft"],
 };
 
 export var MotionPathPlugin = {
-  version: "3.1.1",
+  version: "3.10.4",
   name: "motionPath",
   register: function register(core, Plugin, propTween) {
     gsap = core;
@@ -172,7 +222,7 @@ export var MotionPathPlugin = {
     _toArray = gsap.utils.toArray;
     PropTween = propTween;
   },
-  init: function init(target, vars, tween, index, targets) {
+  init: function init(target, vars) {
     if (!gsap) {
       console.warn("Please gsap.registerPlugin(MotionPathPlugin)");
       return false;
@@ -185,14 +235,17 @@ export var MotionPathPlugin = {
     }
 
     var rawPaths = [],
-        path = vars.path,
+        _vars = vars,
+        path = _vars.path,
+        autoRotate = _vars.autoRotate,
+        unitX = _vars.unitX,
+        unitY = _vars.unitY,
+        x = _vars.x,
+        y = _vars.y,
         firstObj = path[0],
-        autoRotate = vars.autoRotate,
         slicer = _sliceModifier(vars.start, "end" in vars ? vars.end : 1),
         rawPath,
-        p,
-        x,
-        y;
+        p;
 
     this.rawPaths = rawPaths;
     this.target = target;
@@ -210,24 +263,22 @@ export var MotionPathPlugin = {
 
     if (Array.isArray(path) && !("closed" in path) && typeof firstObj !== "number") {
       for (p in firstObj) {
-        if (~_xProps.indexOf(p)) {
+        if (!x && ~_xProps.indexOf(p)) {
           x = p;
-        } else if (~_yProps.indexOf(p)) {
+        } else if (!y && ~_yProps.indexOf(p)) {
           y = p;
         }
       }
 
       if (x && y) {
         //correlated values
-        rawPaths.push(_segmentToRawPath(this, _populateSegmentFromArray(_populateSegmentFromArray([], path, x, 0), path, y, 1), target, vars.x || x, vars.y || y, slicer, vars));
+        rawPaths.push(_segmentToRawPath(this, _populateSegmentFromArray(_populateSegmentFromArray([], path, x, 0), path, y, 1), target, x, y, slicer, vars, unitX || _getUnit(path[0][x]), unitY || _getUnit(path[0][y])));
       } else {
         x = y = 0;
       }
 
       for (p in firstObj) {
-        if (p !== x && p !== y) {
-          rawPaths.push(_segmentToRawPath(this, _populateSegmentFromArray([], path, p, 0), target, p, 0, slicer, vars));
-        }
+        p !== x && p !== y && rawPaths.push(_segmentToRawPath(this, _populateSegmentFromArray([], path, p, 2), target, p, 0, slicer, vars, _getUnit(path[0][p])));
       }
     } else {
       rawPath = slicer(_align(getRawPath(vars.path), target, vars));
@@ -259,9 +310,7 @@ export var MotionPathPlugin = {
       pt = pt._next;
     }
 
-    if (data.rotate) {
-      data.rSet(data.target, data.rProp, rawPaths[0].angle * (data.radians ? _DEG2RAD : 1) + data.rOffset + data.ru, data, ratio);
-    }
+    data.rotate && data.rSet(data.target, data.rProp, rawPaths[0].angle * (data.radians ? _DEG2RAD : 1) + data.rOffset + data.ru, data, ratio);
   },
   getLength: function getLength(path) {
     return cacheRawPathMeasurements(getRawPath(path)).totalLength;
@@ -272,23 +321,33 @@ export var MotionPathPlugin = {
   stringToRawPath: stringToRawPath,
   rawPathToString: rawPathToString,
   transformRawPath: transformRawPath,
+  getGlobalMatrix: getGlobalMatrix,
+  getPositionOnPath: getPositionOnPath,
+  cacheRawPathMeasurements: cacheRawPathMeasurements,
   convertToPath: function convertToPath(targets, swap) {
     return _toArray(targets).map(function (target) {
       return _convertToPath(target, swap !== false);
     });
   },
-  getGlobalMatrix: getGlobalMatrix,
-  getPositionOnPath: getPositionOnPath,
-  cacheRawPathMeasurements: cacheRawPathMeasurements,
+  convertCoordinates: function convertCoordinates(fromElement, toElement, point) {
+    var m = getGlobalMatrix(toElement, true, true).multiply(getGlobalMatrix(fromElement));
+    return point ? m.apply(point) : m;
+  },
+  getAlignMatrix: _getAlignMatrix,
+  getRelativePosition: function getRelativePosition(fromElement, toElement, fromOrigin, toOrigin) {
+    var m = _getAlignMatrix(fromElement, toElement, fromOrigin, toOrigin);
+
+    return {
+      x: m.e,
+      y: m.f
+    };
+  },
   arrayToRawPath: function arrayToRawPath(value, vars) {
     vars = vars || {};
 
     var segment = _populateSegmentFromArray(_populateSegmentFromArray([], value, vars.x || "x", 0), value, vars.y || "y", 1);
 
-    if (vars.relative) {
-      _relativize(segment);
-    }
-
+    vars.relative && _relativize(segment);
     return [vars.type === "cubic" ? segment : pointsToSegment(segment, vars.curviness)];
   }
 };

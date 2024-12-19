@@ -1,8 +1,8 @@
 /*!
- * PhysicsPropsPlugin 3.1.1
+ * PhysicsPropsPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -51,14 +51,11 @@ var PhysicsProp = function PhysicsProp(target, p, velocity, acceleration, fricti
 };
 
 export var PhysicsPropsPlugin = {
-  version: "3.1.1",
+  version: "3.10.4",
   name: "physicsProps",
   register: _initCore,
   init: function init(target, value, tween) {
-    if (!_coreInitted) {
-      _initCore();
-    }
-
+    _coreInitted || _initCore();
     var data = this,
         p;
     data.target = target;
@@ -79,9 +76,7 @@ export var PhysicsPropsPlugin = {
 
         data._props.push(p);
 
-        if (friction) {
-          data.hasFr = 1;
-        }
+        friction && (data.hasFr = 1);
       }
     }
   },
@@ -103,36 +98,46 @@ export var PhysicsPropsPlugin = {
     if (hasFr) {
       time *= sps;
       steps = (time | 0) - step;
+      /*
+      Note: rounding errors build up if we walk the calculations backward which we used to do like this to maximize performance:
+      while (i--) {
+      	curProp = vProps[i];
+      	j = -steps;
+      	while (j--) {
+      		curProp.val -= curProp.v;
+      		curProp.v /= curProp.fr;
+      		curProp.v -= curProp.a;
+      	}
+      	curProp.set(target, curProp.p, _round(curProp.val + (curProp.v * remainder * curProp.fr)) + curProp.u);
+      }
+      but now for the sake of accuracy (to ensure rewinding always goes back to EXACTLY the same spot), we force the calculations to go forward every time. So if the tween is going backward, we just start from the beginning and iterate. This is only necessary with friction.
+       */
+
+      if (steps < 0) {
+        while (i--) {
+          curProp = vProps[i];
+          curProp.v = curProp.vel / sps;
+          curProp.val = curProp.s;
+        }
+
+        i = vProps.length;
+        data.step = step = 0;
+        steps = time | 0;
+      }
+
       remainder = time % 1;
 
-      if (steps >= 0) {
-        //going forward
-        while (i--) {
-          curProp = vProps[i];
-          j = steps;
+      while (i--) {
+        curProp = vProps[i];
+        j = steps;
 
-          while (j--) {
-            curProp.v += curProp.a;
-            curProp.v *= curProp.fr;
-            curProp.val += curProp.v;
-          }
-
-          curProp.set(target, curProp.p, _round(curProp.val + curProp.v * remainder) + curProp.u);
+        while (j--) {
+          curProp.v += curProp.a;
+          curProp.v *= curProp.fr;
+          curProp.val += curProp.v;
         }
-      } else {
-        //going backwards
-        while (i--) {
-          curProp = vProps[i];
-          j = -steps;
 
-          while (j--) {
-            curProp.val -= curProp.v;
-            curProp.v /= curProp.fr;
-            curProp.v -= curProp.a;
-          }
-
-          curProp.set(target, curProp.p, _round(curProp.val + curProp.v * remainder) + curProp.u);
-        }
+        curProp.set(target, curProp.p, _round(curProp.val + curProp.v * remainder * curProp.fr) + curProp.u);
       }
 
       data.step += steps;
@@ -150,9 +155,7 @@ export var PhysicsPropsPlugin = {
         i = vProps.length;
 
     while (i--) {
-      if (vProps[i].p === property) {
-        vProps.splice(i, 1);
-      }
+      vProps[i].p === property && vProps.splice(i, 1);
     }
   }
 };

@@ -1,8 +1,8 @@
 /*!
- * Physics2DPlugin 3.1.1
+ * Physics2DPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -50,14 +50,11 @@ var PhysicsProp = function PhysicsProp(target, p, velocity, acceleration, stepsP
 };
 
 export var Physics2DPlugin = {
-  version: "3.1.1",
+  version: "3.10.4",
   name: "physics2D",
   register: _initCore,
   init: function init(target, value, tween) {
-    if (!_coreInitted) {
-      _initCore();
-    }
-
+    _coreInitted || _initCore();
     var data = this,
         angle = +value.angle || 0,
         velocity = +value.velocity || 0,
@@ -103,37 +100,45 @@ export var Physics2DPlugin = {
         remainder,
         i;
 
-    if (data.fr === 1) {
+    if (fr === 1) {
       tt = time * time * 0.5;
-      x = xp.s + (xp.vel * time + xp.acc * tt);
-      y = yp.s + (yp.vel * time + yp.acc * tt);
+      x = xp.s + xp.vel * time + xp.acc * tt;
+      y = yp.s + yp.vel * time + yp.acc * tt;
     } else {
       time *= sps;
       steps = i = (time | 0) - step;
-      remainder = time % 1;
+      /*
+      Note: rounding errors build up if we walk the calculations backward which we used to do like this to maximize performance:
+      	i = -i;
+      	while (i--) {
+      		xp.val -= xp.v;
+      		yp.val -= yp.v;
+      		xp.v /= fr;
+      		yp.v /= fr;
+      		xp.v -= xp.a;
+      		yp.v -= yp.a;
+      	}
+      but now for the sake of accuracy (to ensure rewinding always goes back to EXACTLY the same spot), we force the calculations to go forward every time. So if the tween is going backward, we just start from the beginning and iterate. This is only necessary with friction.
+       */
 
-      if (i >= 0) {
-        //going forward
-        while (i--) {
-          xp.v += xp.a;
-          yp.v += yp.a;
-          xp.v *= fr;
-          yp.v *= fr;
-          xp.val += xp.v;
-          yp.val += yp.v;
-        }
-      } else {
-        //going backwards
-        i = -i;
+      if (i < 0) {
+        xp.v = xp.vel / sps;
+        yp.v = yp.vel / sps;
+        xp.val = xp.s;
+        yp.val = yp.s;
+        data.step = 0;
+        steps = i = time | 0;
+      }
 
-        while (i--) {
-          xp.val -= xp.v;
-          yp.val -= yp.v;
-          xp.v /= fr;
-          yp.v /= fr;
-          xp.v -= xp.a;
-          yp.v -= yp.a;
-        }
+      remainder = time % 1 * fr;
+
+      while (i--) {
+        xp.v += xp.a;
+        yp.v += yp.a;
+        xp.v *= fr;
+        yp.v *= fr;
+        xp.val += xp.v;
+        yp.val += yp.v;
       }
 
       x = xp.val + xp.v * remainder;
@@ -141,13 +146,8 @@ export var Physics2DPlugin = {
       data.step += steps;
     }
 
-    if (!skipX) {
-      xp.set(target, xp.p, _round(x) + xp.u);
-    }
-
-    if (!skipY) {
-      yp.set(target, yp.p, _round(y) + yp.u);
-    }
+    skipX || xp.set(target, xp.p, _round(x) + xp.u);
+    skipY || yp.set(target, yp.p, _round(y) + yp.u);
   },
   kill: function kill(property) {
     if (this.xp.p === property) {

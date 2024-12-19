@@ -1,8 +1,8 @@
 /*!
- * MotionPathHelper 3.1.1
+ * MotionPathHelper 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -61,9 +61,7 @@ let gsap, _win, _doc, _docEl, _body, MotionPathPlugin,  _arrayToRawPath, _rawPat
 					try {
 						_doc.execCommand('copy');
 						_copyElement.blur();
-						if (onComplete) {
-							onComplete(target);
-						}
+						onComplete && onComplete(target);
 					} catch (err) {
 						console.warn("Copy didn't work; this browser doesn't permit that.");
 					}
@@ -149,7 +147,8 @@ export class MotionPathHelper {
 				svg = _createElement("svg", svgNamespace);
 				_body.appendChild(svg);
 				svg.setAttribute("viewBox", "0 0 100 100");
-				svg.style.cssText = "overflow:visible; background-color: transparent; position:absolute; width:100px; height:100px; top:" + position.top + "px; left:" + position.left + "px;";
+				svg.setAttribute("class", "motion-path-helper");
+				svg.style.cssText = "overflow:visible; background-color: transparent; position:absolute; z-index:5000; width:100px; height:100px; top:" + (position.top - startY) + "px; left:" + (position.left - startX) + "px;";
 			}
 			temp = _isString(path) && !_selectorExp.test(path) ? path : _getInitialPath(startX, startY);
 			path = _createElement("path", svgNamespace);
@@ -180,9 +179,9 @@ export class MotionPathHelper {
 		};
 
 		refreshPath = () => {
-			let m = _getConsolidatedMatrix(path);
-			animation.vars.motionPath.offsetX = m.e - offset.x;
-			animation.vars.motionPath.offsetY = m.f - offset.y;
+			//let m = _getConsolidatedMatrix(path);
+			//animation.vars.motionPath.offsetX = m.e - offset.x;
+			//animation.vars.motionPath.offsetY = m.f - offset.y;
 			animation.invalidate();
 			animationToScrub.restart();
 		};
@@ -206,14 +205,15 @@ export class MotionPathHelper {
 		} else {
 			animation = animationToScrub = gsap.to(target, {
 				motionPath: {
-					path:path,
+					path: path,
 					start: vars.start || 0,
 					end: ("end" in vars) ? vars.end : 1,
-					autoRotate: ("autoRotate" in vars) ? vars.autoRotate : false
-					//align: path
+					autoRotate: ("autoRotate" in vars) ? vars.autoRotate : false,
+					align: path,
+					alignOrigin: vars.alignOrigin
 				},
 				duration: vars.duration || 5,
-				ease: vars.ease || "Power1.easeInOut",
+				ease: vars.ease || "power1.inOut",
 				repeat:-1,
 				repeatDelay:1,
 				paused:!vars.path
@@ -230,6 +230,7 @@ export class MotionPathHelper {
 
 MotionPathHelper.register = _initCore;
 MotionPathHelper.create = (target, vars) => new MotionPathHelper(target, vars);
-MotionPathHelper.version = "3.1.1";
+MotionPathHelper.editPath = (path, vars) => PathEditor.create(path, vars);
+MotionPathHelper.version = "3.10.4";
 
 export { MotionPathHelper as default };

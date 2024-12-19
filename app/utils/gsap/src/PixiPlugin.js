@@ -1,15 +1,15 @@
 /*!
- * PixiPlugin 3.1.1
+ * PixiPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
 */
 /* eslint-disable */
 
-let gsap, _win, _splitColor, _coreInitted, _PIXI, PropTween, _getSetter,
+let gsap, _win, _splitColor, _coreInitted, _PIXI, PropTween, _getSetter, _isV4,
 	_windowExists = () => typeof(window) !== "undefined",
 	_getGSAP = () => gsap || (_windowExists() && (gsap = window.gsap) && gsap.registerPlugin && gsap),
 	_isFunction = value => typeof(value) === "function",
@@ -59,9 +59,7 @@ let gsap, _win, _splitColor, _coreInitted, _PIXI, PropTween, _getSetter,
 			filters = target.filters || [],
 			i = filters.length,
 			filter;
-		if (!filterClass) {
-			_warn(type + " not found. PixiPlugin.registerPIXI(PIXI)");
-		}
+		filterClass || _warn(type + " not found. PixiPlugin.registerPIXI(PIXI)");
 		while (--i > -1) {
 			if (filters[i] instanceof filterClass) {
 				return filters[i];
@@ -213,13 +211,42 @@ let gsap, _win, _splitColor, _coreInitted, _PIXI, PropTween, _getSetter,
 	_contexts = {x:"position", y:"position", tileX:"tilePosition", tileY:"tilePosition"},
 	_colorMatrixFilterProps = {colorMatrixFilter:1, saturation:1, contrast:1, hue:1, colorize:1, colorizeAmount:1, brightness:1, combineCMF:1},
 	_DEG2RAD = Math.PI / 180,
-	_degreesToRadians = value => (typeof(value) === "string" && value.charAt(1) === "=") ? value.substr(0, 2) + (parseFloat(value.substr(2)) * _DEG2RAD) : value * _DEG2RAD,
+	_isString = value => typeof(value) === "string",
+	_degreesToRadians = value => (_isString(value) && value.charAt(1) === "=") ? value.substr(0, 2) + (parseFloat(value.substr(2)) * _DEG2RAD) : value * _DEG2RAD,
+	_renderPropWithEnd = (ratio, data) => data.set(data.t, data.p, ratio === 1 ? data.e : (Math.round((data.s + data.c * ratio) * 100000) / 100000), data),
+	_addRotationalPropTween = (plugin, target, property, startNum, endValue, radians) => {
+		let cap = 360 * (radians ? _DEG2RAD : 1),
+			isString = _isString(endValue),
+			relative = (isString && endValue.charAt(1) === "=") ? +(endValue.charAt(0) + "1") : 0,
+			endNum = parseFloat(relative ? endValue.substr(2) : endValue) * (radians ? _DEG2RAD : 1),
+			change = relative ? endNum * relative : endNum - startNum,
+			finalValue = startNum + change,
+			direction, pt;
+		if (isString) {
+			direction = endValue.split("_")[1];
+			if (direction === "short") {
+				change %= cap;
+				if (change !== change % (cap / 2)) {
+					change += (change < 0) ? cap : -cap;
+				}
+			}
+			if (direction === "cw" && change < 0) {
+				change = ((change + cap * 1e10) % cap) - ~~(change / cap) * cap;
+			} else if (direction === "ccw" && change > 0) {
+				change = ((change - cap * 1e10) % cap) - ~~(change / cap) * cap;
+			}
+		}
+		plugin._pt = pt = new PropTween(plugin._pt, target, property, startNum, change, _renderPropWithEnd);
+		pt.e = finalValue;
+		return pt;
+	},
 	_initCore = () => {
 		if (_windowExists()) {
 			_win = window;
-			gsap = _coreInitted = _getGSAP();
-			_PIXI = _PIXI || _win.PIXI;
-			_splitColor = gsap.utils.splitColor;
+			gsap = _getGSAP();
+			_PIXI = _coreInitted = _PIXI || _win.PIXI;
+			_isV4 = _PIXI && _PIXI.VERSION && _PIXI.VERSION.charAt(0) === "4";
+			_splitColor = color => gsap.utils.splitColor((color + "").substr(0,2) === "0x" ? "#" + color.substr(2) : color); // some colors in PIXI are reported as "0xFF4421" instead of "#FF4421".
 		}
 	}, i, p;
 
@@ -232,7 +259,7 @@ for (i = 0; i < _xyContexts.length; i++) {
 
 
 export const PixiPlugin = {
-	version:"3.1.1",
+	version:"3.10.4",
 	name:"pixi",
 	register(core, Plugin, propTween) {
 		gsap = core;
@@ -244,14 +271,12 @@ export const PixiPlugin = {
 		_PIXI = pixi;
 	},
 	init(target, values, tween, index, targets) {
-		if (!_PIXI) {
-			_initCore();
-		}
-		if (!target instanceof _PIXI.DisplayObject) {
+		_PIXI || _initCore();
+		if (!_PIXI || !(target instanceof _PIXI.DisplayObject)) {
+			console.warn(target, "is not a DisplayObject or PIXI was not found. PixiPlugin.registerPIXI(PIXI);");
 			return false;
 		}
-		let isV4 = _PIXI.VERSION.charAt(0) === "4",
-			context, axis, value, colorMatrix, filter, p, padding, i, data;
+		let context, axis, value, colorMatrix, filter, p, padding, i, data;
 		for (p in values) {
 			context = _contexts[p];
 			value = values[p];
@@ -261,8 +286,8 @@ export const PixiPlugin = {
 			} else if (p === "scale" || p === "anchor" || p === "pivot" || p === "tileScale") {
 				this.add(target[p], "x", target[p].x, value);
 				this.add(target[p], "y", target[p].y, value);
-			} else if (p === "rotation") { //PIXI expects rotation in radians, but as a convenience we let folks define it in degrees and we do the conversion.
-				this.add(target, p, target.rotation, _degreesToRadians(value));
+			} else if (p === "rotation" || p === "angle") { //PIXI expects rotation in radians, but as a convenience we let folks define it in degrees and we do the conversion.
+				_addRotationalPropTween(this, target, p, target[p], value, p === "rotation");
 			} else if (_colorMatrixFilterProps[p]) {
 				if (!colorMatrix) {
 					_parseColorMatrixFilter(target, values.colorMatrixFilter || values, this);
@@ -281,10 +306,10 @@ export const PixiPlugin = {
 			} else if (_colorProps[p]) {
 				if ((p === "lineColor" || p === "fillColor") && target instanceof _PIXI.Graphics) {
 					data = (target.geometry || target).graphicsData; //"geometry" was introduced in PIXI version 5
-					this._pt = new PropTween(this._pt, target, p, 0, 0, _renderDirtyCache, {g:target.geometry || target});
+					this._pt = new PropTween(this._pt, target, p, 0, 0, _renderDirtyCache, {g: target.geometry || target});
 					i = data.length;
 					while (--i > -1) {
-						_addColorTween(isV4 ? data[i] : data[i][p.substr(0, 4) + "Style"], isV4 ? p : "color", value, this);
+						_addColorTween(_isV4 ? data[i] : data[i][p.substr(0, 4) + "Style"], _isV4 ? p : "color", value, this);
 					}
 				} else {
 					_addColorTween(target, p, value, this);
@@ -293,7 +318,7 @@ export const PixiPlugin = {
 				this._pt = new PropTween(this._pt, target, "visible", 0, 0, _renderAutoAlpha);
 				this.add(target, "alpha", target.alpha, value);
 				this._props.push("alpha", "visible");
-			} else {
+			} else if (p !== "resolution") {
 				this.add(target, p, "get", value);
 			}
 			this._props.push(p);

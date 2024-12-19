@@ -1,8 +1,8 @@
 /*!
- * PixiPlugin 3.1.1
+ * PixiPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -16,6 +16,7 @@ var gsap,
     _PIXI,
     PropTween,
     _getSetter,
+    _isV4,
     _windowExists = function _windowExists() {
   return typeof window !== "undefined";
 },
@@ -80,10 +81,7 @@ var gsap,
       filters = target.filters || [],
       i = filters.length,
       filter;
-
-  if (!filterClass) {
-    _warn(type + " not found. PixiPlugin.registerPIXI(PIXI)");
-  }
+  filterClass || _warn(type + " not found. PixiPlugin.registerPIXI(PIXI)");
 
   while (--i > -1) {
     if (filters[i] instanceof filterClass) {
@@ -305,15 +303,58 @@ var gsap,
   combineCMF: 1
 },
     _DEG2RAD = Math.PI / 180,
+    _isString = function _isString(value) {
+  return typeof value === "string";
+},
     _degreesToRadians = function _degreesToRadians(value) {
-  return typeof value === "string" && value.charAt(1) === "=" ? value.substr(0, 2) + parseFloat(value.substr(2)) * _DEG2RAD : value * _DEG2RAD;
+  return _isString(value) && value.charAt(1) === "=" ? value.substr(0, 2) + parseFloat(value.substr(2)) * _DEG2RAD : value * _DEG2RAD;
+},
+    _renderPropWithEnd = function _renderPropWithEnd(ratio, data) {
+  return data.set(data.t, data.p, ratio === 1 ? data.e : Math.round((data.s + data.c * ratio) * 100000) / 100000, data);
+},
+    _addRotationalPropTween = function _addRotationalPropTween(plugin, target, property, startNum, endValue, radians) {
+  var cap = 360 * (radians ? _DEG2RAD : 1),
+      isString = _isString(endValue),
+      relative = isString && endValue.charAt(1) === "=" ? +(endValue.charAt(0) + "1") : 0,
+      endNum = parseFloat(relative ? endValue.substr(2) : endValue) * (radians ? _DEG2RAD : 1),
+      change = relative ? endNum * relative : endNum - startNum,
+      finalValue = startNum + change,
+      direction,
+      pt;
+
+  if (isString) {
+    direction = endValue.split("_")[1];
+
+    if (direction === "short") {
+      change %= cap;
+
+      if (change !== change % (cap / 2)) {
+        change += change < 0 ? cap : -cap;
+      }
+    }
+
+    if (direction === "cw" && change < 0) {
+      change = (change + cap * 1e10) % cap - ~~(change / cap) * cap;
+    } else if (direction === "ccw" && change > 0) {
+      change = (change - cap * 1e10) % cap - ~~(change / cap) * cap;
+    }
+  }
+
+  plugin._pt = pt = new PropTween(plugin._pt, target, property, startNum, change, _renderPropWithEnd);
+  pt.e = finalValue;
+  return pt;
 },
     _initCore = function _initCore() {
   if (_windowExists()) {
     _win = window;
-    gsap = _coreInitted = _getGSAP();
-    _PIXI = _PIXI || _win.PIXI;
-    _splitColor = gsap.utils.splitColor;
+    gsap = _getGSAP();
+    _PIXI = _coreInitted = _PIXI || _win.PIXI;
+    _isV4 = _PIXI && _PIXI.VERSION && _PIXI.VERSION.charAt(0) === "4";
+
+    _splitColor = function _splitColor(color) {
+      return gsap.utils.splitColor((color + "").substr(0, 2) === "0x" ? "#" + color.substr(2) : color);
+    }; // some colors in PIXI are reported as "0xFF4421" instead of "#FF4421".
+
   }
 },
     i,
@@ -327,7 +368,7 @@ for (i = 0; i < _xyContexts.length; i++) {
 }
 
 export var PixiPlugin = {
-  version: "3.1.1",
+  version: "3.10.4",
   name: "pixi",
   register: function register(core, Plugin, propTween) {
     gsap = core;
@@ -340,24 +381,14 @@ export var PixiPlugin = {
     _PIXI = pixi;
   },
   init: function init(target, values, tween, index, targets) {
-    if (!_PIXI) {
-      _initCore();
-    }
+    _PIXI || _initCore();
 
-    if (!target instanceof _PIXI.DisplayObject) {
+    if (!_PIXI || !(target instanceof _PIXI.DisplayObject)) {
+      console.warn(target, "is not a DisplayObject or PIXI was not found. PixiPlugin.registerPIXI(PIXI);");
       return false;
     }
 
-    var isV4 = _PIXI.VERSION.charAt(0) === "4",
-        context,
-        axis,
-        value,
-        colorMatrix,
-        filter,
-        p,
-        padding,
-        i,
-        data;
+    var context, axis, value, colorMatrix, filter, p, padding, i, data;
 
     for (p in values) {
       context = _contexts[p];
@@ -369,9 +400,9 @@ export var PixiPlugin = {
       } else if (p === "scale" || p === "anchor" || p === "pivot" || p === "tileScale") {
         this.add(target[p], "x", target[p].x, value);
         this.add(target[p], "y", target[p].y, value);
-      } else if (p === "rotation") {
+      } else if (p === "rotation" || p === "angle") {
         //PIXI expects rotation in radians, but as a convenience we let folks define it in degrees and we do the conversion.
-        this.add(target, p, target.rotation, _degreesToRadians(value));
+        _addRotationalPropTween(this, target, p, target[p], value, p === "rotation");
       } else if (_colorMatrixFilterProps[p]) {
         if (!colorMatrix) {
           _parseColorMatrixFilter(target, values.colorMatrixFilter || values, this);
@@ -400,7 +431,7 @@ export var PixiPlugin = {
           i = data.length;
 
           while (--i > -1) {
-            _addColorTween(isV4 ? data[i] : data[i][p.substr(0, 4) + "Style"], isV4 ? p : "color", value, this);
+            _addColorTween(_isV4 ? data[i] : data[i][p.substr(0, 4) + "Style"], _isV4 ? p : "color", value, this);
           }
         } else {
           _addColorTween(target, p, value, this);
@@ -410,7 +441,7 @@ export var PixiPlugin = {
         this.add(target, "alpha", target.alpha, value);
 
         this._props.push("alpha", "visible");
-      } else {
+      } else if (p !== "resolution") {
         this.add(target, p, "get", value);
       }
 

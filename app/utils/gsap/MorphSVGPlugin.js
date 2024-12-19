@@ -1,8 +1,8 @@
 /*!
- * MorphSVGPlugin 3.1.1
+ * MorphSVGPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -20,6 +20,9 @@ var gsap,
     _getGSAP = function _getGSAP() {
   return gsap || typeof window !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap;
 },
+    _isFunction = function _isFunction(value) {
+  return typeof value === "function";
+},
     _atan2 = Math.atan2,
     _cos = Math.cos,
     _sin = Math.sin,
@@ -31,8 +34,8 @@ var gsap,
     _bigNum = 1e20,
     _numExp = /[-+=\.]*\d+[\.e\-\+]*\d*[e\-\+]*\d*/gi,
     //finds any numbers, including ones that start with += or -=, negative numbers, and ones in scientific notation like 1e-8.
-_selectorExp = /(^[#\.][a-z]|[a-y][a-z])/gi,
-    _commands = /[achlmqstvz]/ig,
+_selectorExp = /(^[#\.][a-z]|[a-y][a-z])/i,
+    _commands = /[achlmqstvz]/i,
     _log = function _log(message) {
   return console && console.warn(message);
 },
@@ -482,10 +485,7 @@ _getAverageXY = function _getAverageXY(segment) {
     }
   }
 
-  if (log) {
-    _log("shapeIndex:[" + shapeIndices.join(",") + "]");
-  }
-
+  log && _log("shapeIndex:[" + shapeIndices.join(",") + "]");
   start.shapeIndex = shapeIndices;
   return shapeIndices;
 },
@@ -750,8 +750,10 @@ _populateSmoothData = function _populateSmoothData(rawPath, tolerance) {
 };
 
 export var MorphSVGPlugin = {
-  version: "3.1.1",
+  version: "3.10.4",
   name: "morphSVG",
+  rawVars: 1,
+  // otherwise "render" would be interpreted as a function-based value.
   register: function register(core, Plugin) {
     gsap = core;
     PluginClass = Plugin;
@@ -759,37 +761,36 @@ export var MorphSVGPlugin = {
     _initCore();
   },
   init: function init(target, value, tween, index, targets) {
+    _coreInitted || _initCore(1);
+
+    if (!value) {
+      _log("invalid shape");
+
+      return false;
+    }
+
+    _isFunction(value) && (value = value.call(tween, index, target, targets));
+    var type, p, pt, shape, isPoly, shapeIndex, map, startSmooth, endSmooth, start, end, i, j, l, startSeg, endSeg, precompiled, sData, eData, originFactors, useRotation, offset;
+
+    if (typeof value === "string" || value.getBBox || value[0]) {
+      value = {
+        shape: value
+      };
+    } else if (typeof value === "object") {
+      // if there are any function-based values, parse them here (and make a copy of the object so we're not modifying the original)
+      type = {};
+
+      for (p in value) {
+        type[p] = _isFunction(value[p]) && p !== "render" ? value[p].call(tween, index, target, targets) : value[p];
+      }
+
+      value = type;
+    }
+
     var cs = target.nodeType ? window.getComputedStyle(target) : {},
         fill = cs.fill + "",
         fillSafe = !(fill === "none" || (fill.match(_numExp) || [])[3] === "0" || cs.fillRule === "evenodd"),
-        origins = (value.origin || "50 50").split(","),
-        type,
-        p,
-        pt,
-        shape,
-        isPoly,
-        shapeIndex,
-        map,
-        startSmooth,
-        endSmooth,
-        start,
-        end,
-        i,
-        j,
-        l,
-        startSeg,
-        endSeg,
-        precompiled,
-        sData,
-        eData,
-        originFactors,
-        useRotation,
-        offset;
-
-    if (!_coreInitted) {
-      _initCore(1);
-    }
-
+        origins = (value.origin || "50 50").split(",");
     type = (target.nodeName + "").toUpperCase();
     isPoly = type === "POLYLINE" || type === "POLYGON";
 
@@ -801,13 +802,7 @@ export var MorphSVGPlugin = {
 
     p = type === "PATH" ? "d" : "points";
 
-    if (typeof value === "string" || value.getBBox || value[0]) {
-      value = {
-        shape: value
-      };
-    }
-
-    if (!value.prop && typeof target.setAttribute !== "function") {
+    if (!value.prop && !_isFunction(target.setAttribute)) {
       return false;
     }
 
@@ -1044,9 +1039,7 @@ export var MorphSVGPlugin = {
       }
     }
 
-    if (data._render && rawPath) {
-      data._render.call(data._tween, rawPath, target);
-    }
+    data._render && rawPath && data._render.call(data._tween, rawPath, target);
   },
   kill: function kill(property) {
     this._pt = this._rawPath = 0;
@@ -1054,6 +1047,15 @@ export var MorphSVGPlugin = {
   getRawPath: getRawPath,
   stringToRawPath: stringToRawPath,
   rawPathToString: rawPathToString,
+  normalizeStrings: function normalizeStrings(shape1, shape2, _ref) {
+    var shapeIndex = _ref.shapeIndex,
+        map = _ref.map;
+    var result = [shape1, shape2];
+
+    _pathFilter(result, shapeIndex, map);
+
+    return result;
+  },
   pathFilter: _pathFilter,
   pointsFilter: _pointsFilter,
   getTotalSize: _getTotalSize,

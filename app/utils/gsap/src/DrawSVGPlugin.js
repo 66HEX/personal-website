@@ -1,8 +1,8 @@
 /*!
- * DrawSVGPlugin 3.1.1
+ * DrawSVGPlugin 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -10,13 +10,17 @@
 /* eslint-disable */
 
 
-let gsap, _toArray, _doc, _win, _isEdge, _coreInitted,
+let gsap, _toArray, _doc, _win, _isEdge, _coreInitted, _warned,
 	_windowExists = () => typeof(window) !== "undefined",
 	_getGSAP = () => gsap || (_windowExists() && (gsap = window.gsap) && gsap.registerPlugin && gsap),
 	_numExp = /[-+=\.]*\d+[\.e\-\+]*\d*[e\-\+]*\d*/gi, //finds any numbers, including ones that start with += or -=, negative numbers, and ones in scientific notation like 1e-8.
 	_types = {rect:["width","height"], circle:["r","r"], ellipse:["rx","ry"], line:["x2","y2"]},
 	_round = value => Math.round(value * 10000) / 10000,
-	_parseNum = value => parseFloat(value || 0),
+	_parseNum = value => parseFloat(value) || 0,
+	_parseSingleVal = (value, length) => {
+		let num = _parseNum(value);
+		return ~value.indexOf("%") ? num / 100 * length : num;
+	},
 	_getAttributeAsNumber = (target, attr) => _parseNum(target.getAttribute(attr)),
 	_sqrt = Math.sqrt,
 	_getDistance = (x1, y1, x2, y2, scaleX, scaleY) => _sqrt(((_parseNum(x2) - _parseNum(x1)) * scaleX) ** 2 + ((_parseNum(y2) - _parseNum(y1)) * scaleY) ** 2),
@@ -34,8 +38,8 @@ let gsap, _toArray, _doc, _win, _isEdge, _coreInitted,
 			s = value.substr(0, i);
 			e = value.substr(i + 1);
 		}
-		s = ~s.indexOf("%") ? (_parseNum(s) / 100) * length : _parseNum(s);
-		e = ~e.indexOf("%") ? (_parseNum(e) / 100) * length : _parseNum(e);
+		s = _parseSingleVal(s, length);
+		e = _parseSingleVal(e, length);
 		return (s > e) ? [e, s] : [s, e];
 	},
 	_getLength = target => {
@@ -78,9 +82,7 @@ let gsap, _toArray, _doc, _win, _isEdge, _coreInitted,
 			prevPoint = style.strokeDasharray;
 			style.strokeDasharray = "none";
 			length = target.getTotalLength() || 0;
-			if (scaleX !== scaleY) {
-				_warn("Warning: <path> length cannot be measured when vector-effect is non-scaling-stroke and the element isn't proportionally scaled.");
-			}
+			_round(scaleX) !== _round(scaleY) && !_warned && (_warned = 1) && _warn("Warning: <path> length cannot be measured when vector-effect is non-scaling-stroke and the element isn't proportionally scaled.");
 			length *= (scaleX + scaleY) / 2;
 			style.strokeDasharray = prevPoint;
 		} else if (type === "rect") {
@@ -89,9 +91,7 @@ let gsap, _toArray, _doc, _win, _isEdge, _coreInitted,
 			length = _getDistance(x, y, x + width, y + height, scaleX, scaleY);
 		} else if (type === "polyline" || type === "polygon") {
 			points = target.getAttribute("points").match(_numExp) || [];
-			if (type === "polygon") {
-				points.push(points[0], points[1]);
-			}
+			type === "polygon" && points.push(points[0], points[1]);
 			length = 0;
 			for (i = 2; i < points.length; i+=2) {
 				length += _getDistance(points[i-2], points[i-1], points[i], points[i+1], scaleX, scaleY) || 0;
@@ -108,21 +108,15 @@ let gsap, _toArray, _doc, _win, _isEdge, _coreInitted,
 		if (!target) {
 			return [0, 0];
 		}
-		if (!length) {
-			length = _getLength(target) + 1;
-		}
+		length || (length = _getLength(target) + 1);
 		let cs = _win.getComputedStyle(target),
 			dash = cs.strokeDasharray || "",
 			offset = _parseNum(cs.strokeDashoffset),
 			i = dash.indexOf(",");
-		if (i < 0) {
-			i = dash.indexOf(" ");
-		}
-		dash = (i < 0) ? length : _parseNum(dash.substr(0, i)) || 1e-5;
-		if (dash > length) {
-			dash = length;
-		}
-		return [Math.max(0, -offset), Math.max(0, dash - offset)];
+		i < 0 && (i = dash.indexOf(" "));
+		dash = i < 0 ? length : _parseNum(dash.substr(0, i));
+		dash > length && (dash = length);
+		return [-offset || 0, (dash - offset) || 0];
 	},
 	_initCore = () => {
 		if (_windowExists()) {
@@ -136,7 +130,7 @@ let gsap, _toArray, _doc, _win, _isEdge, _coreInitted,
 
 
 export const DrawSVGPlugin = {
-	version:"3.1.1",
+	version:"3.10.4",
 	name:"drawSVG",
 	register(core) {
 		gsap = core;
@@ -146,11 +140,9 @@ export const DrawSVGPlugin = {
 		if (!target.getBBox) {
 			return false;
 		}
-		if (!_coreInitted) {
-			_initCore();
-		}
-		let length = _getLength(target) + 1,
-			start, end, overage, cs;
+		_coreInitted ||	_initCore();
+		let length = _getLength(target),
+			start, end, cs;
 		this._style = target.style;
 		this._target = target;
 		if (value + "" === "true") {
@@ -162,18 +154,11 @@ export const DrawSVGPlugin = {
 		}
 		start = _getPosition(target, length);
 		end = _parse(value, length, start[0]);
-		this._length = _round(length + 10);
-		if (start[0] === 0 && end[0] === 0) {
-			overage = Math.max(0.00001, end[1] - length); //allow people to go past the end, like values of 105% because for some paths, Firefox doesn't return an accurate getTotalLength(), so it could end up coming up short.
-			this._dash = _round(length + overage);
-			this._offset = _round(length - start[1] + overage);
-			this._offsetPT = this.add(this, "_offset", this._offset, _round(length - end[1] + overage));
-		} else {
-			this._dash = _round(start[1] - start[0]) || 0.000001; //some browsers render artifacts if dash is 0, so we use a very small number in that case.
-			this._offset = _round(-start[0]);
-			this._dashPT = this.add(this, "_dash", this._dash, _round(end[1] - end[0]) || 0.00001);
-			this._offsetPT = this.add(this, "_offset", this._offset, _round(-end[0]));
-		}
+		this._length = _round(length);
+		this._dash = _round(start[1] - start[0]); //some browsers render artifacts if dash is 0, so we use a very small number in that case.
+		this._offset = _round(-start[0]);
+		this._dashPT = this.add(this, "_dash", this._dash, _round(end[1] - end[0]));
+		this._offsetPT = this.add(this, "_offset", this._offset, _round(-end[0]));
 		if (_isEdge) { //to work around a bug in Microsoft Edge, animate the stroke-miterlimit by 0.0001 just to trigger the repaint (unnecessary if it's "round" and stroke-linejoin is also "round"). Imperceptible, relatively high-performance, and effective. Another option was to set the "d" <path> attribute to its current value on every tick, but that seems like it'd be much less performant.
 			cs = _win.getComputedStyle(target);
 			if (cs.strokeLinecap !== cs.strokeLinejoin) {
@@ -182,6 +167,7 @@ export const DrawSVGPlugin = {
 			}
 		}
 		this._live = (_hasNonScalingStroke(target) || ~((value + "").indexOf("live")));
+		this._nowrap = ~(value + "").indexOf("nowrap");
 		this._props.push("drawSVG");
 		return _bonusValidated;
 	},
@@ -192,12 +178,14 @@ export const DrawSVGPlugin = {
 		if (pt) {
 			//when the element has vector-effect="non-scaling-stroke" and the SVG is resized (like on a window resize), it actually changes the length of the stroke! So we must sense that and make the proper adjustments.
 			if (data._live) {
-				length = _getLength(data._target) + 11;
+				length = _getLength(data._target);
 				if (length !== data._length) {
 					lengthRatio = length / data._length;
 					data._length = length;
-					data._offsetPT.s *= lengthRatio;
-					data._offsetPT.c *= lengthRatio;
+					if (data._offsetPT) {
+						data._offsetPT.s *= lengthRatio;
+						data._offsetPT.c *= lengthRatio;
+					}
 					if (data._dashPT) {
 						data._dashPT.s *= lengthRatio;
 						data._dashPT.c *= lengthRatio;
@@ -210,18 +198,12 @@ export const DrawSVGPlugin = {
 				pt.r(ratio, pt.d);
 				pt = pt._next;
 			}
-			dash = data._dash;
+			dash = data._dash || ((ratio && ratio !== 1 && 0.0001) || 0); // only let it be zero if it's at the start or end of the tween.
+			length = data._length - dash + 0.1;
 			offset = data._offset;
-			length = data._length;
-			style.strokeDashoffset = data._offset;
-			if (ratio === 1 || !ratio) {
-				if (dash - offset < 0.001 && length - dash <= 10) { //works around a bug in Safari that caused strokes with rounded ends to still show initially when they shouldn't.
-					style.strokeDashoffset = offset + 1;
-				}
-				style.strokeDasharray = (offset < 0.001 && length - dash <= 10) ? "none" : (offset === dash) ? "0px, 999999px" : dash + "px," + length + "px";
-			} else {
-				style.strokeDasharray = dash + "px," + length + "px";
-			}
+			dash && offset && dash + Math.abs(offset % data._length) > data._length - 0.2 && (offset += offset < 0 ? 0.1 : -0.1) && (length += 0.1);
+			style.strokeDashoffset = dash ? offset : offset + 0.001;
+			style.strokeDasharray = length < 0.2 ? "none" : dash ? dash + "px," + (data._nowrap ? 999999 : length) + "px" : "0px, 999999px";
 		}
 	},
 	getLength: _getLength,

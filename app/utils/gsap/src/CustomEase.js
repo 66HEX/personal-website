@@ -1,8 +1,8 @@
 /*!
- * CustomEase 3.1.1
+ * CustomEase 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -32,9 +32,7 @@ let gsap, _coreInitted,
 			min = _bigNum,
 			i;
 		for (i = 1; i < l; i += 6) {
-			if (+values[i] < min) {
-				min = +values[i];
-			}
+			+values[i] < min && (min = +values[i]);
 		}
 		return min;
 	},
@@ -94,13 +92,9 @@ let gsap, _coreInitted,
 export class CustomEase {
 
 	constructor(id, data, config) {
-		if (!_coreInitted) {
-			_initCore();
-		}
+		_coreInitted || _initCore();
 		this.id = id;
-		if (_bonusValidated) {
-			this.setData(data, config);
-		}
+		_bonusValidated && this.setData(data, config);
 	}
 
 	setData(data, config) {
@@ -139,7 +133,7 @@ export class CustomEase {
 		for (i = 0; i < l; i++) {
 			point = points[i];
 			prevPoint = points[i - 1] || point;
-			if (point.x > prevPoint.x || (prevPoint.y !== point.y && prevPoint.x === point.x) || point === prevPoint) { //if a point goes BACKWARD in time or is a duplicate, just drop it.
+			if ((point.x > prevPoint.x || (prevPoint.y !== point.y && prevPoint.x === point.x) || point === prevPoint) && point.x <= 1) { //if a point goes BACKWARD in time or is a duplicate, just drop it. Also it shouldn't go past 1 on the x axis, as could happen in a string like "M0,0 C0,0 0.12,0.68 0.18,0.788 0.195,0.845 0.308,1 0.32,1 0.403,1.005 0.398,1 0.5,1 0.602,1 0.816,1.005 0.9,1 0.91,1 0.948,0.69 0.962,0.615 1.003,0.376 1,0 1,0".
 				prevPoint.cx = point.x - prevPoint.x; //change in x between this point and the next point (performance optimization)
 				prevPoint.cy = point.y - prevPoint.y;
 				prevPoint.n = point;
@@ -205,9 +199,7 @@ export class CustomEase {
 
 		this.ease.custom = this;
 
-		if (this.id) {
-			gsap.registerEase(this.id, this.ease);
-		}
+		this.id && gsap && gsap.registerEase(this.id, this.ease);
 
 		return this;
 	}
@@ -270,9 +262,7 @@ export class CustomEase {
 			}
 			a = "M" + a.join(",");
 		}
-		if (e) {
-			e.setAttribute("d", a);
-		}
+		e && e.setAttribute("d", a);
 		return a;
 	}
 
@@ -280,6 +270,6 @@ export class CustomEase {
 
 _getGSAP() && gsap.registerPlugin(CustomEase);
 
-CustomEase.version = "3.1.1";
+CustomEase.version = "3.10.4";
 
 export { CustomEase as default };

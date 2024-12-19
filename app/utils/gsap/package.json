@@ -1,7 +1,7 @@
 {
     "name": "gsap",
-    "version": "3.1.1",
-    "description": "GSAP is a JavaScript library for building high-performance animations that work in **every** major browser. Animate CSS, SVG, canvas, React, Vue, WebGL, colors, strings, motion paths, generic objects...anything JavaScript can touch! No other library delivers such advanced sequencing, reliability, and tight control while solving real-world problems on millions of sites. GSAP works around countless browser inconsistencies; your animations **just work**.  At its core, GSAP is a high-speed property manipulator, updating values over time with extreme accuracy. It's up to 20x faster than jQuery! See https://greensock.com/why-gsap/ for what makes GSAP so special.",
+    "version": "3.10.4",
+    "description": "GSAP is a robust JavaScript toolset that turns developers into animation superheroes. Build high-performance animations that work in **every** major browser. Animate CSS, SVG, canvas, React, Vue, WebGL, colors, strings, motion paths, generic objects...anything JavaScript can touch! The ScrollTrigger plugin lets you create jaw-dropping scroll-based animations with minimal code. No other library delivers such advanced sequencing, reliability, and tight control while solving real-world problems on millions of sites. GSAP works around countless browser inconsistencies; your animations **just work**. At its core, GSAP is a high-speed property manipulator, updating values over time with extreme accuracy. It's up to 20x faster than jQuery! See https://greensock.com/why-gsap/ for what makes GSAP so special.",
     "homepage": "https://greensock.com",
 	"module": "index.js",
 	"main": "dist/gsap.js",
@@ -11,14 +11,19 @@
     "keywords": [
 		"GSAP",
 		"GreenSock",
+		"bonus",
 		"animation",
 		"MotionPathPlugin",
 		"motion",
 		"motionPath",
+		"ScrollTrigger",
+        "ScrollSmoother",
+        "Observer",
 		"easing",
 		"JavaScript",
 		"PixiPlugin",
 		"CustomEase",
+		"Flip",
 		"SVG",
 		"3D",
 		"2D",
@@ -34,13 +39,14 @@
            "web": "https://greensock.com" 
        } 
    ],
-  "license": "Standard 'no charge' license: https://greensock.com/standard-license. Club GreenSock members get more: https://greensock.com/licensing/. Why GreenSock doesn't employ an MIT license: https://greensock.com/why-license/",
-   "bugs": {
+  "license": "This package should only be used by individuals/companies with an active Club GreenSock membership (Shockingly Green or higher). See https://greensock.com/club/. Licensing: https://greensock.com/licensing/",
+  "bugs": {
        "url": "https://greensock.com/forums/"
-   },
-   "repository": {
+  },
+  "repository": {
       "type": "git",
       "url": "https://github.com/greensock/GSAP" 
-   } 
-
+  },
+  "privjsAlias": "@gsap/shockingly",
+  "publishConfig": { "registry": "https://npm.greensock.com" }
 }

@@ -3,17 +3,17 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 /*!
- * Draggable 3.1.1
+ * Draggable 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
  */
 
 /* eslint-disable */
-import { getGlobalMatrix, Matrix2D } from "./utils/matrix.js";
+import { getGlobalMatrix, Matrix2D } from "./utils/matrix.js.js";
 
 var gsap,
     _win,
@@ -98,6 +98,16 @@ _copy = function _copy(obj, factor) {
 
   return obj;
 },
+    _setTouchActionForAllDescendants = function _setTouchActionForAllDescendants(elements, value) {
+  var i = elements.length,
+      children;
+
+  while (i--) {
+    value ? elements[i].style.touchAction = value : elements[i].style.removeProperty("touch-action");
+    children = elements[i].children;
+    children && children.length && _setTouchActionForAllDescendants(children, value);
+  }
+},
     _renderQueueTick = function _renderQueueTick() {
   return _renderQueue.forEach(function (func) {
     return func();
@@ -146,31 +156,19 @@ _copy = function _copy(obj, factor) {
       passive: false
     } : null);
     element.addEventListener(touchType || type, func, capture);
-
-    if (touchType && type !== touchType && touchType.substr(0, 7) !== "pointer") {
-      //some browsers actually support both, so must we. But pointer events cover all.
-      element.addEventListener(type, func, capture);
-    }
+    touchType && type !== touchType && element.addEventListener(type, func, capture); //some browsers actually support both, so must we. But pointer events cover all.
   }
 },
     _removeListener = function _removeListener(element, type, func) {
   if (element.removeEventListener) {
     var touchType = _touchEventLookup[type];
     element.removeEventListener(touchType || type, func);
-
-    if (touchType && type !== touchType && touchType.substr(0, 7) !== "pointer") {
-      element.removeEventListener(type, func);
-    }
+    touchType && type !== touchType && element.removeEventListener(type, func);
   }
 },
     _preventDefault = function _preventDefault(event) {
-  if (event.preventDefault) {
-    event.preventDefault();
-
-    if (event.preventManipulation) {
-      event.preventManipulation(); //for some Microsoft browsers
-    }
-  }
+  event.preventDefault && event.preventDefault();
+  event.preventManipulation && event.preventManipulation(); //for some Microsoft browsers
 },
     _hasTouchID = function _hasTouchID(list, ID) {
   var i = list.length;
@@ -220,7 +218,7 @@ _copy = function _copy(obj, factor) {
       client = "client" + dim;
   return Math.max(0, _isRoot(element) ? Math.max(_docElement[scroll], _body[scroll]) - (_win["inner" + dim] || _docElement[client] || _body[client]) : element[scroll] - element[client]);
 },
-    _recordMaxScrolls = function _recordMaxScrolls(e) {
+    _recordMaxScrolls = function _recordMaxScrolls(e, skipCurrent) {
   //records _gsMaxScrollX and _gsMaxScrollY properties for the element and all ancestors up the chain so that we can cap it, otherwise dragging beyond the edges with autoScroll on can endlessly scroll.
   var x = _getMaxScroll(e, "x"),
       y = _getMaxScroll(e, "y");
@@ -228,13 +226,16 @@ _copy = function _copy(obj, factor) {
   if (_isRoot(e)) {
     e = _windowProxy;
   } else {
-    _recordMaxScrolls(e.parentNode);
+    _recordMaxScrolls(e.parentNode, skipCurrent);
   }
 
   e._gsMaxScrollX = x;
   e._gsMaxScrollY = y;
-  e._gsScrollX = e.scrollLeft || 0;
-  e._gsScrollY = e.scrollTop || 0;
+
+  if (!skipCurrent) {
+    e._gsScrollX = e.scrollLeft || 0;
+    e._gsScrollY = e.scrollTop || 0;
+  }
 },
     _setStyle = function _setStyle(element, property, value) {
   var style = element.style;
@@ -388,8 +389,9 @@ _getElementBounds = function _getElementBounds(element, context) {
 
       if (!width) {
         cs = _getComputedStyle(element);
-        width = (parseFloat(cs.width) || element.clientWidth || 0) + parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
-        height = (parseFloat(cs.height) || element.clientHeight || 0) + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+        bbox = cs.boxSizing === "border-box";
+        width = (parseFloat(cs.width) || element.clientWidth || 0) + (bbox ? 0 : parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth));
+        height = (parseFloat(cs.height) || element.clientHeight || 0) + (bbox ? 0 : parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth));
       }
     }
 
@@ -511,8 +513,7 @@ _getElementBounds = function _getElementBounds(element, context) {
 
   while (i--) {
     e = elements[i];
-    e.ondragstart = e.onselectstart = selectable ? null : _emptyFunc; //setStyle(e, "userSelect", (selectable ? "text" : "none"));
-
+    e.ondragstart = e.onselectstart = selectable ? null : _emptyFunc;
     gsap.set(e, {
       lazy: true,
       userSelect: selectable ? "text" : "none"
@@ -782,6 +783,7 @@ ScrollProxy = function ScrollProxy(element, vars) {
 },
     _initCore = function _initCore(required) {
   if (_windowExists() && document.body) {
+    var nav = window && window.navigator;
     _win = window;
     _doc = document;
     _docElement = _doc.documentElement;
@@ -791,9 +793,9 @@ ScrollProxy = function ScrollProxy(element, vars) {
     _placeholderDiv = _createElement("div");
     _placeholderDiv.style.cssText = "visibility:hidden;height:1px;top:-1px;pointer-events:none;position:relative;clear:both;cursor:grab";
     _defaultCursor = _placeholderDiv.style.cursor === "grab" ? "grab" : "move";
-    _isAndroid = _win.navigator && _win.navigator.userAgent.toLowerCase().indexOf("android") !== -1; //Android handles touch events in an odd way and it's virtually impossible to "feature test" so we resort to UA sniffing
+    _isAndroid = nav && nav.userAgent.toLowerCase().indexOf("android") !== -1; //Android handles touch events in an odd way and it's virtually impossible to "feature test" so we resort to UA sniffing
 
-    _isTouchDevice = "ontouchstart" in _docElement && "orientation" in _win;
+    _isTouchDevice = "ontouchstart" in _docElement && "orientation" in _win || nav && (nav.MaxTouchPoints > 0 || nav.msMaxTouchPoints > 0);
 
     _addPaddingBR = function () {
       //this function is in charge of analyzing browser behavior related to padding. It sets the _addPaddingBR to true if the browser doesn't normally factor in the bottom or right padding on the element inside the scrolling area, and it sets _addPaddingLeft to true if it's a browser that requires the extra offset (offsetLeft) to be added to the paddingRight (like Opera).
@@ -817,7 +819,7 @@ ScrollProxy = function ScrollProxy(element, vars) {
     _touchEventLookup = function (types) {
       //we create an object that makes it easy to translate touch event types into their "pointer" counterparts if we're in a browser that uses those instead. Like IE10 uses "MSPointerDown" instead of "touchstart", for example.
       var standard = types.split(","),
-          converted = (!_isUndefined(_tempDiv.onpointerdown) ? "pointerdown,pointermove,pointerup,pointercancel" : !_isUndefined(_tempDiv.onmspointerdown) ? "MSPointerDown,MSPointerMove,MSPointerUp,MSPointerCancel" : types).split(","),
+          converted = ("onpointerdown" in _tempDiv ? "pointerdown,pointermove,pointerup,pointercancel" : "onmspointerdown" in _tempDiv ? "MSPointerDown,MSPointerMove,MSPointerUp,MSPointerCancel" : types).split(","),
           obj = {},
           i = 4;
 
@@ -869,9 +871,7 @@ ScrollProxy = function ScrollProxy(element, vars) {
   }
 };
 
-var EventDispatcher =
-/*#__PURE__*/
-function () {
+var EventDispatcher = /*#__PURE__*/function () {
   function EventDispatcher(target) {
     this._listeners = {};
     this.target = target || this;
@@ -909,20 +909,14 @@ function () {
   return EventDispatcher;
 }();
 
-export var Draggable =
-/*#__PURE__*/
-function (_EventDispatcher) {
+export var Draggable = /*#__PURE__*/function (_EventDispatcher) {
   _inheritsLoose(Draggable, _EventDispatcher);
 
   function Draggable(target, vars) {
     var _this2;
 
     _this2 = _EventDispatcher.call(this) || this;
-
-    if (!gsap) {
-      _initCore(1);
-    }
-
+    _coreInitted || _initCore(1);
     target = _toArray(target)[0]; //in case the target is a selector object or selector text
 
     if (!InertiaPlugin) {
@@ -990,23 +984,20 @@ function (_EventDispatcher) {
         touchEventTarget,
         matrix,
         interrupted,
-        startScrollTop,
-        startScrollLeft,
         allowNativeTouchScrolling,
         touchDragAxis,
         isDispatching,
         clickDispatch,
         trustedClickDispatch,
+        isPreventingDefault,
+        innerMatrix,
         onContextMenu = function onContextMenu(e) {
       //used to prevent long-touch from triggering a context menu.
-      if (self.isPressed && e.which < 2) {
-        self.endDrag();
-      } else {
-        _preventDefault(e);
+      // (self.isPressed && e.which < 2) && self.endDrag() // previously ended drag when context menu was triggered, but instead we should just stop propagation and prevent the default event behavior.
+      _preventDefault(e);
 
-        e.stopPropagation();
-        return false;
-      }
+      e.stopImmediatePropagation && e.stopImmediatePropagation();
+      return false;
     },
         //this method gets called on every tick of TweenLite.ticker which allows us to synchronize the renders to the core engine (which is typically synchronized with the display refresh via requestAnimationFrame). This is an optimization - it's better than applying the values inside the "mousemove" or "touchmove" event handler which may get called many times inbetween refreshes.
     render = function render(suppressEvents) {
@@ -1125,7 +1116,7 @@ function (_EventDispatcher) {
             }
 
             if (allowX) {
-              self.deltaY = x - parseFloat(target.style.left || 0);
+              self.deltaX = x - parseFloat(target.style.left || 0);
               target.style.left = x + "px";
             }
           }
@@ -1164,6 +1155,8 @@ function (_EventDispatcher) {
         gsCache = gsap.core.getCache(target);
       }
 
+      gsCache.uncache && gsap.getProperty(target, "x"); // trigger a re-cache
+
       if (xyMode) {
         self.x = parseFloat(gsCache.x);
         self.y = parseFloat(gsCache.y);
@@ -1173,8 +1166,8 @@ function (_EventDispatcher) {
         self.y = scrollProxy.top();
         self.x = scrollProxy.left();
       } else {
-        self.y = parseInt(target.style.top || (cs = _getComputedStyle(target)) && cs.top, 10) || 0;
-        self.x = parseInt(target.style.left || (cs || {}).left, 10) || 0;
+        self.y = parseFloat(target.style.top || (cs = _getComputedStyle(target)) && cs.top) || 0;
+        self.x = parseFloat(target.style.left || (cs || {}).left) || 0;
       }
 
       if ((snapX || snapY || snapXY) && !skipSnap && (self.isDragging || self.isThrowing)) {
@@ -1219,9 +1212,7 @@ function (_EventDispatcher) {
         }
       }
 
-      if (dirty) {
-        render(true);
-      }
+      dirty && render(true);
 
       if (!skipOnUpdate) {
         self.deltaX = self.x - x;
@@ -1481,10 +1472,11 @@ function (_EventDispatcher) {
 
         if (!vars.fastMode) {
           if (scrollProxy) {
-            scrollProxy._skip = true; //Microsoft browsers have a bug that causes them to briefly render the position incorrectly (it flashes to the end state when we seek() the tween even though we jump right back to the current position, and this only seems to happen when we're affecting both top and left), so we set a _suspendTransforms flag to prevent it from actually applying the values in the ScrollProxy.
+            scrollProxy._skip = true; // Microsoft browsers have a bug that causes them to briefly render the position incorrectly (it flashes to the end state when we seek() the tween even though we jump right back to the current position, and this only seems to happen when we're affecting both top and left), so we set a _suspendTransforms flag to prevent it from actually applying the values in the ScrollProxy.
           }
 
-          tween.render(tween.duration(), true, true);
+          tween.render(1e9, true, true); // force to the end. Remember, the duration will likely change upon initting because that's when InertiaPlugin calculates it.
+
           syncXY(true, true);
           self.endX = self.x;
           self.endY = self.y;
@@ -1527,25 +1519,25 @@ function (_EventDispatcher) {
     },
         recordStartPositions = function recordStartPositions() {
       var edgeTolerance = 1 - self.edgeResistance,
+          offsetX = isFixed ? _getDocScrollLeft(ownerDoc) : 0,
+          offsetY = isFixed ? _getDocScrollTop(ownerDoc) : 0,
           parsedOrigin,
-          parent,
           x,
           y;
       updateMatrix(false);
+      _point1.x = self.pointerX - offsetX;
+      _point1.y = self.pointerY - offsetY;
+      matrix && matrix.apply(_point1, _point1);
+      startPointerX = _point1.x; //translate to local coordinate system
 
-      if (matrix) {
-        _point1.x = self.pointerX;
-        _point1.y = self.pointerY;
-        matrix.apply(_point1, _point1);
-        startPointerX = _point1.x; //translate to local coordinate system
-
-        startPointerY = _point1.y;
-      }
+      startPointerY = _point1.y;
 
       if (dirty) {
         setPointerPosition(self.pointerX, self.pointerY);
         render(true);
       }
+
+      innerMatrix = getGlobalMatrix(target);
 
       if (scrollProxy) {
         calculateBounds();
@@ -1567,21 +1559,15 @@ function (_EventDispatcher) {
             y: parseFloat(parsedOrigin[1]) || 0
           });
           syncXY(true, true);
-          x = self.pointerX - rotationOrigin.x;
-          y = rotationOrigin.y - self.pointerY;
-
-          if (isFixed) {
-            x -= _getDocScrollLeft(ownerDoc);
-            y += _getDocScrollTop(ownerDoc);
-          }
-
+          x = self.pointerX - rotationOrigin.x - offsetX;
+          y = rotationOrigin.y - self.pointerY + offsetY;
           startElementX = self.x; //starting rotation (x always refers to rotation in type:"rotation", measured in degrees)
 
           startElementY = self.y = Math.atan2(y, x) * _RAD2DEG;
         } else {
-          parent = !isFixed && target.parentNode;
-          startScrollTop = parent ? parent.scrollTop || 0 : 0;
-          startScrollLeft = parent ? parent.scrollLeft || 0 : 0;
+          //parent = !isFixed && target.parentNode;
+          //startScrollTop = parent ? parent.scrollTop || 0 : 0;
+          //startScrollLeft = parent ? parent.scrollLeft || 0 : 0;
           startElementY = getPropAsNum(yProp, "px"); //record the starting top and left values so that we can just add the mouse's movement to them later.
 
           startElementX = getPropAsNum(xProp, "px");
@@ -1604,8 +1590,8 @@ function (_EventDispatcher) {
         }
       }
 
-      self.startX = startElementX;
-      self.startY = startElementY;
+      self.startX = startElementX = _round(startElementX);
+      self.startY = startElementY = _round(startElementY);
     },
         isTweening = function isTweening() {
       return self.tween && self.tween.isActive();
@@ -1622,6 +1608,8 @@ function (_EventDispatcher) {
 
       if (!enabled || self.isPressed || !e || (e.type === "mousedown" || e.type === "pointerdown") && !force && _getTime() - clickTime < 30 && _touchEventLookup[self.pointerEvent.type]) {
         //when we DON'T preventDefault() in order to accommodate touch-scrolling and the user just taps, many browsers also fire a mousedown/mouseup sequence AFTER the touchstart/touchend sequence, thus it'd result in two quick "click" events being dispatched. This line senses that condition and halts it on the subsequent mousedown.
+        isPreventingDefault && e && enabled && _preventDefault(e); // in some browsers, we must listen for multiple event types like touchstart, pointerdown, mousedown. The first time this function is called, we record whether or not we _preventDefault() so that on duplicate calls, we can do the same if necessary.
+
         return;
       }
 
@@ -1634,7 +1622,8 @@ function (_EventDispatcher) {
 
         _addListener(touchEventTarget, "touchend", onRelease);
 
-        _addListener(touchEventTarget, "touchmove", onMove);
+        _addListener(touchEventTarget, "touchmove", onMove); // possible future change if PointerEvents are more standardized: https://developer.mozilla.org/en-US/docs/Web/API/Element/setPointerCapture
+
 
         _addListener(touchEventTarget, "touchcancel", onRelease);
 
@@ -1648,13 +1637,10 @@ function (_EventDispatcher) {
 
       touchDragAxis = null;
 
-      if (!_supportsPointer) {
+      if (!_supportsPointer || !touchEventTarget) {
         _addListener(ownerDoc, "mouseup", onRelease);
 
-        if (e && e.target) {
-          _addListener(e.target, "mouseup", onRelease); //we also have to listen directly on the element because some browsers don't bubble up the event to the _doc on elements with contentEditable="true"
-
-        }
+        e && e.target && _addListener(e.target, "mouseup", onRelease); //we also have to listen directly on the element because some browsers don't bubble up the event to the _doc on elements with contentEditable="true"
       }
 
       isClicking = isClickable.call(self, e.target) && vars.dragClickables === false && !force;
@@ -1670,12 +1656,15 @@ function (_EventDispatcher) {
         _setSelectable(triggers, true); //accommodates things like inputs and elements with contentEditable="true" (otherwise user couldn't drag to select text)
 
 
+        isPreventingDefault = false;
         return;
       }
 
       allowNativeTouchScrolling = !touchEventTarget || allowX === allowY || self.vars.allowNativeTouchScrolling === false || self.vars.allowContextMenu && e && (e.ctrlKey || e.which > 2) ? false : allowX ? "y" : "x"; //note: in Chrome, right-clicking (for a context menu) fires onPress and it doesn't have the event.which set properly, so we must look for event.ctrlKey. If the user wants to allow context menus we should of course sense it here and not allow native touch scrolling.
 
-      if (!allowNativeTouchScrolling && !self.allowEventDefault) {
+      isPreventingDefault = !allowNativeTouchScrolling && !self.allowEventDefault;
+
+      if (isPreventingDefault) {
         _preventDefault(e);
 
         _addListener(_win, "touchforcechange", _preventDefault); //works around safari bug: https://greensock.com/forums/topic/21450-draggable-in-iframe-on-mobile-is-buggy/
@@ -1714,19 +1703,13 @@ function (_EventDispatcher) {
       }
 
       recordStartPositions();
-
-      if (self.tween) {
-        self.tween.kill();
-      }
-
+      self.tween && self.tween.kill();
       self.isThrowing = false;
       gsap.killTweensOf(scrollProxy || target, killProps, true); //in case the user tries to drag it before the last tween is done.
 
-      if (scrollProxy) {
-        gsap.killTweensOf(target, {
-          scrollTo: 1
-        }, true); //just in case the original target's scroll position is being tweened somewhere else.
-      }
+      scrollProxy && gsap.killTweensOf(target, {
+        scrollTo: 1
+      }, true); //just in case the original target's scroll position is being tweened somewhere else.
 
       self.tween = self.lockedAxis = null;
 
@@ -1738,11 +1721,10 @@ function (_EventDispatcher) {
       hasDragCallback = !!(vars.onDrag || self._listeners.drag);
       hasMoveCallback = !!(vars.onMove || self._listeners.move);
 
-      if (!rotationMode && (vars.cursor !== false || vars.activeCursor)) {
+      if (vars.cursor !== false || vars.activeCursor) {
         i = triggers.length;
 
         while (--i > -1) {
-          //_setStyle(triggers[i], "cursor", vars.activeCursor || vars.cursor || (_defaultCursor === "grab" ? "grabbing" : _defaultCursor));
           gsap.set(triggers[i], {
             cursor: vars.activeCursor || vars.cursor || (_defaultCursor === "grab" ? "grabbing" : _defaultCursor)
           });
@@ -1762,6 +1744,8 @@ function (_EventDispatcher) {
           dy;
 
       if (!enabled || _isMultiTouching || !self.isPressed || !e) {
+        isPreventingDefault && e && enabled && _preventDefault(e); // in some browsers, we must listen for multiple event types like touchmove, pointermove, mousemove. The first time this function is called, we record whether or not we _preventDefault() so that on duplicate calls, we can do the same if necessary.
+
         return;
       }
 
@@ -1776,7 +1760,8 @@ function (_EventDispatcher) {
           //Usually changedTouches[0] will be what we're looking for, but in case it's not, look through the rest of the array...(and Android browsers don't reuse the event like iOS)
           i = touches.length;
 
-          while (--i > -1 && (e = touches[i]).identifier !== touchID) {}
+          while (--i > -1 && (e = touches[i]).identifier !== touchID && e.target !== target) {} // Some Android devices dispatch a touchstart AND pointerdown initially, and then only pointermove thus the touchID may not match because it was grabbed from the touchstart event whereas the pointer event is the one that the browser dispatches for move, so if the event target matches this Draggable's target, let it through.
+
 
           if (i < 0) {
             return;
@@ -1789,13 +1774,9 @@ function (_EventDispatcher) {
 
       if (touchEventTarget && allowNativeTouchScrolling && !touchDragAxis) {
         //Android browsers force us to decide on the first "touchmove" event if we should allow the default (scrolling) behavior or preventDefault(). Otherwise, a "touchcancel" will be fired and then no "touchmove" or "touchend" will fire during the scrolling (no good).
-        _point1.x = e.pageX;
-        _point1.y = e.pageY;
-
-        if (matrix) {
-          matrix.apply(_point1, _point1);
-        }
-
+        _point1.x = e.pageX - (isFixed ? _getDocScrollLeft(ownerDoc) : 0);
+        _point1.y = e.pageY - (isFixed ? _getDocScrollTop(ownerDoc) : 0);
+        matrix && matrix.apply(_point1, _point1);
         pointerX = _point1.x;
         pointerY = _point1.y;
         dx = Math.abs(pointerX - startPointerX);
@@ -1809,12 +1790,9 @@ function (_EventDispatcher) {
 
           }
 
-          if (self.vars.lockAxisOnTouchScroll !== false) {
+          if (self.vars.lockAxisOnTouchScroll !== false && allowX && allowY) {
             self.lockedAxis = touchDragAxis === "x" ? "y" : "x";
-
-            if (_isFunction(self.vars.onLockAxis)) {
-              self.vars.onLockAxis.call(self, originalEvent);
-            }
+            _isFunction(self.vars.onLockAxis) && self.vars.onLockAxis.call(self, originalEvent);
           }
 
           if (_isAndroid && allowNativeTouchScrolling === touchDragAxis) {
@@ -1826,13 +1804,17 @@ function (_EventDispatcher) {
 
       if (!self.allowEventDefault && (!allowNativeTouchScrolling || touchDragAxis && allowNativeTouchScrolling !== touchDragAxis) && originalEvent.cancelable !== false) {
         _preventDefault(originalEvent);
+
+        isPreventingDefault = true;
+      } else if (isPreventingDefault) {
+        isPreventingDefault = false;
       }
 
       if (self.autoScroll) {
         checkAutoScrollBounds = true;
       }
 
-      setPointerPosition(e.pageX - (isFixed ? _getDocScrollLeft(ownerDoc) : 0), e.pageY - (isFixed ? _getDocScrollTop(ownerDoc) : 0), hasMoveCallback);
+      setPointerPosition(e.pageX, e.pageY, hasMoveCallback);
     },
         setPointerPosition = function setPointerPosition(pointerX, pointerY, invokeOnMove) {
       var dragTolerance = 1 - self.dragResistance,
@@ -1854,6 +1836,11 @@ function (_EventDispatcher) {
           temp;
       self.pointerX = pointerX;
       self.pointerY = pointerY;
+
+      if (isFixed) {
+        pointerX -= _getDocScrollLeft(ownerDoc);
+        pointerY -= _getDocScrollTop(ownerDoc);
+      }
 
       if (rotationMode) {
         y = Math.atan2(rotationOrigin.y - pointerY, pointerX - rotationOrigin.x) * _RAD2DEG;
@@ -1929,7 +1916,9 @@ function (_EventDispatcher) {
         if (snapY) {
           y = _round(snapY(y));
         }
-      } else if (hasBounds) {
+      }
+
+      if (hasBounds) {
         if (x > maxX) {
           x = maxX + Math.round((x - maxX) * edgeTolerance);
         } else if (x < minX) {
@@ -1983,8 +1972,10 @@ function (_EventDispatcher) {
     },
         //called when the mouse/touch is released
     onRelease = function onRelease(e, force) {
-      if (!enabled || !self.isPressed || e && touchID != null && !force && (e.pointerId && e.pointerId !== touchID || e.changedTouches && !_hasTouchID(e.changedTouches, touchID))) {
+      if (!enabled || !self.isPressed || e && touchID != null && !force && (e.pointerId && e.pointerId !== touchID && e.target !== target || e.changedTouches && !_hasTouchID(e.changedTouches, touchID))) {
         //for some Microsoft browsers, we must attach the listener to the doc rather than the trigger so that when the finger moves outside the bounds of the trigger, things still work. So if the event we're receiving has a pointerId that doesn't match the touchID, ignore it (for multi-touch)
+        isPreventingDefault && e && enabled && _preventDefault(e); // in some browsers, we must listen for multiple event types like touchend, pointerup, mouseup. The first time this function is called, we record whether or not we _preventDefault() so that on duplicate calls, we can do the same if necessary.
+
         return;
       }
 
@@ -2013,15 +2004,18 @@ function (_EventDispatcher) {
 
       _removeListener(_win, "touchforcechange", _preventDefault);
 
-      if (!_supportsPointer) {
+      if (!_supportsPointer || !touchEventTarget) {
         _removeListener(ownerDoc, "mouseup", onRelease);
 
-        if (e && e.target) {
-          _removeListener(e.target, "mouseup", onRelease);
-        }
+        e && e.target && _removeListener(e.target, "mouseup", onRelease);
       }
 
       dirty = false;
+
+      if (wasDragging) {
+        dragEndTime = _lastDragTime = _getTime();
+        self.isDragging = false;
+      }
 
       if (isClicking && !isContextMenuRelease) {
         if (e) {
@@ -2042,17 +2036,10 @@ function (_EventDispatcher) {
 
       _removeFromRenderQueue(render);
 
-      if (!rotationMode) {
-        i = triggers.length;
+      i = triggers.length;
 
-        while (--i > -1) {
-          _setStyle(triggers[i], "cursor", vars.cursor || (vars.cursor !== false ? _defaultCursor : null));
-        }
-      }
-
-      if (wasDragging) {
-        dragEndTime = _lastDragTime = _getTime();
-        self.isDragging = false;
+      while (--i > -1) {
+        _setStyle(triggers[i], "cursor", vars.cursor || (vars.cursor !== false ? _defaultCursor : null));
       }
 
       _dragCount--;
@@ -2068,7 +2055,7 @@ function (_EventDispatcher) {
             //Usually changedTouches[0] will be what we're looking for, but in case it's not, look through the rest of the array...(and Android browsers don't reuse the event like iOS)
             i = touches.length;
 
-            while (--i > -1 && (e = touches[i]).identifier !== touchID) {}
+            while (--i > -1 && (e = touches[i]).identifier !== touchID && e.target !== target) {}
 
             if (i < 0) {
               return;
@@ -2084,8 +2071,12 @@ function (_EventDispatcher) {
       if (isContextMenuRelease && originalEvent) {
         _preventDefault(originalEvent);
 
+        isPreventingDefault = true;
+
         _dispatchEvent(self, "release", "onRelease");
       } else if (originalEvent && !wasDragging) {
+        isPreventingDefault = false;
+
         if (interrupted && (vars.snap || vars.bounds)) {
           //otherwise, if the user clicks on the object while it's animating to a snapped position, and then releases without moving 3 pixels, it will just stay there (it should animate/snap)
           animate(vars.inertia || vars.throwProps);
@@ -2125,23 +2116,22 @@ function (_EventDispatcher) {
           }
         }
       } else {
-        animate(vars.inertia || vars.throwProps); //will skip if inertia/throwProps isn't defined or IntertiaPlugin isn't loaded.
+        animate(vars.inertia || vars.throwProps); //will skip if inertia/throwProps isn't defined or InertiaPlugin isn't loaded.
 
         if (!self.allowEventDefault && originalEvent && (vars.dragClickables !== false || !isClickable.call(self, originalEvent.target)) && wasDragging && (!allowNativeTouchScrolling || touchDragAxis && allowNativeTouchScrolling === touchDragAxis) && originalEvent.cancelable !== false) {
+          isPreventingDefault = true;
+
           _preventDefault(originalEvent);
+        } else {
+          isPreventingDefault = false;
         }
 
         _dispatchEvent(self, "release", "onRelease");
       }
 
-      if (isTweening()) {
-        placeholderDelayedCall.duration(self.tween.duration()); //sync the timing so that the placeholder DIV gets
-      }
+      isTweening() && placeholderDelayedCall.duration(self.tween.duration()); //sync the timing so that the placeholder DIV gets
 
-      if (wasDragging) {
-        _dispatchEvent(self, "dragend", "onDragEnd");
-      }
-
+      wasDragging && _dispatchEvent(self, "dragend", "onDragEnd");
       return true;
     },
         updateScroll = function updateScroll(e) {
@@ -2168,8 +2158,8 @@ function (_EventDispatcher) {
         onClick = function onClick(e) {
       //this was a huge pain in the neck to align all the various browsers and their behaviors. Chrome, Firefox, Safari, Opera, Android, and Microsoft Edge all handle events differently! Some will only trigger native behavior (like checkbox toggling) from trusted events. Others don't even support isTrusted, but require 2 events to flow through before triggering native behavior. Edge treats everything as trusted but also mandates that 2 flow through to trigger the correct native behavior.
       var time = _getTime(),
-          recentlyClicked = time - clickTime < 40,
-          recentlyDragged = time - dragEndTime < 40,
+          recentlyClicked = time - clickTime < 100,
+          recentlyDragged = time - dragEndTime < 50,
           alreadyDispatched = recentlyClicked && clickDispatch === clickTime,
           defaultPrevented = self.pointerEvent && self.pointerEvent.defaultPrevented,
           alreadyDispatchedTrusted = recentlyClicked && trustedClickDispatch === clickTime,
@@ -2195,6 +2185,13 @@ function (_EventDispatcher) {
           _preventDefault(e);
         }
       }
+
+      if (!recentlyClicked && !recentlyDragged) {
+        // for script-triggered event dispatches, like element.click()
+        e && e.target && (self.pointerEvent = e);
+
+        _dispatchEvent(self, "click", "onClick");
+      }
     },
         localizePoint = function localizePoint(p) {
       return matrix ? {
@@ -2207,11 +2204,8 @@ function (_EventDispatcher) {
     };
 
     old = Draggable.get(target);
-
-    if (old) {
-      old.kill(); // avoids duplicates (an element can only be controlled by one Draggable)
-    } //give the user access to start/stop dragging...
-
+    old && old.kill(); // avoids duplicates (an element can only be controlled by one Draggable)
+    //give the user access to start/stop dragging...
 
     _this2.startDrag = function (event, align) {
       var r1, r2, p1, p2;
@@ -2368,6 +2362,24 @@ function (_EventDispatcher) {
     };
 
     _this2.update = function (applyBounds, sticky, ignoreExternalChanges) {
+      if (sticky && self.isPressed) {
+        // in case the element was repositioned in the document flow, thus its x/y may be identical but its position is actually quite different.
+        var m = getGlobalMatrix(target),
+            p = innerMatrix.apply({
+          x: self.x - startElementX,
+          y: self.y - startElementY
+        }),
+            m2 = getGlobalMatrix(target.parentNode, true);
+        m2.apply({
+          x: m.e - p.x,
+          y: m.f - p.y
+        }, p);
+        self.x -= p.x - m2.e;
+        self.y -= p.y - m2.f;
+        render(true);
+        recordStartPositions();
+      }
+
       var x = self.x,
           y = self.y;
       updateMatrix(!sticky);
@@ -2375,19 +2387,13 @@ function (_EventDispatcher) {
       if (applyBounds) {
         self.applyBounds();
       } else {
-        if (dirty && ignoreExternalChanges) {
-          render(true);
-        }
-
+        dirty && ignoreExternalChanges && render(true);
         syncXY(true);
       }
 
       if (sticky) {
         setPointerPosition(self.pointerX, self.pointerY);
-
-        if (dirty) {
-          render(true);
-        }
+        dirty && render(true);
       }
 
       if (self.isPressed && !sticky && (allowX && Math.abs(x - self.x) > 0.01 || allowY && Math.abs(y - self.y) > 0.01 && !rotationMode)) {
@@ -2395,7 +2401,7 @@ function (_EventDispatcher) {
       }
 
       if (self.autoScroll) {
-        _recordMaxScrolls(target.parentNode);
+        _recordMaxScrolls(target.parentNode, self.isDragging);
 
         checkAutoScrollBounds = self.isDragging;
         render(true); //in case reparenting occurred.
@@ -2416,7 +2422,7 @@ function (_EventDispatcher) {
           i,
           trigger;
 
-      if (!rotationMode && vars.cursor !== false) {
+      if (vars.cursor !== false) {
         setVars.cursor = vars.cursor || _defaultCursor;
       }
 
@@ -2424,17 +2430,15 @@ function (_EventDispatcher) {
         setVars.touchCallout = "none";
       }
 
-      setVars.touchAction = allowX === allowY ? "none" : vars.allowNativeTouchScrolling || vars.allowEventDefault ? "manipulation" : allowX ? "pan-y" : "pan-x";
-
       if (type !== "soft") {
+        _setTouchActionForAllDescendants(triggers, allowX === allowY ? "none" : vars.allowNativeTouchScrolling && target.scrollHeight === target.clientHeight === (target.scrollWidth === target.clientHeight) || vars.allowEventDefault ? "manipulation" : allowX ? "pan-y" : "pan-x"); // Some browsers like Internet Explorer will fire a pointercancel event when the user attempts to drag when touchAction is "manipulate" because it's perceived as a pan. If the element has scrollable content in only one direction, we should use pan-x or pan-y accordingly so that the pointercancel doesn't prevent dragging.
+
+
         i = triggers.length;
 
         while (--i > -1) {
           trigger = triggers[i];
-
-          if (!_supportsPointer) {
-            _addListener(trigger, "mousedown", onPress);
-          }
+          _supportsPointer || _addListener(trigger, "mousedown", onPress);
 
           _addListener(trigger, "touchstart", onPress);
 
@@ -2450,9 +2454,7 @@ function (_EventDispatcher) {
             });
           }
 
-          if (!vars.allowContextMenu) {
-            _addListener(trigger, "contextmenu", onContextMenu);
-          }
+          vars.allowContextMenu || _addListener(trigger, "contextmenu", onContextMenu);
         }
 
         _setSelectable(triggers, false);
@@ -2474,36 +2476,29 @@ function (_EventDispatcher) {
         scrollProxy.element._gsDragID = id;
       }
 
-      if (vars.bounds) {
-        recordStartPositions();
-        self.applyBounds();
-      }
-
+      (vars.bounds || rotationMode) && recordStartPositions();
+      vars.bounds && self.applyBounds();
       return self;
     };
 
     _this2.disable = function (type) {
       var dragging = self.isDragging,
-          i,
+          i = triggers.length,
           trigger;
 
-      if (!rotationMode) {
-        i = triggers.length;
-
-        while (--i > -1) {
-          _setStyle(triggers[i], "cursor", null);
-        }
+      while (--i > -1) {
+        _setStyle(triggers[i], "cursor", null);
       }
 
       if (type !== "soft") {
+        _setTouchActionForAllDescendants(triggers, null);
+
         i = triggers.length;
 
         while (--i > -1) {
           trigger = triggers[i];
 
           _setStyle(trigger, "touchCallout", null);
-
-          _setStyle(trigger, "touchAction", null);
 
           _removeListener(trigger, "mousedown", onPress);
 
@@ -2532,23 +2527,13 @@ function (_EventDispatcher) {
       _removeScrollListener(target, updateScroll);
 
       enabled = false;
-
-      if (InertiaPlugin && type !== "soft") {
-        InertiaPlugin.untrack(scrollProxy || target, xyMode ? "x,y" : rotationMode ? "rotation" : "top,left");
-      }
-
-      if (scrollProxy) {
-        scrollProxy.disable();
-      }
+      InertiaPlugin && type !== "soft" && InertiaPlugin.untrack(scrollProxy || target, xyMode ? "x,y" : rotationMode ? "rotation" : "top,left");
+      scrollProxy && scrollProxy.disable();
 
       _removeFromRenderQueue(render);
 
       self.isDragging = self.isPressed = isClicking = false;
-
-      if (dragging) {
-        _dispatchEvent(self, "dragend", "onDragEnd");
-      }
-
+      dragging && _dispatchEvent(self, "dragend", "onDragEnd");
       return self;
     };
 
@@ -2558,11 +2543,7 @@ function (_EventDispatcher) {
 
     _this2.kill = function () {
       self.isThrowing = false;
-
-      if (self.tween) {
-        self.tween.kill();
-      }
-
+      self.tween && self.tween.kill();
       self.disable();
       gsap.set(triggers, {
         clearProps: "userSelect"
@@ -2575,9 +2556,7 @@ function (_EventDispatcher) {
       scrollProxy = _this2.scrollProxy = new ScrollProxy(target, _extend({
         onKill: function onKill() {
           //ScrollProxy's onKill() gets called if/when the ScrollProxy senses that the user interacted with the scroll position manually (like using the scrollbar). IE9 doesn't fire the "mouseup" properly when users drag the scrollbar of an element, so this works around that issue.
-          if (self.isPressed) {
-            onRelease(null);
-          }
+          self.isPressed && onRelease(null);
         }
       }, vars)); //a bug in many Android devices' stock browser causes scrollTop to get forced back to 0 after it is altered via JS, so we set overflow to "hidden" on mobile/touch devices (they hide the scroll bar anyway). That works around the bug. (This bug is discussed at https://code.google.com/p/android/issues/detail?id=19625)
 
@@ -2612,10 +2591,7 @@ function (_EventDispatcher) {
   };
 
   Draggable.create = function create(targets, vars) {
-    if (!_coreInitted) {
-      _initCore(true);
-    }
-
+    _coreInitted || _initCore(true);
     return _toArray(targets).map(function (target) {
       return new Draggable(target, vars);
     });
@@ -2688,6 +2664,6 @@ _setDefaults(Draggable.prototype, {
 });
 
 Draggable.zIndex = 1000;
-Draggable.version = "3.1.1";
+Draggable.version = "3.10.4";
 _getGSAP() && gsap.registerPlugin(Draggable);
 export { Draggable as default };

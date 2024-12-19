@@ -1,8 +1,8 @@
 /*!
- * PathEditor 3.1.1
+ * PathEditor 3.10.4
  * https://greensock.com
  *
- * Copyright 2008-2020, GreenSock. All rights reserved.
+ * Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -344,7 +344,7 @@ _comma = ",",
     _onPress = function _onPress(e) {
   var self = this,
       ctm = getGlobalMatrix(self.target.parentNode, true),
-      //previously used self.target.parentNode.getScreenCTM().inverse() but there's a major bug in Firefox that prevents it from working properly when there's an ancestor with a transform applied, so we bootstrapped our own solution that seems ot work great across all browsers.
+      //previously used self.target.parentNode.getScreenCTM().inverse() but there's a major bug in Firefox that prevents it from working properly when there's an ancestor with a transform applied, so we bootstrapped our own solution that seems to work great across all browsers.
   touchEventTarget,
       temp;
   this._matrix = this.target.transform.baseVal.getItem(0).matrix;
@@ -539,7 +539,7 @@ _comma = ",",
 },
     _createSegmentAnchors = function _createSegmentAnchors(rawPath, j, editor, vars) {
   var segment = rawPath[j],
-      l = segment.length,
+      l = segment.length - (segment.closed ? 6 : 0),
       a = [],
       i;
 
@@ -547,6 +547,7 @@ _comma = ",",
     a.push(new Anchor(editor, rawPath, j, i, vars));
   }
 
+  segment.closed && (a[0].isClosedStart = true);
   return a;
 },
     _getLength = function _getLength(segment, i, i2) {
@@ -556,9 +557,7 @@ _comma = ",",
   return Math.sqrt(x * x + y * y);
 };
 
-var DraggableSVG =
-/*#__PURE__*/
-function () {
+var DraggableSVG = /*#__PURE__*/function () {
   function DraggableSVG(target, vars) {
     this.target = typeof target === "string" ? _doc.querySelectorAll(target)[0] : target;
     this.vars = vars || {};
@@ -691,9 +690,7 @@ function () {
   return DraggableSVG;
 }();
 
-var Anchor =
-/*#__PURE__*/
-function () {
+var Anchor = /*#__PURE__*/function () {
   function Anchor(editor, rawPath, j, i, vars) {
     this.editor = editor;
     this.element = _createSVG("path", editor._selection, {
@@ -753,9 +750,10 @@ function () {
     }
 
     var prevSmooth = this.smooth,
-        segment = this.rawPath[j];
+        segment = this.rawPath[j],
+        pi = i === 0 && segment.closed ? segment.length - 4 : i - 2;
     this.segment = segment;
-    this.smooth = i && i < segment.length - 2 && Math.abs(Math.atan2(segment[i + 1] - segment[i - 1], segment[i] - segment[i - 2]) - Math.atan2(segment[i + 3] - segment[i + 1], segment[i + 2] - segment[i])) < 0.09 ? 2 : 0; //0: corner, 1: smooth but not mirrored, 2: smooth and mirrored.
+    this.smooth = i > 0 && i < segment.length - 2 && Math.abs(Math.atan2(segment[i + 1] - segment[pi + 1], segment[i] - segment[pi]) - Math.atan2(segment[i + 3] - segment[i + 1], segment[i + 2] - segment[i])) < 0.09 ? 2 : 0; //0: corner, 1: smooth but not mirrored, 2: smooth and mirrored.
 
     if (this.smooth !== prevSmooth) {
       this.element.setAttribute("d", this.smooth ? this.editor._circleHandle : this.editor._squareHandle);
@@ -767,9 +765,7 @@ function () {
   return Anchor;
 }();
 
-export var PathEditor =
-/*#__PURE__*/
-function () {
+export var PathEditor = /*#__PURE__*/function () {
   function PathEditor(target, vars) {
     vars = vars || {};
 
@@ -1052,9 +1048,10 @@ function () {
   _proto3._onClickHandle1 = function _onClickHandle1() {
     var anchor = this._editingAnchor,
         i = anchor.i,
-        s = anchor.segment;
+        s = anchor.segment,
+        pi = anchor.isClosedStart ? s.length - 4 : i - 2;
 
-    if (_ALT && Math.abs(s[i] - s[i - 2]) < 5 && Math.abs(s[i + 1] - s[i - 1]) < 5) {
+    if (_ALT && Math.abs(s[i] - s[pi]) < 5 && Math.abs(s[i + 1] - s[pi + 1]) < 5) {
       this._onClickAnchor(anchor);
     }
   };
@@ -1194,6 +1191,7 @@ function () {
   _proto3._onClickAnchor = function _onClickAnchor(anchor) {
     var i = anchor.i,
         segment = anchor.segment,
+        pi = anchor.isClosedStart ? segment.length - 4 : i - 2,
         rnd = 1000,
         isEnd = !i || i >= segment.length - 2,
         angle1,
@@ -1206,28 +1204,28 @@ function () {
     if (_ALT && _recentlyAddedAnchor !== anchor && this._editingAnchor) {
       anchor.smooth = !anchor.smooth;
 
-      if (isEnd) {
+      if (isEnd && !anchor.isClosedStart) {
         //the very ends can't be "smooth"
         anchor.smooth = false;
       }
 
       anchor.element.setAttribute("d", anchor.smooth ? this._circleHandle : this._squareHandle);
 
-      if (anchor.smooth && !isEnd) {
-        angle1 = Math.atan2(segment[i + 1] - segment[i - 1], segment[i] - segment[i - 2]);
+      if (anchor.smooth && (!isEnd || anchor.isClosedStart)) {
+        angle1 = Math.atan2(segment[i + 1] - segment[pi + 1], segment[i] - segment[pi]);
         angle2 = Math.atan2(segment[i + 3] - segment[i + 1], segment[i + 2] - segment[i]);
         angle1 = (angle1 + angle2) / 2;
-        length1 = _getLength(segment, i - 2, i);
+        length1 = _getLength(segment, pi, i);
         length2 = _getLength(segment, i, i + 2);
 
         if (length1 < 0.2) {
-          length1 = _getLength(segment, i, i - 6) / 4;
-          angle1 = angle2 || Math.atan2(segment[i + 7] - segment[i - 5], segment[i + 6] - segment[i - 6]);
+          length1 = _getLength(segment, i, pi - 4) / 4;
+          angle1 = angle2 || Math.atan2(segment[i + 7] - segment[pi - 3], segment[i + 6] - segment[pi - 4]);
         }
 
         if (length2 < 0.2) {
           length2 = _getLength(segment, i, i + 6) / 4;
-          angle2 = angle1 || Math.atan2(segment[i + 7] - segment[i - 5], segment[i + 6] - segment[i - 6]);
+          angle2 = angle1 || Math.atan2(segment[i + 7] - segment[pi - 3], segment[i + 6] - segment[pi - 4]);
         }
 
         sin = Math.sin(angle1);
@@ -1238,8 +1236,8 @@ function () {
           cos = -cos;
         }
 
-        segment[i - 2] = ((segment[i] + cos * length1) * rnd | 0) / rnd;
-        segment[i - 1] = ((segment[i + 1] + sin * length1) * rnd | 0) / rnd;
+        segment[pi] = ((segment[i] + cos * length1) * rnd | 0) / rnd;
+        segment[pi + 1] = ((segment[i + 1] + sin * length1) * rnd | 0) / rnd;
         segment[i + 2] = ((segment[i] - cos * length2) * rnd | 0) / rnd;
         segment[i + 3] = ((segment[i + 1] - sin * length2) * rnd | 0) / rnd;
 
@@ -1248,10 +1246,10 @@ function () {
         this.update();
 
         this._saveState();
-      } else if (!anchor.smooth && !isEnd) {
-        if (i) {
-          segment[i - 2] = segment[i];
-          segment[i - 1] = segment[i + 1];
+      } else if (!anchor.smooth && (!isEnd || anchor.isClosedStart)) {
+        if (i || anchor.isClosedStart) {
+          segment[pi] = segment[i];
+          segment[pi + 1] = segment[i + 1];
         }
 
         if (i < segment.length - 2) {
@@ -1296,9 +1294,9 @@ function () {
 
     i = anchor ? anchor.i : 0;
 
-    if (anchor && i) {
-      x = segment[i - 2];
-      y = segment[i - 1]; //TODO: if they equal the anchor coordinates, just hide it.
+    if (anchor && (i || anchor.isClosedStart)) {
+      x = anchor.isClosedStart ? segment[segment.length - 4] : segment[i - 2];
+      y = anchor.isClosedStart ? segment[segment.length - 3] : segment[i - 1]; //TODO: if they equal the anchor coordinates, just hide it.
 
       this._handle1.style.visibility = this._line1.style.visibility = !_ALT && x === segment[i] && y === segment[i + 1] ? "hidden" : "visible";
 
@@ -1326,7 +1324,7 @@ function () {
     var anchor = this._editingAnchor;
 
     if (anchor) {
-      if (anchor.i) {
+      if (anchor.i || anchor.isClosedStart) {
         this._handle1.style.visibility = this._line1.style.visibility = "visible";
       }
 
@@ -1339,13 +1337,15 @@ function () {
   _proto3._onReleaseAlt = function _onReleaseAlt() {
     var anchor = this._editingAnchor,
         s,
-        i;
+        i,
+        pi;
 
     if (anchor) {
       s = anchor.segment;
       i = anchor.i;
+      pi = anchor.isClosedStart ? s.length - 4 : i - 2;
 
-      if (s[i] === s[i - 2] && s[i + 1] === s[i - 1]) {
+      if (s[i] === s[pi] && s[i + 1] === s[pi + 1]) {
         this._handle1.style.visibility = this._line1.style.visibility = "hidden";
       }
 
@@ -1365,7 +1365,7 @@ function () {
 
   _proto3._onPressHandle2 = function _onPressHandle2() {
     if (this._editingAnchor.smooth) {
-      this._oppositeHandleLength = _getLength(this._editingAnchor.segment, this._editingAnchor.i - 2, this._editingAnchor.i);
+      this._oppositeHandleLength = _getLength(this._editingAnchor.segment, this._editingAnchor.isClosedStart ? this._editingAnchor.segment.length - 4 : this._editingAnchor.i - 2, this._editingAnchor.i);
     }
 
     _callback("onPress", this);
@@ -1381,12 +1381,13 @@ function () {
     var anchor = this._editingAnchor,
         s = anchor.segment,
         i = anchor.i,
+        pi = anchor.isClosedStart ? s.length - 4 : i - 2,
         rnd = 1000,
         x = this._handle1._draggable.x,
         y = this._handle1._draggable.y,
         angle;
-    s[i - 2] = x = (x * rnd | 0) / rnd;
-    s[i - 1] = y = (y * rnd | 0) / rnd;
+    s[pi] = x = (x * rnd | 0) / rnd;
+    s[pi + 1] = y = (y * rnd | 0) / rnd;
 
     if (anchor.smooth) {
       if (_ALT) {
@@ -1412,6 +1413,7 @@ function () {
     var anchor = this._editingAnchor,
         s = anchor.segment,
         i = anchor.i,
+        pi = anchor.isClosedStart ? s.length - 4 : i - 2,
         rnd = 1000,
         x = this._handle2._draggable.x,
         y = this._handle2._draggable.y,
@@ -1431,8 +1433,8 @@ function () {
         angle = Math.atan2(s[i + 1] - y, s[i] - x);
         x = this._oppositeHandleLength * Math.cos(angle);
         y = this._oppositeHandleLength * Math.sin(angle);
-        s[i - 2] = ((s[i] + x) * rnd | 0) / rnd;
-        s[i - 1] = ((s[i + 1] + y) * rnd | 0) / rnd;
+        s[pi] = ((s[i] + x) * rnd | 0) / rnd;
+        s[pi + 1] = ((s[i + 1] + y) * rnd | 0) / rnd;
       }
     }
 
@@ -1446,7 +1448,8 @@ function () {
         i,
         j,
         s,
-        a;
+        a,
+        pi;
 
     for (j = 0; j < l; j++) {
       a = anchors[j];
@@ -1456,6 +1459,12 @@ function () {
       if (i) {
         s[i - 2] = ((s[i - 2] + changeX) * rnd | 0) / rnd;
         s[i - 1] = ((s[i - 1] + changeY) * rnd | 0) / rnd;
+      } else if (a.isClosedStart) {
+        pi = s.length - 2;
+        s[pi] = _round(s[pi] + changeX);
+        s[pi + 1] = _round(s[pi + 1] + changeY);
+        s[pi - 2] = _round(s[pi - 2] + changeX);
+        s[pi - 1] = _round(s[pi - 1] + changeY);
       }
 
       s[i] = ((s[i] + changeX) * rnd | 0) / rnd;
@@ -1518,7 +1527,8 @@ function () {
         i,
         s,
         x,
-        y;
+        y,
+        pi;
 
     if (readPath) {
       this.init();
@@ -1528,9 +1538,10 @@ function () {
       i = anchor.i;
       s = anchor.segment;
 
-      if (i) {
-        x = s[i - 2];
-        y = s[i - 1];
+      if (i || anchor.isClosedStart) {
+        pi = anchor.isClosedStart ? s.length - 4 : i - 2;
+        x = s[pi];
+        y = s[pi + 1];
 
         this._handle1.setAttribute("transform", "translate(" + x + _comma + y + ")");
 
@@ -1790,5 +1801,5 @@ PathEditor.getSnapFunction = function (vars) {
   };
 };
 
-PathEditor.version = "3.1.1";
+PathEditor.version = "3.10.4";
 export { PathEditor as default };

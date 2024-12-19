@@ -1,16 +1,35 @@
-// TODO
-declare const EaselPlugin: any;
-
-declare module "gsap/EaselPlugin" {
-
-  // TODO
-  export const EaselPlugin: any;
-  export { EaselPlugin as default };
+declare namespace EaselPlugin {
+  interface Vars {
+    [key: string]: any;
+  }
 }
 
-declare module "gsap/dist/EaselPlugin" {
-  export * from "gsap/EaselPlugin";
-  export { EaselPlugin as default } from "gsap/EaselPlugin";
+declare namespace gsap {
+
+  interface TweenVars {
+    easel?: EaselPlugin.Vars;
+  }
+}
+
+declare namespace gsap.plugins {
+
+  interface EaselPlugin extends Plugin {
+
+  }
+
+  interface EaselPluginClass extends EaselPlugin {
+    new(): PluginScope & EaselPlugin;
+    prototype: PluginScope & EaselPlugin;
+  }
+
+  const easel: EaselPluginClass;
+}
+
+declare const EaselPlugin: gsap.plugins.EaselPlugin;
+
+declare module "gsap/EaselPlugin" {
+  export const EaselPlugin: gsap.plugins.EaselPlugin;
+  export { EaselPlugin as default };
 }
 
 declare module "gsap/src/EaselPlugin" {
@@ -18,6 +37,30 @@ declare module "gsap/src/EaselPlugin" {
   export { EaselPlugin as default } from "gsap/EaselPlugin";
 }
 
+declare module "gsap/dist/EaselPlugin" {
+  export * from "gsap/EaselPlugin";
+  export { EaselPlugin as default } from "gsap/EaselPlugin";
+}
+
 declare module "gsap/all" {
+  export * from "gsap/EaselPlugin";
+}
+
+declare module "gsap-trial/EaselPlugin" {
+  export * from "gsap/EaselPlugin";
+  export { EaselPlugin as default } from "gsap/EaselPlugin";
+}
+
+declare module "gsap-trial/src/EaselPlugin" {
+  export * from "gsap/EaselPlugin";
+  export { EaselPlugin as default } from "gsap/EaselPlugin";
+}
+
+declare module "gsap-trial/dist/EaselPlugin" {
+  export * from "gsap/EaselPlugin";
+  export { EaselPlugin as default } from "gsap/EaselPlugin";
+}
+
+declare module "gsap-trial/all" {
   export * from "gsap/EaselPlugin";
 }

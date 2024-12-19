@@ -1,8 +1,8 @@
 /*!
- * SplitText: 3.1.1
+ * SplitText: 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -82,12 +82,13 @@ let _doc, _win, _coreInitted,
 			if (child._isSplit) {
 				_deWordify(child);
 			} else {
-				if (i && child.previousSibling.nodeType === 3) {
+				if (i && child.previousSibling && child.previousSibling.nodeType === 3) {
 					child.previousSibling.nodeValue += (child.nodeType === 3) ? child.nodeValue : child.firstChild.nodeValue;
+					e.removeChild(child);
 				} else if (child.nodeType !== 3) {
 					e.insertBefore(child.firstChild, child);
+					e.removeChild(child);
 				}
-				e.removeChild(child);
 			}
 		}
 	},
@@ -100,7 +101,7 @@ let _doc, _win, _coreInitted,
 			borderLeftAndRight = _getStyleAsNumber("borderLeftWidth", cs) + _getStyleAsNumber("borderRightWidth", cs),
 			padTopAndBottom = _getStyleAsNumber("paddingTop", cs) + _getStyleAsNumber("paddingBottom", cs),
 			padLeftAndRight = _getStyleAsNumber("paddingLeft", cs) + _getStyleAsNumber("paddingRight", cs),
-			lineThreshold = _getStyleAsNumber("fontSize", cs) * 0.2,
+			lineThreshold = _getStyleAsNumber("fontSize", cs) * (vars.lineThreshold || 0.2),
 			textAlign = cs.textAlign,
 			charArray = [],
 			wordArray = [],
@@ -115,10 +116,12 @@ let _doc, _win, _coreInitted,
 			linesClass = vars.linesClass,
 			iterateLine = ~((linesClass || "").indexOf("++")),
 			spaceNodesToRemove = [],
+			isFlex = cs.display === "flex",
+			prevInlineDisplay = element.style.display,
 			i, j, l, node, nodes, isChild, curLine, addWordSpaces, style, lineNode, lineWidth, offset;
-		if (iterateLine) {
-			linesClass = linesClass.split("++").join("");
-		}
+		iterateLine && (linesClass = linesClass.split("++").join(""));
+
+		isFlex && (element.style.display = "block");
 
 		//copy all the descendant nodes into an array (we can't use a regular nodeList because it's live and we may need to renest things)
 		j = element.getElementsByTagName("*");
@@ -167,9 +170,7 @@ let _doc, _win, _coreInitted,
 			isChild = (node.parentNode === element);
 			if (node.nodeName === "BR") {
 				if (lines || absolute) {
-					if (node.parentNode) {
-						node.parentNode.removeChild(node);
-					}
+					node.parentNode && node.parentNode.removeChild(node);
 					nodes.splice(i--, 1);
 					l--;
 				} else if (!words) {
@@ -194,10 +195,15 @@ let _doc, _win, _coreInitted,
 			}
 
 			if (!words && chars) {
-				//we always start out wrapping words in their own <div> so that line breaks happen correctly, but here we'll remove those <div> tags if necessary and renest the characters directly into the element rather than inside the word <div>
+				//we always start out wrapping words in their own <div> so that line breaks happen correctly, but here we'll remove those <div> tags if necessary and re-nest the characters directly into the element rather than inside the word <div>
 				if (node._isSplit) {
-					node._next = node.nextSibling;
+					node._next = j = node.nextSibling;
 					node.parentNode.appendChild(node); //put it at the end to keep the order correct.
+					while (j && j.nodeType === 3 && j.textContent === " ") { // if there are nodes that are just a space right afterward, go ahead and append them to the end so they're not out of order.
+						node._next = j.nextSibling;
+						node.parentNode.appendChild(j);
+						j = j.nextSibling;
+					}
 
 				} else if (node.parentNode._isSplit) {
 					node._parent = node.parentNode;
@@ -213,12 +219,8 @@ let _doc, _win, _coreInitted,
 					l--;
 				} else if (!isChild) {
 					offset = (!node.nextSibling && _isBeforeWordDelimiter(node.parentNode, element, wordDelimiter)); //if this is the last letter in the word (and we're not breaking by lines and not positioning things absolutely), we need to add a space afterwards so that the characters don't just mash together
-					if (node.parentNode._parent) {
-						node.parentNode._parent.appendChild(node);
-					}
-					if (offset) {
-						node.parentNode.appendChild(_doc.createTextNode(" "));
-					}
+					node.parentNode._parent && node.parentNode._parent.appendChild(node);
+					offset && node.parentNode.appendChild(_doc.createTextNode(" "));
 					if (tag === "span") {
 						node.style.display = "inline"; //so that word breaks are honored properly.
 					}
@@ -268,9 +270,7 @@ let _doc, _win, _coreInitted,
 					if (curLine[j].nodeName !== "BR") {
 						node = curLine[j];
 						lineNode.appendChild(node);
-						if (addWordSpaces && node._wordEnd) {
-							lineNode.appendChild(_doc.createTextNode(" "));
-						}
+						addWordSpaces && node._wordEnd && lineNode.appendChild(_doc.createTextNode(" "));
 						if (absolute) {
 							if (j === 0) {
 								lineNode.style.top = (node._y) + "px";
@@ -313,10 +313,9 @@ let _doc, _win, _coreInitted,
 				}
 			}
 		}
+		isFlex && (prevInlineDisplay ? (element.style.display = prevInlineDisplay) : element.style.removeProperty("display"));
 		_pushReversed(allChars, charArray);
-		if (words) {
-			_pushReversed(allWords, wordArray);
-		}
+		words && _pushReversed(allWords, wordArray);
 		_pushReversed(allLines, lineArray);
 	},
 	_splitRawText = (element, vars, wordStart, charStart) => {
@@ -382,9 +381,7 @@ let _doc, _win, _coreInitted,
 			}
 		}
 		element.outerHTML = splitText + (wordIsOpen ? wordEnd : "");
-		if (hasTagStart) {
-			_swapText(parent, "{{LT}}", "<"); //note: don't perform this on "element" because that gets replaced with all new elements when we set element.outerHTML.
-		}
+		hasTagStart && _swapText(parent, "{{LT}}", "<"); //note: don't perform this on "element" because that gets replaced with all new elements when we set element.outerHTML.
 	},
 	_split = (element, vars, wordStart, charStart) => {
 		let children = _toArray(element.childNodes),
@@ -395,6 +392,7 @@ let _doc, _win, _coreInitted,
 			vars.absolute = false;
 			for (i = 0; i < l; i++) {
 				child = children[i];
+				child._next = child._isFirst = child._parent = child._wordEnd = null;
 				if (child.nodeType !== 3 || /\S+/.test(child.nodeValue)) {
 					if (absolute && child.nodeType !== 3 && _getComputedStyle(child).display === "inline") { //if there's a child node that's display:inline, switch it to inline-block so that absolute positioning works properly (most browsers don't report offsetTop/offsetLeft properly inside a <span> for example)
 						child.style.display = "inline-block";
@@ -414,24 +412,18 @@ let _doc, _win, _coreInitted,
 export class SplitText {
 
 	constructor(element, vars) {
-		if (!_coreInitted) {
-			_initCore();
-		}
+		_coreInitted || _initCore();
 		this.elements = _toArray(element);
 		this.chars = [];
 		this.words = [];
 		this.lines = [];
 		this._originals = [];
 		this.vars = vars || {};
-		if (_bonusValidated) {
-			this.split(vars);
-		}
+		_bonusValidated && this.split(vars);
 	}
 
 	split(vars) {
-		if (this.isSplit) {
-			this.revert();
-		}
+		this.isSplit && this.revert();
 		this.vars = vars = vars || this.vars;
 		this._originals.length = this.chars.length = this.words.length = this.lines.length = 0;
 		let i = this.elements.length,
@@ -474,6 +466,6 @@ export class SplitText {
 
 }
 
-SplitText.version = "3.1.1";
+SplitText.version = "3.10.4";
 
 export { SplitText as default };

@@ -1,16 +1,11 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "@/app/utils/gsap/SplitText";
 import { works } from "@/app/data/worksData";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
-
-
-gsap.registerPlugin(ScrollTrigger, SplitText);
+import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
+import { animateProjectImages, animatePageContent } from "./animation";
 
 const formatId = (id: string): string => id.padStart(2, "0");
 
@@ -21,64 +16,21 @@ export default function WorksPage() {
     const worksRef = useRef(null);
 
     useGSAP(() => {
-        imageRefs.current.forEach((image, index) => {
-            if (image) {
-                if (index === activeIndex) {
-                    gsap.to(image, {
-                        scale: 1,
-                        duration: 1,
-                        ease: "power3.out",
-                    });
-                } else {
-                    gsap.to(image, {
-                        scale: 1.05,
-                        duration: 1,
-                        ease: "power3.out",
-                    });
-                }
-            }
-        });
+        animateProjectImages(imageRefs.current, activeIndex);
     }, [activeIndex, viewMode]);
 
-
-
     useGSAP(() => {
-        const elements = gsap.utils.toArray(".project-container");
-        const childSplit = new SplitText(worksRef.current, { type: "lines" });
-        new SplitText(worksRef.current, {
-            type: "lines",
-            linesClass: "line-wrapper overflow-hidden pt-1",
-        });
-        const works = childSplit.lines;
-
-        const tl = gsap.timeline();
-
-        tl.fromTo(
-            works,
-            { y: "100%", visibility: "hidden" },
-            { y: "0%",visibility: "visible", duration: 1, ease: "power3.out" }
-        );
-        tl.fromTo(
-            elements,
-            { opacity: 0, y: 25, visibility: "hidden" },
-            {
-                opacity: 1,
-                y: 0,
-                visibility: "visible",
-                duration: 0.5,
-                ease: "sine.out",
-                stagger: 0.1,
-            },
-            "<"
-        );
+        return animatePageContent(worksRef.current);
     }, [viewMode]);
 
     return (
-        <div
-            className="w-screen min-h-svh bg-offwhitebackground text-black font-Lausanne500">
+        <div className="w-screen min-h-svh bg-offwhitebackground text-black font-Lausanne500">
             <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-24">
-                <h1 style={{visibility: "hidden"}} ref={worksRef}
-                    className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none pb-8 flex">
+                <h1
+                    style={{visibility: "hidden"}}
+                    ref={worksRef}
+                    className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none pb-8 flex"
+                >
                     All Works
                     <sup className="text-xs md:text-sm tracking-normal align-top">
                         ({String(works.length).padStart(2, "0")})
@@ -88,14 +40,14 @@ export default function WorksPage() {
                 <div className="flex text-sm items-center gap-2 font-Lausanne300 uppercase tracking-tight leading-none pb-4">
                     <button
                         onClick={() => setViewMode("list")}
-                        className={` ${viewMode === "list" ? "opacity-50" : ""}`}
+                        className={`${viewMode === "list" ? "opacity-50" : ""}`}
                     >
                         List
                     </button>
                     <span>/</span>
                     <button
                         onClick={() => setViewMode("grid")}
-                        className={` ${viewMode === "grid" ? "opacity-50" : ""}`}
+                        className={`${viewMode === "grid" ? "opacity-50" : ""}`}
                     >
                         Grid
                     </button>
@@ -109,31 +61,26 @@ export default function WorksPage() {
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div style={{visibility: "hidden"}} className="project-container cursor-pointer">
                                 <div className="grid grid-cols-5 md:grid-cols-6 gap-4  tracking-tight leading-none">
-                                    <div
-                                        className="col-span-1 text-2xl md:text-5xl font-Lausanne300 justify-start items-center opacity-50 hidden md:flex">
+                                    <div className="col-span-1 text-2xl md:text-5xl font-Lausanne300 justify-start items-center opacity-50 hidden md:flex">
                                         <p>{formatId(project.id)}</p>
                                     </div>
                                     <div className="col-span-4 lg:col-span-3 flex justify-start items-center">
                                         <p className="text-2xl md:text-5xl font-Lausanne750 opacity-50">{project.title}</p>
                                     </div>
-                                    <div
-                                        className="col-span-1 text-sm md:text-xl font-Lausanne300 hidden lg:flex justify-start items-center opacity-50">
+                                    <div className="col-span-1 text-sm md:text-xl font-Lausanne300 hidden lg:flex justify-start items-center opacity-50">
                                         {project.type.join(" / ")}
                                     </div>
-                                    <div
-                                        className="col-span-1 text-sm md:text-xl font-Lausanne300 flex justify-end items-center opacity-50">
+                                    <div className="col-span-1 text-sm md:text-xl font-Lausanne300 flex justify-end items-center opacity-50">
                                         <p>{project.year}</p>
                                     </div>
                                 </div>
-                                {index < works.length - 1 &&
-                                    <hr className="border border-black opacity-10 my-4 lg:my-8"/>}
+                                {index < works.length - 1 && <hr className="border border-black opacity-10 my-4 lg:my-8"/>}
                             </div>
                         </TransitionLink>
                     ))}
-
                 </div>
             ) : (
-                <div className="px-4 lg:px-24 pb-32 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="px-4 lg:px-24 pb-32 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
                     {works.map((project, index) => (
                         <div
                             style={{visibility: "hidden"}}
@@ -155,11 +102,8 @@ export default function WorksPage() {
                                             className="object-cover"
                                         />
                                     </div>
-                                    <div
-                                        className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent rounded-custom overflow-hidden"/>
-
-                                    <div
-                                        className="absolute bottom-0 left-0 flex text-offwhitetext p-4 gap-4 text-sm md:text-xl font-Lausanne300 tracking-tight leading-none">
+                                    <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent rounded-custom overflow-hidden"/>
+                                    <div className="absolute bottom-0 left-0 flex text-offwhitetext p-4 gap-4 text-sm md:text-xl font-Lausanne300 tracking-tight leading-none">
                                         <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">{project.title}</p>
                                         <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">
                                             {project.year}

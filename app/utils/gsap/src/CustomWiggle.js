@@ -1,8 +1,8 @@
 /*!
- * CustomWiggle 3.1.1
+ * CustomWiggle 3.10.4
  * https://greensock.com
  *
- * @license Copyright 2008-2020, GreenSock. All rights reserved.
+ * @license Copyright 2008-2022, GreenSock. All rights reserved.
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
@@ -121,6 +121,6 @@ export class CustomWiggle {
 
 _getGSAP() && gsap.registerPlugin(CustomWiggle);
 
-CustomWiggle.version = "3.1.1";
+CustomWiggle.version = "3.10.4";
 
 export { CustomWiggle as default };

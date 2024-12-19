@@ -48,7 +48,7 @@ const ScrollTriggerBlur: React.FC<RevealTextProps> = ({ children, className }) =
                 }
             }
         );
-        
+
     }, [children]);
 
     return (

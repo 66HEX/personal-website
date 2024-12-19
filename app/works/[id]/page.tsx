@@ -37,7 +37,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
         <div>
             <div className="bg-offwhitebackground text-offblacktext">
                 <div className="w-full h-[30vh] flex items-end px-4 lg:px-24">
-                    <div className="grid grid-cols-2 w-full mb-8 gap-8">
+                    <div className="grid grid-cols-2 w-full mb-12 gap-8">
                         <div className="col-span-2 lg:col-span-1 flex items-end">
                             <h1 style={{visibility: "hidden"}} ref={titleRef}
                                 className="text-4xl md:text-7xl font-Lausanne750 tracking-tight leading-none lg:mb-0">
@@ -92,7 +92,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     </div>
                 </div>
                 <div
-                    className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 px-4 lg:px-24 py-8 lg:py-24 text-sm leading-tight">
+                    className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 px-4 lg:px-24 py-12 lg:py-24 text-sm leading-tight">
                     <div className="col-span-1 hidden md:flex">
 
                     </div>
@@ -104,7 +104,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     </div>
                 </div>
 
-                <div className="w-screen pb-8 md:pb-24 px-4 lg:px-24 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
+                <div className="w-screen pb-12 md:pb-24 px-4 lg:px-24 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
                     <div className="col-span-1 w-full h-full relative">
                         <div className="relative w-full h-auto rounded-custom overflow-hidden">
                             <Image

@@ -20,7 +20,7 @@ export default function SelectedWorks() {
     }, [activeIndex]);
 
     return (
-        <div className="w-screen px-4 lg:px-24 py-8 lg:py-24 bg-offwhitebackground text-offblacktext">
+        <div className="w-screen px-4 lg:px-24 py-12 lg:py-24 bg-offwhitebackground text-offblacktext">
             <div className="w-full flex flex-row justify-between items-end">
                 <h1 className="text-2xl lg:text-5xl font-Lausanne750 uppercase mb-8 tracking-tight leading-none flex items-start">
                     More Works

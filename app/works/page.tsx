@@ -55,7 +55,7 @@ export default function WorksPage() {
             </div>
 
             {viewMode === "list" ? (
-                <div className="px-4 lg:px-24 pb-32 grid grid-cols-1">
+                <div className="px-4 lg:px-24 pb-12 grid grid-cols-1">
                     <hr className="border border-black opacity-10 mb-4 lg:mb-8"/>
                     {works.map((project, index) => (
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
@@ -80,7 +80,7 @@ export default function WorksPage() {
                     ))}
                 </div>
             ) : (
-                <div className="px-4 lg:px-24 pb-32 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
+                <div className="px-4 lg:px-24 pb-12 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
                     {works.map((project, index) => (
                         <div
                             style={{visibility: "hidden"}}

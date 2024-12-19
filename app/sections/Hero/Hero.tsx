@@ -1,6 +1,6 @@
 "use client";
 
-import ThreeScene from "@/app/components/Scene2/Scene";
+import ThreeScene from "@/app/components/Scene/Scene";
 
 
 export default function Hero() {

@@ -34,12 +34,13 @@ export default function Navbar() {
         const timeline = gsap.timeline();
         timeline
             .to(menuRef.current, {
-                height: "auto",
+                height: "200px",
+                marginBottom: "1rem",
                 duration: 0.5,
                 ease: "power3.out",
             })
             .fromTo(
-                linksRef.current.filter(Boolean), // Filtruje `null` w tablicy
+                linksRef.current,
                 { y: 20, opacity: 0 },
                 {
                     y: 0,
@@ -48,15 +49,13 @@ export default function Navbar() {
                     stagger: 0.1,
                     ease: "power3.out",
                 },
-                "<"
             );
     };
 
     const closeMenu = () => {
         const timeline = gsap.timeline();
         timeline
-            .to(
-                linksRef.current.filter(Boolean),
+            .to(linksRef.current,
                 {
                     y: -20,
                     opacity: 0,
@@ -67,6 +66,7 @@ export default function Navbar() {
             )
             .to(menuRef.current, {
                 height: 0,
+                marginBottom: "0rem",
                 duration: 0.5,
                 ease: "power3.in",
             });
@@ -74,7 +74,7 @@ export default function Navbar() {
 
     useEffect(() => {
         gsap.set(menuRef.current, { height: 0 });
-        gsap.set(linksRef.current.filter(Boolean), { y: -20, opacity: 0 });
+        gsap.set(linksRef.current, { y: -20, opacity: 0 });
     }, []);
 
     return (
@@ -105,7 +105,7 @@ export default function Navbar() {
                 {/* Mobile Menu */}
                 <div
                     ref={menuRef}
-                    className="md:hidden overflow-hidden flex flex-col gap-4 font-Lausanne250"
+                    className="md:hidden overflow-hidden flex flex-col justify-end space-y-4 font-Lausanne250"
                 >
                     {navLinks.map((link, index) => (
                         <div

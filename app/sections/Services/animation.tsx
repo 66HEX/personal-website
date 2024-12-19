@@ -18,39 +18,23 @@ export const animateAccordion = (
 ) => {
     const { detailsRefs, arrowRefs } = refs;
 
+    const detailsHeights = detailsRefs.map(ref => ref ? ref.scrollHeight : 0);
+
+    const tl = gsap.timeline({ defaults: { duration: 1, ease: "power3.inOut" } });
+
     detailsRefs.forEach((ref, i) => {
-        if (i === index && ref) {
-            gsap.to(ref, {
-                height: isOpen ? 0 : ref.scrollHeight,
-                duration: 1,
-                ease: "power3.inOut",
-            });
-        } else if (ref) {
-            gsap.to(ref, {
-                height: 0,
-                duration: 1,
-                ease: "power3.inOut",
-            });
+        if (ref) {
+            const targetHeight = i === index ? (isOpen ? 0 : detailsHeights[i]) : 0;
+            tl.to(ref, { height: targetHeight }, 0);
         }
     });
 
     arrowRefs.forEach((arrow, i) => {
-        if (i === index && arrow) {
-            gsap.to(arrow, {
-                rotate: isOpen ? 0 : 180,
-                duration: 0.5,
-                transformOrigin: "center center",
-                force3D: true,
-                ease: "power3.inOut",
-            });
-        } else if (arrow) {
-            gsap.to(arrow, {
-                rotate: 0,
-                duration: 0.5,
-                transformOrigin: "center center",
-                force3D: true,
-                ease: "power3.inOut",
-            });
+        if (arrow) {
+            const rotation = i === index && !isOpen ? 180 : 0;
+            if (arrow.style.transform !== `rotate(${rotation}deg)`) {
+                tl.to(arrow, { rotate: rotation, transformOrigin: "center center", force3D: true }, 0);
+            }
         }
     });
 };

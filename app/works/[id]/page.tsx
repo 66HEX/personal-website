@@ -37,7 +37,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
         <div>
             <div className="bg-offwhitebackground text-offblacktext">
                 <div className="w-full h-[30vh] flex items-end px-4 lg:px-24">
-                    <div className="grid grid-cols-2 w-full mb-12 gap-8">
+                    <div className="grid grid-cols-2 w-full mb-4 gap-4">
                         <div className="col-span-2 lg:col-span-1 flex items-end">
                             <h1 style={{visibility: "hidden"}} ref={titleRef}
                                 className="text-4xl md:text-7xl font-Lausanne750 tracking-tight leading-none lg:mb-0">

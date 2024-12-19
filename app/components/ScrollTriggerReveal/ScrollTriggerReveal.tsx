@@ -43,7 +43,7 @@ const ScrollTriggerReveal: React.FC<RevealTextProps> = ({ children, className })
         );
 
         return () => {
-            
+
         };
     }, [children]);
 

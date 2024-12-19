@@ -32,11 +32,10 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
             opacity: 0,
             duration: 0.5,
             ease: "power3.in",
-            onComplete: async () => {
-                router.push(href);
-                await sleep(200);
+            onComplete: () => {
+                router.push(href);  // Push the route without async/await
                 gsap.fromTo("#page-transition", { opacity: 0 },
-                    { opacity: 1, duration: 0.5 });
+                    { opacity: 1, delay: 0.25, duration: 0.5 });
             },
         });
     };

@@ -2,7 +2,7 @@ export const services = [
     {
         id: 1,
         title: "Web Development",
-        description: "As a full-stack developer, I build lightning-fast, responsive websites that not only look stunning but work flawlessly. I specialize in React, and Next, allowing me to choose the perfect technology stack for your specific needs and business goals."
+        description: "As a front-end developer, I build lightning-fast, responsive websites that not only look stunning but work flawlessly. I specialize in React, and Next, allowing me to choose the perfect technology stack for your specific needs and business goals."
     },
     {
         id: 2,

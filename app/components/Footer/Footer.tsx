@@ -17,22 +17,23 @@ const navLinks = [
 export default function Footer() {
     return (
         <div
-            className="relative h-[28rem] md:h-[20rem] xl:h-[20rem]"
+            className="relative h-[32rem] md:h-[24rem]"
             style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
         >
             <div
-                className="fixed bottom-0 h-[28rem] md:h-[20rem] xl:h-[20rem] w-full bg-offblacktext text-offwhitetext">
+                className="fixed bottom-0 h-[32rem] md:h-[24rem] w-full bg-offblacktext text-offwhitetext">
                 <div className="w-full px-4 lg:px-24 py-12 font-Lausanne250">
                     <h1 className="text-2xl lg:text-5xl font-Lausanne750 tracking-tight leading-none mb-4 opacity-50">
                         /hex
                     </h1>
-                    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-24">
                         {/* Left section */}
                         <div className="col-span-2 flex flex-col justify-start">
                             <p className="text-sm lg:text-base leading-relaxed">
-                                Frontend developer with a passion for pushing web technologies to their limits.
+                                Front-end developer with a passion for pushing web technologies to their limits.
                                 Combining modern frameworks, responsive design principles, and creative problem-solving
                                 to deliver exceptional user experiences that exceed expectations and drive results.
+                                <span className="font-Lausanne750 opacity-50"> Always learning, always delivering.</span>
                             </p>
                         </div>
 

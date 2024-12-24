@@ -45,10 +45,27 @@ const Marquee: React.FC = () => {
         const initAnimation = async () => {
             await document.fonts.ready;
 
+            const getPadding = () => {
+                const viewportWidth = window.innerWidth;
+                if (viewportWidth >= 1024) { // lg breakpoint
+                    return 32;
+                } else { // sm breakpoint
+                    return 16;
+                }
+            };
+
             loopRef.current = horizontalLoop('.testimonial-card', {
                 repeat: -1,
                 speed: speed,
-                paddingRight: 32,
+                paddingRight: getPadding(),
+            });
+
+            // Recalculate padding on resize
+            window.addEventListener('resize', () => {
+                if (loopRef.current) {
+                    const newPadding = getPadding();
+                    loopRef.current.paddingRight = newPadding;
+                }
             });
 
             observerRef.current = Observer.create({
@@ -66,6 +83,7 @@ const Marquee: React.FC = () => {
                 },
             });
         };
+
 
         initAnimation();
 

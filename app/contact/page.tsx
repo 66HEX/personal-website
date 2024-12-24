@@ -46,7 +46,7 @@ export default function Contact() {
     return (
         <div className="px-4 lg:px-24 py-24 min-h-screen bg-black text-white font-Lausanne300">
             <div className="container mx-auto">
-                <div className="flex justify-between items-center mb-20">
+                <div className="flex justify-between items-center mb-12">
                     <h1 className="text-4xl md:text-7xl  font-Lausanne750 tracking-tight uppercase">Contact</h1>
                 </div>
                 <div className="grid md:grid-cols-2 gap-20">

@@ -55,11 +55,11 @@ export default function SelectedWorks() {
                                     </div>
                                     <div
                                         className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
-                                    <div className="absolute bottom-0 left-0 p-8">
+                                    <div className="absolute bottom-0 left-0 p-4 xl:p-8">
                                         <div
                                             className="flex justify-between gap-4 text-sm md:text-xl tracking-tight leading-none">
-                                            <p className="border border-white px-4 py-1 rounded-full font-Lausanne750">{project.title}</p>
-                                            <p className="border border-white px-4 py-1 rounded-full font-Lausanne300 opacity-50">{project.year}</p>
+                                            <p className="border border-white px-4 py-2 rounded-full font-Lausanne750">{project.title}</p>
+                                            <p className="border border-white px-4 py-2 rounded-full font-Lausanne300 opacity-50">{project.year}</p>
                                         </div>
                                     </div>
                                 </div>

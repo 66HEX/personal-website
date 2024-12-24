@@ -6,7 +6,7 @@ export default function Hero() {
 
     return (
         <div
-            className="relative min-h-screen w-screen bg-black text-white flex flex-col justify-center items-start px-4 lg:px-24"
+            className="relative h-svh w-screen bg-black text-white flex flex-col justify-center items-start px-4 lg:px-24"
             style={{
                 backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)',
                 backgroundSize: '100% 200%',

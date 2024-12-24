@@ -19,6 +19,11 @@ export default function Navbar() {
         { index: "04", href: "/contact", label: "Contact" },
     ];
 
+    useEffect(() => {
+        gsap.set(menuRef.current, { height: 0, overflow: "hidden" });
+
+    }, []);
+
     const closeMenu = () => {
         if (!isOpen) return;
 
@@ -75,28 +80,6 @@ export default function Navbar() {
         });
     };
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                containerRef.current &&
-                !containerRef.current.contains(event.target as Node)
-            ) {
-                closeMenu();
-            }
-        };
-
-        const handleRouteChange = () => {
-            closeMenu();
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        window.addEventListener("popstate", handleRouteChange);
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-            window.removeEventListener("popstate", handleRouteChange);
-        };
-    }, [isOpen]);
 
     const handleLinkClick = () => {
         closeMenu();
@@ -160,7 +143,7 @@ export default function Navbar() {
                             <TransitionLink
                                 href={link.href}
                                 className="flex items-center gap-2"
-                                onClick={handleLinkClick}
+                                
                             >
                                 <span className="text-xs opacity-50">{link.index}</span>
                                 <span className="text-sm font-[300]">{link.label}</span>

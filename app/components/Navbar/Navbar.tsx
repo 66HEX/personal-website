@@ -10,31 +10,42 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement | null>(null);
     const linksRef = useRef<(HTMLDivElement | null)[]>([]);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const navLinks = [
-        { index: "1", href: "/", label: "Home" },
-        { index: "2", href: "/works", label: "Works" },
-        { index: "3",href: "/about", label: "About" },
-        { index: "4", href: "/contact", label: "Contact" },
+        { index: "01", href: "/", label: "Home" },
+        { index: "02", href: "/works", label: "Works" },
+        { index: "03", href: "/about", label: "About" },
+        { index: "04", href: "/contact", label: "Contact" },
     ];
 
-    const toggleMenu = () => {
-        setIsOpen((prev) => {
-            const newState = !prev;
-            if (newState) {
-                openMenu();
-            } else {
-                closeMenu();
-            }
-            return newState;
-        });
+    const closeMenu = () => {
+        if (!isOpen) return;
+
+        const timeline = gsap.timeline();
+        timeline
+            .to(linksRef.current, {
+                y: -20,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.05,
+                ease: "power3.inOut",
+            })
+            .to(menuRef.current, {
+                height: 0,
+                marginBottom: "0rem",
+                duration: 0.5,
+                ease: "power3.inOut",
+            });
+
+        setIsOpen(false);
     };
 
     const openMenu = () => {
         const timeline = gsap.timeline();
         timeline
             .to(menuRef.current, {
-                height: "200px",
+                height: "auto",
                 marginBottom: "1rem",
                 duration: 0.5,
                 ease: "power3.inOut",
@@ -52,70 +63,107 @@ export default function Navbar() {
             );
     };
 
-    const closeMenu = () => {
-        const timeline = gsap.timeline();
-        timeline
-            .to(linksRef.current,
-                {
-                    y: -20,
-                    opacity: 0,
-                    duration: 0.5,
-                    stagger: 0.05,
-                    ease: "power3.inOut",
-                }
-            )
-            .to(menuRef.current, {
-                height: 0,
-                marginBottom: "0rem",
-                duration: 0.5,
-                ease: "power3.inOut",
-            });
+    const toggleMenu = () => {
+        setIsOpen((prev) => {
+            const newState = !prev;
+            if (newState) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+            return newState;
+        });
     };
 
     useEffect(() => {
-        gsap.set(menuRef.current, { height: 0 });
-        gsap.set(linksRef.current, { y: -20, opacity: 0 });
-    }, []);
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(event.target as Node)
+            ) {
+                closeMenu();
+            }
+        };
+
+        const handleRouteChange = () => {
+            closeMenu();
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        window.addEventListener("popstate", handleRouteChange);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("popstate", handleRouteChange);
+        };
+    }, [isOpen]);
+
+    const handleLinkClick = () => {
+        closeMenu();
+    };
 
     return (
-        <nav className="fixed top-2 left-0 text-white z-50 w-full px-4 md:px-24">
-            <div className="flex flex-col bg-white/5 border border-white/5 backdrop-blur-3xl py-4 px-4 lg:px-8 rounded-custom overflow-hidden">
-                <div className="flex justify-between items-center w-full">
-                    <div className="text-2xl font-[750] tracking-tight leading-none uppercase">
-                        <TransitionLink href="/">/hex</TransitionLink>
+        <nav className="fixed top-4 left-0 text-white z-50 w-full px-4 lg:px-24">
+            <div
+                ref={containerRef}
+                className="flex flex-col bg-white/5 border border-white/20 backdrop-blur-3xl rounded-custom overflow-hidden"
+            >
+                <div className="flex justify-between items-center w-full px-4 md:px-8 py-4">
+                    <div className="flex items-center gap-2">
+                        <TransitionLink
+                            href="/"
+                            className="text-2xl lg:text-3xl font-[750] tracking-tight leading-none"
+                        >
+                            /hex
+                            <sup className="text-xs tracking-normal align-top opacity-50">
+                                dev
+                            </sup>
+                        </TransitionLink>
                     </div>
 
-                    <div className="hidden md:flex gap-4 text-xl font[300] transition-opacity">
+                    <div className="hidden md:flex items-center gap-8">
                         {navLinks.map((link) => (
-                            <TransitionLink key={link.href} href={link.href}>
-                                <AnimatedLink className="leading-none">
-                                    {link.label}
-                                </AnimatedLink>
+                            <TransitionLink
+                                key={link.href}
+                                href={link.href}
+                                className="group relative"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xs font-[300] opacity-50">{link.index}</span>
+                                    <AnimatedLink className="text-xl font-[300]">
+                                        {link.label}
+                                    </AnimatedLink>
+                                </div>
                             </TransitionLink>
                         ))}
                     </div>
 
                     <button
                         onClick={toggleMenu}
-                        className="md:hidden"
+                        className="md:hidden p-2 hover:bg-white/10 rounded-full transition-colors"
                         aria-label="Toggle menu"
                     >
                         {isOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
 
-                {/* Mobile Menu */}
                 <div
                     ref={menuRef}
-                    className="md:hidden overflow-hidden flex flex-col justify-end space-y-4 font-Lausanne250"
+                    className="md:hidden overflow-hidden px-4"
                 >
                     {navLinks.map((link, index) => (
                         <div
                             key={link.href}
                             ref={(el) => (linksRef.current[index] = el)}
+                            className="py-2"
                         >
-                            <TransitionLink href={link.href}>
-                                {link.label}
+                            <TransitionLink
+                                href={link.href}
+                                className="flex items-center gap-2"
+                                onClick={handleLinkClick}
+                            >
+                                <span className="text-xs opacity-50">{link.index}</span>
+                                <span className="text-sm font-[300]">{link.label}</span>
                             </TransitionLink>
                         </div>
                     ))}

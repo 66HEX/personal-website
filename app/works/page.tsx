@@ -32,7 +32,7 @@ export default function WorksPage() {
                     className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none pb-8 flex"
                 >
                     All Works
-                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50">
+                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">
                         ({String(works.length).padStart(2, "0")})
                     </sup>
                 </h1>
@@ -61,16 +61,16 @@ export default function WorksPage() {
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div style={{visibility: "hidden"}} className="project-container cursor-pointer">
                                 <div className="grid grid-cols-5 md:grid-cols-6 tracking-tight leading-none py-4 lg:py-8">
-                                    <div className="col-span-1 text-2xl md:text-5xl font-[300] justify-start items-center opacity-50 hidden md:flex">
+                                    <div className="col-span-1 text-2xl md:text-5xl font-[750] justify-start items-center opacity-50 hidden md:flex">
                                         <p>{formatId(project.id)}</p>
                                     </div>
                                     <div className="col-span-4 lg:col-span-3 flex justify-start items-center">
                                         <p className="text-2xl md:text-5xl font-[750] opacity-50">{project.title}</p>
                                     </div>
-                                    <div className="col-span-1 text-sm md:text-xl font-[300] hidden lg:flex justify-start items-center opacity-50">
+                                    <div className="col-span-1 text-sm md:text-base font-[300] hidden lg:flex justify-start items-center opacity-50">
                                         {project.type.join(" / ")}
                                     </div>
-                                    <div className="col-span-1 text-sm md:text-xl font-[300] flex justify-end items-center opacity-50">
+                                    <div className="col-span-1 text-sm md:text-base font-[300] flex justify-end items-center opacity-50">
                                         <p>{project.year}</p>
                                     </div>
                                 </div>
@@ -105,10 +105,10 @@ export default function WorksPage() {
                                         />
                                     </div>
                                     <div
-                                        className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
+                                        className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
                                     <div className="absolute bottom-0 left-0 p-4 xl:p-8">
                                         <div
-                                            className="flex justify-between gap-4 text-sm md:text-xl tracking-tight leading-none">
+                                            className="flex justify-between gap-4 text-sm md:text-base tracking-tight leading-none">
                                             <p className="border border-white px-4 py-2 rounded-full font-[750]">{project.title}</p>
                                             <p className="border border-white px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
                                         </div>

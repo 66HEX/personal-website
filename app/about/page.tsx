@@ -46,10 +46,10 @@ export default function AboutMePage() {
                             style={{visibility: "hidden"}}
                             className="col-span-1 flex flex-col justify-end gap-2"
                         >
-                            <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
+                            <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
                                 Name
                             </p>
-                            <p className="text-sm md:text-xl font-[300] tracking-tight leading-none opacity-50">
+                            <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
                                 Marek Jóźwiak
                             </p>
                         </div>
@@ -58,10 +58,10 @@ export default function AboutMePage() {
                             style={{ visibility: "hidden" }}
                             className="col-span-1 flex flex-col justify-end gap-2"
                         >
-                            <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
+                            <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
                                 Focus Area
                             </p>
-                            <p className="text-sm md:text-xl font-[300] tracking-tight leading-none opacity-50">
+                            <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
                                 Front-end Development
                             </p>
                         </div>

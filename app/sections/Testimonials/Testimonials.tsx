@@ -1,17 +1,9 @@
-'use client';
+"use client";
 
-import { gsap } from "gsap";
-import { initializeButtonAnimation } from "./animation";
-import {useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect} from 'react';
+import { initializeButtonAnimation, initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "./animation";
+import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-type Testimonial = {
-    text: string;
-    author: string;
-    role: string;
-    src: string;
-};
 
 const Marquee = forwardRef((props, ref) => {
     const container = useRef<HTMLDivElement>(null);
@@ -43,14 +35,16 @@ const Marquee = forwardRef((props, ref) => {
         return (containerWidth - totalSpacing) / visibleCards;
     };
 
-    const createTestimonialCard = (testimonial: Testimonial, index: number) => {
-        const cardWidth = calculateCardWidth();
-        return `
-            <div class="testimonial-card flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/20" 
-                 style="width: ${cardWidth}px">
+    const initializeCards = () => {
+        if (!contentRef.current) return;
+
+        const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];
+        contentRef.current.innerHTML = items.map((testimonial, index) => `
+            <SpotlightCard class="testimonial-card flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/20" 
+                 style="width: ${calculateCardWidth()}px">
                 <div class="relative flex flex-col justify-start items-start h-full p-4 xl:p-8">
                     <div class="text-left mb-auto">
-                        <p class="text-sm md:text-xl font-[300] italic opacity-50">"${testimonial.text}"</p>
+                        <p class="text-sm md:text-base font-[300] italic opacity-50">"${testimonial.text}"</p>
                     </div>
                     <div class="flex items-center mt-8 md:mt-16">
                         <div class="relative h-[60px] w-[60px] rounded-full overflow-hidden mr-4">
@@ -62,21 +56,10 @@ const Marquee = forwardRef((props, ref) => {
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
-    };
+            </SpotlightCard>
+        `).join('');
 
-    const initializeCards = () => {
-        if (!contentRef.current) return;
-
-        const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];
-        contentRef.current.innerHTML = items.map((testimonial, index) =>
-            createTestimonialCard(testimonial, index)
-        ).join('');
-
-        const cardWidth = calculateCardWidth() + getSpacing();
-        const offset = testimonialsData.length * cardWidth;
-        gsap.set(contentRef.current, { x: -offset });
+        initializeTestimonialsAnimation(contentRef.current, testimonialsData, calculateCardWidth, getSpacing);
     };
 
     useLayoutEffect(() => {
@@ -92,30 +75,8 @@ const Marquee = forwardRef((props, ref) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const scrollTestimonials = useCallback(async (direction: 'left' | 'right') => {
-        if (!contentRef.current || animating.current) return;
-
-        animating.current = true;
-        const cardWidth = calculateCardWidth() + getSpacing();
-        const totalWidth = cardWidth * testimonialsData.length;
-        const currentX = gsap.getProperty(contentRef.current, "x") as number;
-
-        await gsap.to(contentRef.current, {
-            x: currentX + (direction === 'right' ? -cardWidth : cardWidth),
-            duration: 0.5,
-            ease: "power2.out",
-            onComplete: () => {
-                const newX = gsap.getProperty(contentRef.current, "x") as number;
-
-                if (direction === 'right' && newX <= -(totalWidth * 2)) {
-                    gsap.set(contentRef.current, { x: newX + totalWidth });
-                } else if (direction === 'left' && newX >= -totalWidth) {
-                    gsap.set(contentRef.current, { x: newX - totalWidth });
-                }
-
-                animating.current = false;
-            }
-        });
+    const scrollTestimonials = useCallback((direction: 'left' | 'right') => {
+        scrollTestimonialsAnimation(contentRef.current, direction, animating, calculateCardWidth, getSpacing, testimonialsData);
     }, []);
 
     return (
@@ -131,7 +92,6 @@ Marquee.displayName = 'Marquee';
 const Testimonials: React.FC = () => {
     const marqueRef = useRef<any>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
-
 
     const handleScroll = (direction: 'left' | 'right') => {
         if (marqueRef.current?.scrollTestimonials) {
@@ -149,7 +109,7 @@ const Testimonials: React.FC = () => {
             <div className="flex items-center justify-between w-full mb-8">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                     Testimonials
-                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50">
+                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">
                         ({String(testimonialsData.length / 2).padStart(2, "0")})
                     </sup>
                 </h1>

@@ -1,62 +1,55 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { FiArrowRight } from "react-icons/fi";
-import {
-    useMotionTemplate,
-    useMotionValue,
-    motion,
-    animate,
-} from "framer-motion";
-import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
+import { ChevronDown } from "lucide-react";
 
-const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
-
-export default function  AuroraHero () {
-    const color = useMotionValue(COLORS_TOP[0]);
-
-    useEffect(() => {
-        animate(color, COLORS_TOP, {
-            ease: "easeInOut",
-            duration: 10,
-            repeat: Infinity,
-            repeatType: "mirror",
-        });
-    }, []);
-
-    const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #131313 50%, ${color})`;
-    const border = useMotionTemplate`1px solid ${color}`;
-    const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
+export default function Hero() {
 
     return (
-        <motion.section
+        <div
+            className="relative min-h-screen w-screen bg-black text-white flex flex-col justify-center items-start px-4 lg:px-24"
             style={{
-                backgroundImage,
+                backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)',
+                backgroundSize: '100% 200%',
+                backgroundPosition: '50% 0%'
             }}
-            className="h-svh w-screen flex flex-col justify-center items-center overflow-hidden bg-black text-white p-4"
         >
-            <div className="w-full h-full flex flex-col justify-center items-center">
-                <span className="mb-4 inline-block rounded-full bg-white/5 font-[300] px-4 py-2 text-sm">
-                    Design & Development
-                </span>
-                <h1 className="font-[1000] max-w-5xl text-center text-4xl md:text-7xl tracking-tight leading-tight text-white">
-                    Transforming ideas into seamless digital experiences
-                </h1>
-                <p className="font-[300] mb-8 mt-4 max-w-xl text-center text-sm md:text-xl opacity-50">
-                    I design and build modern websites that help businesses thrive in the digital world, focusing on
-                    clean design and exceptional user experience.
-                </p>
-                <motion.button
-                    style={{
-                        border,
-                        boxShadow,
-                    }}
-                    className="group relative flex w-fit items-center gap-2 rounded-full bg-black px-8 py-2 text-lg text-white font-[300]"
+            <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black pointer-events-none" />
+
+            <div className="relative z-10 max-w-5xl">
+                <div className="mb-4">
+                    <h2 className="text-sm md:text-base font-[300] uppercase tracking-widest opacity-50">
+                        Creative Developer
+                    </h2>
+                </div>
+
+                <h1
+                    className="text-4xl md:text-6xl lg:text-8xl font-[750] tracking-tight leading-none mb-8"
                 >
-                    <TransitionLink href={"/contact"}>Let's Talk</TransitionLink>
-                    <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12"/>
-                </motion.button>
+                    Crafting Digital Experiences Through Creative Code
+                </h1>
+
+                <p
+                    className="text-base md:text-xl font-[300] mb-8 max-w-2xl"
+                >
+                    Pushing the boundaries of web development by combining modern technologies
+                    with creative design solutions to build immersive digital experiences.
+                </p>
+
+                <div className="flex gap-4">
+                    <button
+
+                        className="group font-[300] flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full px-6 py-3 transition-colors"
+                    >
+                        Let's Talk
+                        <ChevronDown className="w-4 h-4 transition-transform group-hover:translate-y-1" />
+                    </button>
+                </div>
             </div>
-        </motion.section>
+
+            <div className="absolute bottom-8 left-4 lg:left-24 flex items-center gap-4 text-sm opacity-50">
+                <div className="w-8 h-[1px] bg-white/50 font-[300]" />
+                <span>Scroll to explore</span>
+            </div>
+        </div>
     );
-};
+}

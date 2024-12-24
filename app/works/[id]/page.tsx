@@ -7,6 +7,7 @@ import {useEffect, useRef} from "react";
 import { useGSAP } from "@gsap/react";
 import { animateWorkDetails, initializeButtonAnimation } from "./animation";
 import Link from "next/link";
+import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
 export default function WorkDetailsPage({ params }: { params: { id: string } }) {
     const project = works.find((work) => work.id === params.id);
@@ -55,28 +56,28 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                         <div className="col-span-2 lg:col-span-1 flex gap-8 md:grid md:grid-cols-3">
                             <div ref={clientRef} style={{visibility: "hidden"}}
                                  className="col-span-1 flex flex-col justify-end gap-2">
-                                <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
+                                <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
                                     Client
                                 </p>
-                                <p className="text-sm md:text-xl font-[300] tracking-tight leading-none opacity-50">
+                                <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
                                     {project.client}
                                 </p>
                             </div>
                             <div ref={typeRef} style={{visibility: "hidden"}}
                                  className="col-span-2 md:col-span-1 flex-col justify-end flex gap-2">
-                                <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
+                                <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
                                     Services
                                 </p>
-                                <p className="text-sm md:text-xl font-[300] tracking-tight leading-none opacity-50">
+                                <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
                                     {project.type.join(" / ")}
                                 </p>
                             </div>
                             <div style={{visibility: "hidden"}} ref={yearRef}
                                  className="col-span-1 flex flex-col justify-end gap-2">
-                                <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
+                                <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
                                     Year
                                 </p>
-                                <p className="text-sm md:text-xl font-[300] tracking-tight leading-none opacity-50">
+                                <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
                                     {project.year}
                                 </p>
                             </div>
@@ -146,14 +147,16 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 </div>
                 <button
                     ref={buttonRef}
-                    className="w-full text-sm md:text-xl font-[300] mt-8 mb-12 lg:mb-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                    className="w-full text-sm md:text-xl font-[300] my:12 lg:my-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
                     <Link
                         className="h-full w-full px-4 py-4"
                         href={project.liveLink}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Visit Website
+                        <AnimatedLink>
+                            Visit Website
+                        </AnimatedLink>
                     </Link>
                 </button>
 

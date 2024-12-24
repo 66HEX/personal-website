@@ -5,6 +5,7 @@ import { CustomEase } from "gsap/CustomEase";
 import { initializeButtonAnimation } from "./animation";
 import {useEffect, useRef} from 'react';
 import Link from "next/link";
+import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
 
 gsap.registerPlugin(CustomEase);
@@ -64,8 +65,10 @@ export default function Contact() {
                             Have a project in mind? Get in touch and let's create something extraordinary together.
                             I'm always excited to hear about new ideas and challenges.
                         </p>
-                        <Link href="mailto:hexthecoder@gmail.com" className="block hover:opacity-70 transition-opacity font-[750]">
-                            hexthecoder@gmail.com
+                        <Link href="mailto:hexthecoder@gmail.com" className="block font-[750]">
+                            <AnimatedLink>
+                                hexthecoder@gmail.com
+                            </AnimatedLink>
                         </Link>
                     </div>
                     <ContactForm />

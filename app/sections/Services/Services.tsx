@@ -24,7 +24,7 @@ export default function Services() {
             <div className="w-full flex justify-between items-end px-4 lg:px-24 pt-12 md:pt-24">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none mb-8 flex">
                     Services
-                    <sup className="text-xs md:text-sm tracking-normal align-top">
+                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">
                         ({String(services.length).padStart(2, "0")})
                     </sup>
                 </h1>
@@ -39,7 +39,7 @@ export default function Services() {
                         >
                             <div className="flex justify-between gap-8 tracking-tight leading-none">
                                 <div className="flex flex-col justify-start items-start">
-                                    <p className="text-2xl lg:text-5xl font-[750]">
+                                    <p className="text-2xl lg:text-5xl font-[750] opacity-50">
                                         {service.title}
                                     </p>
                                 </div>
@@ -47,7 +47,7 @@ export default function Services() {
                                     <svg
                                         ref={(el) => (arrowRefs.current[index] = el)}
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6 md:w-10 md:h-10"
+                                        className="w-6 h-6 md:w-10 md:h-10 opacity-50"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"

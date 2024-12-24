@@ -23,7 +23,7 @@ export default function Footer() {
         <footer className="relative w-screen bg-white/5 text-white">
             <div className="w-full px-4 lg:px-24 py-12 lg:py-24">
                 <div className="flex items-center justify-between w-full mb-12">
-                    <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
+                    <h1 className="text-2xl lg:text-5xl font-[750] tracking-tight leading-none">
                         /hex
                         <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">
                             dev

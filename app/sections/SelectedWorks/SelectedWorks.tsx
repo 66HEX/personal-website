@@ -6,6 +6,7 @@ import { works } from "@/app/data/worksData";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import Image from "next/image";
 import { animateProjectImage, initializeButtonAnimation } from "./animation";
+import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
 export default function SelectedWorks() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -23,11 +24,20 @@ export default function SelectedWorks() {
 
     return (
         <div className="w-screen px-4 py-12 lg:px-24 lg:py-24 bg-black text-white">
-            <div className="w-full flex flex-row justify-between items-end">
-                <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none mb-8">
+            <div className="w-full flex flex-row justify-between items-end mb-8">
+                <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                     Selected Works
-                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50">(03)</sup>
+                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">(03)</sup>
                 </h1>
+                <button
+                    ref={buttonRef}
+                    className="text-sm md:text-base font-[300] bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                    <TransitionLink className="h-full w-full px-4 py-2" href={"/works"}>
+                        <AnimatedLink>
+                            View All
+                        </AnimatedLink>
+                    </TransitionLink>
+                </button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
@@ -54,10 +64,10 @@ export default function SelectedWorks() {
                                         />
                                     </div>
                                     <div
-                                        className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
+                                        className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
                                     <div className="absolute bottom-0 left-0 p-4 xl:p-8">
                                         <div
-                                            className="flex justify-between gap-4 text-sm md:text-xl tracking-tight leading-none">
+                                            className="flex justify-between gap-4 text-sm md:text-base tracking-tight leading-none">
                                             <p className="border border-white px-4 py-2 rounded-full font-[750]">{project.title}</p>
                                             <p className="border border-white px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
                                         </div>
@@ -67,13 +77,6 @@ export default function SelectedWorks() {
                         </div>
                     ))}
             </div>
-            <button
-                ref={buttonRef}
-                className="w-full text-sm md:text-xl font-[300] mt-8 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
-                <TransitionLink className="h-full w-full px-4 py-4" href={"/works"}>
-                    View All
-                </TransitionLink>
-            </button>
         </div>
     );
 }

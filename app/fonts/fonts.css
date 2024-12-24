@@ -157,3 +157,11 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'Lausanne300Italic';
+    src: url('TWKLausanne-300Italic.woff2') format('woff2');
+    font-weight: 250;
+    font-style: italic;
+    font-display: swap;
+}

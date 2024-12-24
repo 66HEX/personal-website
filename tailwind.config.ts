@@ -9,9 +9,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        offwhitebackground: '#E3E1DE',
-        offwhitetext: '#E3E1DE',
-        offblacktext: '#131313',
+        black: '#131313',
+        white: '#E3E1DE',
         accent: '#FF4C24',
       },
       fontFamily: {
@@ -35,9 +34,10 @@ export default {
         Lausanne900: 'Lausanne900',
         Lausanne950: 'Lausanne950',
         Lausanne1000: 'Lausanne1000',
+        Lausanne300Italic: 'Lausanne300Italic',
       },
       fontSize: {
-        fluid: ['5vw', '5vw'],
+        fluid: ['15vw', '15vw'],
       },
       dropShadow: {
         glow: [

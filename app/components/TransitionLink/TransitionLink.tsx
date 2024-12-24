@@ -30,13 +30,12 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
 
         gsap.to("#page-transition", {
             opacity: 0,
-            duration: 0.5,
+            duration: 1,
             ease: "power3.in",
             onComplete: () => {
                 router.push(href);
-                window.scrollTo(0, 0);
                 gsap.fromTo("#page-transition", { opacity: 0 },
-                    { opacity: 1, delay: 0.5, duration: 0.5 });
+                    { opacity: 1, delay: 0.5, duration: 1 });
             },
         });
     };
@@ -46,7 +45,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
             {...props}
             href={href}
             onClick={handleTransition}
-            className={className}  // Apply className to the Link component
+            className={className}
         >
             {children}
         </Link>

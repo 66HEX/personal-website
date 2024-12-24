@@ -1,5 +1,6 @@
-import Link from "next/link";
 import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
+import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
+import Link from "next/link";
 
 const socialLinks = [
     { href: "https://www.linkedin.com/in/marek-j%C3%B3%C5%BAwiak-29958132a/", label: "LinkedIn" },
@@ -21,38 +22,38 @@ export default function Footer() {
             style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
         >
             <div
-                className="fixed bottom-0 h-[36rem] md:h-[24rem] w-full bg-offblacktext text-offwhitetext">
+                className="fixed bottom-0 h-[36rem] md:h-[24rem] w-full bg-white/5 text-white">
                 <div className="w-full px-4 lg:px-24 py-12 font-Lausanne300">
-                    <h1 className="text-2xl lg:text-5xl font-Lausanne750 tracking-tight leading-none mb-4 opacity-50">
+                    <h1 className="text-2xl lg:text-5xl font-Lausanne750 tracking-tight leading-none mb-4">
                         /hex
                     </h1>
                     <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-24">
-                        {/* Left section */}
                         <div className="col-span-2 flex flex-col justify-start">
-                            <p className="text-sm lg:text-base leading-relaxed">
-                                Front-end developer with a passion for pushing web technologies to their limits.
+                            <p className="text-sm lg:text-base leading-relaxed opacity-50">
+                                Creative Front-end developer with a passion for pushing web technologies to their
+                                limits.
                                 Combining modern frameworks, responsive design principles, and creative problem-solving
                                 to deliver exceptional user experiences that exceed expectations and drive results.
-                                <span className="block md:inline-block ml-1 font-Lausanne750 text-accent "> Always learning, always delivering.</span>
                             </p>
                         </div>
 
                         <div className="col-span-1 flex flex-col justify-start items-start gap-4 text-sm">
                             <div className="flex flex-col gap-2">
-                                <p className="opacity-50 font-Lausanne750">Navigation</p>
+                                <p className="font-Lausanne750">Navigation</p>
                                 {navLinks.map((nav) => (
-                                    <Link key={nav.href} href={nav.href}>
+                                    <TransitionLink className="opacity-50" key={nav.href} href={nav.href}>
                                         <AnimatedLink>{nav.label}</AnimatedLink>
-                                    </Link>
+                                    </TransitionLink>
                                 ))}
                             </div>
                         </div>
 
                         <div className="col-span-1 flex flex-col justify-start items-start gap-4 text-sm">
                             <div className="flex flex-col gap-2">
-                                <p className="opacity-50 font-Lausanne750">Socials</p>
+                                <p className="font-Lausanne750">Socials</p>
                                 {socialLinks.map((link) => (
-                                    <Link key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+                                    <Link className="opacity-50" key={link.href} href={link.href} target="_blank"
+                                          rel="noopener noreferrer">
                                         <AnimatedLink>{link.label}</AnimatedLink>
                                     </Link>
                                 ))}
@@ -60,10 +61,12 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-                <p className="absolute bottom-4 right-4 lg:right-24 text-xs font-Lausanne750 opacity-50">
-                    ©2024 Marek Jóźwiak. All rights reserved.
+                <p className="absolute bottom-4 right-4 text-xs font-Lausanne750">
+                    All rights reserved.
                 </p>
-
+                <p className="absolute bottom-4 left-4 text-xs font-Lausanne750">
+                    ©2024 Marek Jóźwiak.
+                </p>
             </div>
         </div>
     );

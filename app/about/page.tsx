@@ -28,7 +28,7 @@ export default function AboutMePage() {
     }, []);
 
     return (
-        <div className="bg-offwhitebackground text-offblacktext">
+        <div className="bg-black text-white">
             <div className="w-full h-[30vh] flex items-end px-4 lg:px-24">
                 <div className="grid grid-cols-2 w-full mb-8 gap-8 lg:gap-24">
                     <div className="col-span-2 lg:col-span-1 flex items-end">
@@ -59,10 +59,10 @@ export default function AboutMePage() {
                             className="col-span-1 flex flex-col justify-end gap-2"
                         >
                             <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
-                                Focus Areas
+                                Focus Area
                             </p>
                             <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-none opacity-50">
-                                Frontend Development
+                                Front-end Development
                             </p>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ export default function AboutMePage() {
             <div className="w-screen px-4 lg:px-24 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-24 pb-12 md:pb-24">
                 <div
                     className="col-span-1 gap-4 lg:gap-8 text-sm leading-tight order-2">
-                    <div className="col-span-1 flex flex-col gap-4 lg:gap-8">
+                    <div className="col-span-1 flex flex-col gap-4 lg:gap-8 opacity-50">
                         <p
                             ref={bioRef}
                             style={{visibility: "hidden"}}
@@ -109,10 +109,10 @@ export default function AboutMePage() {
                     </div>
                 </div>
                 <div className="col-span-1 h-auto relative overflow-hidden">
-                    <div className="relative w-full h-auto rounded-custom overflow-hidden">
+                    <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/5">
                         <Image
                             ref={imageRef}
-                            src="/images/about-photo.png" // Replace with your image path
+                            src="/images/about-photo.png"
                             alt="About Me Image"
                             layout="intrinsic"
                             width={2000}

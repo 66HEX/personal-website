@@ -62,49 +62,50 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
     tl.fromTo(
         title,
         { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" }
+        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
+        "0.5"
     );
 
     tl.fromTo(
         subtitle,
         { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-        "<"
+        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
+        "0.5"
     );
 
     tl.fromTo(
         subtitle2,
         { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-        "<"
+        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
+        "0.5"
     );
 
     tl.fromTo(
         bio,
         { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-        "<"
+        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
+        "0.5"
     );
 
     tl.fromTo(
         bio2,
         { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-        "<"
+        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
+        "0.5"
     );
 
     tl.fromTo(
         bio3,
         { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-        "<"
+        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
+        "0.5"
     );
 
     tl.fromTo(
         imageRef,
         { opacity: 0, scale: 1.1, visibility: "hidden" },
-        { opacity: 1, scale: 1, visibility: "visible", duration: 1.5, ease: "power3.out" },
-        "<"
+        { opacity: 1, scale: 1, visibility: "visible", duration: 0.75, ease: "power3.out" },
+        "0.5"
     );
 
     return () => {

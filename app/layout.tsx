@@ -12,13 +12,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-offwhitebackground">
+      <body className="bg-black">
       <SmoothScrolling>
           <Navbar/>
           <main id="page-transition">
               {children}
           </main>
-          <hr className="border border-gray-200"/>
           <Footer/>
       </SmoothScrolling>
       </body>

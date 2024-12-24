@@ -8,7 +8,7 @@ export const works = [
         client: "Lean Bulls",
         year: 2024,
         type: ["Design", "Development"],
-        liveLink: "https://skyline-studio.mock/",
+        liveLink: "https://lean-bulls-gym.vercel.app/",
         summary: "A modern powerlifting gym designed to build strength, resilience, and a sense of community among its members.",
         description: [
             "The Lean Bulls Gym website provides an engaging and user-friendly platform to explore everything this powerlifting gym has to offer. With detailed information on coaching team, membership options and services, the site serves as a central hub for current and prospective members.",
@@ -23,7 +23,7 @@ export const works = [
         client: "Natalia Jasińska",
         year: 2024,
         type: ["Design", "Development"],
-        liveLink: "https://nataliaj-mock.com/",
+        liveLink: "https://nataliajasinska.pl/",
         summary: "Optimizing nutrition for strength athletes with tailored plans designed to enhance performance and recovery.",
         description: [
             "The website for Natalia Jasińska is primarily designed to showcase and sell collaboration opportunities and Natalia's flagship ebook, PowerEater. This comprehensive guide dives deep into nutrition strategies tailored for strength athletes, helping them achieve peak performance and recovery.",
@@ -39,7 +39,7 @@ export const works = [
         client: "Angelika Grzejdziak",
         year: 2024,
         type: ["Design", "Development"],
-        liveLink: "https://angelikag-mock.com/",
+        liveLink: "https://angelikagrzejdziak.pl/",
         summary: "Empowering individuals to achieve their health and fitness goals through customized coaching and expert guidance.",
         description: [
             "Angelika Grzejdziak's website is an inviting and informative platform tailored to individuals looking to elevate their fitness and nutrition. Showcasing a range of services from personalized meal plans to custom workout routines, the site is a one-stop shop for health enthusiasts.",

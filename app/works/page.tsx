@@ -24,7 +24,7 @@ export default function WorksPage() {
     }, [viewMode]);
 
     return (
-        <div className="w-screen min-h-svh bg-offwhitebackground text-offblacktext font-Lausanne500">
+        <div className="w-screen min-h-svh bg-black text-white font-Lausanne500">
             <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-24">
                 <h1
                     style={{visibility: "hidden"}}
@@ -32,7 +32,7 @@ export default function WorksPage() {
                     className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none pb-8 flex"
                 >
                     All Works
-                    <sup className="text-xs md:text-sm tracking-normal align-top">
+                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50">
                         ({String(works.length).padStart(2, "0")})
                     </sup>
                 </h1>
@@ -56,7 +56,7 @@ export default function WorksPage() {
 
             {viewMode === "list" ? (
                 <div className="px-4 lg:px-24 pb-12 grid grid-cols-1">
-                    <hr className="border border-offblacktext opacity-10 "/>
+                    <hr className="border border-white/5"/>
                     {works.map((project, index) => (
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div style={{visibility: "hidden"}} className="project-container cursor-pointer">
@@ -74,7 +74,7 @@ export default function WorksPage() {
                                         <p>{project.year}</p>
                                     </div>
                                 </div>
-                                {index < works.length - 1 && <hr className="border border-offblacktext opacity-10"/>}
+                                {index < works.length - 1 && <hr className="border border-white/5"/>}
 
                             </div>
                         </TransitionLink>
@@ -86,29 +86,32 @@ export default function WorksPage() {
                         <div
                             style={{visibility: "hidden"}}
                             key={project.id}
-                            className="relative overflow-hidden project-container"
+                            className="relative overflow-hidden project-container rounded-custom border border-white/5"
                             onMouseEnter={() => setActiveIndex(index)}
                             onMouseLeave={() => setActiveIndex(null)}
                         >
                             <TransitionLink href={`/works/${project.id}`}>
-                                <div className="relative overflow-hidden w-full rounded-custom">
-                                    <div className="relative w-full h-auto">
+                                <div className="flex flex-col">
+                                    <div className="relative w-full rounded-t-custom overflow-hidden">
                                         <Image
                                             src={project.mainImage}
                                             alt={project.title}
                                             layout="intrinsic"
                                             width={1000}
                                             height={1000}
+                                            priority
                                             ref={(el) => (imageRefs.current[index] = el)}
                                             className="object-cover"
                                         />
                                     </div>
-                                    <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent rounded-custom overflow-hidden"/>
-                                    <div className="absolute bottom-0 left-0 flex text-offwhitetext p-4 gap-4 text-sm md:text-xl font-Lausanne300 tracking-tight leading-none">
-                                        <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">{project.title}</p>
-                                        <p className="border-2 border-offwhitetext px-4 py-2 rounded-full">
-                                            {project.year}
-                                        </p>
+                                    <div
+                                        className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
+                                    <div className="absolute bottom-0 left-0 p-8">
+                                        <div
+                                            className="flex justify-between gap-4 text-sm md:text-xl tracking-tight leading-none">
+                                            <p className="border border-white px-4 py-1 rounded-full font-Lausanne750">{project.title}</p>
+                                            <p className="border border-white px-4 py-1 rounded-full font-Lausanne300 opacity-50">{project.year}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </TransitionLink>

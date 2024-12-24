@@ -12,10 +12,10 @@ export default function Navbar() {
     const linksRef = useRef<(HTMLDivElement | null)[]>([]);
 
     const navLinks = [
-        { href: "/", label: "Home" },
-        { href: "/works", label: "Works" },
-        { href: "/about", label: "About" },
-        { href: "/contact", label: "Contact" },
+        { index: "1", href: "/", label: "Home" },
+        { index: "2", href: "/works", label: "Works" },
+        { index: "3",href: "/about", label: "About" },
+        { index: "4", href: "/contact", label: "Contact" },
     ];
 
     const toggleMenu = () => {
@@ -37,7 +37,7 @@ export default function Navbar() {
                 height: "200px",
                 marginBottom: "1rem",
                 duration: 0.5,
-                ease: "power3.out",
+                ease: "power3.inOut",
             })
             .fromTo(
                 linksRef.current,
@@ -47,7 +47,7 @@ export default function Navbar() {
                     opacity: 1,
                     duration: 0.5,
                     stagger: 0.1,
-                    ease: "power3.out",
+                    ease: "power3.inOut",
                 },
             );
     };
@@ -61,14 +61,14 @@ export default function Navbar() {
                     opacity: 0,
                     duration: 0.5,
                     stagger: 0.05,
-                    ease: "power3.in",
+                    ease: "power3.inOut",
                 }
             )
             .to(menuRef.current, {
                 height: 0,
                 marginBottom: "0rem",
                 duration: 0.5,
-                ease: "power3.in",
+                ease: "power3.inOut",
             });
     };
 
@@ -78,8 +78,8 @@ export default function Navbar() {
     }, []);
 
     return (
-        <nav className="fixed top-2 left-0 text-offwhitetext z-50 w-full px-4 md:px-24">
-            <div className="flex flex-col bg-offblacktext/70 backdrop-blur-3xl py-4 px-8 rounded-custom overflow-hidden">
+        <nav className="fixed top-2 left-0 text-white z-50 w-full px-4 md:px-24">
+            <div className="flex flex-col bg-white/10 border border-white/5 backdrop-blur-3xl py-4 px-8 rounded-custom overflow-hidden">
                 <div className="flex justify-between items-center w-full">
                     <div className="text-2xl font-Lausanne300 tracking-tight leading-none">
                         <TransitionLink href="/">/hex</TransitionLink>
@@ -88,7 +88,8 @@ export default function Navbar() {
                     <div className="hidden md:flex gap-4 text-xl font-Lausanne250">
                         {navLinks.map((link) => (
                             <TransitionLink key={link.href} href={link.href}>
-                                <AnimatedLink>{link.label}</AnimatedLink>
+                                <AnimatedLink>{link.label}
+                                </AnimatedLink>
                             </TransitionLink>
                         ))}
                     </div>
@@ -113,7 +114,7 @@ export default function Navbar() {
                             ref={(el) => (linksRef.current[index] = el)}
                         >
                             <TransitionLink href={link.href}>
-                                <AnimatedLink>{link.label}</AnimatedLink>
+                                {link.label}
                             </TransitionLink>
                         </div>
                     ))}

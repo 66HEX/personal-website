@@ -29,7 +29,7 @@ export default function Hero() {
                 </h1>
 
                 <p
-                    className="text-base md:text-xl font-[300] mb-8 max-w-2xl"
+                    className="text-base md:text-xl font-[300] mb-8 max-w-2xl opacity-50"
                 >
                     Pushing the boundaries of web development by combining modern technologies
                     with creative design solutions to build immersive digital experiences.

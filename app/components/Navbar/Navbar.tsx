@@ -109,7 +109,7 @@ export default function Navbar() {
                 className="flex flex-col bg-white/5 border border-white/20 backdrop-blur-3xl rounded-custom overflow-hidden"
             >
                 <div className="flex justify-between items-center w-full px-4 md:px-8 py-4">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center">
                         <TransitionLink
                             href="/"
                             className="text-2xl lg:text-3xl font-[750] tracking-tight leading-none"
@@ -130,7 +130,7 @@ export default function Navbar() {
                             >
                                 <div className="flex items-center gap-2">
                                     <span className="text-xs font-[300] opacity-50">{link.index}</span>
-                                    <AnimatedLink className="text-xl font-[300]">
+                                    <AnimatedLink className="text-base font-[300]">
                                         {link.label}
                                     </AnimatedLink>
                                 </div>
@@ -140,7 +140,7 @@ export default function Navbar() {
 
                     <button
                         onClick={toggleMenu}
-                        className="md:hidden p-2 hover:bg-white/10 rounded-full transition-colors"
+                        className="md:hidden rounded-full transition-colors"
                         aria-label="Toggle menu"
                     >
                         {isOpen ? <X size={24} /> : <Menu size={24} />}

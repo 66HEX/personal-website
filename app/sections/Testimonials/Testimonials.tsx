@@ -110,7 +110,7 @@ const Testimonials: React.FC = () => {
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                     Testimonials
                     <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">
-                        ({String(testimonialsData.length / 2).padStart(2, "0")})
+                        ({String(testimonialsData.length ).padStart(2, "0")})
                     </sup>
                 </h1>
                 <div className="flex gap-2">

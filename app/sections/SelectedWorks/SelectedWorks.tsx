@@ -33,9 +33,7 @@ export default function SelectedWorks() {
                     ref={buttonRef}
                     className="text-sm md:text-base font-[300] bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
                     <TransitionLink className="h-full w-full px-4 py-2" href={"/works"}>
-                        <AnimatedLink>
-                            View All
-                        </AnimatedLink>
+                        View All
                     </TransitionLink>
                 </button>
             </div>

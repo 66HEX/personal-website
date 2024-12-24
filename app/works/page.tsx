@@ -24,12 +24,12 @@ export default function WorksPage() {
     }, [viewMode]);
 
     return (
-        <div className="w-screen min-h-svh bg-black text-white font-Lausanne500">
+        <div className="w-screen min-h-svh bg-black text-white">
             <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-24">
                 <h1
                     style={{visibility: "hidden"}}
                     ref={worksRef}
-                    className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none pb-8 flex"
+                    className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none pb-8 flex"
                 >
                     All Works
                     <sup className="text-xs md:text-sm tracking-normal align-top opacity-50">
@@ -37,7 +37,7 @@ export default function WorksPage() {
                     </sup>
                 </h1>
 
-                <div className="flex text-sm items-center gap-2 font-Lausanne300 uppercase tracking-tight leading-none pb-4">
+                <div className="flex text-sm items-center gap-2 font-[300] uppercase tracking-tight leading-none pb-4">
                     <button
                         onClick={() => setViewMode("list")}
                         className={`${viewMode === "list" ? "opacity-50" : ""}`}
@@ -56,25 +56,25 @@ export default function WorksPage() {
 
             {viewMode === "list" ? (
                 <div className="px-4 lg:px-24 pb-12 grid grid-cols-1">
-                    <hr className="border border-white/5"/>
+                    <hr className="border border-white/20"/>
                     {works.map((project, index) => (
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div style={{visibility: "hidden"}} className="project-container cursor-pointer">
                                 <div className="grid grid-cols-5 md:grid-cols-6 tracking-tight leading-none py-4 lg:py-8">
-                                    <div className="col-span-1 text-2xl md:text-5xl font-Lausanne300 justify-start items-center opacity-50 hidden md:flex">
+                                    <div className="col-span-1 text-2xl md:text-5xl font-[300] justify-start items-center opacity-50 hidden md:flex">
                                         <p>{formatId(project.id)}</p>
                                     </div>
                                     <div className="col-span-4 lg:col-span-3 flex justify-start items-center">
-                                        <p className="text-2xl md:text-5xl font-Lausanne750 opacity-50">{project.title}</p>
+                                        <p className="text-2xl md:text-5xl font-[750] opacity-50">{project.title}</p>
                                     </div>
-                                    <div className="col-span-1 text-sm md:text-xl font-Lausanne300 hidden lg:flex justify-start items-center opacity-50">
+                                    <div className="col-span-1 text-sm md:text-xl font-[300] hidden lg:flex justify-start items-center opacity-50">
                                         {project.type.join(" / ")}
                                     </div>
-                                    <div className="col-span-1 text-sm md:text-xl font-Lausanne300 flex justify-end items-center opacity-50">
+                                    <div className="col-span-1 text-sm md:text-xl font-[300] flex justify-end items-center opacity-50">
                                         <p>{project.year}</p>
                                     </div>
                                 </div>
-                                {index < works.length - 1 && <hr className="border border-white/5"/>}
+                                {index < works.length - 1 && <hr className="border border-white/20"/>}
 
                             </div>
                         </TransitionLink>
@@ -86,7 +86,7 @@ export default function WorksPage() {
                         <div
                             style={{visibility: "hidden"}}
                             key={project.id}
-                            className="relative overflow-hidden project-container rounded-custom border border-white/5"
+                            className="relative overflow-hidden project-container rounded-custom border border-white/20"
                             onMouseEnter={() => setActiveIndex(index)}
                             onMouseLeave={() => setActiveIndex(null)}
                         >
@@ -109,8 +109,8 @@ export default function WorksPage() {
                                     <div className="absolute bottom-0 left-0 p-4 xl:p-8">
                                         <div
                                             className="flex justify-between gap-4 text-sm md:text-xl tracking-tight leading-none">
-                                            <p className="border border-white px-4 py-2 rounded-full font-Lausanne750">{project.title}</p>
-                                            <p className="border border-white px-4 py-2 rounded-full font-Lausanne300 opacity-50">{project.year}</p>
+                                            <p className="border border-white px-4 py-2 rounded-full font-[750]">{project.title}</p>
+                                            <p className="border border-white px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -11,10 +11,6 @@ interface TransitionLinkProps extends LinkProps {
     className?: string;
 }
 
-function sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export const TransitionLink: React.FC<TransitionLinkProps> = ({
                                                                   children,
                                                                   href,
@@ -30,12 +26,12 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
 
         gsap.to("#page-transition", {
             opacity: 0,
-            duration: 1,
+            duration: 0.5,
             ease: "power3.in",
             onComplete: () => {
                 router.push(href);
                 gsap.fromTo("#page-transition", { opacity: 0 },
-                    { opacity: 1, delay: 0.5, duration: 1 });
+                    { opacity: 1, delay: 0.5, duration: 0.5 });
             },
         });
     };

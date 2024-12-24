@@ -1,7 +1,7 @@
 "use client";
 
 import { gsap } from "gsap";
-import { SplitText } from "@/app/utils/gsap/SplitText";
+import { SplitText } from "@/app/libs/gsap/SplitText";
 
 gsap.registerPlugin(SplitText);
 
@@ -28,7 +28,7 @@ export const animateWorkDetails = (refs: AnimationRefs) => {
 
     new SplitText(titleRef, {
         type: "lines",
-        linesClass: "line-wrapper overflow-hidden pb-1",
+        linesClass: "line-wrapper overflow-hidden",
     });
     new SplitText(subtitleRef, {
         type: "lines",

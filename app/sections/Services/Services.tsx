@@ -22,7 +22,7 @@ export default function Services() {
     return (
         <div className="w-screen bg-black text-white">
             <div className="w-full flex justify-between items-end px-4 lg:px-24 pt-12 md:pt-24">
-                <h1 className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none mb-8 flex">
+                <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none mb-8 flex">
                     Services
                     <sup className="text-xs md:text-sm tracking-normal align-top">
                         ({String(services.length).padStart(2, "0")})
@@ -30,7 +30,7 @@ export default function Services() {
                 </h1>
             </div>
             <div className="px-4 lg:px-24 pb-12 md:pb-24 grid grid-cols-1">
-                <hr className="border border-white/5 mb-4 lg:mb-8" />
+                <hr className="border border-white/20 mb-4 lg:mb-8" />
                 {services.map((service, index) => (
                     <div key={service.id}>
                         <div
@@ -39,7 +39,7 @@ export default function Services() {
                         >
                             <div className="flex justify-between gap-8 tracking-tight leading-none">
                                 <div className="flex flex-col justify-start items-start">
-                                    <p className="text-2xl lg:text-5xl font-Lausanne750">
+                                    <p className="text-2xl lg:text-5xl font-[750]">
                                         {service.title}
                                     </p>
                                 </div>
@@ -66,12 +66,12 @@ export default function Services() {
                             ref={(el) => (detailsRefs.current[index] = el)}
                             className="overflow-hidden h-0"
                         >
-                            <p className="text-sm md:text-xl font-Lausanne300 opacity-50 mt-4">
+                            <p className="text-sm md:text-xl font-[300] opacity-50 mt-4">
                                 {service.description}
                             </p>
                         </div>
                         {index < services.length - 1 && (
-                            <hr className="border border-white/5 my-4 lg:my-8" />
+                            <hr className="border border-white/20 my-4 lg:my-8" />
                         )}
                     </div>
                 ))}

@@ -2,13 +2,12 @@
 
 import { gsap } from "gsap";
 import { Observer } from "gsap/Observer";
-import { CustomEase } from "gsap/CustomEase";
 import Image from 'next/image';
 import { useRef, useLayoutEffect } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
-import horizontalLoop from '@/app/utils/HorizontalLoop';
+import horizontalLoop from '@/app/libs/HorizontalLoop';
 
-gsap.registerPlugin(CustomEase, Observer);
+gsap.registerPlugin(Observer);
 
 type Testimonial = {
     text: string;
@@ -64,19 +63,19 @@ const Marquee: React.FC = () => {
 
 const TestimonialCard: React.FC<Testimonial> = ({ text, author, role, src }) => {
     return (
-        <div className="testimonial-card w-full md:w-1/2 xl:w-1/3 flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/5">
+        <div className="testimonial-card w-2/3 md:w-1/2 xl:w-1/3 flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/20">
             <div className="relative flex flex-col justify-start items-start h-full p-4 xl:p-8">
                 <div className="text-left mb-auto">
-                    <p className="text-sm md:text-xl font-Lausanne300Italic opacity-50">"{text}"</p>
+                    <p className="text-sm md:text-xl font-[300] italic opacity-50">"{text}"</p>
                 </div>
 
-                <div className="flex items-center mt-16">
+                <div className="flex items-center mt-8 md:mt-16">
                     <div className="relative h-[60px] w-[60px] rounded-full overflow-hidden mr-4">
                         <Image style={{ objectFit: "cover" }} src={src} alt={author} fill />
                     </div>
                     <div>
-                        <p className="font-Lausanne750 text-sm md:text-xl">{author}</p>
-                        <p className="font-Lausanne300 text-xs opacity-50">{role}</p>
+                        <p className="font-[750] text-sm md:text-xl">{author}</p>
+                        <p className="font-[300] text-xs opacity-50">{role}</p>
                     </div>
                 </div>
             </div>
@@ -87,7 +86,7 @@ const TestimonialCard: React.FC<Testimonial> = ({ text, author, role, src }) => 
 const Testimonials: React.FC = () => {
     return (
         <section id="testimonials" className="w-screen bg-black text-white px-4 lg:px-24 py-12 lg:py-24 flex flex-col justify-center items-start">
-            <h1 className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none mb-8">
+            <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none mb-8">
                 Testimonials
                 <sup className="text-xs md:text-sm tracking-normal align-top opacity-50">
                     ({String(testimonialsData.length / 2).padStart(2, "0")})

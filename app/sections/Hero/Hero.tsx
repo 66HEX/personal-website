@@ -42,10 +42,10 @@ export default function  AuroraHero () {
         >
             <div className="w-full h-full flex flex-col justify-center items-center">
 
-                <h1 className="font-Lausanne1000 max-w-7xl text-center text-4xl md:text-7xl tracking-tight leading-tight text-white">
+                <h1 className="font-[1000] max-w-7xl text-center text-4xl md:text-7xl tracking-tight leading-tight text-white">
                     Transforming ideas into seamless digital experiences
                 </h1>
-                <p className="font-Lausanne300 mb-8 mt-4 max-w-xl text-center text-sm md:text-xl opacity-50">
+                <p className="font-[300] mb-8 mt-4 max-w-xl text-center text-sm md:text-xl opacity-50">
                     I design and build modern websites that help businesses thrive in the digital world, focusing on
                     clean design and exceptional user experience.
                 </p>
@@ -54,7 +54,7 @@ export default function  AuroraHero () {
                         border,
                         boxShadow,
                     }}
-                    className="group relative flex w-fit items-center gap-1.5 rounded-full bg-black px-4 py-2 text-lg text-white font-Lausanne300"
+                    className="group relative flex w-fit items-center gap-1.5 rounded-full bg-black px-4 py-2 text-lg text-white font-[300]"
                 >
                     <TransitionLink href={"/contact"}>Let's Talk</TransitionLink>
                     <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12"/>

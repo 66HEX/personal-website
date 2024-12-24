@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { SplitText } from "@/app/utils/gsap/SplitText";
+import { SplitText } from "@/app/libs/gsap/SplitText";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -31,7 +31,7 @@ const ScrollTriggerBlur: React.FC<RevealTextProps> = ({ children, className }) =
                 {
                     opacity: 0,
                     filter: 'blur(10px)',
-                    willChange: 'transform, opacity' // Add will-change to optimize rendering
+                    willChange: 'transform, opacity'
                 },
                 {
                     opacity: 1,

@@ -24,7 +24,7 @@ export default function SelectedWorks() {
     return (
         <div className="w-screen px-4 py-12 lg:px-24 lg:py-24 bg-black text-white">
             <div className="w-full flex flex-row justify-between items-end">
-                <h1 className="text-2xl lg:text-5xl font-Lausanne750 uppercase tracking-tight leading-none mb-8">
+                <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none mb-8">
                     Selected Works
                     <sup className="text-xs md:text-sm tracking-normal align-top opacity-50">(03)</sup>
                 </h1>
@@ -36,7 +36,7 @@ export default function SelectedWorks() {
                     .map((project, index) => (
                         <div
                             key={project.id}
-                            className="relative overflow-hidden rounded-custom border border-white/5"
+                            className="relative overflow-hidden rounded-custom border border-white/20"
                             onMouseEnter={() => setActiveIndex(index)}
                             onMouseLeave={() => setActiveIndex(null)}
                         >
@@ -58,8 +58,8 @@ export default function SelectedWorks() {
                                     <div className="absolute bottom-0 left-0 p-4 xl:p-8">
                                         <div
                                             className="flex justify-between gap-4 text-sm md:text-xl tracking-tight leading-none">
-                                            <p className="border border-white px-4 py-2 rounded-full font-Lausanne750">{project.title}</p>
-                                            <p className="border border-white px-4 py-2 rounded-full font-Lausanne300 opacity-50">{project.year}</p>
+                                            <p className="border border-white px-4 py-2 rounded-full font-[750]">{project.title}</p>
+                                            <p className="border border-white px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@ export default function SelectedWorks() {
             </div>
             <button
                 ref={buttonRef}
-                className="w-full text-sm md:text-xl font-Lausanne300 mt-8 bg-white/5 border border-white/10 rounded-full tracking-tight leading-none flex justify-center items-center">
+                className="w-full text-sm md:text-xl font-[300] mt-8 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
                 <TransitionLink className="h-full w-full px-4 py-4" href={"/works"}>
                     View All
                 </TransitionLink>

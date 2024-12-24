@@ -35,7 +35,7 @@ export default function AboutMePage() {
                         <h1
                             ref={titleRef}
                             style={{ visibility: "hidden" }}
-                            className="text-4xl md:text-7xl font-Lausanne750 tracking-tight leading-none"
+                            className="text-4xl md:text-7xl font-[750] tracking-tight uppercase"
                         >
                             About Me
                         </h1>
@@ -46,10 +46,10 @@ export default function AboutMePage() {
                             style={{visibility: "hidden"}}
                             className="col-span-1 flex flex-col justify-end gap-2"
                         >
-                            <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
+                            <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
                                 Name
                             </p>
-                            <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-none opacity-50">
+                            <p className="text-sm md:text-xl font-[300] tracking-tight leading-none opacity-50">
                                 Marek Jóźwiak
                             </p>
                         </div>
@@ -58,10 +58,10 @@ export default function AboutMePage() {
                             style={{ visibility: "hidden" }}
                             className="col-span-1 flex flex-col justify-end gap-2"
                         >
-                            <p className="text-sm md:text-xl font-Lausanne750 tracking-tight leading-none uppercase">
+                            <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
                                 Focus Area
                             </p>
-                            <p className="text-sm md:text-xl font-Lausanne300 tracking-tight leading-none opacity-50">
+                            <p className="text-sm md:text-xl font-[300] tracking-tight leading-none opacity-50">
                                 Front-end Development
                             </p>
                         </div>
@@ -109,7 +109,7 @@ export default function AboutMePage() {
                     </div>
                 </div>
                 <div className="col-span-1 h-auto relative overflow-hidden">
-                    <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/5">
+                    <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
                         <Image
                             ref={imageRef}
                             src="/images/about-photo.png"

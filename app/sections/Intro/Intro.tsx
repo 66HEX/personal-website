@@ -3,7 +3,7 @@ import ScrollTriggerBlur from "@/app/components/ScrollTriggerBlur/ScrollTriggerB
 export default function Intro() {
     return (
         <div className="w-screen flex justify-center items-center text-white/50 px-4 py-12 lg:px-24 lg:py-24">
-            <h1 className="text-2xl lg:text-5xl font-Lausanne750 tracking-tight leading-none text-center">
+            <h1 className="text-2xl lg:text-5xl font-[750] tracking-tight leading-none text-center md:max-w-2xl lg:max-w-7xl">
                 <ScrollTriggerBlur>
                     As a <span className="text-white">front-end developer</span>, I bring a unique
                     combination of creativity and technical

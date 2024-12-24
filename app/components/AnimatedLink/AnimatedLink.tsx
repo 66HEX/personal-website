@@ -2,7 +2,7 @@
 
 import React, { useRef, ReactNode } from "react";
 import { gsap } from "gsap";
-import { SplitText } from "@/app/utils/gsap/SplitText";
+import { SplitText } from "@/app/libs/gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import { CustomEase } from "gsap/CustomEase";
 

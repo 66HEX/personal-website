@@ -10,12 +10,7 @@ import {
 } from "framer-motion";
 import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
 
-const COLORS_TOP = [
-    "#A69A93",
-    "#8E7E76",
-    "#756C67",
-    "#2E2E2E"
-];
+const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 
 export default function  AuroraHero () {
     const color = useMotionValue(COLORS_TOP[0]);
@@ -41,8 +36,10 @@ export default function  AuroraHero () {
             className="h-svh w-screen flex flex-col justify-center items-center overflow-hidden bg-black text-white p-4"
         >
             <div className="w-full h-full flex flex-col justify-center items-center">
-
-                <h1 className="font-[1000] max-w-7xl text-center text-4xl md:text-7xl tracking-tight leading-tight text-white">
+                <span className="mb-4 inline-block rounded-full bg-white/5 font-[300] px-4 py-2 text-sm">
+                    Design & Development
+                </span>
+                <h1 className="font-[1000] max-w-5xl text-center text-4xl md:text-7xl tracking-tight leading-tight text-white">
                     Transforming ideas into seamless digital experiences
                 </h1>
                 <p className="font-[300] mb-8 mt-4 max-w-xl text-center text-sm md:text-xl opacity-50">

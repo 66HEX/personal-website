@@ -38,20 +38,17 @@ const AnimatedLink: React.FC<TextWrapperProps> = ({ children, className }) => {
 
         const timeline = gsap.timeline({ paused: true });
 
-        timeline.to(text.lines, {
-            y: "-100%",
-            duration: 0.35,
-            ease: "customEase",
-        });
+        timeline.fromTo(
+            text.lines,
+            { y: "0%", opacity: 0.5 },
+            { y: "-100%", opacity: 1, duration: 0.35, ease: "customEase" }
+        );
 
-        timeline.to(
+        timeline.fromTo(
             copy.lines,
-            {
-                y: "-100%",
-                duration: 0.35,
-                ease: "customEase",
-            },
-            0
+            { y: "0%", opacity: 0.5 },
+            { y: "-100%", opacity: 1, duration: 0.35, ease: "customEase" },
+            0 // Offset czasu równoczesny z pierwszą animacją
         );
 
         const handleMouseEnter = () => {

@@ -6,6 +6,7 @@ import useMousePosition from './useMousePosition'
 type SpotlightProps = {
     children: React.ReactNode
     className?: string
+    ref?: React.RefObject<HTMLDivElement>
 }
 
 export default function Spotlight({

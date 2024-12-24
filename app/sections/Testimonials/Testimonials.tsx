@@ -50,7 +50,7 @@ const Marquee: React.FC = () => {
 
     return (
         <main>
-            <div ref={container} className="testimonial-container flex space-x-8">
+            <div ref={container} className="testimonial-container flex space-x-4 xl:space-x-8">
                 {testimonialsData.map((testimonial: Testimonial, index: number) => (
                     <TestimonialCard
                         key={index}
@@ -64,7 +64,7 @@ const Marquee: React.FC = () => {
 
 const TestimonialCard: React.FC<Testimonial> = ({ text, author, role, src }) => {
     return (
-        <div className="testimonial-card w-full md:w-1/3 flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/5">
+        <div className="testimonial-card w-full md:w-1/2 xl:w-1/3 flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/5">
             <div className="relative flex flex-col justify-start items-start h-full p-8">
                 <div className="text-left mb-auto">
                     <p className="text-sm md:text-xl font-Lausanne300Italic opacity-50">"{text}"</p>

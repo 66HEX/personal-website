@@ -44,8 +44,8 @@ const ContactForm = () => {
 
 export default function Contact() {
     return (
-        <div className="px-4 lg:px-24 py-12 lg:py-24 min-h-screen bg-black text-white font-Lausanne300">
-            <div className="container mx-auto px-4 py-20">
+        <div className="px-4 lg:px-24 py-24 min-h-screen bg-black text-white font-Lausanne300">
+            <div className="container mx-auto">
                 <div className="flex justify-between items-center mb-20">
                     <h1 className="text-4xl md:text-7xl  font-Lausanne750 tracking-tight uppercase">Contact</h1>
                 </div>

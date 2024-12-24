@@ -38,14 +38,14 @@ export default function  AuroraHero () {
             style={{
                 backgroundImage,
             }}
-            className="relative grid min-h-screen place-content-center overflow-hidden bg-black px-4 py-4 md:py-24 text-white"
+            className="relative h-svh place-content-center overflow-hidden bg-black px-4 py-4 md:py-24 text-white"
         >
             <div className="relative z-10 flex flex-col items-center">
 
                 <h1 className="font-Lausanne1000 max-w-7xl text-center text-4xl md:text-7xl tracking-tight leading-tight text-white">
                     Transforming ideas into seamless digital experiences
                 </h1>
-                <p className="font-Lausanne300 my-8 max-w-xl text-center text-sm md:text-xl opacity-50">
+                <p className="font-Lausanne300 mb-8 mt-4 max-w-xl text-center text-sm md:text-xl opacity-50">
                     I design and build modern websites that help businesses thrive in the digital world, focusing on
                     clean design and exceptional user experience.
                 </p>

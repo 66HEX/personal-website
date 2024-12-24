@@ -40,7 +40,7 @@ export default function  AuroraHero () {
             }}
             className="relative min-h-screen w-screen place-content-center overflow-hidden bg-black px-4 py-4 md:py-24 text-white"
         >
-            <div className="relative z-10 flex flex-col items-center">
+            <div className="w-full h-full flex flex-col items-center">
 
                 <h1 className="font-Lausanne1000 max-w-7xl text-center text-4xl md:text-7xl tracking-tight leading-tight text-white">
                     Transforming ideas into seamless digital experiences
@@ -53,12 +53,6 @@ export default function  AuroraHero () {
                     style={{
                         border,
                         boxShadow,
-                    }}
-                    whileHover={{
-                        scale: 1.05,
-                    }}
-                    whileTap={{
-                        scale: 0.95,
                     }}
                     className="group relative flex w-fit items-center gap-1.5 rounded-full bg-black px-6 py-3 text-lg text-white font-Lausanne300"
                 >

@@ -13,7 +13,6 @@ interface AnimationRefs {
     typeRef: HTMLHeadingElement | null;
     imageRef: HTMLElement | null;
     descriptionRef: (HTMLParagraphElement | null)[];
-    buttonRef: HTMLButtonElement | null;
 }
 
 export const animateWorkDetails = (refs: AnimationRefs) => {

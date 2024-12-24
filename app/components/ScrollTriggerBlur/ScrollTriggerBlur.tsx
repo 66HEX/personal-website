@@ -38,7 +38,7 @@ const ScrollTriggerBlur: React.FC<RevealTextProps> = ({ children, className }) =
                     filter: 'blur(0px)',
                     duration: 1,
                     stagger: 0.2,
-                    ease: 'power3.in',
+                    ease: 'linear',
                     scrollTrigger: {
                         trigger: textRef.current,
                         start: 'top bottom',
@@ -49,7 +49,7 @@ const ScrollTriggerBlur: React.FC<RevealTextProps> = ({ children, className }) =
                     onUpdate: function () {
                         wordElements.forEach((char, index) => {
                             const progress = this.progress();
-                            if (index > wordElements.length * 0.8) {
+                            if (index > wordElements.length * 0.5) {
                                 gsap.to(char, { filter: `blur(${10 * (1 - progress)}px)` });
                             }
                         });

@@ -3,7 +3,7 @@
 import { gsap } from "gsap";
 import { Observer } from "gsap/Observer";
 import Image from 'next/image';
-import { useRef, useLayoutEffect } from 'react';
+import {useRef, useLayoutEffect, useCallback} from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import horizontalLoop from '@/app/libs/HorizontalLoop';
 
@@ -18,34 +18,59 @@ type Testimonial = {
 
 const Marquee: React.FC = () => {
     const container = useRef<HTMLDivElement>(null);
+    const observerRef = useRef<Observer | null>(null);
+    const loopRef = useRef<gsap.core.Timeline | null>(null);
+    const tlRef = useRef<gsap.core.Timeline | null>(null);
+
+    const cleanup = useCallback(() => {
+        if (observerRef.current) {
+            observerRef.current.kill();
+            observerRef.current = null;
+        }
+        if (loopRef.current) {
+            loopRef.current.kill();
+            loopRef.current = null;
+        }
+        if (tlRef.current) {
+            tlRef.current.kill();
+            tlRef.current = null;
+        }
+    }, []);
 
     useLayoutEffect(() => {
         const speed = 1;
 
         if (!container.current) return;
 
-        document.fonts.ready.then(() => {
-            const loop = horizontalLoop('.testimonial-card', {
+        const initAnimation = async () => {
+            await document.fonts.ready;
+
+            loopRef.current = horizontalLoop('.testimonial-card', {
                 repeat: -1,
                 speed: speed,
                 paddingRight: 32,
             });
 
-            let tl: gsap.core.Timeline | null = null;
-
-            Observer.create({
+            observerRef.current = Observer.create({
                 target: window as any,
                 type: 'wheel',
                 onChangeY: (self) => {
-                    tl && tl.kill();
+                    if (tlRef.current) {
+                        tlRef.current.kill();
+                    }
+
                     const factor = self.deltaY > 0 ? 1 : -1;
-                    tl = gsap.timeline()
-                        .to(loop, { timeScale: speed * factor, duration: 0.25 })
-                        .to(loop, { timeScale: 1 * factor, duration: 1 });
+                    tlRef.current = gsap.timeline()
+                        .to(loopRef.current, { timeScale: speed * factor, duration: 0.25 })
+                        .to(loopRef.current, { timeScale: 1 * factor, duration: 1 });
                 },
             });
-        });
-    }, []);
+        };
+
+        initAnimation();
+
+        return cleanup;
+    }, [cleanup]);
 
     return (
         <main>
@@ -63,7 +88,7 @@ const Marquee: React.FC = () => {
 
 const TestimonialCard: React.FC<Testimonial> = ({ text, author, role, src }) => {
     return (
-        <div className="testimonial-card w-2/3 md:w-1/2 xl:w-1/3 flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/20">
+        <div className="testimonial-card w-full md:w-1/2 xl:w-1/3 flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/20">
             <div className="relative flex flex-col justify-start items-start h-full p-4 xl:p-8">
                 <div className="text-left mb-auto">
                     <p className="text-sm md:text-xl font-[300] italic opacity-50">"{text}"</p>

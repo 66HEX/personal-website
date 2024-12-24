@@ -54,7 +54,7 @@ export default function  AuroraHero () {
                         border,
                         boxShadow,
                     }}
-                    className="group relative flex w-fit items-center gap-1.5 rounded-full bg-black px-4 py-2 text-lg text-white font-[300]"
+                    className="group relative flex w-fit items-center gap-2 rounded-full bg-black px-8 py-2 text-lg text-white font-[300]"
                 >
                     <TransitionLink href={"/contact"}>Let's Talk</TransitionLink>
                     <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12"/>

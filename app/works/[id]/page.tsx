@@ -5,8 +5,7 @@ import { works } from "@/app/data/worksData";
 import Image from "next/image";
 import {useEffect, useRef} from "react";
 import { useGSAP } from "@gsap/react";
-import { animateWorkDetails } from "./animation";
-import {initializeButtonAnimation} from "@/app/sections/SelectedWorks/animation";
+import { animateWorkDetails, initializeButtonAnimation } from "./animation";
 import Link from "next/link";
 
 export default function WorkDetailsPage({ params }: { params: { id: string } }) {
@@ -34,7 +33,6 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
             yearRef: yearRef.current,
             typeRef: typeRef.current,
             imageRef: imageRef.current,
-            buttonRef: buttonRef.current,
         });
     }, []);
 
@@ -87,7 +85,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 </div>
                 <div className="w-full">
                     <div className="w-full h-full relative overflow-hidden">
-                        <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/5">
+                        <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
                             <Image
                                 ref={imageRef}
                                 src={project.mainImage}

@@ -38,7 +38,7 @@ export default function  AuroraHero () {
             style={{
                 backgroundImage,
             }}
-            className="h-svh w-screen flex flex-col justify-center items-center overflow-hidden bg-black text-white"
+            className="h-svh w-screen flex flex-col justify-center items-center overflow-hidden bg-black text-white p-4"
         >
             <div className="w-full h-full flex flex-col justify-center items-center">
 

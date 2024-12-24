@@ -38,7 +38,7 @@ export default function  AuroraHero () {
             style={{
                 backgroundImage,
             }}
-            className="relative h-screen w-screen place-content-center overflow-hidden bg-black px-4 py-4 md:py-24 text-white"
+            className="relative min-h-screen w-screen place-content-center overflow-hidden bg-black px-4 py-4 md:py-24 text-white"
         >
             <div className="relative z-10 flex flex-col items-center">
 

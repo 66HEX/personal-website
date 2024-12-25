@@ -2,7 +2,7 @@
 
 import { gsap } from "gsap";
 import { CustomEase } from "gsap/CustomEase";
-import { initializeButtonAnimation } from "./animation";
+import { setupContactAnimation, initializeButtonAnimation } from "./animation";
 import {useEffect, useRef} from 'react';
 import Link from "next/link";
 import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
@@ -20,7 +20,7 @@ const ContactForm = () => {
 
 
     return (
-        <form className="w-full max-w-2xl mx-auto font-[300]" onSubmit={(e) => e.preventDefault()}>
+        <form className="w-full max-w-2xl  font-[300]" onSubmit={(e) => e.preventDefault()}>
             <div className="border border-white/20 p-4 rounded-custom transition-all mb-4">
                 <input
                     type="text"
@@ -52,20 +52,40 @@ const ContactForm = () => {
 };
 
 export default function Contact() {
+
+    const component = useRef(null);
+    const titleRef = useRef(null);
+    const subtitleRef = useRef(null);
+    const descriptionRef = useRef(null);
+    const emailRef = useRef(null);
+    const formRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = setupContactAnimation({
+            titleRef,
+            subtitleRef,
+            descriptionRef,
+            emailRef,
+            formRef
+        }, component);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <div className="px-4 lg:px-24 pb-12 lg:pb-24 min-h-screen bg-black text-white">
-            <div className="container mx-auto flex flex-col justify-center items-start">
+        <div ref={component} className="px-4 lg:px-24 pb-12 lg:pb-24 min-h-screen bg-black text-white">
+            <div className="w-full flex flex-col justify-center items-start">
                 <div className="h-[30vh] py-8 flex items-end">
-                    <h1 className="text-4xl md:text-7xl font-[750] tracking-tight uppercase">Contact</h1>
+                    <h1 ref={titleRef} className="text-4xl md:text-7xl font-[750] tracking-tight uppercase">Contact</h1>
                 </div>
                 <div className="grid md:grid-cols-2 gap-24">
                     <div>
-                        <h2 className="text-3xl font-[750] tracking-tight">Let's talk about your next big idea</h2>
-                        <p className="text-lg font-[300] opacity-50 my-4">
+                        <h2 ref={subtitleRef} className="text-3xl font-[750] tracking-tight">Let's talk about your next big idea</h2>
+                        <p ref={descriptionRef} className="text-lg font-[300] opacity-50 my-4">
                             Have a project in mind? Get in touch and let's create something extraordinary together.
                             I'm always excited to hear about new ideas and challenges.
                         </p>
-                        <Link href="mailto:hexthecoder@gmail.com" className="block font-[750]">
+                        <Link ref={emailRef} href="mailto:hexthecoder@gmail.com" className="block font-[750]">
                             <AnimatedLink>
                                 hexthecoder@gmail.com
                             </AnimatedLink>

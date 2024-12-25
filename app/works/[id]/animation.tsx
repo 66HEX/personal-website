@@ -7,7 +7,7 @@ gsap.registerPlugin(SplitText);
 
 interface AnimationRefs {
     titleRef: HTMLHeadingElement | null;
-    subtitleRef: HTMLHeadingElement | null;
+
     clientRef: HTMLHeadingElement | null;
     yearRef: HTMLHeadingElement | null;
     typeRef: HTMLHeadingElement | null;
@@ -16,90 +16,117 @@ interface AnimationRefs {
 }
 
 export const animateWorkDetails = (refs: AnimationRefs) => {
-    const { titleRef, subtitleRef, clientRef, yearRef, typeRef, imageRef, descriptionRef } = refs;
+    const { titleRef, clientRef, yearRef, typeRef, imageRef, descriptionRef } = refs;
 
     const childSplit1 = new SplitText(titleRef, { type: "lines" });
-    const childSplit2 = new SplitText(subtitleRef, { type: "lines" });
-    const childSplit3 = new SplitText(clientRef, { type: "lines" });
-    const childSplit4 = new SplitText(yearRef, { type: "lines" });
-    const childSplit5 = new SplitText(typeRef, { type: "lines" });
-    const childSplit6 = new SplitText(descriptionRef, { type: "lines" });
+    const childSplit2 = new SplitText(clientRef, { type: "lines" });
+    const childSplit3 = new SplitText(yearRef, { type: "lines" });
+    const childSplit4 = new SplitText(typeRef, { type: "lines" });
+    const childSplit5 = new SplitText(descriptionRef, { type: "lines" });
 
-    new SplitText(titleRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(subtitleRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(clientRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(yearRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(typeRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(descriptionRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
+    [titleRef,  clientRef, yearRef, typeRef, descriptionRef].forEach(ref => {
+        if (ref) {
+            new SplitText(ref, {
+                type: "lines",
+                linesClass: "line-wrapper overflow-hidden",
+            });
+        }
     });
 
     const title = childSplit1.lines;
-    const subtitle = childSplit2.lines;
-    const client = childSplit3.lines;
-    const year = childSplit4.lines;
-    const type = childSplit5.lines;
-    const description = childSplit6.lines;
+    const client = childSplit2.lines;
+    const year = childSplit3.lines;
+    const type = childSplit4.lines;
+    const description = childSplit5.lines;
 
     const tl = gsap.timeline();
 
     tl.fromTo(
+        imageRef,
+        {
+            opacity: 0,
+            scale: 1.2,
+            visibility: "hidden"
+        },
+        {
+            opacity: 1,
+            scale: 1,
+            visibility: "visible",
+            duration: 1.2,
+            ease: "power2.out"
+        },
+        "0"
+    );
+
+    tl.fromTo(
         title,
         { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-        "0.5"
+        {
+            y: "0%",
+            visibility: "visible",
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1
+        },
+        "0.3"
     );
-    tl.fromTo(
-        subtitle,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
-    );
+
+
     tl.fromTo(
         client,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
+        { y: "20px", opacity: 0, visibility: "hidden" },
+        {
+            y: "0",
+            opacity: 1,
+            visibility: "visible",
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power3.out"
+        },
         "0.5"
     );
-    tl.fromTo(
-        year,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
-    );
+
     tl.fromTo(
         type,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
+        { y: "20px", opacity: 0, visibility: "hidden" },
+        {
+            y: "0",
+            opacity: 1,
+            visibility: "visible",
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power3.out"
+        },
+        "0.7"
     );
+
     tl.fromTo(
-        imageRef,
-        { opacity: 0, scale: 1.1, visibility: "hidden" },
-        { opacity: 1, scale: 1, visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
+        year,
+        { y: "20px", opacity: 0, visibility: "hidden" },
+        {
+            y: "0",
+            opacity: 1,
+            visibility: "visible",
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power3.out"
+        },
+        "0.9"
     );
+
+
     tl.fromTo(
         description,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
+        { y: "30px", opacity: 0, visibility: "hidden" },
+        {
+            y: "0",
+            opacity: 1,
+            visibility: "visible",
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out"
+        },
+        "1"
     );
 
     return () => {

@@ -28,7 +28,6 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
     useGSAP(() => {
         return animateWorkDetails({
             titleRef: titleRef.current,
-            subtitleRef: subtitleRef.current,
             descriptionRef: descriptionRefs.current,
             clientRef: clientRef.current,
             yearRef: yearRef.current,
@@ -49,7 +48,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     <div className="grid grid-cols-2 w-full mb-8 gap-8">
                         <div className="col-span-2 lg:col-span-1 flex items-end">
                             <h1 style={{visibility: "hidden"}} ref={titleRef}
-                                className="text-4xl md:text-7xl font-[750] tracking-tight">
+                                className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                                 {project.title}
                             </h1>
                         </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { gsap } from "gsap";
 import { SplitText } from "@/app/libs/gsap/SplitText";
 
@@ -14,8 +16,7 @@ interface AnimationRefs {
 }
 
 export const animateAboutMeDetails = (refs: AnimationRefs) => {
-    const { titleRef, subtitleRef,subtitleRef2, bioRef,bioRef2,bioRef3, imageRef } = refs;
-
+    const { titleRef, subtitleRef, subtitleRef2, bioRef, bioRef2, bioRef3, imageRef } = refs;
 
     const childSplit1 = new SplitText(titleRef, { type: "lines" });
     const childSplit2 = new SplitText(subtitleRef, { type: "lines" });
@@ -24,30 +25,13 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
     const childSplit5 = new SplitText(bioRef3, { type: "lines" });
     const childSplit6 = new SplitText(subtitleRef2, { type: "lines" });
 
-
-    new SplitText(titleRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(subtitleRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(subtitleRef2, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(bioRef, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(bioRef2, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
-    });
-    new SplitText(bioRef3, {
-        type: "lines",
-        linesClass: "line-wrapper overflow-hidden",
+    [titleRef, subtitleRef, subtitleRef2, bioRef, bioRef2, bioRef3].forEach(ref => {
+        if (ref) {
+            new SplitText(ref, {
+                type: "lines",
+                linesClass: "line-wrapper overflow-hidden",
+            });
+        }
     });
 
     const title = childSplit1.lines;
@@ -60,52 +44,76 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
     const tl = gsap.timeline();
 
     tl.fromTo(
+        imageRef,
+        {
+            opacity: 0,
+            scale: 1.2,
+            visibility: "hidden"
+        },
+        {
+            opacity: 1,
+            scale: 1,
+            visibility: "visible",
+            duration: 1.2,
+            ease: "power2.out"
+        },
+        "0"
+    );
+
+    tl.fromTo(
         title,
         { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-        "0.5"
+        {
+            y: "0%",
+            visibility: "visible",
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1
+        },
+        "0.3"
     );
 
     tl.fromTo(
         subtitle,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
+        { y: "20px", opacity: 0, visibility: "hidden" },
+        {
+            y: "0",
+            opacity: 1,
+            visibility: "visible",
+            duration: 0.5,
+            ease: "power3.out",
+            stagger: 0.1
+        },
         "0.5"
     );
 
     tl.fromTo(
         subtitle2,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
+        { y: "20px", opacity: 0, visibility: "hidden" },
+        {
+            y: "0",
+            opacity: 1,
+            visibility: "visible",
+            duration: 0.5,
+            ease: "power3.out",
+            stagger: 0.1
+        },
+        "0.7"
     );
 
+    // Bio paragraphs animation with stagger
     tl.fromTo(
-        bio,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
-    );
-
-    tl.fromTo(
-        bio2,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
-    );
-
-    tl.fromTo(
-        bio3,
-        { y: "100%", visibility: "hidden" },
-        { y: "0%", visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
-    );
-
-    tl.fromTo(
-        imageRef,
-        { opacity: 0, scale: 1.1, visibility: "hidden" },
-        { opacity: 1, scale: 1, visibility: "visible", duration: 0.75, ease: "power3.out" },
-        "0.5"
+        [bio, bio2, bio3],
+        { y: "30px", opacity: 0, visibility: "hidden" },
+        {
+            y: "0",
+            opacity: 1,
+            visibility: "visible",
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out"
+        },
+        "0.9"
     );
 
     return () => {

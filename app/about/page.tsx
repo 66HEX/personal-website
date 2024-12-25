@@ -35,7 +35,7 @@ export default function AboutMePage() {
                         <h1
                             ref={titleRef}
                             style={{ visibility: "hidden" }}
-                            className="text-4xl md:text-7xl font-[750] tracking-tight uppercase"
+                            className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none"
                         >
                             About Me
                         </h1>
@@ -62,14 +62,14 @@ export default function AboutMePage() {
                                 Focus Area
                             </p>
                             <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
-                                Front-end Development
+                                Front-End Development
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="w-screen px-4 lg:px-24 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-24 pb-12 md:pb-24">
+            <div className="w-screen px-4 lg:px-24 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 pb-12 md:pb-24">
                 <div
                     className="col-span-1 gap-4 lg:gap-8 text-sm leading-tight order-2">
                     <div className="col-span-1 flex flex-col gap-4 lg:gap-8 opacity-50">
@@ -78,7 +78,7 @@ export default function AboutMePage() {
                             style={{visibility: "hidden"}}
                             className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-relaxed"
                         >
-                        I'm an emerging frontend developer with a passion for crafting engaging web experiences.
+                        I'm an emerging front-end developer with a passion for crafting engaging web experiences.
                             Over the past 1.5 years, I've immersed myself in modern web development, focusing on
                             React.js and Next.js ecosystems. My journey in tech is driven by a constant desire to
                             learn and grow, turning creative concepts into clean, functional, and visually

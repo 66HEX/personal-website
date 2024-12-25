@@ -46,7 +46,7 @@ export const animatePageContent = (worksRef: HTMLElement | null) => {
         works,
         { y: "100%", visibility: "hidden" },
         { y: "0%", visibility: "visible", duration: 1, ease: "power3.out" },
-        "<"
+        "0"
     );
 
     tl.fromTo(
@@ -60,7 +60,7 @@ export const animatePageContent = (worksRef: HTMLElement | null) => {
             ease: "power3.out",
             stagger: 0.1,
         },
-        "<"
+        "0.3"
     );
 
     return () => {

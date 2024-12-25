@@ -21,7 +21,6 @@ export default function Navbar() {
 
     useEffect(() => {
         gsap.set(menuRef.current, { height: 0, overflow: "hidden" });
-
     }, []);
 
     const closeMenu = () => {
@@ -80,16 +79,32 @@ export default function Navbar() {
         });
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(event.target as Node)
+            ) {
+                closeMenu();
+            }
+        };
 
-    const handleLinkClick = () => {
-        closeMenu();
-    };
+        if (isOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpen]);
 
     return (
         <nav className="fixed top-4 left-0 text-white z-50 w-full px-4 lg:px-24">
             <div
                 ref={containerRef}
-                className="flex flex-col bg-white/5 border border-white/20 backdrop-blur-3xl rounded-custom overflow-hidden"
+                className="flex flex-col bg-black/50 border border-white/20 backdrop-blur-3xl rounded-custom overflow-hidden"
             >
                 <div className="flex justify-between items-center w-full px-4 md:px-8 py-4">
                     <div className="flex items-center">
@@ -143,9 +158,10 @@ export default function Navbar() {
                             <TransitionLink
                                 href={link.href}
                                 className="flex items-center gap-2"
-                                
+                                onClick={(event) => {
+                                    closeMenu()}}
                             >
-                                <span className="text-xs opacity-50">{link.index}</span>
+                                <span className="text-xs font-[300] opacity-50">{link.index}</span>
                                 <span className="text-sm font-[300]">{link.label}</span>
                             </TransitionLink>
                         </div>

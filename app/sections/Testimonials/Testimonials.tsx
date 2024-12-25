@@ -1,7 +1,7 @@
 "use client";
 
 import { initializeButtonAnimation, initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "./animation";
-import {useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect, useState} from 'react';
+import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -75,11 +75,9 @@ const Marquee = forwardRef((props, ref) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const [positionX, setPositionX] = useState(0);
-
     const scrollTestimonials = useCallback((direction: 'left' | 'right') => {
-        scrollTestimonialsAnimation(contentRef.current, direction, animating, calculateCardWidth, getSpacing, testimonialsData, positionX, setPositionX);
-    }, [positionX]);
+        scrollTestimonialsAnimation(contentRef.current, direction, animating, calculateCardWidth, getSpacing, testimonialsData);
+    }, []);
 
     return (
         <div ref={container} className="overflow-hidden">

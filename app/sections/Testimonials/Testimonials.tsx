@@ -1,7 +1,7 @@
 "use client";
 
 import { initializeButtonAnimation, initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "./animation";
-import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
+import {useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect, useState} from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -40,7 +40,7 @@ const Marquee = forwardRef((props, ref) => {
 
         const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];
         contentRef.current.innerHTML = items.map((testimonial, index) => `
-            <SpotlightCard class="testimonial-card flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/20" 
+            <div class="testimonial-card flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/20" 
                  style="width: ${calculateCardWidth()}px">
                 <div class="relative flex flex-col justify-start items-start h-full p-4 xl:p-8">
                     <div class="text-left mb-auto">
@@ -56,7 +56,7 @@ const Marquee = forwardRef((props, ref) => {
                         </div>
                     </div>
                 </div>
-            </SpotlightCard>
+            </div>
         `).join('');
 
         initializeTestimonialsAnimation(contentRef.current, testimonialsData, calculateCardWidth, getSpacing);
@@ -75,9 +75,11 @@ const Marquee = forwardRef((props, ref) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const [positionX, setPositionX] = useState(0);
+
     const scrollTestimonials = useCallback((direction: 'left' | 'right') => {
-        scrollTestimonialsAnimation(contentRef.current, direction, animating, calculateCardWidth, getSpacing, testimonialsData);
-    }, []);
+        scrollTestimonialsAnimation(contentRef.current, direction, animating, calculateCardWidth, getSpacing, testimonialsData, positionX, setPositionX);
+    }, [positionX]);
 
     return (
         <div ref={container} className="overflow-hidden">

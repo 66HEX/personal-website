@@ -1,14 +1,17 @@
 'use client';
 
 import { ChevronDown } from "lucide-react";
-import { useLayoutEffect, useRef } from "react";
-import { setupHeroAnimation } from "./animation";
+import {useEffect, useLayoutEffect, useRef} from "react";
+import { setupHeroAnimation, initializeButtonAnimation } from "./animation";
 
 export default function Hero() {
     const component = useRef(null);
     const headingRef = useRef(null);
     const subtitleRef = useRef(null);
     const descriptionRef = useRef(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
+    const chevronRef = useRef(null);
+
 
     useLayoutEffect(() => {
         const ctx = setupHeroAnimation({
@@ -18,6 +21,11 @@ export default function Hero() {
         }, component);
 
         return () => ctx.revert();
+    }, []);
+
+    useEffect(() => {
+        const cleanup = initializeButtonAnimation(buttonRef.current, chevronRef.current);
+        return cleanup;
     }, []);
 
     return (
@@ -59,10 +67,11 @@ export default function Hero() {
 
                 <div className="flex gap-4">
                     <button
-                        className="hero-button group font-[300] flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full px-6 py-3 transition-colors"
+                        ref={buttonRef}
+                        className="hero-button group font-[300] flex items-center gap-2 bg-white/5 border border-white/20 rounded-full px-6 py-3 transition-colors"
                     >
                         Let's Talk
-                        <ChevronDown className="w-4 h-4 transition-transform group-hover:translate-y-1" />
+                        <ChevronDown ref={chevronRef} className="w-4 h-4" />
                     </button>
                 </div>
             </div>

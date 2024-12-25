@@ -6,7 +6,6 @@ import { works } from "@/app/data/worksData";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import Image from "next/image";
 import { animateProjectImage, initializeButtonAnimation } from "./animation";
-import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
 export default function SelectedWorks() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);

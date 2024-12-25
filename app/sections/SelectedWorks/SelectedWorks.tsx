@@ -44,7 +44,7 @@ export default function SelectedWorks() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
                 {works
-                    .slice(0, 3)
+                    .slice(0, 4)
                     .map((project, index) => (
                         <div
                             key={project.id}

@@ -93,7 +93,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                             <Image
                                 ref={imageRef}
                                 src={project.mainImage}
-                                alt="Hero Image"
+                                alt="Project Image"
                                 layout="intrinsic"
                                 priority={true}
                                 width={2000}
@@ -121,49 +121,53 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                         ))}
                     </div>
                 </div>
+                {project.images && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
+                        <div className="col-span-1 w-full h-full relative">
+                            <div
+                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
+                                <Image
+                                    src={project.images[0]}
+                                    alt="Project Image"
+                                    layout="intrinsic"
+                                    width={1000}
+                                    height={500}
+                                    className="object-cover"
+                                />
+                            </div>
+                        </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
-                    <div className="col-span-1 w-full h-full relative">
-                        <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
-                            <Image
-                                src={project.images[0]}
-                                alt="Hero Image"
-                                layout="intrinsic"
-                                width={1000}
-                                height={500}
-                                className="object-cover"
-                            />
+                        <div className="col-span-1 w-full h-full relative">
+                            <div
+                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
+                                <Image
+                                    src={project.images[1]}
+                                    alt="Project Image"
+                                    layout="intrinsic"
+                                    width={1000}
+                                    height={500}
+                                    className="object-cover"
+                                />
+                            </div>
                         </div>
                     </div>
-
-                    <div className="col-span-1 w-full h-full relative">
-                        <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
-                            <Image
-                                src={project.images[1]}
-                                alt="Hero Image"
-                                layout="intrinsic"
-                                width={1000}
-                                height={500}
-                                className="object-cover"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <button
-                    ref={buttonRef}
-                    className="w-full text-sm md:text-xl font-[300] mt-8 lg:mt-12 mb-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
-                    <Link
-                        className="h-full w-full px-4 py-4"
-                        href={project.liveLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <AnimatedLink>
-                            Visit Website
-                        </AnimatedLink>
-                    </Link>
-                </button>
-
+                )}
+                {project.liveLink && (
+                    <button
+                        ref={buttonRef}
+                        className="w-full text-sm md:text-xl font-[300] mt-8 lg:mt-12 mb-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                        <Link
+                            className="h-full w-full px-4 py-4"
+                            href={project.liveLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <AnimatedLink>
+                                Visit Website
+                            </AnimatedLink>
+                        </Link>
+                    </button>
+                )}
             </div>
         </div>
     );

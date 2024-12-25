@@ -69,10 +69,10 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                             <div ref={typeRef} style={{visibility: "hidden"}}
                                  className="col-span-2 md:col-span-1 flex-col justify-end flex gap-2">
                                 <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
-                                    Services
+                                    Type
                                 </p>
                                 <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
-                                    {project.type.join(" / ")}
+                                    {project.type}
                                 </p>
                             </div>
                             <div style={{visibility: "hidden"}} ref={yearRef}
@@ -155,7 +155,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 {project.liveLink && (
                     <button
                         ref={buttonRef}
-                        className="w-full text-sm md:text-xl font-[300] mt-8 lg:mt-12 mb-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                        className="w-full text-sm md:text-xl font-[300] mt-8 lg:mt-12 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
                         <Link
                             className="h-full w-full px-4 py-4"
                             href={project.liveLink}
@@ -168,6 +168,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                         </Link>
                     </button>
                 )}
+                <div className="w-full h-32"/>
             </div>
         </div>
     );

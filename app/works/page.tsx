@@ -69,7 +69,7 @@ export default function WorksPage() {
                                         <p className="text-2xl md:text-5xl font-[750] opacity-50">{project.title}</p>
                                     </div>
                                     <div className="col-span-1 text-sm md:text-base font-[300] hidden lg:flex justify-start items-center opacity-50">
-                                        {project.type.join(" / ")}
+                                        {project.type}
                                     </div>
                                     <div className="col-span-1 text-sm md:text-base font-[300] flex justify-end items-center opacity-50">
                                         <p>{project.year}</p>

@@ -6,7 +6,7 @@ export const works = [
         images: ["/images/works/leanbulls2.png", "/images/works/leanbulls3.png"],
         client: "Lean Bulls Gym",
         year: 2024,
-        type: ["Design", "Development"],
+        type: "Front-End Development",
         liveLink: "https://lean-bulls-gym.vercel.app/",
         description: [
             "The Lean Bulls Gym website provides an engaging and user-friendly platform to explore everything this powerlifting gym has to offer. With detailed information on coaching team, membership options and services, the site serves as a central hub for current and prospective members.",
@@ -19,7 +19,7 @@ export const works = [
         images: ["/images/works/logo2.png", "/images/works/logo3.png"],
         client: "Natalia Jasińska",
         year: 2024,
-        type: ["Design"],
+        type: "Brand Identity",
         description: [
             "The logo redesign for Natalia is a modern, bold monogram combining the initials 'NJ' in a powerful, athletic style. The design reflects Natalia's expertise in working with powerlifters and strength athletes, emphasizing strength, precision, and professionalism.",
             "Moving away from the previous delicate and feminine script style, the new logo is strong and dynamic, representing the sport of powerlifting and Natalia’s commitment to helping athletes achieve their best physical performance. The monogram is designed to be versatile, working seamlessly across various platforms and applications, from websites to gym apparel."
@@ -31,10 +31,10 @@ export const works = [
         mainImage: "/images/works/sponsor1.png",
         client: "Lean Bulls Gdynia",
         year: 2024,
-        type: ["Design", "Marketing"],
+        type: "Marketing Design",
         description: [
             "This project involved creating a detailed sponsorship offer for the Powerlifting Club, aimed at securing support and partnerships from local and national businesses. The offer highlights the benefits of sponsoring the club, including exposure at competitions, events, and training sessions.",
-            "The document was designed to be visually appealing and informative, showcasing the club's achievements, key members, and its community-driven approach. The sponsorship proposal also outlines various support options, including event-specific and long-term partnerships, ensuring that potential sponsors have clear and flexible options to get involved.",
+            "The document was designed to be visually appealing and informative, showcasing the club's achievements, key members, and its community-driven approach. The sponsorship proposal also outlines various support options, including event-specific and long-term partnerships, ensuring that potential sponsors have clear and flexible options to get involved."
         ]
     },
     {
@@ -44,7 +44,7 @@ export const works = [
         images: ["/images/works/angelika2.png", "/images/works/angelika3.png"],
         client: "Angelika Grzejdziak",
         year: 2024,
-        type: ["Design", "Development"],
+        type: "E-Commerce Design",
         liveLink: "https://angelikagrzejdziak.pl/",
         description: [
             "Angelika Grzejdziak's website is an inviting and informative platform tailored to individuals looking to elevate their fitness and nutrition. Showcasing a range of services from personalized meal plans to custom workout routines, the site is a one-stop shop for health enthusiasts.",
@@ -58,7 +58,7 @@ export const works = [
         images: ["/images/works/natalia2.png", "/images/works/natalia3.png"],
         client: "Natalia Jasińska",
         year: 2024,
-        type: ["Design", "Development"],
+        type: "E-Commerce Design",
         liveLink: "https://nataliajasinska.pl/",
         description: [
             "The website for Natalia Jasińska is primarily designed to showcase and sell collaboration opportunities and Natalia's flagship ebook, PowerEater. This comprehensive guide dives deep into nutrition strategies tailored for strength athletes, helping them achieve peak performance and recovery.",

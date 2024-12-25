@@ -20,7 +20,7 @@ export default function Services() {
     };
 
     return (
-        <div className="w-screen bg-black text-white">
+        <div className="w-screen bg-black text-white lg:mb-24">
             <div className="w-full flex justify-between items-end px-4 lg:px-24 pt-12 md:pt-24">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none mb-8 flex">
                     Services

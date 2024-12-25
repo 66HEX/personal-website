@@ -47,7 +47,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
     return (
         <div>
-            <div className="bg-black text-white px-4 lg:px-24">
+            <div className="bg-black text-white px-4 lg:px-24 lg:pb-24">
                 <div className="w-full h-[30vh] flex items-end">
                     <div className="grid grid-cols-2 w-full mb-8 gap-8">
                         <div className="col-span-2 lg:col-span-1 flex items-end">
@@ -150,7 +150,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 </div>
                 <button
                     ref={buttonRef}
-                    className="w-full text-sm md:text-xl font-[300] mt-8 mb-24 lg:my-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                    className="w-full text-sm md:text-xl font-[300] mt-8 lg:mt-12 mb-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
                     <Link
                         className="h-full w-full px-4 py-4"
                         href={project.liveLink}

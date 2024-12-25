@@ -8,8 +8,21 @@ import localFont from 'next/font/local'
 
 export const metadata: Metadata = {
     title: "Hex - Web Developer + Designer",
-    description: "Portfolio of HEX, a freelance web developer specializing in modern web technologies. I’m Hex, a digital creator based in Poland, where creativity meets precision to craft modern, functional web experiences. I bring ideas to life with every line of code and design, blending innovation and technology to shape digital journeys that captivate, inspire, and stand the test of time.",
+    description: "Portfolio of HEX, a freelance web developer specializing in modern web technologies. I'm Hex, a digital creator based in Poland, where creativity meets precision to craft modern, functional web experiences. I bring ideas to life with every line of code and design, blending innovation and technology to shape digital journeys that captivate, inspire, and stand the test of time.",
     keywords: "freelance web developer, web development, portfolio, modern websites, responsive design, user experience, digital creator, front-end development, UI/UX designer",
+    robots: {
+        index: true,
+        follow: true,
+        nocache: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            noimageindex: false,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
+    },
     openGraph: {
         type: "website",
         title: "Hex - Web Developer + Designer",

@@ -2,7 +2,6 @@
 
 import { initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "@/app/animations/testimonialsAnimation";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
-
 import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -103,11 +102,15 @@ const Testimonials: React.FC = () => {
 
     useEffect(() => {
         const cleanup = initializeButtonAnimation(buttonRef.current);
-        return cleanup;
+        return () => {
+            if (typeof cleanup === 'function') {
+                cleanup();
+            }
+        };
     }, []);
 
     return (
-        <section id="testimonials" className="w-screen bg-black text-white px-4 lg:px-24 py-12 lg:py-24 flex flex-col justify-center items-start">
+        <section id="testimonials" className="w-screen bg-black text-white px-4 lg:px-24 pt-12 mb-24 lg:py-24 flex flex-col justify-center items-start">
             <div className="flex items-center justify-between w-full mb-8">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                     Testimonials

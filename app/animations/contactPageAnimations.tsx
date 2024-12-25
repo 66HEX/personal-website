@@ -14,7 +14,6 @@ interface ContactAnimationRefs {
     emailRef: RefObject<HTMLAnchorElement>;
 }
 
-
 export const setupContactAnimation = (
     refs: ContactAnimationRefs,
     component: RefObject<HTMLDivElement>
@@ -62,6 +61,47 @@ export const setupContactAnimation = (
                 y: 0,
             }, "0.7");
     }, component);
+
+    return ctx;
+};
+
+export const animateStatusMessage = (
+    statusRef: RefObject<HTMLDivElement>,
+    onComplete: () => void
+) => {
+    const ctx = gsap.context(() => {
+        if (!statusRef.current) return;
+
+        gsap.set(statusRef.current, {
+            opacity: 0,
+            y: 20,
+            scale: 0.95
+        });
+
+        const tl = gsap.timeline({
+            defaults: { ease: CustomEase.create("custom", "0.6, 0.01, 0.05, 0.95") }
+        });
+
+        tl.to(statusRef.current, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6
+        });
+
+        tl.to(statusRef.current, {
+            opacity: 1,
+            duration: 1.2
+        });
+
+        tl.to(statusRef.current, {
+            opacity: 0,
+            y: -20,
+            scale: 0.95,
+            duration: 0.5,
+            onComplete
+        });
+    });
 
     return ctx;
 };

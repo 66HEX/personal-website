@@ -19,7 +19,11 @@ export default function SelectedWorks() {
 
     useEffect(() => {
         const cleanup = initializeButtonAnimation(buttonRef.current);
-        return cleanup;
+        return () => {
+            if (typeof cleanup === 'function') {
+                cleanup();
+            }
+        };
     }, []);
 
     return (

@@ -35,7 +35,7 @@ export default function Footer() {
                     <div className="col-span-2 flex flex-col justify-start">
                         <div>
                             <p className="font-[300] text-sm lg:text-base leading-relaxed opacity-50">
-                                Creative Front-end developer with a passion for pushing web technologies to their
+                                Creative front-end developer with a passion for pushing web technologies to their
                                 limits. Combining modern frameworks, responsive design principles, and creative problem-solving
                                 to deliver exceptional user experiences that exceed expectations and drive results.
                             </p>

@@ -26,7 +26,11 @@ export default function Hero() {
 
     useEffect(() => {
         const cleanup = initializeButtonAnimation(buttonRef.current);
-        return cleanup;
+        return () => {
+            if (typeof cleanup === 'function') {
+                cleanup();
+            }
+        };
     }, []);
 
     return (

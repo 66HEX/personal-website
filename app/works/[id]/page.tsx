@@ -19,7 +19,6 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
-    const subtitleRef = useRef<HTMLHeadingElement>(null);
     const clientRef = useRef<HTMLHeadingElement>(null);
     const yearRef = useRef<HTMLHeadingElement>(null);
     const typeRef = useRef<HTMLHeadingElement>(null);
@@ -39,7 +38,11 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
     useEffect(() => {
         const cleanup = initializeButtonAnimation(buttonRef.current);
-        return cleanup;
+        return () => {
+            if (typeof cleanup === 'function') {
+                cleanup();
+            }
+        };
     }, []);
 
     return (
@@ -147,7 +150,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 </div>
                 <button
                     ref={buttonRef}
-                    className="w-full text-sm md:text-xl font-[300] mt-8 mb-12 lg:my-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                    className="w-full text-sm md:text-xl font-[300] mt-8 mb-24 lg:my-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
                     <Link
                         className="h-full w-full px-4 py-4"
                         href={project.liveLink}

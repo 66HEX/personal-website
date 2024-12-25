@@ -29,7 +29,7 @@ export default function Services() {
                     </sup>
                 </h1>
             </div>
-            <div className="px-4 lg:px-24 pb-12 md:pb-24 grid grid-cols-1">
+            <div className="px-4 lg:px-24 pb-24 grid grid-cols-1">
                 <hr className="border border-white/20 mb-4 lg:mb-8" />
                 {services.map((service, index) => (
                     <div key={service.id}>

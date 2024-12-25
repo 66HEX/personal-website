@@ -95,6 +95,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                 src={project.mainImage}
                                 alt="Hero Image"
                                 layout="intrinsic"
+                                priority={true}
                                 width={2000}
                                 height={1500}
                                 className="object-cover"

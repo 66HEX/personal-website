@@ -115,6 +115,7 @@ export default function AboutMePage() {
                             src="/images/about-photo.png"
                             alt="About Me Image"
                             layout="intrinsic"
+                            priority={true}
                             width={2000}
                             height={1500}
                             className="object-cover"

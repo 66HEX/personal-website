@@ -100,7 +100,7 @@ export default function WorksPage() {
                                             layout="intrinsic"
                                             width={1000}
                                             height={1000}
-                                            priority
+                                            priority={true}
                                             ref={(el) => (imageRefs.current[index] = el)}
                                             className="object-cover"
                                         />

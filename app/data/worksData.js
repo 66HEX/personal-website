@@ -1,11 +1,11 @@
 export const works = [
     {
         id: "1",
-        title: "Lean Bulls Gym",
+        title: "Gym Platform",
         subtitle: "Powerlifting Club",
         mainImage: "/images/leanbulls1.png",
         images: ["/images/leanbulls2.png", "/images/leanbulls3.png"],
-        client: "Lean Bulls",
+        client: "Lean Bulls Gym",
         year: 2024,
         type: ["Design", "Development"],
         liveLink: "https://lean-bulls-gym.vercel.app/",
@@ -16,7 +16,7 @@ export const works = [
     },
     {
         id: "2",
-        title: "Natalia Jasińska",
+        title: "Nutritionist's Website",
         subtitle: "Nutritionist",
         mainImage: "/images/natalia1.png",
         images: ["/images/natalia2.png", "/images/natalia3.png"],
@@ -32,7 +32,7 @@ export const works = [
     },
     {
         id: "3",
-        title: "Angelika Grzejdziak",
+        title: "Trainer's Website",
         subtitle: "Fitness Coach",
         mainImage: "/images/angelika1.png",
         images: ["/images/angelika2.png", "/images/angelika3.png"],

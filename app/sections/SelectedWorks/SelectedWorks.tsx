@@ -31,7 +31,7 @@ export default function SelectedWorks() {
             <div className="w-full flex flex-row justify-between items-end mb-8">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                     Selected Works
-                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">(03)</sup>
+                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">(04)</sup>
                 </h1>
                 <button
                     ref={buttonRef}

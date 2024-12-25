@@ -77,8 +77,8 @@ export default function Contact() {
                 <div className="h-[30vh] py-8 flex items-end">
                     <h1 ref={titleRef} className="text-4xl md:text-7xl font-[750] tracking-tight uppercase">Contact</h1>
                 </div>
-                <div className="grid md:grid-cols-2 gap-24">
-                    <div>
+                <div className="grid md:grid-cols-2 gap-32 w-full">
+                    <div className="col-span-1">
                         <h2 ref={subtitleRef} className="text-3xl font-[750] tracking-tight">Let's talk about your next big idea</h2>
                         <p ref={descriptionRef} className="text-lg font-[300] opacity-50 my-4">
                             Have a project in mind? Get in touch and let's create something extraordinary together.
@@ -90,7 +90,9 @@ export default function Contact() {
                             </AnimatedLink>
                         </Link>
                     </div>
-                    <ContactForm />
+                    <div className="col-span-1 w-full">
+                        <ContactForm />
+                    </div>
                 </div>
             </div>
         </div>

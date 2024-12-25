@@ -3,6 +3,7 @@
 import { ChevronDown } from "lucide-react";
 import {useEffect, useLayoutEffect, useRef} from "react";
 import { setupHeroAnimation, initializeButtonAnimation } from "./animation";
+import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
 
 export default function Hero() {
     const component = useRef(null);
@@ -10,7 +11,6 @@ export default function Hero() {
     const subtitleRef = useRef(null);
     const descriptionRef = useRef(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
-    const chevronRef = useRef(null);
 
 
     useLayoutEffect(() => {
@@ -24,7 +24,7 @@ export default function Hero() {
     }, []);
 
     useEffect(() => {
-        const cleanup = initializeButtonAnimation(buttonRef.current, chevronRef.current);
+        const cleanup = initializeButtonAnimation(buttonRef.current);
         return cleanup;
     }, []);
 
@@ -68,10 +68,12 @@ export default function Hero() {
                 <div className="flex gap-4">
                     <button
                         ref={buttonRef}
-                        className="hero-button group font-[300] flex items-center gap-2 bg-white/5 border border-white/20 rounded-full px-6 py-3 transition-colors"
+                        className="hero-button group font-[300] flex items-center gap-2 bg-white/5 border border-white/20 rounded-full"
                     >
-                        Let's Talk
-                        <ChevronDown ref={chevronRef} className="w-4 h-4" />
+                        <TransitionLink className="px-4 py-2 flex items-center gap-2" href={"/contact"}>
+                            Let's Talk
+                            <ChevronDown className="w-4 h-4" />
+                        </TransitionLink>
                     </button>
                 </div>
             </div>

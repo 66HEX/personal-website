@@ -5,7 +5,8 @@ import { works } from "@/app/data/worksData";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
-import { animateProjectImages, animatePageContent } from "./animation";
+import { animatePageContent } from "@/app/animations/worksPageAnimation";
+import { animateProjectImage } from "@/app/animations/imageHoverAnimation";
 
 const formatId = (id: string): string => id.padStart(2, "0");
 
@@ -16,7 +17,7 @@ export default function WorksPage() {
     const worksRef = useRef(null);
 
     useGSAP(() => {
-        animateProjectImages(imageRefs.current, activeIndex);
+        animateProjectImage(imageRefs.current, activeIndex);
     }, [activeIndex, viewMode]);
 
     useGSAP(() => {

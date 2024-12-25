@@ -5,7 +5,8 @@ import { works } from "@/app/data/worksData";
 import Image from "next/image";
 import {useEffect, useRef} from "react";
 import { useGSAP } from "@gsap/react";
-import { animateWorkDetails, initializeButtonAnimation } from "./animation";
+import { animateWorkDetails } from "@/app/animations/worksDetailsAnimation";
+import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import Link from "next/link";
 import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 

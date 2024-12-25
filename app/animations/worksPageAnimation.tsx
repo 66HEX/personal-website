@@ -12,6 +12,9 @@ export const animateProjectImages = (
 ) => {
     imageRefs.forEach((image, index) => {
         if (image) {
+            gsap.set(image, {
+                scale: 1.05
+            });
             if (index === activeIndex) {
                 gsap.to(image, {
                     scale: 1,

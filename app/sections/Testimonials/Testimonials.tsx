@@ -1,6 +1,8 @@
 "use client";
 
-import { initializeButtonAnimation, initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "./animation";
+import { initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "@/app/animations/testimonialsAnimation";
+import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
+
 import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import { ChevronLeft, ChevronRight } from "lucide-react";

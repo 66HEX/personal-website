@@ -2,7 +2,8 @@
 
 import { gsap } from "gsap";
 import { CustomEase } from "gsap/CustomEase";
-import { setupContactAnimation, initializeButtonAnimation } from "./animation";
+import { setupContactAnimation } from "@/app/animations/contactPageAnimations";
+import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import {useEffect, useRef} from 'react';
 import Link from "next/link";
 import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";

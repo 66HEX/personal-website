@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { animateAboutMeDetails } from "./animations";
+import { animateAboutMeDetails } from "@/app/animations/aboutPageAnimation";
 import Services from "@/app/sections/Services/Services";
 
 export default function AboutMePage() {

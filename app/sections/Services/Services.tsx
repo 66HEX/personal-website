@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { services } from "@/app/data/servicesData";
-import { animateAccordion } from "./animation";
+import { animateAccordion } from "@/app/animations/servicesAnimation";
 
 export default function Services() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);

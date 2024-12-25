@@ -2,7 +2,8 @@
 
 import { ChevronDown } from "lucide-react";
 import {useEffect, useLayoutEffect, useRef} from "react";
-import { setupHeroAnimation, initializeButtonAnimation } from "./animation";
+import { setupHeroAnimation } from "@/app/animations/heroAnimation";
+import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
 
 export default function Hero() {

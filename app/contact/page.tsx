@@ -6,7 +6,6 @@ import { setupContactAnimation, animateStatusMessage  } from "@/app/animations/c
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import {useEffect, useRef, useState} from 'react';
 import Link from "next/link";
-import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
 gsap.registerPlugin(CustomEase);
 

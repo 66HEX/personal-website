@@ -6,32 +6,6 @@ import { SplitText } from "@/app/libs/gsap/SplitText";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-export const animateProjectImages = (
-    imageRefs: (HTMLImageElement | null)[],
-    activeIndex: number | null
-) => {
-    imageRefs.forEach((image, index) => {
-        if (image) {
-            gsap.set(image, {
-                scale: 1.05
-            });
-            if (index === activeIndex) {
-                gsap.to(image, {
-                    scale: 1,
-                    duration: 1,
-                    ease: "power3.out",
-                });
-            } else {
-                gsap.to(image, {
-                    scale: 1.05,
-                    duration: 1,
-                    ease: "power3.out",
-                });
-            }
-        }
-    });
-};
-
 export const animatePageContent = (worksRef: HTMLElement | null) => {
     if (!worksRef) return;
 

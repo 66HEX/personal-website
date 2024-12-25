@@ -80,7 +80,7 @@ export default function Navbar() {
     };
 
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
+        const handleClickOrTouchOutside = (event: MouseEvent | TouchEvent) => {
             if (
                 containerRef.current &&
                 !containerRef.current.contains(event.target as Node)
@@ -90,15 +90,19 @@ export default function Navbar() {
         };
 
         if (isOpen) {
-            document.addEventListener("mousedown", handleClickOutside);
+            document.addEventListener("mousedown", handleClickOrTouchOutside);
+            document.addEventListener("touchstart", handleClickOrTouchOutside);
         } else {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOrTouchOutside);
+            document.removeEventListener("touchstart", handleClickOrTouchOutside);
         }
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOrTouchOutside);
+            document.removeEventListener("touchstart", handleClickOrTouchOutside);
         };
     }, [isOpen]);
+
 
     return (
         <nav className="fixed top-4 left-0 text-white z-50 w-full px-4 lg:px-24">
@@ -159,7 +163,7 @@ export default function Navbar() {
                                 href={link.href}
                                 className="flex items-center gap-2"
                                 onClick={(event) => {
-                                    closeMenu()}}
+                                    toggleMenu()}}
                             >
                                 <span className="text-xs font-[300] opacity-50">{link.index}</span>
                                 <span className="text-sm font-[300]">{link.label}</span>

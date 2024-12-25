@@ -117,7 +117,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 mb-8">
                     <div className="col-span-1 w-full h-full relative">
                         <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
                             <Image
@@ -146,7 +146,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 </div>
                 <button
                     ref={buttonRef}
-                    className="w-full text-sm md:text-xl font-[300] my:12 lg:my-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                    className="w-full text-sm md:text-xl font-[300] my-12 lg:my-24 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
                     <Link
                         className="h-full w-full px-4 py-4"
                         href={project.liveLink}

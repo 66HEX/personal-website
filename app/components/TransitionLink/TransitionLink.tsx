@@ -38,7 +38,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
         const stripes = Array.from({ length: 5 }, () => {
             const stripe = document.createElement('div');
             stripe.style.height = '100%';
-            stripe.style.backgroundColor = '#161616';
+            stripe.style.backgroundColor = '#fff';
             stripe.style.transformOrigin = 'top';
             stripe.style.transform = 'scaleY(0)';
             container.appendChild(stripe);

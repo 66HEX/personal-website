@@ -1,6 +1,9 @@
+// testimonialsAnimation.tsx
 "use client";
 
 import { gsap } from "gsap";
+
+let lastPosition = 0;
 
 export const initializeTestimonialsAnimation = (
     contentRef: HTMLDivElement | null,
@@ -13,7 +16,7 @@ export const initializeTestimonialsAnimation = (
     const cardWidth = cardWidthCalculator() + spacingCalculator();
     const offset = testimonialsData.length * cardWidth;
 
-    gsap.set(contentRef, { x: -offset });
+    gsap.set(contentRef, { x: lastPosition || -offset });
 };
 
 export const scrollTestimonialsAnimation = async (
@@ -45,6 +48,7 @@ export const scrollTestimonialsAnimation = async (
                 gsap.set(contentRef, { x: newX - totalWidth });
             }
 
+            lastPosition = gsap.getProperty(contentRef, "x") as number;
             animating.current = false;
         }
     });

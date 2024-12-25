@@ -170,4 +170,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 Your Name - hexthecoder@gmail.com
 
-Project Link: [https://github.com/yourusername/portfolio](https://github.com/yourusername/portfolio)
+Project Link: [https://github.com/66HEX/personal-website](https://github.com/66HEX/personal-website)

@@ -8,7 +8,6 @@ import { useGSAP } from "@gsap/react";
 import { animateWorkDetails } from "@/app/animations/worksDetailsAnimation";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import Link from "next/link";
-import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
 export default function WorkDetailsPage({ params }: { params: { id: string } }) {
     const project = works.find((work) => work.id === params.id);
@@ -162,9 +161,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <AnimatedLink>
-                                Visit Website
-                            </AnimatedLink>
+                            Visit Website
                         </Link>
                     </button>
                 )}

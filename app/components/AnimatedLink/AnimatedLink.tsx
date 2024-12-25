@@ -48,7 +48,7 @@ const AnimatedLink: React.FC<TextWrapperProps> = ({ children, className }) => {
             copy.lines,
             { y: "0%", opacity: 0.5 },
             { y: "-100%", opacity: 1, duration: 0.35, ease: "customEase" },
-            0 // Offset czasu równoczesny z pierwszą animacją
+            0
         );
 
         const handleMouseEnter = () => {

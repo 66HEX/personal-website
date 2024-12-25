@@ -8,7 +8,6 @@ import {useEffect, useRef} from 'react';
 import Link from "next/link";
 import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
-
 gsap.registerPlugin(CustomEase);
 
 const ContactForm = () => {
@@ -21,8 +20,8 @@ const ContactForm = () => {
 
 
     return (
-        <form className="w-full max-w-2xl  font-[300]" onSubmit={(e) => e.preventDefault()}>
-            <div className="border border-white/20 p-4 rounded-custom transition-all mb-4">
+        <form className="w-full font-[300]" onSubmit={(e) => e.preventDefault()}>
+            <div className="border border-white/20 p-4 rounded-custom mb-4">
                 <input
                     type="text"
                     placeholder="Name"
@@ -45,7 +44,7 @@ const ContactForm = () => {
             </div>
             <button
                 ref={buttonRef}
-                className="border border-white/20 w-full bg-white/5 text-white py-4 rounded-custom hover:opacity-90 transition-opacity">
+                className="border border-white/20 w-full bg-white/5 text-white py-4 rounded-custom">
                 Send Message
             </button>
         </form>
@@ -59,7 +58,7 @@ export default function Contact() {
     const subtitleRef = useRef(null);
     const descriptionRef = useRef(null);
     const emailRef = useRef(null);
-    const formRef = useRef(null);
+
 
     useEffect(() => {
         const ctx = setupContactAnimation({
@@ -67,7 +66,6 @@ export default function Contact() {
             subtitleRef,
             descriptionRef,
             emailRef,
-            formRef
         }, component);
 
         return () => ctx.revert();

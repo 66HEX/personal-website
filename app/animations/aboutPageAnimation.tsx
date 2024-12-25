@@ -101,7 +101,6 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
         "0.7"
     );
 
-    // Bio paragraphs animation with stagger
     tl.fromTo(
         [bio, bio2, bio3],
         { y: "30px", opacity: 0, visibility: "hidden" },

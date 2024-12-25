@@ -12,7 +12,6 @@ interface ContactAnimationRefs {
     subtitleRef: RefObject<HTMLHeadingElement>;
     descriptionRef: RefObject<HTMLParagraphElement>;
     emailRef: RefObject<HTMLAnchorElement>;
-    formRef: RefObject<HTMLFormElement>;
 }
 
 
@@ -65,28 +64,4 @@ export const setupContactAnimation = (
     }, component);
 
     return ctx;
-};
-
-export const initializeButtonAnimation = (buttonRef: HTMLButtonElement | null) => {
-    if (!buttonRef) return () => {};
-
-    const tl = gsap.timeline({ paused: true });
-    tl.to(buttonRef, {
-        scale: 0.95,
-        duration: 0.2,
-        ease: "power2.out"
-    });
-
-    const handleMouseDown = () => tl.play();
-    const handleMouseUp = () => tl.reverse();
-
-    buttonRef.addEventListener('mousedown', handleMouseDown);
-    buttonRef.addEventListener('mouseup', handleMouseUp);
-    buttonRef.addEventListener('mouseleave', handleMouseUp);
-
-    return () => {
-        buttonRef.removeEventListener('mousedown', handleMouseDown);
-        buttonRef.removeEventListener('mouseup', handleMouseUp);
-        buttonRef.removeEventListener('mouseleave', handleMouseUp);
-    };
 };

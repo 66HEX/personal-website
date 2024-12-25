@@ -162,7 +162,7 @@ export default function Navbar() {
                             <TransitionLink
                                 href={link.href}
                                 className="flex items-center gap-2"
-                                closeMenu={closeMenu}  // Przekazujemy funkcję do zamykania menu
+                                closeMenu={closeMenu}
                             >
                                 <span className="text-xs font-[300] opacity-50">{link.index}</span>
                                 <span className="text-sm font-[300]">{link.label}</span>

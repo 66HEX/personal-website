@@ -43,12 +43,12 @@ export default function Footer() {
                     </div>
 
                     <div className="col-span-1 flex flex-col justify-start items-start gap-4">
-                        <div className="w-full">
+                        <div>
                             <p className="font-[750] text-sm md:text-xl mb-4">Navigation</p>
                             <div className="flex flex-col gap-2 font-[300]">
                                 {navLinks.map((nav) => (
                                     <TransitionLink
-                                        className="text-sm"
+                                        className="text-sm w-fit"
                                         key={nav.href}
                                         href={nav.href}
                                     >
@@ -60,12 +60,12 @@ export default function Footer() {
                     </div>
 
                     <div className="col-span-1 flex flex-col justify-start items-start gap-4">
-                        <div className="w-full">
+                        <div>
                             <p className="font-[750] text-sm md:text-xl mb-4">Socials</p>
                             <div className="flex flex-col gap-2 font-[300]">
                                 {socialLinks.map((link) => (
                                     <Link
-                                        className="text-sm"
+                                        className="text-sm w-fit"
                                         key={link.href}
                                         href={link.href}
                                         target="_blank"

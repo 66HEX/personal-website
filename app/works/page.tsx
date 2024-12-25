@@ -25,7 +25,7 @@ export default function WorksPage() {
     }, [viewMode]);
 
     return (
-        <div className="w-screen min-h-svh bg-black text-white">
+        <div className="w-screen min-h-svh bg-black text-white mb-24">
             <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-24">
                 <h1
                     style={{visibility: "hidden"}}

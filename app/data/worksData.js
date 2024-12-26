@@ -27,14 +27,16 @@ export const works = [
     },
     {
         id: "3",
-        title: "Sponsorship Offer",
-        mainImage: "/images/works/sponsor1.png",
-        client: "Lean Bulls Gdynia",
+        title: "Powerlifting SaaS",
+        mainImage: "/images/works/saas1.png",
+        images: ["/images/works/saas2.png", "/images/works/saas3.png"],
+        client: "Personal Project",
         year: 2024,
-        type: "Marketing Design",
+        type: "Front-End Development",
+        liveLink: "https://iron-forge-six.vercel.app/",
         description: [
-            "This project involved creating a detailed sponsorship offer for the Powerlifting Club, aimed at securing support and partnerships from local and national businesses. The offer highlights the benefits of sponsoring the club, including exposure at competitions, events, and training sessions.",
-            "The document was designed to be visually appealing and informative, showcasing the club's achievements, key members, and its community-driven approach. The sponsorship proposal also outlines various support options, including event-specific and long-term partnerships, ensuring that potential sponsors have clear and flexible options to get involved."
+            "IronForge is an innovative SaaS platform designed specifically for powerlifting athletes and coaches. The landing page showcases the platform's core features, including AI-powered training optimization, automated progress tracking, and comprehensive performance analytics.",
+            "The modern, responsive design emphasizes the platform's technological capabilities while maintaining accessibility for the powerlifting community. Through intuitive UI and compelling visuals, the landing page effectively communicates how IronForge revolutionizes training management and performance optimization for strength athletes."
         ]
     },
     {
@@ -78,5 +80,17 @@ export const works = [
             "A modern portfolio website built with Next.js, TypeScript, and GSAP, featuring smooth page transitions and interactive animations. The site showcases a responsive design with dynamic project displays and custom cursor animations that enhance user experience.",
             "The platform includes features like automated email handling via Resend API, custom hover effects, and a thoughtfully organized project structure. Built with performance and aesthetics in mind, it demonstrates technical expertise while maintaining a clean, minimalistic design that puts the focus on the showcased work."
         ]
-    }
+    },
+    {
+        id: "7",
+        title: "Sponsorship Offer",
+        mainImage: "/images/works/sponsor1.png",
+        client: "Lean Bulls Gdynia",
+        year: 2024,
+        type: "Marketing Design",
+        description: [
+            "This project involved creating a detailed sponsorship offer for the Powerlifting Club, aimed at securing support and partnerships from local and national businesses. The offer highlights the benefits of sponsoring the club, including exposure at competitions, events, and training sessions.",
+            "The document was designed to be visually appealing and informative, showcasing the club's achievements, key members, and its community-driven approach. The sponsorship proposal also outlines various support options, including event-specific and long-term partnerships, ensuring that potential sponsors have clear and flexible options to get involved."
+        ]
+    },
 ];

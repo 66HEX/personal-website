@@ -65,4 +65,18 @@ export const works = [
             "The clean and modern design of the site highlights Natalia's expertise in sports nutrition. Visitors can purchase the PowerEater ebook, explore collaboration opportunities, and connect with resources that support strength-focused nutrition and athletic performance."
         ]
     },
+    {
+        id: "6",
+        title: "Personal Portfolio",
+        mainImage: "/images/works/portfolio1.png",
+        images: ["/images/works/portfolio2.png", "/images/works/portfolio3.png"],
+        client: "Personal Project",
+        year: 2024,
+        type: "Full-Stack Development",
+        liveLink: "https://hexthecoder.pl",
+        description: [
+            "A modern portfolio website built with Next.js, TypeScript, and GSAP, featuring smooth page transitions and interactive animations. The site showcases a responsive design with dynamic project displays and custom cursor animations that enhance user experience.",
+            "The platform includes features like automated email handling via Resend API, custom hover effects, and a thoughtfully organized project structure. Built with performance and aesthetics in mind, it demonstrates technical expertise while maintaining a clean, minimalistic design that puts the focus on the showcased work."
+        ]
+    }
 ];

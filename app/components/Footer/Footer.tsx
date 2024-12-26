@@ -79,7 +79,7 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-12 pt-8 border-t border-white/20 flex justify-between items-center">
+                <div className="mt-12 pt-8 border-t border-white/10 flex justify-between items-center">
                     <p className="text-xs font-[300] opacity-50">
                         ©2024 Marek Jóźwiak.
                     </p>

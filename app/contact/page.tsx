@@ -6,6 +6,7 @@ import { setupContactAnimation, animateStatusMessage  } from "@/app/animations/c
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import {useEffect, useRef, useState} from 'react';
 import Link from "next/link";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 gsap.registerPlugin(CustomEase);
 
@@ -89,7 +90,7 @@ const ContactForm = () => {
 
     return (
         <form className="w-full font-[300]" onSubmit={handleSubmit}>
-            <div className="border border-white/20 p-4 rounded-custom mb-4">
+            <div className="border border-white/10 p-4 rounded-custom mb-4">
                 <input
                     type="text"
                     name="name"
@@ -101,7 +102,7 @@ const ContactForm = () => {
                     className="w-full opacity-50 bg-transparent outline-none"
                 />
             </div>
-            <div className="border border-white/20 p-4 rounded-custom transition-all mb-4">
+            <div className="border border-white/10 p-4 rounded-custom transition-all mb-4">
                 <input
                     type="email"
                     name="email"
@@ -113,7 +114,7 @@ const ContactForm = () => {
                     className="w-full opacity-50 bg-transparent outline-none [&:-webkit-autofill]:bg-transparent"
                 />
             </div>
-            <div className="border border-white/20 p-4 rounded-custom transition-all mb-8">
+            <div className="border border-white/10 p-4 rounded-custom transition-all mb-8">
                 <textarea
                     name="message"
                     value={formData.message}
@@ -129,7 +130,7 @@ const ContactForm = () => {
                 ref={buttonRef}
                 type="submit"
                 disabled={isSubmitting}
-                className="border border-white/20 w-full bg-white/5 text-white py-4 rounded-custom disabled:opacity-50 disabled:cursor-not-allowed"
+                className="border border-white/10 w-full bg-white/5 text-white py-4 rounded-custom disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
@@ -139,8 +140,8 @@ const ContactForm = () => {
                     ref={statusRef}
                     className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-custom border backdrop-blur-sm 
                     ${status.type === 'success'
-                        ? 'border-green-500/20 text-green-500 bg-green-500/5'
-                        : 'border-red-500/20 text-red-500 bg-red-500/5'
+                        ? 'border-green-500/10 text-green-500 bg-green-500/5'
+                        : 'border-red-500/10 text-red-500 bg-red-500/5'
                     } flex items-center justify-center max-w-[90vw] min-w-[200px] shadow-lg`}
                 >
                     {status.message}
@@ -171,7 +172,8 @@ export default function Contact() {
     }, []);
 
     return (
-        <div ref={component} className="px-4 lg:px-24 pb-24 min-h-screen bg-black text-white">
+        <div ref={component} className="px-4 lg:px-24 pb-24 min-h-screen relative text-white">
+            <BackgroundOverlay/>
             <div className="w-full flex flex-col justify-center items-start">
                 <div className="h-[30vh] py-8 flex items-end">
                     <h1 ref={titleRef} className="text-4xl md:text-7xl font-[750] tracking-tight uppercase">Contact</h1>

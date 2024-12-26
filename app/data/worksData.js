@@ -35,7 +35,7 @@ export const works = [
         type: "Front-End Development",
         liveLink: "https://iron-forge-six.vercel.app/",
         description: [
-            "IronForge is an innovative SaaS platform designed specifically for powerlifting athletes and coaches. The landing page showcases the platform's core features, including AI-powered training optimization, automated progress tracking, and comprehensive performance analytics.",
+            "IronForge is a conceptual SaaS platform designed specifically for powerlifting athletes and coaches. The landing page showcases the platform's core features, including AI-powered training optimization, automated progress tracking, and comprehensive performance analytics.",
             "The modern, responsive design emphasizes the platform's technological capabilities while maintaining accessibility for the powerlifting community. Through intuitive UI and compelling visuals, the landing page effectively communicates how IronForge revolutionizes training management and performance optimization for strength athletes."
         ]
     },

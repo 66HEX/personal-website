@@ -7,6 +7,7 @@ import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import Image from "next/image";
 import { animateProjectImage } from "@/app/animations/imageHoverAnimation";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 export default function SelectedWorks() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -27,7 +28,8 @@ export default function SelectedWorks() {
     }, []);
 
     return (
-        <div className="w-screen px-4 py-12 lg:px-24 lg:py-24 bg-black text-white">
+        <div className="w-screen px-4 py-12 lg:px-24 lg:py-24 text-white relative">
+            <BackgroundOverlay/>
             <div className="w-full flex flex-row justify-between items-end mb-8">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                     Selected Works
@@ -35,7 +37,7 @@ export default function SelectedWorks() {
                 </h1>
                 <button
                     ref={buttonRef}
-                    className="text-sm md:text-base font-[300] bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                    className="text-sm md:text-base font-[300] bg-white/5 border border-white/10 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
                     <TransitionLink className="h-full w-full px-4 py-2" href={"/works"}>
                         View All
                     </TransitionLink>
@@ -48,7 +50,7 @@ export default function SelectedWorks() {
                     .map((project, index) => (
                         <div
                             key={project.id}
-                            className="relative overflow-hidden rounded-custom border border-white/20"
+                            className="relative overflow-hidden rounded-custom border border-white/10"
                             onMouseEnter={() => setActiveIndex(index)}
                             onMouseLeave={() => setActiveIndex(null)}
                         >
@@ -70,8 +72,8 @@ export default function SelectedWorks() {
                                     <div className="absolute bottom-0 left-0 p-4 xl:p-8">
                                         <div
                                             className="flex justify-between gap-4 text-sm md:text-base tracking-tight leading-none">
-                                            <p className="border border-white px-4 py-2 rounded-full font-[750]">{project.title}</p>
-                                            <p className="border border-white px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
+                                            <p className="backdrop-blur-sm bg-white/5 border border-white/10 px-4 py-2 rounded-full font-[750]">{project.title}</p>
+                                            <p className="backdrop-blur-sm bg-white/5 border border-white/10 px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { animateWorkDetails } from "@/app/animations/worksDetailsAnimation";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import Link from "next/link";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 export default function WorkDetailsPage({ params }: { params: { id: string } }) {
     const project = works.find((work) => work.id === params.id);
@@ -46,7 +47,8 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
     return (
         <div>
-            <div className="bg-black text-white px-4 lg:px-24 lg:pb-24">
+            <div className="relative text-white px-4 lg:px-24 lg:pb-24">
+                <BackgroundOverlay/>
                 <div className="w-full h-[30vh] flex items-end">
                     <div className="grid grid-cols-2 w-full mb-8 gap-8">
                         <div className="col-span-2 lg:col-span-1 flex items-end">
@@ -88,7 +90,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 </div>
                 <div className="w-full">
                     <div className="w-full h-full relative overflow-hidden">
-                        <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
+                        <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/10">
                             <Image
                                 ref={imageRef}
                                 src={project.mainImage}
@@ -124,7 +126,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
                         <div className="col-span-1 w-full h-full relative">
                             <div
-                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
+                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/10">
                                 <Image
                                     src={project.images[0]}
                                     alt="Project Image"
@@ -138,7 +140,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
                         <div className="col-span-1 w-full h-full relative">
                             <div
-                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
+                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/10">
                                 <Image
                                     src={project.images[1]}
                                     alt="Project Image"
@@ -154,7 +156,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 {project.liveLink && (
                     <button
                         ref={buttonRef}
-                        className="w-full text-sm md:text-xl font-[300] mt-8 lg:mt-12 bg-white/5 border border-white/20 rounded-full tracking-tight leading-none flex justify-center items-center">
+                        className="w-full text-sm md:text-xl font-[300] mt-8 lg:mt-12 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
                         <Link
                             className="h-full w-full px-4 py-4"
                             href={project.liveLink}

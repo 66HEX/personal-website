@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import { animatePageContent } from "@/app/animations/worksPageAnimation";
 import { animateProjectImage } from "@/app/animations/imageHoverAnimation";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 const formatId = (id: string): string => id.padStart(2, "0");
 
@@ -25,7 +26,8 @@ export default function WorksPage() {
     }, [viewMode]);
 
     return (
-        <div className="w-screen min-h-svh bg-black text-white mb-24">
+        <div className="w-screen min-h-svh text-white mb-24 relative">
+            <BackgroundOverlay/>
             <div className="w-full h-[30vh] flex justify-between items-end px-4 lg:px-24">
                 <h1
                     style={{visibility: "hidden"}}
@@ -57,7 +59,7 @@ export default function WorksPage() {
 
             {viewMode === "list" ? (
                 <div className="px-4 lg:px-24 pb-12 grid grid-cols-1">
-                    <hr className="border border-white/20"/>
+                    <hr className="border border-white/10"/>
                     {works.map((project, index) => (
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div style={{visibility: "hidden"}} className="project-container cursor-pointer">
@@ -75,7 +77,7 @@ export default function WorksPage() {
                                         <p>{project.year}</p>
                                     </div>
                                 </div>
-                                {index < works.length - 1 && <hr className="border border-white/20"/>}
+                                {index < works.length - 1 && <hr className="border border-white/10"/>}
 
                             </div>
                         </TransitionLink>
@@ -87,7 +89,7 @@ export default function WorksPage() {
                         <div
                             style={{visibility: "hidden"}}
                             key={project.id}
-                            className="relative overflow-hidden project-container rounded-custom border border-white/20"
+                            className="relative overflow-hidden project-container rounded-custom border border-white/10"
                             onMouseEnter={() => setActiveIndex(index)}
                             onMouseLeave={() => setActiveIndex(null)}
                         >
@@ -110,8 +112,8 @@ export default function WorksPage() {
                                     <div className="absolute bottom-0 left-0 p-4 xl:p-8">
                                         <div
                                             className="flex justify-between gap-4 text-sm md:text-base tracking-tight leading-none">
-                                            <p className="border border-white px-4 py-2 rounded-full font-[750]">{project.title}</p>
-                                            <p className="border border-white px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
+                                            <p className="bg-white/5 border border-white/10 backdrop-blur-sm px-4 py-2 rounded-full font-[750]">{project.title}</p>
+                                            <p className="bg-white/5 border border-white/10 backdrop-blur-sm px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
                                         </div>
                                     </div>
                                 </div>

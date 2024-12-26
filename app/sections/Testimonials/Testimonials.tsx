@@ -5,6 +5,7 @@ import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation
 import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 const Marquee = forwardRef((props, ref) => {
     const container = useRef<HTMLDivElement>(null);
@@ -41,7 +42,7 @@ const Marquee = forwardRef((props, ref) => {
 
         const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];
         contentRef.current.innerHTML = items.map((testimonial, index) => `
-            <div class="testimonial-card flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/20" 
+            <div class="testimonial-card flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/10 backdrop-blur-sm" 
                  style="width: ${calculateCardWidth()}px">
                 <div class="relative flex flex-col justify-start items-start h-full p-4 xl:p-8">
                     <div class="text-left mb-auto">
@@ -110,7 +111,8 @@ const Testimonials: React.FC = () => {
     }, []);
 
     return (
-        <section id="testimonials" className="w-screen bg-black text-white px-4 lg:px-24 pt-12 mb-24 lg:py-24 flex flex-col justify-center items-start">
+        <section id="testimonials" className="w-screen text-white px-4 lg:px-24 pt-12 mb-24 lg:py-24 flex flex-col justify-center items-start relative">
+            <BackgroundOverlay/>
             <div className="flex items-center justify-between w-full mb-8">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                     Testimonials

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { animateAboutMeDetails } from "@/app/animations/aboutPageAnimation";
 import Services from "@/app/sections/Services/Services";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 export default function AboutMePage() {
     const titleRef = useRef<HTMLHeadingElement>(null);
@@ -28,7 +29,8 @@ export default function AboutMePage() {
     }, []);
 
     return (
-        <div className="bg-black text-white">
+        <div className="text-white relative">
+            <BackgroundOverlay/>
             <div className="w-full h-[30vh] flex items-end px-4 lg:px-24">
                 <div className="grid grid-cols-2 w-full mb-8 gap-8 lg:gap-24">
                     <div className="col-span-2 lg:col-span-1 flex items-end">
@@ -109,7 +111,7 @@ export default function AboutMePage() {
                     </div>
                 </div>
                 <div className="col-span-1 h-auto relative overflow-hidden">
-                    <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/20">
+                    <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/10">
                         <Image
                             ref={imageRef}
                             src="/images/about-photo.png"
@@ -123,6 +125,7 @@ export default function AboutMePage() {
                         />
                     </div>
                 </div>
+
             </div>
             <Services/>
         </div>

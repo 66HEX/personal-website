@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { services } from "@/app/data/servicesData";
 import { animateAccordion } from "@/app/animations/servicesAnimation";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 export default function Services() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -20,7 +21,7 @@ export default function Services() {
     };
 
     return (
-        <div className="w-screen bg-black text-white lg:mb-24">
+        <div className="w-screen text-white lg:mb-24">
             <div className="w-full flex justify-between items-end px-4 lg:px-24 pt-12 md:pt-24">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none mb-8 flex">
                     Services
@@ -30,7 +31,7 @@ export default function Services() {
                 </h1>
             </div>
             <div className="px-4 lg:px-24 pb-24 grid grid-cols-1">
-                <hr className="border border-white/20 mb-4 lg:mb-8" />
+                <hr className="border border-white/10 mb-4 lg:mb-8" />
                 {services.map((service, index) => (
                     <div key={service.id}>
                         <div
@@ -71,7 +72,7 @@ export default function Services() {
                             </p>
                         </div>
                         {index < services.length - 1 && (
-                            <hr className="border border-white/20 my-4 lg:my-8" />
+                            <hr className="border border-white/10 my-4 lg:my-8" />
                         )}
                     </div>
                 ))}

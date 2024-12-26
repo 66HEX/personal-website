@@ -5,6 +5,7 @@ import {useEffect, useLayoutEffect, useRef} from "react";
 import { setupHeroAnimation } from "@/app/animations/heroAnimation";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 export default function Hero() {
     const component = useRef(null);
@@ -36,15 +37,8 @@ export default function Hero() {
     return (
         <div
             ref={component}
-            className="relative h-svh w-screen bg-black text-white flex flex-col justify-center items-start px-4 lg:px-24"
-            style={{
-                backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)',
-                backgroundSize: '100% 200%',
-                backgroundPosition: '50% 0%'
-            }}
-        >
-            <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black pointer-events-none" />
-
+            className="relative h-svh w-screen  text-white flex flex-col justify-center items-start px-4 lg:px-24">
+            <BackgroundOverlay/>
             <div className="relative z-10 max-w-5xl">
                 <div className="mb-4">
                     <h2
@@ -73,7 +67,7 @@ export default function Hero() {
                 <div className="flex gap-4">
                     <button
                         ref={buttonRef}
-                        className="hero-button group font-[300] flex items-center gap-2 bg-white/5 border border-white/20 rounded-full"
+                        className="hero-button group font-[300] flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full"
                     >
                         <TransitionLink className="px-4 py-2 flex items-center gap-2" href={"/contact"}>
                             Let's Talk

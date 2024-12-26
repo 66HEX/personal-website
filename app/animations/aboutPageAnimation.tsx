@@ -18,7 +18,7 @@ interface AnimationRefs {
 export const animateAboutMeDetails = (refs: AnimationRefs) => {
     const { titleRef, subtitleRef, subtitleRef2, bioRef, bioRef2, bioRef3, imageRef } = refs;
 
-    const childSplit1 = new SplitText(titleRef, { type: "lines" });
+    const childSplit1 = new SplitText(titleRef, { type: "lines,words,chars" });
     const childSplit2 = new SplitText(subtitleRef, { type: "lines" });
     const childSplit3 = new SplitText(bioRef, { type: "lines" });
     const childSplit4 = new SplitText(bioRef2, { type: "lines" });
@@ -34,7 +34,7 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
         }
     });
 
-    const title = childSplit1.lines;
+    const title = childSplit1.chars;
     const subtitle = childSplit2.lines;
     const bio = childSplit3.lines;
     const bio2 = childSplit4.lines;
@@ -66,9 +66,9 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
         {
             y: "0%",
             visibility: "visible",
-            duration: 0.8,
+            duration: 1,
             ease: "power3.out",
-            stagger: 0.1
+            stagger: 0.02
         },
         "0.3"
     );

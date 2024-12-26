@@ -63,7 +63,7 @@ src/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/portfolio.git
+git clone https://github.com/66HEX/personal-website.git
 ```
 
 2. Install dependencies:

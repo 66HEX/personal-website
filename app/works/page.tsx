@@ -113,7 +113,7 @@ export default function WorksPage() {
                                         <div
                                             className="flex justify-between gap-4 text-sm md:text-base tracking-tight leading-none">
                                             <p className="bg-white/5 border border-white/10 backdrop-blur-sm px-4 py-2 rounded-full font-[750]">{project.title}</p>
-                                            <p className="bg-white/5 border border-white/10 backdrop-blur-sm px-4 py-2 rounded-full font-[300] opacity-50">{project.year}</p>
+                                            <p className="bg-white/5 border border-white/10 backdrop-blur-sm px-4 py-2 rounded-full font-[300]">{project.year}</p>
                                         </div>
                                     </div>
                                 </div>

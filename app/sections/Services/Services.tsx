@@ -35,7 +35,7 @@ export default function Services() {
                 {services.map((service, index) => (
                     <div key={service.id}>
                         <div
-                            className="service-container cursor-pointer"
+                            className="service-container cursor-pointer px-4"
                             onClick={() => toggleAccordion(index)}
                         >
                             <div className="flex justify-between gap-8 tracking-tight leading-none">
@@ -65,7 +65,7 @@ export default function Services() {
                         </div>
                         <div
                             ref={(el) => (detailsRefs.current[index] = el)}
-                            className="overflow-hidden h-0"
+                            className="overflow-hidden h-0 px-4"
                         >
                             <p className="text-sm md:text-xl font-[300] opacity-50 mt-4">
                                 {service.description}

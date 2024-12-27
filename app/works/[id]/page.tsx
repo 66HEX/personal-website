@@ -73,7 +73,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                     Type
                                 </p>
                                 <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
-                                    {project.type}
+                                    {project.type[0]}
                                 </p>
                             </div>
                             <div style={{visibility: "hidden"}} ref={yearRef}

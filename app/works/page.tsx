@@ -63,7 +63,7 @@ export default function WorksPage() {
                     {works.map((project, index) => (
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div style={{visibility: "hidden"}} className="project-container cursor-pointer">
-                                <div className="grid grid-cols-5 md:grid-cols-6 tracking-tight leading-none py-4 lg:py-8">
+                                <div className="grid grid-cols-5 md:grid-cols-6 tracking-tight leading-none py-4 lg:py-8 text px-4">
                                     <div className="col-span-1 text-2xl md:text-5xl font-[750] justify-start items-center opacity-50 hidden md:flex">
                                         <p>{formatId(project.id)}</p>
                                     </div>
@@ -71,11 +71,28 @@ export default function WorksPage() {
                                         <p className="text-2xl md:text-5xl font-[750] opacity-50">{project.title}</p>
                                     </div>
                                     <div className="col-span-1 text-sm md:text-base font-[300] hidden lg:flex justify-start items-center opacity-50">
-                                        {project.type}
+                                        {project.type[0]}
                                     </div>
                                     <div className="col-span-1 text-sm md:text-base font-[300] flex justify-end items-center opacity-50">
                                         <p>{project.year}</p>
                                     </div>
+                                    <span className="grid grid-cols-5 md:grid-cols-6 tracking-tight leading-none py-4 lg:py-8 bg-[#858585] text-black px-4 rounded-custom effect-span">
+                                        <div
+                                            className="col-span-1 text-2xl md:text-5xl font-[750] justify-start items-center hidden md:flex">
+                                        <p>{formatId(project.id)}</p>
+                                    </div>
+                                    <div className="col-span-4 lg:col-span-3 flex justify-start items-center">
+                                        <p className="text-2xl md:text-5xl font-[750]">{project.client}</p>
+                                    </div>
+                                    <div
+                                        className="col-span-1 text-sm md:text-base font-[300] hidden lg:flex justify-start items-center">
+                                        {project.type[1]}
+                                    </div>
+                                    <div
+                                        className="col-span-1 text-sm md:text-base font-[300] flex justify-end items-center">
+                                        <p>{project.year}</p>
+                                    </div>
+                                    </span>
                                 </div>
                                 {index < works.length - 1 && <hr className="border border-white/10"/>}
 

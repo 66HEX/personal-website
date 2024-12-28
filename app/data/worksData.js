@@ -15,6 +15,34 @@ export const works = [
     },
     {
         id: "2",
+        title: "VPN SaaS",
+        mainImage: "/images/works/netguard1.png",
+        images: ["/images/works/netguard2.png", "/images/works/netguard3.png"],
+        client: "Personal Project",
+        year: 2024,
+        type: ["Front-End Development", "UI/UX Design"],
+        liveLink: "https://netguard-platform.vercel.app/",
+        description: [
+            "NetGuard is a conceptual VPN SaaS platform that reimagines secure internet access for modern businesses. The landing page showcases the platform's key features, including global server network, enterprise-grade encryption, and seamless team management across multiple locations.",
+            "The design embraces modern SaaS aesthetics through extensive use of glassmorphism and vibrant gradients. Frosted glass effects create depth and sophistication, while dynamic color transitions and layered transparency enhance visual hierarchy. The responsive interface seamlessly blends these contemporary design elements to present NetGuard's VPN capabilities in an engaging and innovative way."
+        ]
+    },
+    {
+        id: "3",
+        title: "Powerlifting SaaS",
+        mainImage: "/images/works/ironforge1.png",
+        images: ["/images/works/ironforge2.png", "/images/works/ironforge3.png"],
+        client: "Personal Project",
+        year: 2024,
+        type: ["Front-End Development", "UI/UX Design"],
+        liveLink: "https://iron-forge-six.vercel.app/",
+        description: [
+            "IronForge is a conceptual SaaS platform designed specifically for powerlifting athletes and coaches. The landing page showcases the platform's core features, including AI-powered training optimization, automated progress tracking, and comprehensive performance analytics.",
+            "The modern, responsive design emphasizes the platform's technological capabilities while maintaining accessibility for the powerlifting community. Through intuitive UI and compelling visuals, the landing page effectively communicates how IronForge revolutionizes training management and performance optimization for strength athletes."
+        ]
+    },
+    {
+        id: "4",
         title: "Logo Redesign",
         mainImage: "/images/works/logo1.png",
         images: ["/images/works/logo2.png", "/images/works/logo3.png"],
@@ -27,21 +55,7 @@ export const works = [
         ]
     },
     {
-        id: "3",
-        title: "Powerlifting SaaS",
-        mainImage: "/images/works/saas1.png",
-        images: ["/images/works/saas2.png", "/images/works/saas3.png"],
-        client: "Personal Project",
-        year: 2024,
-        type: ["Front-End Development", "UI/UX Design"],
-        liveLink: "https://iron-forge-six.vercel.app/",
-        description: [
-            "IronForge is a conceptual SaaS platform designed specifically for powerlifting athletes and coaches. The landing page showcases the platform's core features, including AI-powered training optimization, automated progress tracking, and comprehensive performance analytics.",
-            "The modern, responsive design emphasizes the platform's technological capabilities while maintaining accessibility for the powerlifting community. Through intuitive UI and compelling visuals, the landing page effectively communicates how IronForge revolutionizes training management and performance optimization for strength athletes."
-        ]
-    },
-    {
-        id: "4",
+        id: "5",
         title: "Trainer's Website",
         mainImage: "/images/works/angelika1.png",
         images: ["/images/works/angelika2.png", "/images/works/angelika3.png"],
@@ -55,7 +69,7 @@ export const works = [
         ]
     },
     {
-        id: "5",
+        id: "6",
         title: "Nutritionist's Website",
         mainImage: "/images/works/natalia1.png",
         images: ["/images/works/natalia2.png", "/images/works/natalia3.png"],
@@ -69,7 +83,7 @@ export const works = [
         ]
     },
     {
-        id: "6",
+        id: "7",
         title: "Personal Portfolio",
         mainImage: "/images/works/portfolio1.png",
         images: ["/images/works/portfolio2.png", "/images/works/portfolio3.png"],
@@ -83,7 +97,7 @@ export const works = [
         ]
     },
     {
-        id: "7",
+        id: "8",
         title: "Sponsorship Offer",
         mainImage: "/images/works/sponsor1.png",
         client: "Lean Bulls Gdynia",

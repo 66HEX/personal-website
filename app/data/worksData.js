@@ -21,7 +21,7 @@ export const works = [
         client: "Personal Project",
         year: 2024,
         type: ["Front-End Development", "UI/UX Design"],
-        liveLink: "https://netguard-platform.vercel.app/",
+        liveLink: "https://net-guard.vercel.app/",
         description: [
             "NetGuard is a conceptual VPN SaaS platform that reimagines secure internet access for modern businesses. The landing page showcases the platform's key features, including global server network, enterprise-grade encryption, and seamless team management across multiple locations.",
             "The design embraces modern SaaS aesthetics through extensive use of glassmorphism and vibrant gradients. Frosted glass effects create depth and sophistication, while dynamic color transitions and layered transparency enhance visual hierarchy. The responsive interface seamlessly blends these contemporary design elements to present NetGuard's VPN capabilities in an engaging and innovative way."

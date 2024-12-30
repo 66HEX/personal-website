@@ -108,7 +108,7 @@ export default function Navbar() {
         <nav className="fixed top-4 left-0 text-white z-50 w-full px-4 lg:px-24">
             <div
                 ref={containerRef}
-                className="flex flex-col bg-black/50 border border-white/5 backdrop-blur-3xl rounded-full overflow-hidden"
+                className="flex flex-col bg-black/50 border border-white/5 backdrop-blur-3xl rounded-custom overflow-hidden"
             >
                 <div className="flex justify-between items-center w-full px-4 md:px-8 py-4">
                     <div className="flex items-center">

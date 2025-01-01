@@ -7,7 +7,7 @@ export const works = [
         client: "Lean Bulls Gym",
         year: 2024,
         type: ["Front-End Development", "Web Design"],
-        liveLink: "https://lean-bulls-gym.vercel.app/",
+        liveLink: "https://www.leanbulls.pl/",
         description: [
             "The Lean Bulls Gym website provides an engaging and user-friendly platform to explore everything this powerlifting gym has to offer. With detailed information on coaching team, membership options and services, the site serves as a central hub for current and prospective members.",
             "Built with user convenience at its core, the website features an intuitive design and high-quality visuals that make it effortless to explore membership options, learn about coaching services, and connect with the Lean Bulls community. It acts as an online gateway to the Lean Bulls Gym experience, reflecting its spirit of strength and camaraderie."

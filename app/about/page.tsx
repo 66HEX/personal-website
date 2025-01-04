@@ -114,7 +114,7 @@ export default function AboutMePage() {
                     <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/10">
                         <Image
                             ref={imageRef}
-                            src="/images/about-photo.png"
+                            src="/images/about-photo.webp"
                             alt="About Me Image"
                             layout="intrinsic"
                             priority={true}

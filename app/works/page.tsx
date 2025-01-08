@@ -12,7 +12,7 @@ import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOver
 const formatId = (id: string): string => id.padStart(2, "0");
 
 export default function WorksPage() {
-    const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+    const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
     const worksRef = useRef(null);
@@ -42,17 +42,17 @@ export default function WorksPage() {
 
                 <div className="flex text-sm items-center gap-2 font-[300] uppercase tracking-tight leading-none pb-4">
                     <button
-                        onClick={() => setViewMode("list")}
-                        className={`${viewMode === "list" ? "opacity-50" : ""}`}
-                    >
-                        List
-                    </button>
-                    <span>/</span>
-                    <button
                         onClick={() => setViewMode("grid")}
                         className={`${viewMode === "grid" ? "opacity-50" : ""}`}
                     >
                         Grid
+                    </button>
+                    <span>/</span>
+                    <button
+                        onClick={() => setViewMode("list")}
+                        className={`${viewMode === "list" ? "opacity-50" : ""}`}
+                    >
+                        List
                     </button>
                 </div>
             </div>

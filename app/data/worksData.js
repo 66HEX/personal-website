@@ -30,15 +30,15 @@ export const works = [
     {
         id: "3",
         title: "Powerlifting SaaS",
-        mainImage: "/images/works/ironforge1.webp",
-        images: ["/images/works/ironforge2.webp", "/images/works/ironforge3.webp"],
+        mainImage: "/images/works/nexus1.webp",
+        images: ["/images/works/nexus2.webp", "/images/works/nexus3.webp"],
         client: "Personal Project",
         year: 2024,
         type: ["Front-End Development", "UI/UX Design"],
-        liveLink: "https://iron-forge-six.vercel.app/",
+        liveLink: "https://nexus-eta-six.vercel.app/",
         description: [
-            "IronForge is a conceptual SaaS platform designed specifically for powerlifting athletes and coaches. The landing page showcases the platform's core features, including AI-powered training optimization, automated progress tracking, and comprehensive performance analytics.",
-            "The modern, responsive design emphasizes the platform's technological capabilities while maintaining accessibility for the powerlifting community. Through intuitive UI and compelling visuals, the landing page effectively communicates how IronForge revolutionizes training management and performance optimization for strength athletes."
+            "Nexus is a premium digital platform concept that combines sophisticated aesthetics with functional design for powerlifting coaching. The project showcases modern web design principles through carefully crafted dark themes, cyan-to-slate gradients, and innovative glassmorphism effects. The interface features striking 3D animated background, interactive progress charts, and custom Three.js animations that add depth and movement to the user experience.",
+            "The design system emphasizes responsive layouts and seamless adaptability across devices. Through its comprehensive feature set including custom preloaders, animated data visualizations, and premium card designs, Nexus demonstrates contemporary web capabilities while maintaining an emphasis on accessible and intuitive user interfaces for the powerlifting community."
         ]
     },
     {

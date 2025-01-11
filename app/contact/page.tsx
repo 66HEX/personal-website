@@ -7,9 +7,6 @@ import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation
 import {useEffect, useRef, useState} from 'react';
 import Link from "next/link";
 import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
-import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
-
-gsap.registerPlugin(CustomEase);
 
 interface FormData {
     name: string;
@@ -100,7 +97,7 @@ const ContactForm = () => {
                     placeholder="Name"
                     autoComplete="off"
                     required
-                    className="w-full opacity-50 bg-transparent outline-none"
+                    className="w-full opacity-80 bg-transparent outline-none"
                 />
             </div>
             <div className="border border-white/5 p-4 rounded-custom transition-all mb-4">
@@ -112,7 +109,7 @@ const ContactForm = () => {
                     placeholder="Email"
                     autoComplete="off"
                     required
-                    className="w-full opacity-50 bg-transparent outline-none [&:-webkit-autofill]:bg-transparent"
+                    className="w-full opacity-80 bg-transparent outline-none [&:-webkit-autofill]:bg-transparent"
                 />
             </div>
             <div className="border border-white/5 p-4 rounded-custom transition-all mb-8">
@@ -124,14 +121,14 @@ const ContactForm = () => {
                     autoComplete="off"
                     required
                     rows={4}
-                    className="w-full opacity-50 bg-transparent outline-none resize-none"
+                    className="w-full opacity-80 bg-transparent outline-none resize-none"
                 />
             </div>
             <button
                 ref={buttonRef}
                 type="submit"
                 disabled={isSubmitting}
-                className="border border-white/5 w-full bg-white/5 text-white py-4 rounded-custom disabled:opacity-50 disabled:cursor-not-allowed"
+                className="border w-full bg-white/[0.025] border-white/5 text-white py-4 rounded-custom disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
@@ -186,7 +183,7 @@ export default function Contact() {
                             Have a project in mind? Get in touch and let's create something extraordinary together.
                             I'm always excited to hear about new ideas and challenges.
                         </p>
-                        <Link ref={emailRef} href="mailto:hexthecoder@gmail.com" className="block font-[750] w-fit">
+                        <Link ref={emailRef} href="mailto:hexthecoder@gmail.com" className="block font-[750] w-fit text-xl">
                             hexthecoder@gmail.com
                         </Link>
                     </div>

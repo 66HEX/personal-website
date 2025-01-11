@@ -22,8 +22,9 @@ export const setupContactAnimation = (
         const title = new SplitText(refs.titleRef.current, { type: "lines,words,chars" });
         const subtitle = new SplitText(refs.subtitleRef.current, { type: "lines" });
         const description = new SplitText(refs.descriptionRef.current, { type: "lines" });
+        const email = new SplitText(refs.emailRef.current, { type: "lines" });
 
-        [refs.titleRef.current, refs.subtitleRef.current, refs.descriptionRef.current].forEach(ref => {
+        [refs.titleRef.current,refs.emailRef.current, refs.subtitleRef.current, refs.descriptionRef.current].forEach(ref => {
             if (ref) {
                 new SplitText(ref, {
                     type: "lines",
@@ -35,7 +36,7 @@ export const setupContactAnimation = (
         gsap.set(title.chars, { opacity: 0, y: 50 });
         gsap.set(subtitle.lines, { opacity: 0, y: 20 });
         gsap.set(description.lines, { opacity: 0, y: 20 });
-        gsap.set(refs.emailRef.current, { opacity: 0, y: 20 });
+        gsap.set(email.lines, { opacity: 0, y: 20 });
 
         const tl = gsap.timeline({
             defaults: { ease: "power3.out", duration: 1 }
@@ -48,7 +49,7 @@ export const setupContactAnimation = (
             stagger: 0.02
         })
             .to(subtitle.lines, {
-                opacity: 1,
+                opacity: 0.8,
                 y: 0,
             }, "0.3")
             .to(description.lines, {
@@ -56,8 +57,8 @@ export const setupContactAnimation = (
                 y: 0,
                 stagger: 0.1
             }, "0.5")
-            .to(refs.emailRef.current, {
-                opacity: 1,
+            .to(email.lines, {
+                opacity: 0.8,
                 y: 0,
             }, "0.7");
     }, component);

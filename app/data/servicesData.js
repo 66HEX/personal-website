@@ -1,22 +1,29 @@
+import { Code2, Palette, Search, Gauge, Wrench } from "lucide-react";
+
 export const services = [
     {
-        id: 1,
-        title: "Web Development",
-        description: "As a front-end developer, I build lightning-fast, responsive websites that not only look stunning but work flawlessly. I specialize in React, and Next, allowing me to choose the perfect technology stack for your specific needs and business goals."
+        icon: <Code2 className="w-8 h-8 text-white"/>,
+        title: "Front-End Development",
+        description: "Building modern web applications using React and Next.js with focus on clean code, performance, and best development practices."
     },
     {
-        id: 2,
-        title: "Branding",
-        description: "I help brands find their unique voice. Beyond just creating logos and visual elements, I craft a compelling brand story that resonates with your audience. My approach combines creative design with practical business insights to make your brand truly stand out in the market."
+        icon: <Palette className="w-8 h-8 text-white"/>,
+        title: "UI/UX Implementation",
+        description: "Pixel-perfect implementation of designs with attention to detail. Utilizing advanced CSS techniques and animations to create engaging interfaces."
     },
     {
-        id: 3,
-        title: "UI/UX Design",
-        description: "I design interfaces that don't just look great - they feel natural to use. Each project starts with thorough user research and testing. This data-driven approach helps me create designs that boost conversion rates and keep users coming back for more. I focus on solving real user problems, not just making things pretty."
-    },
-    {
-        id: 4,
+        icon: <Search className="w-8 h-8 text-white"/>,
         title: "SEO Optimization",
-        description: "I use proven SEO techniques that actually boost your search engine rankings and drive quality traffic to your site. From in-depth keyword research to technical optimizations and content strategy, I handle every aspect of SEO to help your business get found online by the right audience."
-    }
+        description: "Optimizing websites for search engines through SEO best practices, semantic HTML structure, and proper content organization."
+    },
+    {
+        icon: <Gauge className="w-8 h-8 text-white"/>,
+        title: "Performance Optimization",
+        description: "Enhancing application performance through efficient code, lazy loading, and modern web technologies to ensure fast loading times and smooth interactions."
+    },
+    {
+        icon: <Wrench className="w-8 h-8 text-white"/>,
+        title: "Maintenance & Support",
+        description: "Regular updates, performance monitoring, and quick technical issue resolution. Ensuring continuous operation and application development."
+    },
 ];

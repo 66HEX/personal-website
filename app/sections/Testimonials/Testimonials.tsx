@@ -4,8 +4,7 @@ import { initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "@/
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Marquee = forwardRef((props, ref) => {
     const container = useRef<HTMLDivElement>(null);
@@ -45,9 +44,9 @@ const Marquee = forwardRef((props, ref) => {
             <div class="testimonial-card flex-shrink-0 group" style="width: ${calculateCardWidth()}px">
                 <div class="relative h-full bg-white/[0.025] border border-white/5 rounded-custom overflow-hidden backdrop-blur-sm">               
                     <div class="relative flex flex-col h-full p-6 xl:p-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mb-4 text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mb-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
                         
-                        <p class="text-sm md:text-base font-[500] text-white/80 mb-8">"${testimonial.text}"</p>
+                        <p class="text-sm md:text-base font-[400] text-white/50 mb-8">${testimonial.text}</p>
                         
                         <div class="mt-auto flex items-center gap-4">
                             <div class="relative">
@@ -57,7 +56,7 @@ const Marquee = forwardRef((props, ref) => {
                             </div>
                             <div>
                                 <p class="font-[750] text-base md:text-lg text-white">${testimonial.author}</p>
-                                <p class="text-sm text-white/50 font-[500]">${testimonial.role}</p>
+                                <p class="text-sm text-white/50 font-[400]">${testimonial.role}</p>
                             </div>
                         </div>
                     </div>
@@ -117,7 +116,6 @@ const Testimonials: React.FC = () => {
 
     return (
         <section id="testimonials" className="w-screen text-white px-4 lg:px-24 pt-12 mb-24 lg:py-24 flex flex-col justify-center items-start relative">
-            <BackgroundOverlay/>
             <div className="flex items-center justify-between w-full mb-8">
                 <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                     Testimonials

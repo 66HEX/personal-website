@@ -1,12 +1,9 @@
 'use client';
 
-import { gsap } from "gsap";
-import { CustomEase } from "gsap/CustomEase";
 import { setupContactAnimation, animateStatusMessage  } from "@/app/animations/contactPageAnimations";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import {useEffect, useRef, useState} from 'react';
 import Link from "next/link";
-import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 interface FormData {
     name: string;
@@ -170,7 +167,6 @@ export default function Contact() {
 
     return (
         <div ref={component} className="px-4 lg:px-24 pb-24 min-h-screen relative text-white">
-            <BackgroundOverlay/>
             <div className="w-full flex flex-col justify-center items-start">
                 <div className="h-[30vh] py-8 flex items-end">
                     <h1 ref={titleRef} className="text-4xl md:text-7xl font-[750] tracking-tight uppercase">Contact</h1>

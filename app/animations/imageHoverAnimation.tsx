@@ -7,23 +7,22 @@ export const animateProjectImage = (
     activeIndex: number | null
 ) => {
     imageRefs.forEach((image, index) => {
-        if (image) {
-            gsap.set(image, {
-                scale: 1.05
+        if (!image) return;
+
+        if (activeIndex === null) {
+            gsap.to(image, {
+                scale: 1.05,
+                duration: 1,
+                ease: "power3.out",
+                overwrite: true
             });
-            if (index === activeIndex) {
-                gsap.to(image, {
-                    scale: 1,
-                    duration: 1,
-                    ease: "power3.out",
-                });
-            } else {
-                gsap.to(image, {
-                    scale: 1.05,
-                    duration: 1,
-                    ease: "power3.out",
-                });
-            }
+        } else if (index === activeIndex) {
+            gsap.to(image, {
+                scale: 1,
+                duration: 1,
+                ease: "power3.out",
+                overwrite: true
+            });
         }
     });
 };

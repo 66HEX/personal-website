@@ -9,6 +9,7 @@ interface AnimationRefs {
     titleRef: HTMLHeadingElement | null;
     subtitleRef: HTMLHeadingElement | null;
     subtitleRef2: HTMLHeadingElement | null;
+    subtitleRef3: HTMLHeadingElement | null;
     bioRef: HTMLParagraphElement | null;
     bioRef2: HTMLParagraphElement | null;
     bioRef3: HTMLParagraphElement | null;
@@ -16,7 +17,7 @@ interface AnimationRefs {
 }
 
 export const animateAboutMeDetails = (refs: AnimationRefs) => {
-    const { titleRef, subtitleRef, subtitleRef2, bioRef, bioRef2, bioRef3, imageRef } = refs;
+    const { titleRef, subtitleRef, subtitleRef2, subtitleRef3, bioRef, bioRef2, bioRef3, imageRef } = refs;
 
     const childSplit1 = new SplitText(titleRef, { type: "lines,words,chars" });
     const childSplit2 = new SplitText(subtitleRef, { type: "lines" });
@@ -24,8 +25,9 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
     const childSplit4 = new SplitText(bioRef2, { type: "lines" });
     const childSplit5 = new SplitText(bioRef3, { type: "lines" });
     const childSplit6 = new SplitText(subtitleRef2, { type: "lines" });
+    const childSplit7 = new SplitText(subtitleRef3, { type: "lines" });
 
-    [titleRef, subtitleRef, subtitleRef2, bioRef, bioRef2, bioRef3].forEach(ref => {
+    [titleRef, subtitleRef, subtitleRef2,subtitleRef3, bioRef, bioRef2, bioRef3].forEach(ref => {
         if (ref) {
             new SplitText(ref, {
                 type: "lines",
@@ -40,6 +42,7 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
     const bio2 = childSplit4.lines;
     const bio3 = childSplit5.lines;
     const subtitle2 = childSplit6.lines;
+    const subtitle3 = childSplit7.lines;
 
     const tl = gsap.timeline();
 
@@ -89,6 +92,20 @@ export const animateAboutMeDetails = (refs: AnimationRefs) => {
 
     tl.fromTo(
         subtitle2,
+        { y: "20px", opacity: 0, visibility: "hidden" },
+        {
+            y: "0",
+            opacity: 1,
+            visibility: "visible",
+            duration: 0.5,
+            ease: "power3.out",
+            stagger: 0.1
+        },
+        "0.7"
+    );
+
+    tl.fromTo(
+        subtitle3,
         { y: "20px", opacity: 0, visibility: "hidden" },
         {
             y: "0",

@@ -9,22 +9,22 @@ interface AnimationRefs {
     titleRef: HTMLHeadingElement | null;
 
     clientRef: HTMLHeadingElement | null;
-    yearRef: HTMLHeadingElement | null;
     typeRef: HTMLHeadingElement | null;
     imageRef: HTMLElement | null;
     descriptionRef: (HTMLParagraphElement | null)[];
+    descriptionTitleRef: HTMLHeadingElement | null;
 }
 
 export const animateWorkDetails = (refs: AnimationRefs) => {
-    const { titleRef, clientRef, yearRef, typeRef, imageRef, descriptionRef } = refs;
+    const { titleRef, clientRef, typeRef, imageRef, descriptionRef, descriptionTitleRef } = refs;
 
     const childSplit1 = new SplitText(titleRef, { type: "lines" });
     const childSplit2 = new SplitText(clientRef, { type: "lines" });
-    const childSplit3 = new SplitText(yearRef, { type: "lines" });
     const childSplit4 = new SplitText(typeRef, { type: "lines" });
     const childSplit5 = new SplitText(descriptionRef, { type: "lines" });
+    const childSplit6 = new SplitText(descriptionTitleRef, { type: "lines" });
 
-    [titleRef,  clientRef, yearRef, typeRef, descriptionRef].forEach(ref => {
+    [titleRef,  clientRef, typeRef, descriptionRef, descriptionTitleRef].forEach(ref => {
         if (ref) {
             new SplitText(ref, {
                 type: "lines",
@@ -35,9 +35,9 @@ export const animateWorkDetails = (refs: AnimationRefs) => {
 
     const title = childSplit1.lines;
     const client = childSplit2.lines;
-    const year = childSplit3.lines;
     const type = childSplit4.lines;
     const description = childSplit5.lines;
+    const descriptionTitle = childSplit6.lines;
 
     const tl = gsap.timeline();
 
@@ -101,19 +101,18 @@ export const animateWorkDetails = (refs: AnimationRefs) => {
     );
 
     tl.fromTo(
-        year,
-        { y: "20px", opacity: 0, visibility: "hidden" },
+        descriptionTitle,
+        { y: "30px", opacity: 0, visibility: "hidden" },
         {
             y: "0",
             opacity: 1,
             visibility: "visible",
-            duration: 0.5,
+            duration: 0.7,
             stagger: 0.1,
             ease: "power3.out"
         },
-        "0.9"
+        "1"
     );
-
 
     tl.fromTo(
         description,

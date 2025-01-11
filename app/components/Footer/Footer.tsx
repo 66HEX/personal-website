@@ -49,7 +49,7 @@ export default function Footer() {
                             <h1 className="text-2xl lg:text-4xl font-[750] tracking-tight leading-none">
                                 /hexthecoder
                             </h1>
-                            <p className="font-[500] text-sm  text-white/80 leading-relaxed max-w-lg">
+                            <p className="font-[500] text-sm  text-white/50 leading-relaxed max-w-lg">
                                 Creative front-end developer with a passion for pushing web technologies to their
                                 limits. Combining modern frameworks, responsive design principles, and creative problem-solving
                                 to deliver exceptional user experiences.                            </p>
@@ -59,7 +59,7 @@ export default function Footer() {
                     <div className="md:col-span-6 lg:col-span-6 grid grid-cols-2 gap-8 md:gap-16">
                         <nav aria-label="Main navigation">
                             <p className="font-[750] text-sm md:text-lg mb-4">Navigation</p>
-                            <div className="flex flex-col gap-2 font-[500]">
+                            <div className="flex flex-col gap-2 font-[400]">
                                 {navLinks.map((nav) => (
                                     <TransitionLink
                                         className="text-sm w-fit"
@@ -74,7 +74,7 @@ export default function Footer() {
 
                         <div aria-label="Social media links">
                             <p className="font-[750] text-sm md:text-lg mb-4">Socials</p>
-                            <div className="flex flex-col gap-2 font-[500]">
+                            <div className="flex flex-col gap-2 font-[400]">
                                 {socialLinks.map((link) => (
                                     <Link
                                         className="text-sm w-fit"
@@ -92,10 +92,10 @@ export default function Footer() {
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-white/5 flex flex-row justify-between items-center space-y-0">
-                    <p className="text-sm text-white/80 font-[500]">
+                    <p className="text-sm text-white/70 font-[400]">
                         ©{currentYear} Marek Jóźwiak
                     </p>
-                    <p className="text-sm text-white/80 font-[500]">
+                    <p className="text-sm text-white/70 font-[400]">
                         All rights reserved
                     </p>
                 </div>

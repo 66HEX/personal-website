@@ -2,6 +2,9 @@
 
 import { RefObject } from 'react';
 import gsap from 'gsap';
+import { SplitText } from "@/app/libs/gsap/SplitText";
+
+gsap.registerPlugin(SplitText);
 
 interface NavbarAnimationProps {
     toggleButtonLine1Ref: RefObject<HTMLDivElement>;
@@ -12,12 +15,12 @@ interface NavbarAnimationProps {
 }
 
 export const navbarAnimation = ({
-                                       toggleButtonLine1Ref,
-                                       toggleButtonLine2Ref,
-                                       menuRef,
-                                       menuItemsContainerRef,
-                                       isMenuOpen
-                                   }: NavbarAnimationProps) => {
+                                    toggleButtonLine1Ref,
+                                    toggleButtonLine2Ref,
+                                    menuRef,
+                                    menuItemsContainerRef,
+                                    isMenuOpen
+                                }: NavbarAnimationProps) => {
     const animateHamburger = (isOpening: boolean) => {
         if (isOpening) {
             gsap.to(toggleButtonLine1Ref.current, {
@@ -67,9 +70,25 @@ export const navbarAnimation = ({
             ].filter(Boolean);
 
             if (menuItems.length > 0) {
-                tl.to(menuItems, {
+                menuItems.forEach(item => {
+                    if (item instanceof HTMLElement) {
+                        new SplitText(item, {
+                            type: "lines",
+                            linesClass: "line-wrapper overflow-hidden"
+                        });
+                    }
+                });
+
+                const splitWords = menuItems.map(item => {
+                    if (item instanceof HTMLElement) {
+                        return new SplitText(item, { type: "words" }).words;
+                    }
+                    return [];
+                }).flat();
+
+                tl.to(splitWords, {
                     opacity: 0,
-                    y: 20,
+                    y: 50,
                     duration: 0.3,
                     stagger: 0.05,
                     ease: "power2.in"
@@ -100,11 +119,27 @@ export const navbarAnimation = ({
             }
         );
 
+        menuItems.forEach(item => {
+            if (item instanceof HTMLElement) {
+                new SplitText(item, {
+                    type: "lines",
+                    linesClass: "line-wrapper overflow-hidden"
+                });
+            }
+        });
+
+        const splitWords = menuItems.map(item => {
+            if (item instanceof HTMLElement) {
+                return new SplitText(item, { type: "words" }).words;
+            }
+            return [];
+        }).flat();
+
         gsap.fromTo(
-            menuItems,
+            splitWords,
             {
                 opacity: 0,
-                y: 20,
+                y: 50,
             },
             {
                 opacity: 1,

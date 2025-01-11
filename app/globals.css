@@ -29,7 +29,6 @@ textarea:-webkit-autofill:active {
     -webkit-text-fill-color: rgba(255, 255, 255, 1) !important;
 }
 
-
 .text {
     -webkit-background-clip: text;
     background-clip: text;

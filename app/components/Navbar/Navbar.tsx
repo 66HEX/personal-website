@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 import { navbarAnimation } from '@/app/animations/navbarAnimation';
+import Logo from '@/public/logo/hex-logo.svg'
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,7 +59,6 @@ export default function Navbar() {
         }
     };
 
-    // Ensure menu closes properly before unmounting
     const handleTransitionStart = async () => {
         if (isMenuOpen) {
             await closeMenu();
@@ -74,12 +74,18 @@ export default function Navbar() {
     }, [isMenuOpen]);
 
     return (
-        <header className="fixed top-0 md:top-6 left-0 w-screen z-50">
+        <header className="fixed top-0 left-0 w-screen z-50">
             <nav
-                className="absolute top-4 left-4 right-4 mx-auto"
+                className="absolute inset-0 mx-auto"
                 aria-label="Main navigation"
             >
-                <div className="w-full mx-auto flex items-center justify-end relative">
+                <div className="w-full mx-auto flex items-center justify-between relative px-4 pt-4 pb-4 md:pb-0">
+                    <TransitionLink
+                        href="/"
+                        className="h-12 w-auto"
+                    >
+                        <Logo className="h-full w-auto text-white" />
+                    </TransitionLink>
                     <div
                         className="hidden md:flex items-center absolute left-1/2 -translate-x-1/2 gap-8 px-6 py-3 bg-white/[0.025] border border-white/5 backdrop-blur-3xl rounded-full"
                         aria-label="Desktop navigation"

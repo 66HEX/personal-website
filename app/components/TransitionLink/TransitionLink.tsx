@@ -22,12 +22,12 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
                                                               }) => {
     const router = useRouter();
 
-    const handleTransition = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const handleTransition = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
 
-        // Call the onTransitionStart callback if provided
+        // Start both animations immediately
         if (onTransitionStart) {
-            await onTransitionStart();
+            onTransitionStart();
         }
 
         const container = document.createElement('div');
@@ -51,23 +51,23 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
             return stripe;
         });
 
-        await gsap.to(stripes, {
+        gsap.to(stripes, {
             scaleY: 1,
             duration: 0.5,
             stagger: 0.1,
-            ease: "power3.inOut"
-        });
-
-        router.push(href);
-
-        await gsap.to(stripes, {
-            scaleY: 0,
-            duration: 0.5,
-            stagger: 0.1,
             ease: "power3.inOut",
-            transformOrigin: 'bottom',
             onComplete: () => {
-                container.remove();
+                router.push(href);
+                gsap.to(stripes, {
+                    scaleY: 0,
+                    duration: 0.5,
+                    stagger: 0.1,
+                    ease: "power3.inOut",
+                    transformOrigin: 'bottom',
+                    onComplete: () => {
+                        container.remove();
+                    }
+                });
             }
         });
     };

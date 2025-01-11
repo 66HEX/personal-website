@@ -23,7 +23,7 @@ export default {
         ]
       },
       borderRadius: {
-        custom: '2rem',
+        custom: '1rem',
 
       },
     },

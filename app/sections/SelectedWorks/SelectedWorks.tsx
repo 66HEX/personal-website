@@ -20,12 +20,11 @@ export default function SelectedWorks() {
     }, [activeIndex]);
 
     useEffect(() => {
-        const cleanup = initializeButtonAnimation(buttonRef.current);
-        return () => {
-            if (typeof cleanup === 'function') {
-                cleanup();
-            }
-        };
+        const cleanup = initializeButtonAnimation({
+            buttonRef: buttonRef.current
+        });
+
+        return cleanup;
     }, []);
 
     return (

@@ -82,9 +82,9 @@ export default function Navbar() {
                 <div className="w-full mx-auto flex items-center justify-between relative px-4 pt-4 pb-4 md:pb-0">
                     <TransitionLink
                         href="/"
-                        className="h-12 w-auto"
+                        className="h-12 w-auto text-white flex items-center gap-2"
                     >
-                        <Logo className="h-full w-auto text-white" />
+                        <Logo className="h-full w-auto" />
                     </TransitionLink>
                     <div
                         className="hidden md:flex items-center absolute left-1/2 -translate-x-1/2 gap-8 px-6 py-3 bg-white/[0.025] border border-white/5 backdrop-blur-3xl rounded-full"

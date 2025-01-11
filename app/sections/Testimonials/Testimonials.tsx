@@ -51,7 +51,7 @@ const Marquee = forwardRef((props, ref) => {
                         
                         <div class="mt-auto flex items-center gap-4">
                             <div class="relative">
-                                <div class="w-14 h-14 rounded-full overflow-hidden">
+                                <div class="w-14 h-14 rounded-full border border-white/5 overflow-hidden">
                                     <img src="${testimonial.src}" alt="${testimonial.author}" class="w-full h-full object-cover" />
                                 </div>
                             </div>
@@ -98,6 +98,7 @@ Marquee.displayName = 'Marquee';
 const Testimonials: React.FC = () => {
     const marqueRef = useRef<any>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
+    const buttonRef2 = useRef<HTMLButtonElement | null>(null);
 
     const handleScroll = (direction: 'left' | 'right') => {
         if (marqueRef.current?.scrollTestimonials) {
@@ -106,12 +107,12 @@ const Testimonials: React.FC = () => {
     };
 
     useEffect(() => {
-        const cleanup = initializeButtonAnimation(buttonRef.current);
-        return () => {
-            if (typeof cleanup === 'function') {
-                cleanup();
-            }
-        };
+        const cleanup = initializeButtonAnimation({
+            buttonRef: buttonRef.current,
+            buttonRef2: buttonRef2.current
+        });
+
+        return cleanup;
     }, []);
 
     return (
@@ -134,8 +135,9 @@ const Testimonials: React.FC = () => {
                         <ChevronLeft className="w-6 h-6"/>
                     </button>
                     <button
+                        ref={buttonRef2}
                         onClick={() => handleScroll('right')}
-                        className="p-2 bg-white/[0.025] border border-white/5 rounded-full transition-colors"
+                        className="p-2 bg-white/[0.025] border border-white/5 rounded-full"
                         aria-label="Next testimonials"
                     >
                         <ChevronRight className="w-6 h-6"/>

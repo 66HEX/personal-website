@@ -37,12 +37,11 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
     }, []);
 
     useEffect(() => {
-        const cleanup = initializeButtonAnimation(buttonRef.current);
-        return () => {
-            if (typeof cleanup === 'function') {
-                cleanup();
-            }
-        };
+        const cleanup = initializeButtonAnimation({
+            buttonRef: buttonRef.current
+        });
+
+        return cleanup;
     }, []);
 
     return (
@@ -81,7 +80,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 </div>
                 <div className="w-full">
                     <div className="w-full h-full relative overflow-hidden">
-                        <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/10">
+                        <div className="relative w-full h-auto rounded-custom overflow-hidden border border-white/5">
                             <Image
                                 ref={imageRef}
                                 src={project.mainImage}
@@ -117,7 +116,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
                         <div className="col-span-1 w-full h-full relative">
                             <div
-                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/10">
+                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/5">
                                 <Image
                                     src={project.images[0]}
                                     alt="Project Image"
@@ -131,7 +130,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
                         <div className="col-span-1 w-full h-full relative">
                             <div
-                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/10">
+                                className="relative w-full h-auto rounded-custom overflow-hidden border border-white/5">
                                 <Image
                                     src={project.images[1]}
                                     alt="Project Image"
@@ -147,7 +146,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 {project.liveLink && (
                     <button
                         ref={buttonRef}
-                        className="w-full text-sm md:text-xl font-[500] mt-8 lg:mt-12 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
+                        className="w-full text-sm md:text-xl font-[500] mt-8 lg:mt-12 bg-white/[0.025] border border-white/5 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
                         <Link
                             className="h-full w-full px-4 py-4"
                             href={project.liveLink}

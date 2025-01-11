@@ -8,7 +8,7 @@ interface TransitionLinkProps extends LinkProps {
     children: React.ReactNode;
     href: string;
     className?: string;
-    closeMenu?: () => void;
+    onTransitionStart?: () => Promise<void>;
     ref?: React.RefObject<HTMLAnchorElement>;
 }
 
@@ -16,7 +16,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
                                                                   children,
                                                                   href,
                                                                   className,
-                                                                  closeMenu,
+                                                                  onTransitionStart,
                                                                   ref,
                                                                   ...props
                                                               }) => {
@@ -24,6 +24,11 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
 
     const handleTransition = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
+
+        // Call the onTransitionStart callback if provided
+        if (onTransitionStart) {
+            await onTransitionStart();
+        }
 
         const container = document.createElement('div');
         container.style.position = 'fixed';
@@ -52,10 +57,6 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
             stagger: 0.1,
             ease: "power3.inOut"
         });
-
-        if (closeMenu) {
-            closeMenu();
-        }
 
         router.push(href);
 

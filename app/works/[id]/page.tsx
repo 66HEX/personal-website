@@ -83,7 +83,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                     style={{visibility: "hidden"}}
                                     className="col-span-1 flex flex-col gap-2"
                                 >
-                                    <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
+                                    <p className="text-xl font-[750] tracking-tight leading-none uppercase">
                                         Client
                                     </p>
                                     <p className="text-sm md:text-xl font-[400] tracking-tight leading-none text-white/50">
@@ -95,7 +95,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                     style={{ visibility: "hidden" }}
                                     className="col-span-1 flex flex-col gap-2"
                                 >
-                                    <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
+                                    <p className="text-xl font-[750] tracking-tight leading-none uppercase">
                                         Type
                                     </p>
                                     <p className="text-sm md:text-xl font-[400] tracking-tight leading-none text-white/50">

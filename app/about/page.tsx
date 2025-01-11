@@ -68,7 +68,7 @@ export default function AboutMePage() {
                                     style={{visibility: "hidden"}}
                                     className="col-span-1 flex flex-col gap-2"
                                 >
-                                    <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
+                                    <p className="text-xl font-[750] tracking-tight leading-none uppercase">
                                         Name
                                     </p>
                                     <p className="text-sm md:text-xl font-[400] tracking-tight leading-none text-white/50">
@@ -80,7 +80,7 @@ export default function AboutMePage() {
                                     style={{ visibility: "hidden" }}
                                     className="col-span-1 flex flex-col gap-2"
                                 >
-                                    <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase ">
+                                    <p className="text-xl font-[750] tracking-tight leading-none uppercase ">
                                         Focus Area
                                     </p>
                                     <p className="text-sm md:text-xl font-[400] tracking-tight leading-none text-white/50">

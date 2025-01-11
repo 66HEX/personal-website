@@ -33,7 +33,7 @@ textarea:-webkit-autofill:active {
     -webkit-background-clip: text;
     background-clip: text;
     background-size: 0%;
-    transition: background-size cubic-bezier(.1,.5,.5,1) 0.5s;
+    transition: background-size cubic-bezier(.1,.5,.5,1) 0.75s;
     position: relative;
 }
 .effect-span {

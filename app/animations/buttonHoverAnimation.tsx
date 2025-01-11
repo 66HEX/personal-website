@@ -6,7 +6,7 @@ export const initializeButtonAnimation = (buttonRef: HTMLButtonElement | null) =
     const enterHandler = () => {
         gsap.to(buttonRef, {
             color: '#ffffff',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
             duration: 0.25,
             ease: "power3.out",
         });
@@ -15,7 +15,7 @@ export const initializeButtonAnimation = (buttonRef: HTMLButtonElement | null) =
     const leaveHandler = () => {
         gsap.to(buttonRef, {
             color: '#ffffff',
-            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            backgroundColor: 'rgba(255, 255, 255, 0.025)',
             duration: 0.25,
             ease: "power3.in",
         });

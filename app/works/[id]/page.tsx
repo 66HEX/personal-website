@@ -50,39 +50,30 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
             <div className="relative text-white px-4 lg:px-24 lg:pb-24">
                 <BackgroundOverlay/>
                 <div className="w-full h-[30vh] flex items-end">
-                    <div className="grid grid-cols-2 w-full mb-8 gap-8">
+                    <div className="grid grid-cols-2 w-full mb-8 gap-8 lg:gap-24">
                         <div className="col-span-2 lg:col-span-1 flex items-end">
                             <h1 style={{visibility: "hidden"}} ref={titleRef}
                                 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
                                 {project.title}
                             </h1>
                         </div>
-                        <div className="col-span-2 lg:col-span-1 flex gap-8 md:grid md:grid-cols-3">
+                        <div className="col-span-2 lg:col-span-1 flex gap-8 md:grid md:grid-cols-2">
                             <div ref={clientRef} style={{visibility: "hidden"}}
                                  className="col-span-1 flex flex-col justify-end gap-2">
-                                <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
+                                <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
                                     Client
                                 </p>
-                                <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
+                                <p className="text-sm md:text-xl font-[500] tracking-tight leading-none opacity-50">
                                     {project.client}
                                 </p>
                             </div>
                             <div ref={typeRef} style={{visibility: "hidden"}}
                                  className="col-span-2 md:col-span-1 flex-col justify-end flex gap-2">
-                                <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
+                                <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
                                     Type
                                 </p>
-                                <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
+                                <p className="text-sm md:text-xl font-[500] tracking-tight leading-none opacity-50">
                                     {project.type[0]}
-                                </p>
-                            </div>
-                            <div style={{visibility: "hidden"}} ref={yearRef}
-                                 className="col-span-1 flex flex-col justify-end gap-2">
-                                <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
-                                    Year
-                                </p>
-                                <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
-                                    {project.year}
                                 </p>
                             </div>
                         </div>
@@ -113,7 +104,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     <div className="col-span-1 flex flex-col gap-4 lg:gap-8">
                         {project.description.map((desc, index) => (
                             <p
-                                className="opacity-50 text-sm md:text-xl font-[300] tracking-tight max-w-prose leading-relaxed"
+                                className="opacity-80 text-sm md:text-xl font-[500] tracking-tight max-w-prose leading-relaxed"
                                 key={index}
                                 ref={(el) => (descriptionRefs.current[index] = el)} // Assign refs dynamically
                             >
@@ -156,7 +147,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                 {project.liveLink && (
                     <button
                         ref={buttonRef}
-                        className="w-full text-sm md:text-xl font-[300] mt-8 lg:mt-12 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
+                        className="w-full text-sm md:text-xl font-[500] mt-8 lg:mt-12 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
                         <Link
                             className="h-full w-full px-4 py-4"
                             href={project.liveLink}

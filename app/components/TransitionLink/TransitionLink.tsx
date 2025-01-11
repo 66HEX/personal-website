@@ -1,7 +1,6 @@
 "use client";
 
 import Link, { LinkProps } from "next/link";
-import React from "react";
 import { useRouter } from "next/navigation";
 import { gsap } from "gsap";
 
@@ -10,6 +9,7 @@ interface TransitionLinkProps extends LinkProps {
     href: string;
     className?: string;
     closeMenu?: () => void;
+    ref?: React.RefObject<HTMLAnchorElement>;
 }
 
 export const TransitionLink: React.FC<TransitionLinkProps> = ({
@@ -17,6 +17,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
                                                                   href,
                                                                   className,
                                                                   closeMenu,
+                                                                  ref,
                                                                   ...props
                                                               }) => {
     const router = useRouter();
@@ -38,7 +39,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
         const stripes = Array.from({ length: 5 }, () => {
             const stripe = document.createElement('div');
             stripe.style.height = '100%';
-            stripe.style.backgroundColor = '#fff';
+            stripe.style.backgroundColor = '#171717';
             stripe.style.transformOrigin = 'top';
             stripe.style.transform = 'scaleY(0)';
             container.appendChild(stripe);
@@ -71,7 +72,13 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
     };
 
     return (
-        <Link {...props} href={href} onClick={handleTransition} className={className}>
+        <Link
+            {...props}
+            ref={ref}
+            href={href}
+            onClick={handleTransition}
+            className={className}
+        >
             {children}
         </Link>
     );

@@ -1,177 +1,132 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
+import { useState, useRef } from 'react';
+import { useGSAP } from "@gsap/react";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
-import { Menu, X } from "lucide-react";
-import { gsap } from "gsap";
+import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
+import { navbarAnimation } from '@/app/animations/navbarAnimation';
 
 export default function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
-    const menuRef = useRef<HTMLDivElement | null>(null);
-    const linksRef = useRef<(HTMLDivElement | null)[]>([]);
-    const containerRef = useRef<HTMLDivElement>(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+    const toggleButtonRef = useRef<HTMLButtonElement>(null);
+    const toggleButtonLine1Ref = useRef<HTMLDivElement>(null);
+    const toggleButtonLine2Ref = useRef<HTMLDivElement>(null);
+    const menuItemsContainerRef = useRef<HTMLDivElement>(null);
 
-    const navLinks = [
-        { index: "01", href: "/", label: "Home" },
-        { index: "02", href: "/works", label: "Works" },
-        { index: "03", href: "/about", label: "About" },
-        { index: "04", href: "/contact", label: "Contact" },
+    const { closeMenu, openMenu } = navbarAnimation({
+        toggleButtonLine1Ref,
+        toggleButtonLine2Ref,
+        menuRef,
+        menuItemsContainerRef,
+        isMenuOpen
+    });
+
+    const refs = {
+        home: useRef(null),
+        works: useRef(null),
+        about: useRef(null),
+        contact: useRef(null),
+    };
+
+    const menuItems = [
+        { href: "/", label: "Home", ref: refs.home },
+        { href: "/works", label: "Works", ref: refs.works },
+        { href: "/about", label: "About", ref: refs.about },
+        { href: "/contact", label: "Contact", ref: refs.contact },
     ];
 
-    useEffect(() => {
-        gsap.set(menuRef.current, { height: 0, overflow: "hidden" });
-    }, []);
-
-    const closeMenu = () => {
-        if (!isOpen) return;
-
-        const timeline = gsap.timeline();
-        timeline
-            .to(linksRef.current, {
-                y: -20,
-                opacity: 0,
-                duration: 0.5,
-                stagger: 0.05,
-                ease: "power3.inOut",
-            })
-            .to(menuRef.current, {
-                height: 0,
-                marginBottom: "0rem",
-                duration: 0.5,
-                ease: "power3.inOut",
+    const handleToggleMenu = () => {
+        if (isMenuOpen) {
+            closeMenu().then(() => {
+                setIsMenuOpen(false);
             });
-
-        setIsOpen(false);
-    };
-
-    const openMenu = () => {
-        const timeline = gsap.timeline();
-        timeline
-            .to(menuRef.current, {
-                height: "auto",
-                marginBottom: "1rem",
-                duration: 0.5,
-                ease: "power3.inOut",
-            })
-            .fromTo(
-                linksRef.current,
-                { y: 20, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.5,
-                    stagger: 0.1,
-                    ease: "power3.inOut",
-                },
-            );
-    };
-
-    const toggleMenu = () => {
-        setIsOpen((prev) => {
-            const newState = !prev;
-            if (newState) {
-                openMenu();
-            } else {
-                closeMenu();
-            }
-            return newState;
-        });
-    };
-
-    useEffect(() => {
-        const handleClickOrTouchOutside = (event: MouseEvent | TouchEvent) => {
-            if (
-                containerRef.current &&
-                !containerRef.current.contains(event.target as Node)
-            ) {
-                closeMenu();
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener("mousedown", handleClickOrTouchOutside);
-            document.addEventListener("touchstart", handleClickOrTouchOutside);
         } else {
-            document.removeEventListener("mousedown", handleClickOrTouchOutside);
-            document.removeEventListener("touchstart", handleClickOrTouchOutside);
+            setIsMenuOpen(true);
         }
+    };
 
-        return () => {
-            document.removeEventListener("mousedown", handleClickOrTouchOutside);
-            document.removeEventListener("touchstart", handleClickOrTouchOutside);
-        };
-    }, [isOpen]);
-
+    useGSAP(() => {
+        if (isMenuOpen) {
+            openMenu();
+        }
+    }, [isMenuOpen]);
 
     return (
-        <nav className="fixed top-4 left-0 text-white z-50 w-full px-4 lg:px-24">
-            <div
-                ref={containerRef}
-                className="flex flex-col bg-black/50 border border-white/5 backdrop-blur-3xl rounded-custom overflow-hidden"
+        <header className="fixed top-0 md:top-6 left-0 w-screen z-50">
+            <nav
+                className="absolute top-4 left-4 right-4 mx-auto"
+                aria-label="Main navigation"
             >
-                <div className="flex justify-between items-center w-full px-4 md:px-8 py-4">
-                    <div className="flex items-center">
-                        <TransitionLink
-                            href="/"
-                            className="text-2xl lg:text-3xl font-[750] tracking-tight leading-none"
-                        >
-                            /hex
-                            <sup className="text-xs tracking-normal align-top opacity-50">
-                                dev
-                            </sup>
-                        </TransitionLink>
-                    </div>
-
-                    <div className="hidden md:flex items-center gap-8">
-                        {navLinks.map((link) => (
+                <div className="w-full mx-auto flex items-center justify-end relative ">
+                    <div
+                        className="hidden md:flex items-center absolute left-1/2 -translate-x-1/2 gap-8 px-6 py-3 bg-white/[0.025] border border-white/5 backdrop-blur-3xl rounded-full"
+                        aria-label="Desktop navigation"
+                    >
+                        {menuItems.map((item) => (
                             <TransitionLink
-                                key={link.href}
-                                href={link.href}
-                                className="group relative"
+                                key={item.href}
+                                href={item.href}
+                                className="text-base text-white font-[500]"
+                                aria-label={`Navigate to ${item.label} page`}
                             >
-                                <div className="flex items-center gap-2">
-                                    <span className="text-xs font-[300] opacity-50">{link.index}</span>
-                                    <AnimatedLink className="text-base font-[300]">
-                                        {link.label}
-                                    </AnimatedLink>
-                                </div>
+                                <AnimatedLink>
+                                    {item.label}
+                                </AnimatedLink>
                             </TransitionLink>
                         ))}
                     </div>
 
                     <button
-                        onClick={toggleMenu}
-                        className="md:hidden rounded-full transition-colors"
-                        aria-label="Toggle menu"
+                        ref={toggleButtonRef}
+                        onClick={handleToggleMenu}
+                        className="md:hidden relative h-8 w-8 text-white/50 transition-colors z-50"
+                        aria-expanded={isMenuOpen}
+                        aria-label="Toggle navigation menu"
+                        aria-controls="mobile-menu"
+                        type="button"
                     >
-                        {isOpen ? <X size={24} /> : <Menu size={24} />}
+                        <div
+                            ref={toggleButtonLine1Ref}
+                            className="absolute w-6 border-[1.5px] border-white top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                            aria-hidden="true"
+                        ></div>
+                        <div
+                            ref={toggleButtonLine2Ref}
+                            className="absolute w-6 border-[1.5px] border-white top-[65%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                            aria-hidden="true"
+                        ></div>
                     </button>
                 </div>
+            </nav>
 
+            {isMenuOpen && (
                 <div
                     ref={menuRef}
-                    className="md:hidden overflow-hidden px-4"
+                    className="fixed inset-0 w-screen min-h-svh h-full md:hidden backdrop-blur-md bg-black/80 z-40"
+                    aria-modal="true"
+                    aria-label="Mobile navigation menu"
+                    id="mobile-menu"
                 >
-                    {navLinks.map((link, index) => (
-                        <div
-                            key={link.href}
-                            ref={(el) => (linksRef.current[index] = el)}
-                            className="py-2"
-                        >
+                    <div
+                        ref={menuItemsContainerRef}
+                        className="flex flex-col items-center justify-center h-full gap-8"
+                        aria-label="Mobile navigation links"
+                    >
+                        {menuItems.map((item) => (
                             <TransitionLink
-                                href={link.href}
-                                className="flex items-center gap-2"
+                                key={item.href}
+                                href={item.href}
                                 closeMenu={closeMenu}
+                                className="text-2xl text-white font-[300]"
+                                aria-label={`Navigate to ${item.label} page`}
                             >
-                                <span className="text-xs font-[300] opacity-50">{link.index}</span>
-                                <span className="text-sm font-[300]">{link.label}</span>
+                                {item.label}
                             </TransitionLink>
-                        </div>
-                    ))}
-
+                        ))}
+                    </div>
                 </div>
-            </div>
-        </nav>
+            )}
+        </header>
     );
 }

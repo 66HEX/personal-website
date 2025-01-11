@@ -8,6 +8,7 @@ import Image from "next/image";
 import { animateProjectImage } from "@/app/animations/imageHoverAnimation";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
+import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
 export default function SelectedWorks() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -37,7 +38,7 @@ export default function SelectedWorks() {
                 </h1>
                 <button
                     ref={buttonRef}
-                    className="text-sm md:text-base font-[300] bg-white/5 border border-white/10 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
+                    className="text-sm md:text-base font-[500] bg-white/[0.025] border border-white/5 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
                     <TransitionLink className="h-full w-full px-4 py-2" href={"/works"}>
                         View All
                     </TransitionLink>
@@ -50,7 +51,7 @@ export default function SelectedWorks() {
                     .map((project, index) => (
                         <div
                             key={project.id}
-                            className="relative overflow-hidden rounded-custom border border-white/10"
+                            className="relative overflow-hidden rounded-custom border border-white/5"
                             onMouseEnter={() => setActiveIndex(index)}
                             onMouseLeave={() => setActiveIndex(null)}
                         >
@@ -72,8 +73,8 @@ export default function SelectedWorks() {
                                     <div className="absolute bottom-0 left-0 p-4 xl:p-8">
                                         <div
                                             className="flex justify-between gap-4 text-sm md:text-base tracking-tight leading-none">
-                                            <p className="backdrop-blur-sm bg-white/5 border border-white/10 px-4 py-2 rounded-full font-[750]">{project.title}</p>
-                                            <p className="backdrop-blur-sm bg-white/5 border border-white/10 px-4 py-2 rounded-full font-[300]">{project.year}</p>
+                                            <p className="backdrop-blur-3xl bg-white/5 border border-white/5 px-4 py-2 rounded-full font-[750]">{project.title}</p>
+                                            <p className="backdrop-blur-3xl bg-white/5 border border-white/5 px-4 py-2 rounded-full text-white/80 font-[500]">{project.year}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -1,10 +1,10 @@
 "use client";
 
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import { SplitText } from "@/app/libs/gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(SplitText);
 
 interface AnimationRefs {
     detailsRefs: (HTMLDivElement | null)[];
@@ -20,7 +20,7 @@ export const animateAccordion = (
 
     const detailsHeights = detailsRefs.map(ref => ref ? ref.scrollHeight : 0);
 
-    const tl = gsap.timeline({ defaults: { duration: 1, ease: "power3.inOut" } });
+    const tl = gsap.timeline({ defaults: { duration: 0.5, ease: "power3.inOut" } });
 
     detailsRefs.forEach((ref, i) => {
         if (ref) {

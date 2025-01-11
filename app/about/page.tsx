@@ -48,10 +48,10 @@ export default function AboutMePage() {
                             style={{visibility: "hidden"}}
                             className="col-span-1 flex flex-col justify-end gap-2"
                         >
-                            <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
+                            <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
                                 Name
                             </p>
-                            <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
+                            <p className="text-sm md:text-xl font-[500] tracking-tight leading-none opacity-50">
                                 Marek Jóźwiak
                             </p>
                         </div>
@@ -60,10 +60,10 @@ export default function AboutMePage() {
                             style={{ visibility: "hidden" }}
                             className="col-span-1 flex flex-col justify-end gap-2"
                         >
-                            <p className="text-sm md:text-base font-[750] tracking-tight leading-none uppercase">
+                            <p className="text-sm md:text-xl font-[750] tracking-tight leading-none uppercase">
                                 Focus Area
                             </p>
-                            <p className="text-sm md:text-base font-[300] tracking-tight leading-none opacity-50">
+                            <p className="text-sm md:text-xl font-[500] tracking-tight leading-none opacity-50">
                                 Front-End Development
                             </p>
                         </div>
@@ -74,11 +74,11 @@ export default function AboutMePage() {
             <div className="w-screen px-4 lg:px-24 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 pb-12 md:pb-24">
                 <div
                     className="col-span-1 gap-4 lg:gap-8 text-sm leading-tight order-2">
-                    <div className="col-span-1 flex flex-col gap-4 lg:gap-8 opacity-50">
+                    <div className="col-span-1 flex flex-col gap-4 lg:gap-8 opacity-80">
                         <p
                             ref={bioRef}
                             style={{visibility: "hidden"}}
-                            className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-relaxed"
+                            className="text-sm md:text-xl font-[500] tracking-tight max-w-prose leading-relaxed"
                         >
                         I'm an emerging front-end developer with a passion for crafting engaging web experiences.
                             Over the past 1.5 years, I've immersed myself in modern web development, focusing on
@@ -89,7 +89,7 @@ export default function AboutMePage() {
                         <p
                             ref={bioRef2}
                             style={{visibility: "hidden"}}
-                            className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-relaxed"
+                            className="text-sm md:text-xl font-[500] tracking-tight max-w-prose leading-relaxed"
                         >
                             While my commercial experience spans several successful projects, I approach each new
                             challenge with enthusiasm and dedication. I've worked with TypeScript, Tailwind CSS,
@@ -100,7 +100,7 @@ export default function AboutMePage() {
                         <p
                             ref={bioRef3}
                             style={{visibility: "hidden"}}
-                            className="text-sm md:text-xl font-Lausanne300 tracking-tight max-w-prose leading-relaxed"
+                            className="text-sm md:text-xl font-[500] tracking-tight max-w-prose leading-relaxed"
                         >
                             I'm deeply committed to expanding my skillset and staying current with frontend
                             development trends. My dedication to continuous learning drives me to explore new

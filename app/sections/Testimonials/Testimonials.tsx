@@ -4,7 +4,7 @@ import { initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "@/
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 const Marquee = forwardRef((props, ref) => {
@@ -42,19 +42,23 @@ const Marquee = forwardRef((props, ref) => {
 
         const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];
         contentRef.current.innerHTML = items.map((testimonial, index) => `
-            <div class="testimonial-card flex-shrink-0 text-white rounded-custom bg-white/5 border border-white/10 backdrop-blur-sm" 
-                 style="width: ${calculateCardWidth()}px">
-                <div class="relative flex flex-col justify-start items-start h-full p-4 xl:p-8">
-                    <div class="text-left mb-auto">
-                        <p class="text-sm md:text-base font-[300] italic opacity-50">"${testimonial.text}"</p>
-                    </div>
-                    <div class="flex items-center mt-8 md:mt-16">
-                        <div class="relative h-[60px] w-[60px] rounded-full overflow-hidden mr-4">
-                            <img src="${testimonial.src}" alt="${testimonial.author}" style="object-fit: cover; width: 100%; height: 100%;" />
-                        </div>
-                        <div>
-                            <p class="font-[750] text-sm md:text-xl">${testimonial.author}</p>
-                            <p class="font-[300] text-xs opacity-50">${testimonial.role}</p>
+            <div class="testimonial-card flex-shrink-0 group" style="width: ${calculateCardWidth()}px">
+                <div class="relative h-full bg-white/[0.025] border border-white/5 rounded-custom overflow-hidden backdrop-blur-sm">               
+                    <div class="relative flex flex-col h-full p-6 xl:p-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mb-4 text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
+                        
+                        <p class="text-sm md:text-base font-[500] text-white/80 mb-8">"${testimonial.text}"</p>
+                        
+                        <div class="mt-auto flex items-center gap-4">
+                            <div class="relative">
+                                <div class="w-14 h-14 rounded-full overflow-hidden">
+                                    <img src="${testimonial.src}" alt="${testimonial.author}" class="w-full h-full object-cover" />
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-[750] text-base md:text-lg text-white">${testimonial.author}</p>
+                                <p class="text-sm text-white/50 font-[500]">${testimonial.role}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,14 +128,14 @@ const Testimonials: React.FC = () => {
                     <button
                         ref={buttonRef}
                         onClick={() => handleScroll('left')}
-                        className="p-2 bg-white/5 border border-white/20 rounded-full"
+                        className="p-2 bg-white/[0.025] border border-white/5 rounded-full"
                         aria-label="Previous testimonials"
                     >
                         <ChevronLeft className="w-6 h-6"/>
                     </button>
                     <button
                         onClick={() => handleScroll('right')}
-                        className="p-2 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full transition-colors"
+                        className="p-2 bg-white/[0.025] border border-white/5 rounded-full transition-colors"
                         aria-label="Next testimonials"
                     >
                         <ChevronRight className="w-6 h-6"/>

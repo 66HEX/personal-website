@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import { services } from "@/app/data/servicesData";
 import { animateAccordion } from "@/app/animations/servicesAnimation";
-import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 export default function Services() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -31,7 +30,7 @@ export default function Services() {
                 </h1>
             </div>
             <div className="px-4 lg:px-24 pb-24 grid grid-cols-1">
-                <hr className="border border-white/10 mb-4 lg:mb-8" />
+                <hr className="border border-white/5 mb-4 lg:mb-8" />
                 {services.map((service, index) => (
                     <div key={service.id}>
                         <div
@@ -40,7 +39,7 @@ export default function Services() {
                         >
                             <div className="flex justify-between gap-8 tracking-tight leading-none">
                                 <div className="flex flex-col justify-start items-start">
-                                    <p className="text-2xl lg:text-5xl font-[750] opacity-50">
+                                    <p className="text-2xl lg:text-5xl font-[750] text-white/80">
                                         {service.title}
                                     </p>
                                 </div>
@@ -67,12 +66,12 @@ export default function Services() {
                             ref={(el) => (detailsRefs.current[index] = el)}
                             className="overflow-hidden h-0 px-4"
                         >
-                            <p className="text-sm md:text-xl font-[300] opacity-50 mt-4">
+                            <p className="text-sm md:text-xl font-[500] opacity-50 mt-4">
                                 {service.description}
                             </p>
                         </div>
                         {index < services.length - 1 && (
-                            <hr className="border border-white/10 my-4 lg:my-8" />
+                            <hr className="border border-white/5 my-4 lg:my-8" />
                         )}
                     </div>
                 ))}

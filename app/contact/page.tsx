@@ -7,6 +7,7 @@ import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation
 import {useEffect, useRef, useState} from 'react';
 import Link from "next/link";
 import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
+import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 
 gsap.registerPlugin(CustomEase);
 
@@ -89,8 +90,8 @@ const ContactForm = () => {
     };
 
     return (
-        <form className="w-full font-[300]" onSubmit={handleSubmit}>
-            <div className="border border-white/10 p-4 rounded-custom mb-4">
+        <form className="w-full font-[500]" onSubmit={handleSubmit}>
+            <div className="border border-white/5 p-4 rounded-custom mb-4">
                 <input
                     type="text"
                     name="name"
@@ -102,7 +103,7 @@ const ContactForm = () => {
                     className="w-full opacity-50 bg-transparent outline-none"
                 />
             </div>
-            <div className="border border-white/10 p-4 rounded-custom transition-all mb-4">
+            <div className="border border-white/5 p-4 rounded-custom transition-all mb-4">
                 <input
                     type="email"
                     name="email"
@@ -114,7 +115,7 @@ const ContactForm = () => {
                     className="w-full opacity-50 bg-transparent outline-none [&:-webkit-autofill]:bg-transparent"
                 />
             </div>
-            <div className="border border-white/10 p-4 rounded-custom transition-all mb-8">
+            <div className="border border-white/5 p-4 rounded-custom transition-all mb-8">
                 <textarea
                     name="message"
                     value={formData.message}
@@ -130,7 +131,7 @@ const ContactForm = () => {
                 ref={buttonRef}
                 type="submit"
                 disabled={isSubmitting}
-                className="border border-white/10 w-full bg-white/5 text-white py-4 rounded-custom disabled:opacity-50 disabled:cursor-not-allowed"
+                className="border border-white/5 w-full bg-white/5 text-white py-4 rounded-custom disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
@@ -140,8 +141,8 @@ const ContactForm = () => {
                     ref={statusRef}
                     className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-custom border backdrop-blur-sm 
                     ${status.type === 'success'
-                        ? 'border-green-500/10 text-green-500 bg-green-500/5'
-                        : 'border-red-500/10 text-red-500 bg-red-500/5'
+                        ? 'border-green-500/5 text-green-500 bg-green-500/5'
+                        : 'border-red-500/5 text-red-500 bg-red-500/5'
                     } flex items-center justify-center max-w-[90vw] min-w-[200px] shadow-lg`}
                 >
                     {status.message}
@@ -181,7 +182,7 @@ export default function Contact() {
                 <div className="grid md:grid-cols-2 gap-12 md:gap-32 w-full">
                     <div className="col-span-1">
                         <h2 ref={subtitleRef} className="text-3xl font-[750] tracking-tight">Let's talk about your next big idea</h2>
-                        <p ref={descriptionRef} className="text-lg font-[300] my-4">
+                        <p ref={descriptionRef} className="text-lg font-[500] my-4">
                             Have a project in mind? Get in touch and let's create something extraordinary together.
                             I'm always excited to hear about new ideas and challenges.
                         </p>

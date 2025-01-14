@@ -12,13 +12,13 @@ export default function HeroSection() {
             </div>
             <div className="w-full flex flex-col relative bg-white/5 border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">
                 <div className="flex justify-between">
-                    <div className="mb-6">
+                    <div className="mb-6 hidden md:block">
                         <div
                             className="px-4 py-1.5 text-sm font-[400] inline-block text-textGray bg-white/[0.025] border border-white/5 rounded-full">
                             Building Digital Products
                         </div>
                     </div>
-                    <div className="hidden lg:block">
+                    <div className="">
                         <div
                             className="flex items-center gap-2 px-3 py-1 font-[400] text-xs bg-white/[0.025] border border-white/5 rounded-full">
                             <div className="w-2 h-2 rounded-full bg-green-500"></div>
@@ -30,7 +30,7 @@ export default function HeroSection() {
                     <div className="max-w-2xl order-2 md:order-1">
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-[750] tracking-tight leading-tight mb-8">
                             Bringing <span
-                            className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-950/40 to-amber-950/40">ideas</span> to
+                            className="text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-white/40">ideas</span> to
                             life through code
                         </h1>
 

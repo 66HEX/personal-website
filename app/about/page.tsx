@@ -65,8 +65,8 @@ export default function AboutMePage() {
     return (
         <section className="w-screen text-white relative">
             <div className="px-4 lg:px-24 py-24">
-                <div className="flex flex-col gap-4 md:gap-8">
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                <div className="flex flex-col gap-6 md:gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                         <div className="col-span-1 md:col-span-8">
                             <div
                                 className="bg-white/[0.05] border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">
@@ -75,7 +75,7 @@ export default function AboutMePage() {
                                         className="p-2 bg-white/[0.025] border border-white/5 rounded-lg w-fit h-fit">
                                         <UserRound className="w-8 h-8 text-white"/>
                                     </div>
-                                    <div className="flex gap-4">
+                                    <div className="flex">
                                         <div
                                             className="px-3 py-1 text-xs text-white bg-white/[0.025] border border-white/5 rounded-full">
                                         Profile
@@ -83,7 +83,7 @@ export default function AboutMePage() {
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col gap-4 md:gap-8">
+                                <div className="flex flex-col gap-6 md:gap-8">
                                     <div className="flex flex-col gap-8">
                                         <div
                                             className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-white/5">
@@ -155,7 +155,7 @@ export default function AboutMePage() {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                         <div className="col-span-1 md:col-span-8">
                             <div
                                 className="bg-white/[0.05] border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">

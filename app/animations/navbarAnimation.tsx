@@ -1,17 +1,42 @@
 "use client";
 
-import { RefObject } from 'react';
+import { RefObject, useRef } from 'react';
 import gsap from 'gsap';
 import { SplitText } from "@/app/libs/gsap/SplitText";
+import { CustomEase } from "gsap/CustomEase";
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(SplitText, CustomEase);
+
+interface GSAPTimeline {
+    clear(): gsap.core.Timeline;
+    totalDuration(): number;
+    play(): gsap.core.Timeline;
+    reverse(): gsap.core.Timeline;
+    kill(): void;
+    to(
+        target: gsap.TweenTarget,
+        vars: gsap.TweenVars,
+        position?: gsap.Position
+    ): gsap.core.Timeline;
+    eventCallback(
+        type: "onComplete" | "onReverseComplete",
+        callback?: () => void
+    ): gsap.core.Timeline;
+}
 
 interface NavbarAnimationProps {
     toggleButtonLine1Ref: RefObject<HTMLDivElement>;
     toggleButtonLine2Ref: RefObject<HTMLDivElement>;
     menuRef: RefObject<HTMLDivElement>;
     menuItemsContainerRef: RefObject<HTMLDivElement>;
+    socialMenuContainerRef: RefObject<HTMLDivElement>;
+    contactMenuContainerRef: RefObject<HTMLDivElement>;
     isMenuOpen: boolean;
+}
+
+interface NavbarAnimationReturn {
+    toggleMenu: () => Promise<void>;
+    initializeAnimation: () => GSAPTimeline | undefined;
 }
 
 export const navbarAnimation = ({
@@ -19,141 +44,87 @@ export const navbarAnimation = ({
                                     toggleButtonLine2Ref,
                                     menuRef,
                                     menuItemsContainerRef,
+                                    socialMenuContainerRef,
+                                    contactMenuContainerRef,
                                     isMenuOpen
-                                }: NavbarAnimationProps) => {
-    const animateHamburger = (isOpening: boolean) => {
-        if (isOpening) {
-            gsap.to(toggleButtonLine1Ref.current, {
-                duration: 0.25,
+                                }: NavbarAnimationProps): NavbarAnimationReturn => {
+    const menuTimeline = useRef<GSAPTimeline>(
+        gsap.timeline({ paused: true }) as GSAPTimeline
+    );
+
+    const initializeAnimation = () => {
+        if (!menuRef.current || !socialMenuContainerRef.current || !contactMenuContainerRef.current) {
+            return undefined;
+        }
+
+        gsap.set(menuRef.current, { xPercent: 100, opacity: 1 });
+        gsap.set(menuItemsContainerRef.current, { xPercent: 100 });
+        gsap.set(socialMenuContainerRef.current, { xPercent: 100 });
+        gsap.set(contactMenuContainerRef.current, { xPercent: 100 });
+
+        CustomEase.create("customEase", "0.75,0,0.25,1");
+
+        menuTimeline.current.clear();
+
+        menuTimeline.current
+            .to(toggleButtonLine1Ref.current, {
+                duration: 0.3,
                 rotate: 45,
                 top: "50%",
                 left: "50%",
-                ease: "power3.inOut",
-            });
-            gsap.to(toggleButtonLine2Ref.current, {
-                duration: 0.25,
+                ease: "customEase"
+            }, 0)
+            .to(toggleButtonLine2Ref.current, {
+                duration: 0.3,
                 rotate: -45,
                 top: "50%",
                 left: "50%",
-                ease: "power3.inOut",
-            });
-        } else {
-            gsap.to(toggleButtonLine1Ref.current, {
-                duration: 0.25,
-                rotate: 0,
-                top: "40%",
-                left: "50%",
-                ease: "power3.inOut",
-            });
-            gsap.to(toggleButtonLine2Ref.current, {
-                duration: 0.25,
-                rotate: 0,
-                top: "60%",
-                left: "50%",
-                ease: "power3.inOut",
-            });
-        }
+                ease: "customEase"
+            }, 0)
+            .to(menuRef.current, {
+                xPercent: 0,
+                duration: 0.6,
+                ease: "customEase"
+            }, 0)
+            .to(menuItemsContainerRef.current, {
+                xPercent: 0,
+                duration: 0.6,
+                ease: "customEase"
+            }, ">-0.525")
+            .to(socialMenuContainerRef.current, {
+                xPercent: 0,
+                duration: 0.6,
+                ease: "customEase"
+            }, ">-0.5125")
+            .to(contactMenuContainerRef.current, {
+                xPercent: 0,
+                duration: 0.6,
+                ease: "customEase"
+            }, ">-0.5");
+
+        return menuTimeline.current;
     };
 
-    const closeMenu = () => {
+    const toggleMenu = () => {
         return new Promise<void>((resolve) => {
-            if (!isMenuOpen) {
-                resolve();
-                return;
+            if (!menuTimeline.current.totalDuration()) {
+                initializeAnimation();
             }
 
-            animateHamburger(false);
-            const tl = gsap.timeline();
-
-            const menuItems = [
-                ...Array.from(menuItemsContainerRef.current?.children || [])
-            ].filter(Boolean);
-
-            if (menuItems.length > 0) {
-                menuItems.forEach(item => {
-                    if (item instanceof HTMLElement) {
-                        new SplitText(item, {
-                            type: "lines",
-                            linesClass: "line-wrapper overflow-hidden"
-                        });
-                    }
+            if (isMenuOpen) {
+                menuTimeline.current.reverse().eventCallback("onReverseComplete", () => {
+                    resolve();
                 });
-
-                const splitWords = menuItems.map(item => {
-                    if (item instanceof HTMLElement) {
-                        return new SplitText(item, { type: "words" }).words;
-                    }
-                    return [];
-                }).flat();
-
-                tl.to(splitWords, {
-                    opacity: 0,
-                    yPercent: 100,
-                    duration: 0.3,
-                    stagger: 0.05,
-                    ease: "power2.in"
-                });
-            }
-
-            tl.to(menuRef.current, {
-                opacity: 0,
-                duration: 0.2,
-                ease: "power2.in",
-                onComplete: resolve
-            });
-        });
-    };
-
-    const openMenu = () => {
-        if (!menuRef.current || !menuItemsContainerRef.current) return;
-
-        animateHamburger(true);
-        const menuItems = Array.from(menuItemsContainerRef.current.children);
-
-        gsap.fromTo(menuRef.current,
-            { opacity: 0 },
-            {
-                opacity: 1,
-                duration: 0.3,
-                ease: "power2.out"
-            }
-        );
-
-        menuItems.forEach(item => {
-            if (item instanceof HTMLElement) {
-                new SplitText(item, {
-                    type: "lines",
-                    linesClass: "line-wrapper overflow-hidden"
+            } else {
+                menuTimeline.current.play().eventCallback("onComplete", () => {
+                    resolve();
                 });
             }
         });
-
-        const splitWords = menuItems.map(item => {
-            if (item instanceof HTMLElement) {
-                return new SplitText(item, { type: "words" }).words;
-            }
-            return [];
-        }).flat();
-
-        gsap.fromTo(
-            splitWords,
-            {
-                opacity: 0,
-                yPercent: 100,
-            },
-            {
-                opacity: 1,
-                yPercent: 0,
-                duration: 0.4,
-                stagger: 0.1,
-                ease: "power2.out"
-            }
-        );
     };
 
     return {
-        animateHamburger,
-        closeMenu,
-        openMenu
+        toggleMenu,
+        initializeAnimation
     };
 };

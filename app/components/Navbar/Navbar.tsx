@@ -1,75 +1,85 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { useGSAP } from "@gsap/react";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import { navbarAnimation } from '@/app/animations/navbarAnimation';
 import Image from "next/image";
+import Link from "next/link";
+
+const socialLinks = [
+    {
+        href: "https://www.linkedin.com/in/marek-j%C3%B3%C5%BAwiak-29958132a/",
+        label: "LinkedIn",
+        ariaLabel: "Visit LinkedIn profile"
+    },
+    {
+        href: "https://www.instagram.com/hexthecoder/",
+        label: "Instagram",
+        ariaLabel: "Visit Instagram profile"
+    },
+    {
+        href: "https://github.com/66HEX/",
+        label: "Github",
+        ariaLabel: "Visit Github profile"
+    },
+    {
+        href: "mailto:hexthecoder@gmail.com",
+        label: "Email",
+        ariaLabel: "Send an email"
+    },
+];
+
+const menuItems = [
+    { href: "/", label: "Home" },
+    { href: "/works", label: "Works" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+];
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const menuRef = useRef<HTMLDivElement>(null);
-    const toggleButtonRef = useRef<HTMLButtonElement>(null);
-    const toggleButtonLine1Ref = useRef<HTMLDivElement>(null);
-    const toggleButtonLine2Ref = useRef<HTMLDivElement>(null);
-    const menuItemsContainerRef = useRef<HTMLDivElement>(null);
+    const menuRef = useRef(null);
+    const toggleButtonRef = useRef(null);
+    const toggleButtonLine1Ref = useRef(null);
+    const toggleButtonLine2Ref = useRef(null);
+    const menuItemsContainerRef = useRef(null);
+    const socialMenuContainerRef = useRef(null);
+    const contactMenuContainerRef = useRef(null);
 
-    useEffect(() => {
-        return () => {
-            if (isMenuOpen) {
-                setIsMenuOpen(false);
-                document.body.style.overflow = 'visible';
-            }
-        };
-    }, [isMenuOpen]);
-
-    const { closeMenu, openMenu } = navbarAnimation({
+    const { toggleMenu, initializeAnimation } = navbarAnimation({
         toggleButtonLine1Ref,
         toggleButtonLine2Ref,
         menuRef,
         menuItemsContainerRef,
+        socialMenuContainerRef,
+        contactMenuContainerRef,
         isMenuOpen
     });
 
-    const refs = {
-        home: useRef(null),
-        works: useRef(null),
-        about: useRef(null),
-        contact: useRef(null),
-    };
-
-    const menuItems = [
-        { href: "/", label: "Home", ref: refs.home },
-        { href: "/works", label: "Works", ref: refs.works },
-        { href: "/about", label: "About", ref: refs.about },
-        { href: "/contact", label: "Contact", ref: refs.contact },
-    ];
-
-    const handleToggleMenu = () => {
-        if (isMenuOpen) {
-            closeMenu().then(() => {
-                setIsMenuOpen(false);
+    useEffect(() => {
+        const timeline = initializeAnimation();
+        return () => {
+            if (isMenuOpen) {
                 document.body.style.overflow = 'visible';
-            });
-        } else {
-            setIsMenuOpen(true);
-            document.body.style.overflow = 'hidden';
-        }
+            }
+            timeline?.kill();
+        };
+    }, []);
+
+    const handleToggleMenu = async () => {
+        await toggleMenu();
+        const newIsMenuOpen = !isMenuOpen;
+        setIsMenuOpen(newIsMenuOpen);
+        document.body.style.overflow = newIsMenuOpen ? 'hidden' : 'visible';
     };
 
     const handleTransitionStart = async () => {
         if (isMenuOpen) {
-            await closeMenu();
+            await toggleMenu();
             setIsMenuOpen(false);
             document.body.style.overflow = 'visible';
         }
     };
-
-    useGSAP(() => {
-        if (isMenuOpen) {
-            openMenu();
-        }
-    }, [isMenuOpen]);
 
     return (
         <header className="fixed top-4 left-0 right-0 w-screen z-50">
@@ -87,13 +97,12 @@ export default function Navbar() {
                         </div>
                     </TransitionLink>
 
-                    <div
-                        className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center flex-1">
+                    <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center flex-1">
                         <div
                             className="flex items-center gap-8 px-6 py-3 bg-white/5 border border-text-white/5 backdrop-blur-3xl rounded-full"
                             aria-label="Desktop navigation"
                         >
-                        {menuItems.map((item) => (
+                            {menuItems.map((item) => (
                                 <TransitionLink
                                     key={item.href}
                                     href={item.href}
@@ -130,33 +139,80 @@ export default function Navbar() {
                 </div>
             </nav>
 
-            {isMenuOpen && (
-                <div
-                    ref={menuRef}
-                    className="fixed inset-0 w-screen min-h-svh h-full md:hidden backdrop-blur-md bg-background/80 z-40"
-                    aria-modal="true"
-                    aria-label="Mobile navigation menu"
-                    id="mobile-menu"
-                >
+            <div
+                ref={menuRef}
+                style={{ opacity: 0 }}
+                className="fixed right-0 top-0 w-3/5 min-h-svh h-full py-20 px-4 md:hidden backdrop-blur-2xl bg-background/50 z-30 overflow-y-auto"
+                aria-modal="true"
+                aria-label="Mobile navigation menu"
+                id="mobile-menu"
+            >
+                <div className="flex flex-col gap-4">
+                    {/* Navigation Links */}
                     <div
                         ref={menuItemsContainerRef}
-                        className="flex flex-col items-center justify-center h-full gap-8"
+                        className="flex flex-col items-start justify-start gap-6 p-4 border border-white/5 bg-white/5 backdrop-blur-sm rounded-lg"
                         aria-label="Mobile navigation links"
                     >
-                        {menuItems.map((item) => (
-                            <TransitionLink
-                                key={item.href}
-                                href={item.href}
-                                onTransitionStart={handleTransitionStart}
-                                className="text-2xl text-text-white font-[300]"
-                                aria-label={`Navigate to ${item.label} page`}
-                            >
-                                {item.label}
-                            </TransitionLink>
-                        ))}
+                        <h3
+                            className="ml-auto px-3 py-1 font-[400] text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                            Navigation
+                        </h3>
+                        <div className="flex flex-col gap-2">
+                            {menuItems.map((item) => (
+                                <TransitionLink
+                                    key={item.href}
+                                    href={item.href}
+                                    onTransitionStart={handleTransitionStart}
+                                    className="text-lg text-text-white font-[300]"
+                                    aria-label={`Navigate to ${item.label} page`}
+                                >
+                                    {item.label}
+                                </TransitionLink>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div
+                        ref={socialMenuContainerRef}
+                        className="flex flex-col items-start justify-start gap-6 p-4 border border-white/5 bg-white/5 backdrop-blur-sm rounded-lg">
+                        <h3
+                            className="ml-auto px-3 py-1 font-[400] text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                            Socials
+                        </h3>
+                        <div className="flex flex-col gap-2">
+                            {socialLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-lg text-text-white font-[300]"
+                                    aria-label={link.ariaLabel}
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </div>
+
+                    </div>
+
+                    <div
+                        ref={contactMenuContainerRef}
+                        className="p-4 flex flex-col gap-6 border border-white/5 bg-white/5 backdrop-blur-sm rounded-lg">
+                        <h3
+                            className="ml-auto px-3 py-1 font-[400] text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                            Contact
+                        </h3>
+                        <Link
+                            href="mailto:hexthecoder@gmail.com"
+                            className="text-sm text-text-gray hover:text-text-white transition-colors"
+                        >
+                            hexthecoder@gmail.com
+                        </Link>
                     </div>
                 </div>
-            )}
+            </div>
         </header>
     );
 }

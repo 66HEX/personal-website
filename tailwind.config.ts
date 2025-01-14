@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#000',
+        background: '#0A0A0A',
         "text-white": '#FFFFFF',
         "text-gray": '#a6a6a6',
       },
@@ -24,7 +24,6 @@ export default {
       },
       borderRadius: {
         "outer-card": '1rem',
-
       },
     },
   },

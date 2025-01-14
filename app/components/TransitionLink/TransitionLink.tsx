@@ -3,6 +3,7 @@
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 import { gsap } from "gsap";
+import { useEffect, useCallback, useState } from "react";
 
 interface TransitionLinkProps extends LinkProps {
     children: React.ReactNode;
@@ -21,56 +22,84 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
                                                                   ...props
                                                               }) => {
     const router = useRouter();
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
-    const handleTransition = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const animateOut = useCallback(async () => {
+        const mainContent = document.querySelector('main') || document.body.children[0];
+        gsap.set(mainContent, {
+            transformOrigin: "center center"
+        });
+
+        return gsap.to(mainContent, {
+            y: "-25vh",
+            opacity: 0,
+            duration: 0.7,
+            ease: "power3.inOut"
+        });
+    }, []);
+
+    const animateIn = useCallback(() => {
+        const newContent = document.querySelector('main') || document.body.children[0];
+        gsap.set(newContent, {
+            y: "25vh",
+            opacity: 0,
+            transformOrigin: "center center"
+        });
+
+        return gsap.to(newContent, {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: "power3.inOut"
+        });
+    }, []);
+
+    const handleTransition = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
 
-        // Start both animations immediately
-        if (onTransitionStart) {
-            onTransitionStart();
-        }
+        if (isTransitioning) return;
+        setIsTransitioning(true);
 
-        const container = document.createElement('div');
-        container.style.position = 'fixed';
-        container.style.top = '0';
-        container.style.left = '0';
-        container.style.width = '100vw';
-        container.style.height = '100vh';
-        container.style.zIndex = '9999';
-        container.style.display = 'grid';
-        container.style.gridTemplateColumns = 'repeat(5, 1fr)';
-        document.body.appendChild(container);
-
-        const stripes = Array.from({ length: 5 }, () => {
-            const stripe = document.createElement('div');
-            stripe.style.height = '100%';
-            stripe.style.backgroundColor = '#171717';
-            stripe.style.transformOrigin = 'top';
-            stripe.style.transform = 'scaleY(0)';
-            container.appendChild(stripe);
-            return stripe;
-        });
-
-        gsap.to(stripes, {
-            scaleY: 1,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: "power3.inOut",
-            onComplete: () => {
-                router.push(href);
-                gsap.to(stripes, {
-                    scaleY: 0,
-                    duration: 0.5,
-                    stagger: 0.1,
-                    ease: "power3.inOut",
-                    transformOrigin: 'bottom',
-                    onComplete: () => {
-                        container.remove();
-                    }
-                });
+        try {
+            if (onTransitionStart) {
+                await onTransitionStart();
             }
-        });
+
+            await animateOut();
+
+            // Tworzymy Promise, który rozwiąże się po załadowaniu nowej strony
+            const navigationPromise = new Promise<void>((resolve) => {
+                // Ustawiamy timer jako zabezpieczenie
+                const timeoutId = setTimeout(() => resolve(), 2000);
+
+                // Funkcja sprawdzająca, czy nowa strona jest załadowana
+                const checkForNewContent = () => {
+                    const newContent = document.querySelector('main') || document.body.children[0];
+                    if (newContent && newContent.children.length > 0) {
+                        clearTimeout(timeoutId);
+                        resolve();
+                    } else {
+                        requestAnimationFrame(checkForNewContent);
+                    }
+                };
+
+                router.push(href);
+                requestAnimationFrame(checkForNewContent);
+            });
+
+            await navigationPromise;
+            await animateIn();
+        } finally {
+            setIsTransitioning(false);
+        }
     };
+
+    // Resetowanie stanu przy odmontowaniu
+    useEffect(() => {
+        return () => {
+            setIsTransitioning(false);
+        };
+    }, []);
 
     return (
         <Link

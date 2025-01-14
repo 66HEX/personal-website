@@ -41,14 +41,14 @@ export const navbarAnimation = ({
             gsap.to(toggleButtonLine1Ref.current, {
                 duration: 0.25,
                 rotate: 0,
-                top: "35%",
+                top: "40%",
                 left: "50%",
                 ease: "power3.inOut",
             });
             gsap.to(toggleButtonLine2Ref.current, {
                 duration: 0.25,
                 rotate: 0,
-                top: "65%",
+                top: "60%",
                 left: "50%",
                 ease: "power3.inOut",
             });
@@ -88,7 +88,7 @@ export const navbarAnimation = ({
 
                 tl.to(splitWords, {
                     opacity: 0,
-                    y: 50,
+                    yPercent: 100,
                     duration: 0.3,
                     stagger: 0.05,
                     ease: "power2.in"
@@ -139,11 +139,11 @@ export const navbarAnimation = ({
             splitWords,
             {
                 opacity: 0,
-                y: 50,
+                yPercent: 100,
             },
             {
                 opacity: 1,
-                y: 0,
+                yPercent: 0,
                 duration: 0.4,
                 stagger: 0.1,
                 ease: "power2.out"

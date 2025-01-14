@@ -1,7 +1,6 @@
 'use client';
 
-import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
-import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
+import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import Link from "next/link";
 
 const socialLinks = [
@@ -38,66 +37,70 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer
-            className="relative w-full bg-black text-white border-t border-white/5"
-            aria-label="Footer"
-        >
-            <div className="container mx-auto px-4 lg:px-24 py-12 lg:py-16">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
-                    <div className="md:col-span-6 lg:col-span-6">
-                        <div className="space-y-6">
-                            <h1 className="text-2xl lg:text-4xl font-[750] tracking-tight leading-none">
-                                /hexthecoder
-                            </h1>
-                            <p className="font-[500] text-sm  text-white/50 leading-relaxed max-w-lg">
-                                Creative front-end developer with a passion for pushing web technologies to their
-                                limits. Combining modern frameworks, responsive design principles, and creative problem-solving
-                                to deliver exceptional user experiences.                            </p>
-                        </div>
-                    </div>
-
-                    <div className="md:col-span-6 lg:col-span-6 grid grid-cols-2 gap-8 md:gap-16">
-                        <nav aria-label="Main navigation">
-                            <p className="font-[750] text-sm md:text-lg mb-4">Navigation</p>
-                            <div className="flex flex-col gap-2 font-[400]">
-                                {navLinks.map((nav) => (
-                                    <TransitionLink
-                                        className="text-sm w-fit"
-                                        key={nav.href}
-                                        href={nav.href}
-                                    >
-                                        <AnimatedLink>{nav.label}</AnimatedLink>
-                                    </TransitionLink>
-                                ))}
+        <footer className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-white border-t border-white/5 bg-white/[0.025]">
+            <div className="w-full h-full relative">
+                <div className="relative mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+                        <div className="md:col-span-6 lg:col-span-8">
+                            <div className="space-y-6">
+                                <div className="px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-white/5 rounded-full w-fit">
+                                    /hexthecoder
+                                </div>
+                                <p className="font-[400] text-sm text-textGray leading-relaxed max-w-lg">
+                                    Creative front-end developer with a passion for pushing web technologies to their
+                                    limits. Combining modern frameworks, responsive design principles, and creative problem-solving
+                                    to deliver exceptional user experiences.
+                                </p>
                             </div>
-                        </nav>
+                        </div>
 
-                        <div aria-label="Social media links">
-                            <p className="font-[750] text-sm md:text-lg mb-4">Socials</p>
-                            <div className="flex flex-col gap-2 font-[400]">
-                                {socialLinks.map((link) => (
-                                    <Link
-                                        className="text-sm w-fit"
-                                        key={link.href}
-                                        href={link.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <AnimatedLink>{link.label}</AnimatedLink>
-                                    </Link>
-                                ))}
+                        <div className="md:col-span-6 lg:col-span-4 grid grid-cols-2 gap-8 md:gap-16">
+                            <nav aria-label="Main navigation">
+                                <div className="text-sm font-[400] w-fit mb-4">
+                                    Navigation
+                                </div>
+                                <div className="flex flex-col gap-2 font-[400]">
+                                    {navLinks.map((nav) => (
+                                        <TransitionLink
+                                            className="text-sm w-fit text-textGray hover:text-white transition-colors"
+                                            key={nav.href}
+                                            href={nav.href}
+                                        >
+                                            {nav.label}
+                                        </TransitionLink>
+                                    ))}
+                                </div>
+                            </nav>
+
+                            <div aria-label="Social media links">
+                                <div className="text-sm font-[400] w-fit mb-4">
+                                    Socials
+                                </div>
+                                <div className="flex flex-col gap-2 font-[400]">
+                                    {socialLinks.map((link) => (
+                                        <Link
+                                            className="text-sm w-fit text-textGray hover:text-white transition-colors"
+                                            key={link.href}
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-12 pt-8 border-t border-white/5 flex flex-row justify-between items-center space-y-0">
-                    <p className="text-sm text-white/70 font-[400]">
+                <div className="flex flex-wrap gap-2 justify-between items-center border-t border-white/5 pt-8">
+                    <div className="text-xs font-[400]">
                         ©{currentYear} Marek Jóźwiak
-                    </p>
-                    <p className="text-sm text-white/70 font-[400]">
+                    </div>
+                    <div className="text-xs font-[400]">
                         All rights reserved
-                    </p>
+                    </div>
                 </div>
             </div>
         </footer>

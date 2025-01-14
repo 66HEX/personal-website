@@ -2,14 +2,15 @@
 
 import { initializeTestimonialsAnimation, scrollTestimonialsAnimation } from "@/app/animations/testimonialsAnimation";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
-import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect, useState } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, UsersRound } from "lucide-react";
 
-const Marquee = forwardRef((props, ref) => {
+const Marquee = forwardRef((props: { onPositionChange?: (position: number) => void }, ref) => {
     const container = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const animating = useRef(false);
+    const [currentPosition, setCurrentPosition] = useState(0);
 
     useImperativeHandle(ref, () => ({
         scrollTestimonials: (direction: 'left' | 'right') => {
@@ -17,7 +18,7 @@ const Marquee = forwardRef((props, ref) => {
         }
     }));
 
-    const getSpacing = () => window.innerWidth >= 1280 ? 32 : 16;
+    const getSpacing = () => (window.innerWidth >= 1280 ? 32 : 16);
 
     const getVisibleCards = () => {
         if (window.innerWidth >= 1280) return 3;
@@ -30,9 +31,7 @@ const Marquee = forwardRef((props, ref) => {
         const containerWidth = container.current.clientWidth;
         const spacing = getSpacing();
         const visibleCards = getVisibleCards();
-
         const totalSpacing = spacing * (visibleCards - 1);
-
         return (containerWidth - totalSpacing) / visibleCards;
     };
 
@@ -40,29 +39,48 @@ const Marquee = forwardRef((props, ref) => {
         if (!contentRef.current) return;
 
         const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];
-        contentRef.current.innerHTML = items.map((testimonial, index) => `
-            <div class="testimonial-card flex-shrink-0 group" style="width: ${calculateCardWidth()}px">
-                <div class="relative h-full bg-white/[0.025] border border-white/5 rounded-custom overflow-hidden backdrop-blur-sm">               
-                    <div class="relative flex flex-col h-full p-6 xl:p-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mb-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
-                        
-                        <p class="text-sm md:text-base font-[400] text-white/50 mb-8">${testimonial.text}</p>
-                        
-                        <div class="mt-auto flex items-center gap-4">
-                            <div class="relative">
-                                <div class="w-14 h-14 rounded-full border border-white/5 overflow-hidden">
-                                    <img src="${testimonial.src}" alt="${testimonial.author}" class="w-full h-full object-cover" />
+
+        contentRef.current.innerHTML = items.map((testimonial, index) => {
+            const refId = `card-${index}`;
+            return `
+                <div 
+                    id="${refId}" 
+                    class="testimonial-card flex-shrink-0 group overflow-hidden" 
+                    style="width: ${calculateCardWidth()}px">
+                    <div class="relative h-full bg-white/[0.025] border border-white/5 rounded-custom overflow-hidden">               
+                        <div class="relative flex flex-col h-full p-4 md:p-8">
+                            <div class="flex justify-between items-start mb-6 xl:mb-8">
+                                <div class="p-2 bg-white/[0.025] border border-white/5 rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>
+                                        <path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>
+                                    </svg>
+                                </div> 
+                                <div class="flex items-end gap-4">
+                                    <div
+                                        class="px-3 py-1 font-[400] text-xs text-textGray bg-white/[0.025] border border-white/5 rounded-full">
+                                        Testimonial
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <p class="font-[750] text-base md:text-lg text-white">${testimonial.author}</p>
-                                <p class="text-sm text-white/50 font-[400]">${testimonial.role}</p>
+                            </div>                       
+                            <p class="text-sm font-[400] tracking-tight text-textGray leading-relaxed mb-8">${testimonial.text}</p>
+                            
+                            <div class="mt-auto flex items-center gap-4">
+                                <div class="relative">
+                                    <div class="w-14 h-14 rounded-lg border border-white/5 overflow-hidden">
+                                        <img src="${testimonial.src}" alt="${testimonial.author}" class="w-full h-full object-cover" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="font-[750]  md:text-lg text-white">${testimonial.author}</p>
+                                    <p class="text-xs text-textGray font-[400]">${testimonial.role}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
 
         initializeTestimonialsAnimation(contentRef.current, testimonialsData, calculateCardWidth, getSpacing);
     };
@@ -71,6 +89,7 @@ const Marquee = forwardRef((props, ref) => {
         if (!container.current || !contentRef.current) return;
 
         initializeCards();
+        setCurrentPosition(0);
 
         const handleResize = () => {
             initializeCards();
@@ -81,8 +100,17 @@ const Marquee = forwardRef((props, ref) => {
     }, []);
 
     const scrollTestimonials = useCallback((direction: 'left' | 'right') => {
+        if (animating.current) return;
+
+        const newPosition = direction === 'right'
+            ? (currentPosition + 1) % testimonialsData.length
+            : (currentPosition - 1 + testimonialsData.length) % testimonialsData.length;
+
         scrollTestimonialsAnimation(contentRef.current, direction, animating, calculateCardWidth, getSpacing, testimonialsData);
-    }, []);
+
+        setCurrentPosition(newPosition);
+        props.onPositionChange?.(newPosition);
+    }, [currentPosition, props.onPositionChange]);
 
     return (
         <div ref={container} className="overflow-hidden">
@@ -98,11 +126,27 @@ const Testimonials: React.FC = () => {
     const marqueRef = useRef<any>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const buttonRef2 = useRef<HTMLButtonElement | null>(null);
+    const [currentPosition, setCurrentPosition] = useState(0);
 
     const handleScroll = (direction: 'left' | 'right') => {
         if (marqueRef.current?.scrollTestimonials) {
             marqueRef.current.scrollTestimonials(direction);
         }
+    };
+
+    const handleDotClick = (index: number) => {
+        if (index === currentPosition) return;
+
+        // Calculate how many steps we need to take
+        const stepsNeeded = Math.abs(index - currentPosition);
+        const shouldGoRight = index > currentPosition;
+
+        // Create array of steps and execute them sequentially
+        Array.from({ length: stepsNeeded }).forEach((_, i) => {
+            setTimeout(() => {
+                handleScroll(shouldGoRight ? 'right' : 'left');
+            }, i * 500); // 500ms matches our animation duration
+        });
     };
 
     useEffect(() => {
@@ -115,35 +159,54 @@ const Testimonials: React.FC = () => {
     }, []);
 
     return (
-        <section id="testimonials" className="w-screen text-white px-4 lg:px-24 pt-12 mb-24 lg:py-24 flex flex-col justify-center items-start relative">
-            <div className="flex items-center justify-between w-full mb-8">
-                <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
-                    Testimonials
-                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">
-                        ({String(testimonialsData.length ).padStart(2, "0")})
-                    </sup>
-                </h1>
-                <div className="flex gap-2">
-                    <button
-                        ref={buttonRef}
-                        onClick={() => handleScroll('left')}
-                        className="p-2 bg-white/[0.025] border border-white/5 rounded-full"
-                        aria-label="Previous testimonials"
-                    >
-                        <ChevronLeft className="w-6 h-6"/>
-                    </button>
-                    <button
-                        ref={buttonRef2}
-                        onClick={() => handleScroll('right')}
-                        className="p-2 bg-white/[0.025] border border-white/5 rounded-full"
-                        aria-label="Next testimonials"
-                    >
-                        <ChevronRight className="w-6 h-6"/>
-                    </button>
+        <section id="testimonials" className="w-screen text-white px-4 lg:px-24 py-12 lg:py-24 flex flex-col justify-center items-start relative">
+            <div
+                className="w-full h-full relative bg-white/5 border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">
+                <div className="flex items-start justify-between w-full mb-8">
+                    <div className="p-2 bg-white/[0.025] border border-white/5 rounded-lg">
+                        <UsersRound className="w-8 h-8 text-white"/>
+                    </div>
+                    <div
+                        className="px-3 py-1 font-[400] text-xs text-white bg-white/[0.025] border border-white/5 rounded-full">
+                        Testimonials
+                    </div>
                 </div>
-            </div>
-            <div className="w-full flex flex-col gap-4 overflow-hidden">
-                <Marquee ref={marqueRef}/>
+                <div className="w-full flex flex-col gap-4 overflow-hidden rounded-custom">
+                    <Marquee ref={marqueRef} onPositionChange={setCurrentPosition}/>
+                </div>
+                <div className="flex justify-between items-center mt-6 md:mt-8">
+                    <div className="flex gap-2">
+                        {testimonialsData.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleDotClick(index)}
+                                className={`h-2 rounded-full transition-all duration-300 
+                                    ${index === currentPosition
+                                    ? 'w-8 bg-white'
+                                    : 'w-2 bg-white/20 hover:bg-white/40'}`}
+                                aria-label={`Go to testimonial ${index + 1}`}
+                            />
+                        ))}
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            ref={buttonRef}
+                            onClick={() => handleScroll('left')}
+                            className="p-2 bg-white/[0.025] border border-white/5 rounded-lg"
+                            aria-label="Previous testimonials"
+                        >
+                            <ChevronLeft className="w-6 h-6"/>
+                        </button>
+                        <button
+                            ref={buttonRef2}
+                            onClick={() => handleScroll('right')}
+                            className="p-2 bg-white/[0.025] border border-white/5 rounded-lg"
+                            aria-label="Next testimonials"
+                        >
+                            <ChevronRight className="w-6 h-6"/>
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
     );

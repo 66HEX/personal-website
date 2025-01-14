@@ -3,9 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useGSAP } from "@gsap/react";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
-import AnimatedLink from "@/app/components/AnimatedLink/AnimatedLink";
 import { navbarAnimation } from '@/app/animations/navbarAnimation';
-import Logo from '@/public/logo/hex-logo2.svg'
+import Image from "next/image";
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +14,6 @@ export default function Navbar() {
     const toggleButtonLine2Ref = useRef<HTMLDivElement>(null);
     const menuItemsContainerRef = useRef<HTMLDivElement>(null);
 
-    // Clean up menu when component unmounts
     useEffect(() => {
         return () => {
             if (isMenuOpen) {
@@ -74,35 +72,45 @@ export default function Navbar() {
     }, [isMenuOpen]);
 
     return (
-        <header className="fixed top-0 left-0 right-0 w-screen z-50">
-            <nav
-                className="absolute inset-0 mx-auto"
-                aria-label="Main navigation"
-            >
-                <div className="w-full h-16 mx-auto flex items-center justify-end relative px-4 pt-4 pb-4 md:pb-0">
+        <header className="fixed top-4 left-0 right-0 w-screen z-50">
+            <nav className="absolute inset-0 mx-auto px-4" aria-label="Main navigation">
+                <div className="w-full flex items-center justify-between md:justify-start relative">
+                    <TransitionLink href={"/"}>
+                        <div className="p-2 bg-white/5 border border-white/5 rounded-lg backdrop-blur-3xl">
+                            <Image
+                                src="/logo/hex-logo.svg"
+                                alt="Logo"
+                                width={32}
+                                height={32}
+                                className="invert"
+                            />
+                        </div>
+                    </TransitionLink>
+
                     <div
-                        className="hidden md:flex items-center absolute left-1/2 -translate-x-1/2 gap-8 px-6 py-3 bg-white/[0.025] border border-white/5 backdrop-blur-3xl rounded-full"
-                        aria-label="Desktop navigation"
-                    >
+                        className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center flex-1">
+                        <div
+                            className="flex items-center gap-8 px-6 py-3 bg-white/5 border border-white/5 backdrop-blur-3xl rounded-full"
+                            aria-label="Desktop navigation"
+                        >
                         {menuItems.map((item) => (
-                            <TransitionLink
-                                key={item.href}
-                                href={item.href}
-                                className="text-base text-white font-[500]"
-                                aria-label={`Navigate to ${item.label} page`}
-                                onTransitionStart={handleTransitionStart}
-                            >
-                                <AnimatedLink>
+                                <TransitionLink
+                                    key={item.href}
+                                    href={item.href}
+                                    className="text-base text-textGray font-[500]"
+                                    aria-label={`Navigate to ${item.label} page`}
+                                    onTransitionStart={handleTransitionStart}
+                                >
                                     {item.label}
-                                </AnimatedLink>
-                            </TransitionLink>
-                        ))}
+                                </TransitionLink>
+                            ))}
+                        </div>
                     </div>
 
                     <button
                         ref={toggleButtonRef}
                         onClick={handleToggleMenu}
-                        className="md:hidden relative h-8 w-8 text-white/50 transition-colors z-50"
+                        className="md:hidden relative h-12 w-12 text-textGray p-4 bg-white/5 border border-white/5 rounded-lg backdrop-blur-3xl z-50"
                         aria-expanded={isMenuOpen}
                         aria-label="Toggle navigation menu"
                         aria-controls="mobile-menu"
@@ -110,12 +118,12 @@ export default function Navbar() {
                     >
                         <div
                             ref={toggleButtonLine1Ref}
-                            className="absolute w-6 border-[1.5px] border-white top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                            className="absolute w-6 border-[1.5px] border-white top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
                             aria-hidden="true"
                         ></div>
                         <div
                             ref={toggleButtonLine2Ref}
-                            className="absolute w-6 border-[1.5px] border-white top-[65%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+                            className="absolute w-6 border-[1.5px] border-white top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
                             aria-hidden="true"
                         ></div>
                     </button>

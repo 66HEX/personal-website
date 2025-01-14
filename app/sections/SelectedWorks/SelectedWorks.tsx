@@ -1,22 +1,14 @@
 'use client';
 
-import { useState, useRef, useEffect } from "react";
-import { useGSAP } from "@gsap/react";
+import { useRef, useEffect } from "react";
 import { works } from "@/app/data/worksData";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import Image from "next/image";
-import { animateProjectImage } from "@/app/animations/imageHoverAnimation";
+import {File, Folder} from "lucide-react";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 
-
 export default function SelectedWorks() {
-    const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
-
-    useGSAP(() => {
-        animateProjectImage(imageRefs.current, activeIndex);
-    }, [activeIndex]);
 
     useEffect(() => {
         const cleanup = initializeButtonAnimation({
@@ -27,58 +19,86 @@ export default function SelectedWorks() {
     }, []);
 
     return (
-        <div className="w-screen px-4 py-12 lg:px-24 lg:py-24 text-white relative">
-            <div className="w-full flex flex-row justify-between items-end mb-8">
-                <h1 className="text-2xl lg:text-5xl font-[750] uppercase tracking-tight leading-none">
-                    Selected Works
-                    <sup className="text-xs md:text-sm tracking-normal align-top opacity-50 ml-1">(04)</sup>
-                </h1>
-                <button
-                    ref={buttonRef}
-                    className="text-sm md:text-base font-[400] bg-white/[0.025] border border-white/5 backdrop-blur-sm rounded-full tracking-tight leading-none flex justify-center items-center">
-                    <TransitionLink className="h-full w-full px-4 py-2" href={"/works"}>
-                        View All
-                    </TransitionLink>
-                </button>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
-                {works
-                    .slice(0, 4)
-                    .map((project, index) => (
+        <section className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-white relative">
+            <div
+                className="w-full h-full relative bg-white/5 border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">
+                <div className="flex items-center justify-between w-full mb-6 xl:mb-8">
+                    <div className="flex w-full justify-between items-start">
+                        <div className="p-2 bg-white/[0.025] border border-white/5 rounded-lg">
+                            <Folder className="w-8 h-8 text-white"/>
+                        </div>
                         <div
+                            className="px-3 py-1 font-[400] text-xs text-white bg-white/[0.025] border border-white/5 rounded-full">
+                            Selected Works
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {works.slice(0, 4).map((project, index) => (
+                        <TransitionLink
                             key={project.id}
-                            className="relative overflow-hidden rounded-custom border border-white/5"
-                            onMouseEnter={() => setActiveIndex(index)}
-                            onMouseLeave={() => setActiveIndex(null)}
+                            href={`/works/${project.id}`}
+                            className="group"
                         >
-                            <TransitionLink href={`/works/${project.id}`}>
-                                <div className="flex flex-col">
-                                    <div className="relative w-full rounded-t-custom overflow-hidden">
+                            <div
+                                className="relative h-full bg-white/[0.0125] border border-white/5 rounded-custom overflow-hidden">
+                                <div className="relative flex flex-col h-full p-4 md:p-8">
+                                    <div className="flex justify-between items-start mb-6">
+                                        <div className="p-2 bg-white/[0.025] border border-white/5 rounded-lg">
+                                            <File className="w-5 h-5 text-white"/>
+                                        </div>
+                                        <div
+                                            className="px-3 py-1 font-[400] text-xs text-textGray bg-white/[0.025] border border-white/5 rounded-full">
+                                            {project.type}
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className="relative w-full rounded-lg border border-white/5 overflow-hidden mb-6"
+                                    >
                                         <Image
                                             src={project.mainImage}
                                             alt={project.title}
-                                            layout="intrinsic"
                                             width={1000}
                                             height={1000}
-                                            ref={(el) => (imageRefs.current[index] = el)}
-                                            className="object-cover"
+                                            className="object-cover w-full h-auto"
                                         />
                                     </div>
-                                    <div
-                                        className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
-                                    <div className="absolute bottom-0 left-0 p-4 xl:p-8">
-                                        <div
-                                            className="flex justify-between gap-4 text-sm md:text-base tracking-tight leading-none">
-                                            <p className="backdrop-blur-3xl bg-white/5 border border-white/5 px-4 py-2 rounded-full font-[750]">{project.title}</p>
-                                            <p className="backdrop-blur-3xl bg-white/5 border border-white/5 px-4 py-2 rounded-full text-white/50 font-[400]">{project.type[0]}</p>
+
+                                    <div className="mb-6">
+                                        <h3 className="text-xl font-[750] tracking-tight leading-none mb-4 text-white">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-sm font-[400] tracking-tight text-textGray leading-relaxed">
+                                            {project.description[0].split('.')[0]}.
+                                        </p>
+                                    </div>
+
+                                    <div className="mt-auto">
+                                        <div className="flex flex-wrap gap-2">
+                                            {project.liveLink && (
+                                                <div
+                                                    className="px-3 py-1 text-xs font-[400] bg-green-500/10 border border-green-500/20 text-green-500 rounded-full">
+                                                    Live Project
+                                                </div>
+                                            )}
+                                            <div
+                                                className="px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-white/5 rounded-full">
+                                                {project.client}
+                                            </div>
+                                            <div
+                                                className="px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-white/5 rounded-full">
+                                                {project.year}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </TransitionLink>
-                        </div>
+                            </div>
+                        </TransitionLink>
                     ))}
+                </div>
             </div>
-        </div>
+        </section>
     );
 }

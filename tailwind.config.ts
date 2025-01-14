@@ -9,9 +9,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        black: '#0A0A0A',
+        black: '#000',
         white: '#FFFFFF',
-        accent: '#FF4C24',
+        textGray: '#8C8C8C',
       },
       fontFamily: {
         sans: ['var(--font-lausanne)']

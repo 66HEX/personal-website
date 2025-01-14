@@ -1,85 +1,64 @@
 'use client';
 
-import { ChevronDown } from "lucide-react";
-import {useEffect, useLayoutEffect, useRef} from "react";
-import { setupHeroAnimation } from "@/app/animations/heroAnimation";
-import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
-import {TransitionLink} from "@/app/components/TransitionLink/TransitionLink";
-import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
+import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
+import Scene from "@/app/components/Scene/scene";
+import HeroOverlay from "@/app/components/HeroOverlay/heroOverlay";
 
-export default function Hero() {
-    const component = useRef(null);
-    const headingRef = useRef(null);
-    const subtitleRef = useRef(null);
-    const descriptionRef = useRef(null);
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
-
-
-    useLayoutEffect(() => {
-        const ctx = setupHeroAnimation({
-            headingRef,
-            subtitleRef,
-            descriptionRef
-        }, component);
-
-        return () => ctx.revert();
-    }, []);
-
-    useEffect(() => {
-        const cleanup = initializeButtonAnimation({
-            buttonRef: buttonRef.current
-        });
-
-        return cleanup;
-    }, []);
-
+export default function HeroSection() {
     return (
-        <div
-            ref={component}
-            className="relative h-svh w-screen  text-white flex flex-col justify-center items-start px-4 lg:px-24">
-            <BackgroundOverlay/>
-            <div className="relative z-10 max-w-5xl">
-                <div className="mb-4">
-                    <h2
-                        ref={subtitleRef}
-                        className="text-sm md:text-base font-[400] uppercase tracking-widest"
-                    >
-                        Creative Developer
-                    </h2>
+        <section className="w-screen min-h-screen px-4 lg:px-24 py-24 text-white relative flex items-center overflow-hidden">
+            <div className="absolute inset-0">
+                <HeroOverlay/>
+            </div>
+            <div className="w-full flex flex-col relative bg-white/5 border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">
+                <div className="flex justify-between">
+                    <div className="mb-6">
+                        <div
+                            className="px-4 py-1.5 text-sm font-[400] inline-block text-textGray bg-white/[0.025] border border-white/5 rounded-full">
+                            Building Digital Products
+                        </div>
+                    </div>
+                    <div className="hidden lg:block">
+                        <div
+                            className="flex items-center gap-2 px-3 py-1 font-[400] text-xs bg-white/[0.025] border border-white/5 rounded-full">
+                            <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                            <span>Available for new projects</span>
+                        </div>
+                    </div>
                 </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="max-w-2xl">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-[750] tracking-tight leading-tight mb-8">
+                            Bringing <span
+                            className="text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-white/40">ideas</span> to
+                            life through code
+                        </h1>
 
-                <h1
-                    ref={headingRef}
-                    className="text-4xl md:text-6xl lg:text-8xl font-[750] tracking-tight leading-none mb-8 drop-shadow-glow"
-                >
-                    Crafting Digital Experiences Through Creative Code
-                </h1>
+                        <p className="text-lg text-textGray leading-relaxed mb-12">
+                            Specialized in creating engaging web experiences that combine clean design with smooth interactions. Let's transform your vision into reality.
+                        </p>
 
-                <p
-                    ref={descriptionRef}
-                    className="text-base md:text-xl font-[400] mb-8 max-w-2xl"
-                >
-                    Pushing the boundaries of web development by combining modern technologies
-                    with creative design solutions to build immersive digital experiences.
-                </p>
+                        <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                            <TransitionLink
+                                href="/works"
+                                className="inline-flex items-center justify-center px-8 py-4 text-sm font-[500] bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 rounded-full transition-all duration-200"
+                            >
+                                Explore Work
+                            </TransitionLink>
 
-                <div className="flex gap-4">
-                    <button
-                        ref={buttonRef}
-                        className="hero-button group font-[400] flex items-center gap-2 bg-white/[0.025] border border-white/5 backdrop-blur-sm rounded-full"
-                    >
-                        <TransitionLink className="px-4 py-2 flex items-center gap-2" href={"/contact"}>
-                            Let's Talk
-                            <ChevronDown className="w-4 h-4" />
-                        </TransitionLink>
-                    </button>
+                            <TransitionLink
+                                href="/contact"
+                                className="inline-flex items-center justify-center px-8 py-4 text-sm font-[500] bg-transparent hover:bg-white/[0.025] border border-white/10 rounded-full transition-all duration-200"
+                            >
+                                Contact
+                            </TransitionLink>
+                        </div>
+                    </div>
+                    <div className="w-full h-full bg-white/[0.025] border border-white/5 rounded-custom">
+                        <Scene/>
+                    </div>
                 </div>
             </div>
-
-            <div className="scroll-indicator absolute font-[400] bottom-8 left-4 lg:left-24 flex items-center gap-4 text-sm">
-                <div className="w-8 h-[1px] bg-white/50" />
-                <span>Scroll to explore</span>
-            </div>
-        </div>
+        </section>
     );
 }

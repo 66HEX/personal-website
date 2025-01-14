@@ -2,20 +2,19 @@ import {gsap} from "gsap";
 
 interface ButtonAnimationRefs {
     buttonRef: HTMLButtonElement | null;
-    buttonRef2?: HTMLButtonElement | null; // opcjonalny drugi przycisk
+    buttonRef2?: HTMLButtonElement | null;
 }
 
 export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnimationRefs) => {
     const cleanupFunctions: (() => void)[] = [];
 
-    // Animacja dla pierwszego przycisku
     if (buttonRef) {
         const buttonRefEnterHandler = () => {
             gsap.to(buttonRef, {
                 color: '#ffffff',
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 duration: 0.25,
-                ease: "power3.out",
+                ease: "linear",
             });
         };
 
@@ -24,7 +23,7 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
                 color: '#ffffff',
                 backgroundColor: 'rgba(255, 255, 255, 0.025)',
                 duration: 0.25,
-                ease: "power3.in",
+                ease: "linear",
             });
         };
 
@@ -36,15 +35,13 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
             buttonRef.removeEventListener('mouseleave', buttonRefLeaveHandler);
         });
     }
-
-    // Animacja dla drugiego przycisku (opcjonalna)
     if (buttonRef2) {
         const buttonRef2EnterHandler = () => {
             gsap.to(buttonRef2, {
                 color: '#ffffff',
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 duration: 0.25,
-                ease: "power3.out",
+                ease: "linear",
             });
         };
 
@@ -53,7 +50,7 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
                 color: '#ffffff',
                 backgroundColor: 'rgba(255, 255, 255, 0.025)',
                 duration: 0.25,
-                ease: "power3.in",
+                ease: "linear",
             });
         };
 

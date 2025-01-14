@@ -29,23 +29,3 @@ textarea:-webkit-autofill:active {
     -webkit-text-fill-color: rgba(255, 255, 255, 1) !important;
 }
 
-.text {
-    -webkit-background-clip: text;
-    background-clip: text;
-    background-size: 0%;
-    transition: background-size cubic-bezier(.1,.5,.5,1) 0.75s;
-    position: relative;
-}
-.effect-span {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
-    transform-origin: center;
-    transition: all cubic-bezier(0.165, 0.84, 0.44, 1) 0.75s;
-
-}
-
-.text:hover > span {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-}

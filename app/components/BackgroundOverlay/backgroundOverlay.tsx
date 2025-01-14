@@ -1,32 +1,19 @@
-import React from "react";
-
-export default function BackgroundOverlay() {
+export default function backgroundOverlay() {
     return (
-        <div className="absolute inset-0 -z-10 bg-black overflow-hidden">
-            <svg
-                className="absolute inset-0 w-full h-full"
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="none"
-            >
-                <defs>
-                    <radialGradient id="redGlow" cx="50%" cy="50%" r="70%">
-                        <stop offset="0%" style={{stopColor: '#757575', stopOpacity: 0.1}}/>
-                        <stop offset="100%" style={{stopColor: '#000000', stopOpacity: 0.1}}/>
-                    </radialGradient>
+        <div className="absolute -z-10 w-full h-full bg-black">
 
-                    <filter id="glow">
-                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                        <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#redGlow)"/>
+            {/* Top gradient - subtle blue/teal tones */}
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-black to-cyan-950/20"/>
 
-            </svg>
-            <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-black to-transparent pointer-events-none"/>
-            <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-black to-transparent pointer-events-none"/>
+            {/* Middle gradient - deep blacks */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/90 to-transparent"/>
+
+            {/* Bottom gradient - rich browns */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-amber-950/20"/>
+
+            <div
+                className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(0,0,0,0.1)_10%,_rgba(0,0,0,1)_100%)]"/>
+
         </div>
     );
-}
+};

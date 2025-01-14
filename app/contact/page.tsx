@@ -187,7 +187,7 @@ export default function Contact() {
     return (
         <section className="w-screen text-white relative">
             <div className="px-4 lg:px-24 py-24">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                     <div className="col-span-1 md:col-span-8 order-2 md:order-1">
                         <ContactForm />
                     </div>

@@ -54,7 +54,7 @@ export default function HeroSection() {
                             </TransitionLink>
                         </div>
                     </div>
-                    <div className="order-1 md:order-2 w-full h-full min-h-[200px] bg-white/[0.025] border border-white/5 rounded-custom">
+                    <div className="order-1 md:order-2 w-full h-full min-h-[300px] bg-white/[0.025] border border-white/5 rounded-custom">
                         <Scene/>
                     </div>
                 </div>

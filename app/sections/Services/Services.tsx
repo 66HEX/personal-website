@@ -74,7 +74,7 @@ export default function Services() {
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(200px,auto)] gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(200px,auto)] mb-6 xl:mb-8">
                     <ServiceCard
                         service={services[0]}
                         className="md:col-span-1 md:row-span-1"

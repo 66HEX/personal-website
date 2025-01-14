@@ -28,7 +28,7 @@ export default function WorksPage() {
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div
                                 className="project-container hover:bg-white/[0.0125] transition-all duration-300 cursor-pointer group">
-                                <div className="grid grid-cols-1 tracking-tight p-6 xl:p-8">
+                                <div className="grid grid-cols-1 tracking-tight p-4 xl:p-8">
                                     <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                                         {/* Title and main info */}
                                         <div className="flex-grow">

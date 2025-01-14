@@ -23,7 +23,7 @@ const ServiceCard = ({ service, className = "" }: ServiceCardProps) => {
 
             className={`group bg-white/[0.025] border border-white/5 rounded-custom p-4 md:p-8 flex flex-col ${className}`}
         >
-            <div className="flex justify-between items-start mb-6 xl:mb-8">
+            <div className="flex justify-between items-start mb-8">
                 <div className="p-2 bg-white/[0.025] border border-white/5 rounded-lg">
                     {service.icon}
                 </div>

@@ -47,7 +47,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
     return (
         <section className="w-screen text-white relative">
             <div className="px-4 lg:px-24 py-24">
-                <div className="flex flex-col gap-4 md:gap-8">
+                <div className="flex flex-col gap-6 md:gap-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
                         <div className="col-span-1 md:col-span-8">
                             <div className="bg-white/[0.05] border border-white/5 rounded-custom p-4 xl:p-8 backdrop-blur-sm">
@@ -158,7 +158,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                         {project.images?.map((image, index) => (
                             <div key={index} className="col-span-1 md:col-span-6 relative w-full h-auto rounded-custom overflow-hidden border border-white/5">
                                 <Image

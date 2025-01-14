@@ -27,7 +27,7 @@ export default function HeroSection() {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="max-w-2xl">
+                    <div className="max-w-2xl order-2 md:order-1">
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-[750] tracking-tight leading-tight mb-8">
                             Bringing <span
                             className="text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-white/40">ideas</span> to
@@ -54,7 +54,7 @@ export default function HeroSection() {
                             </TransitionLink>
                         </div>
                     </div>
-                    <div className="w-full h-full bg-white/[0.025] border border-white/5 rounded-custom">
+                    <div className="order-1 md:order-2 w-full h-full bg-white/[0.025] border border-white/5 rounded-custom">
                         <Scene/>
                     </div>
                 </div>

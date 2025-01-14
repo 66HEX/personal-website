@@ -47,7 +47,7 @@ export default function WorksPage() {
                                                 </div>
                                             )}
                                             <div
-                                                className="px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-white/5 rounded-full backdrop-blur-sm whitespace-nowrap">
+                                                className="hidden md:block px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-white/5 rounded-full backdrop-blur-sm whitespace-nowrap">
                                                 {project.type}
                                             </div>
                                             <div

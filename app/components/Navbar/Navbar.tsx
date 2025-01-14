@@ -76,7 +76,7 @@ export default function Navbar() {
             <nav className="absolute inset-0 mx-auto px-4" aria-label="Main navigation">
                 <div className="w-full flex items-center justify-between md:justify-start relative">
                     <TransitionLink href={"/"}>
-                        <div className="p-2 bg-white/5 border border-white/5 rounded-lg backdrop-blur-3xl">
+                        <div className="p-2 bg-white/5 border border-text-white/5 rounded-lg backdrop-blur-3xl">
                             <Image
                                 src="/logo/hex-logo.svg"
                                 alt="Logo"
@@ -90,14 +90,14 @@ export default function Navbar() {
                     <div
                         className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center flex-1">
                         <div
-                            className="flex items-center gap-8 px-6 py-3 bg-white/5 border border-white/5 backdrop-blur-3xl rounded-full"
+                            className="flex items-center gap-8 px-6 py-3 bg-white/5 border border-text-white/5 backdrop-blur-3xl rounded-full"
                             aria-label="Desktop navigation"
                         >
                         {menuItems.map((item) => (
                                 <TransitionLink
                                     key={item.href}
                                     href={item.href}
-                                    className="text-base text-textGray font-[500]"
+                                    className="text-base text-text-gray font-[500]"
                                     aria-label={`Navigate to ${item.label} page`}
                                     onTransitionStart={handleTransitionStart}
                                 >
@@ -110,7 +110,7 @@ export default function Navbar() {
                     <button
                         ref={toggleButtonRef}
                         onClick={handleToggleMenu}
-                        className="md:hidden relative h-12 w-12 text-textGray p-4 bg-white/5 border border-white/5 rounded-lg backdrop-blur-3xl z-50"
+                        className="md:hidden relative h-12 w-12 text-text-gray p-4 bg-white/5 border border-text-white/5 rounded-lg backdrop-blur-3xl z-50"
                         aria-expanded={isMenuOpen}
                         aria-label="Toggle navigation menu"
                         aria-controls="mobile-menu"
@@ -118,12 +118,12 @@ export default function Navbar() {
                     >
                         <div
                             ref={toggleButtonLine1Ref}
-                            className="absolute w-6 border-[1.5px] border-white top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm"
+                            className="absolute w-6 border-[1.5px] border-text-white top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm"
                             aria-hidden="true"
                         ></div>
                         <div
                             ref={toggleButtonLine2Ref}
-                            className="absolute w-6 border-[1.5px] border-white top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm"
+                            className="absolute w-6 border-[1.5px] border-text-white top-[60%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-sm"
                             aria-hidden="true"
                         ></div>
                     </button>
@@ -133,7 +133,7 @@ export default function Navbar() {
             {isMenuOpen && (
                 <div
                     ref={menuRef}
-                    className="fixed inset-0 w-screen min-h-svh h-full md:hidden backdrop-blur-md bg-black/80 z-40"
+                    className="fixed inset-0 w-screen min-h-svh h-full md:hidden backdrop-blur-md bg-background/80 z-40"
                     aria-modal="true"
                     aria-label="Mobile navigation menu"
                     id="mobile-menu"
@@ -148,7 +148,7 @@ export default function Navbar() {
                                 key={item.href}
                                 href={item.href}
                                 onTransitionStart={handleTransitionStart}
-                                className="text-2xl text-white font-[300]"
+                                className="text-2xl text-text-white font-[300]"
                                 aria-label={`Navigate to ${item.label} page`}
                             >
                                 {item.label}

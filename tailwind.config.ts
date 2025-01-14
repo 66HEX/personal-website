@@ -9,9 +9,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        black: '#000',
-        white: '#FFFFFF',
-        textGray: '#8C8C8C',
+        background: '#000',
+        "text-white": '#FFFFFF',
+        "text-gray": '#a6a6a6',
       },
       fontFamily: {
         sans: ['var(--font-lausanne)']
@@ -23,7 +23,7 @@ export default {
         ]
       },
       borderRadius: {
-        custom: '1rem',
+        "outer-card": '1rem',
 
       },
     },

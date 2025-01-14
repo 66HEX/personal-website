@@ -5,6 +5,7 @@ import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation
 import { useRef, useLayoutEffect, useCallback, forwardRef, useImperativeHandle, useEffect, useState } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import { ChevronLeft, ChevronRight, UsersRound } from "lucide-react";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
 
 const Marquee = forwardRef((props: { onPositionChange?: (position: number) => void }, ref) => {
     const container = useRef<HTMLDivElement>(null);
@@ -47,33 +48,33 @@ const Marquee = forwardRef((props: { onPositionChange?: (position: number) => vo
                     id="${refId}" 
                     class="testimonial-card flex-shrink-0 group overflow-hidden" 
                     style="width: ${calculateCardWidth()}px">
-                    <div class="relative h-full bg-white/[0.025] border border-white/5 rounded-custom overflow-hidden">               
+                    <div class="relative h-full bg-white/[0.025] border border-text-white/5 rounded-outer-card overflow-hidden">               
                         <div class="relative flex flex-col h-full p-4 md:p-8">
                             <div class="flex justify-between items-start mb-6 xl:mb-8">
-                                <div class="p-2 bg-white/[0.025] border border-white/5 rounded-lg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <div class="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>
                                         <path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>
                                     </svg>
                                 </div> 
                                 <div class="flex items-end gap-4">
                                     <div
-                                        class="px-3 py-1 font-[400] text-xs text-textGray bg-white/[0.025] border border-white/5 rounded-full">
+                                        class="px-3 py-1 font-[400] text-xs text-text-gray bg-white/[0.025] border border-text-white/5 rounded-full">
                                         Testimonial
                                     </div>
                                 </div>
                             </div>                       
-                            <p class="text-sm font-[400] tracking-tight text-textGray leading-relaxed mb-8">${testimonial.text}</p>
+                            <p class="text-sm font-[400] tracking-tight text-text-gray leading-relaxed mb-8">${testimonial.text}</p>
                             
                             <div class="mt-auto flex items-center gap-4">
                                 <div class="relative">
-                                    <div class="w-14 h-14 rounded-lg border border-white/5 overflow-hidden">
+                                    <div class="w-14 h-14 rounded-lg border border-text-white/5 overflow-hidden">
                                         <img src="${testimonial.src}" alt="${testimonial.author}" class="w-full h-full object-cover" />
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="font-[750]  md:text-lg text-white">${testimonial.author}</p>
-                                    <p class="text-xs text-textGray font-[400]">${testimonial.role}</p>
+                                    <p class="font-[750]  md:text-lg text-text-white">${testimonial.author}</p>
+                                    <p class="text-xs text-text-gray font-[400]">${testimonial.role}</p>
                                 </div>
                             </div>
                         </div>
@@ -159,19 +160,22 @@ const Testimonials: React.FC = () => {
     }, []);
 
     return (
-        <section id="testimonials" className="w-screen text-white px-4 lg:px-24 py-12 lg:py-24 flex flex-col justify-center items-start relative">
+        <section id="testimonials" className="w-screen text-text-white px-4 lg:px-24 py-12 lg:py-24 flex flex-col justify-center items-start relative">
+            <div className="absolute inset-0">
+                <BackgroundOverlay/>
+            </div>
             <div
-                className="w-full h-full relative bg-white/5 border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">
+                className="w-full h-full relative bg-white/5 border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
                 <div className="flex items-start justify-between w-full mb-8">
-                    <div className="p-2 bg-white/[0.025] border border-white/5 rounded-lg">
-                        <UsersRound className="w-8 h-8 text-white"/>
+                    <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                        <UsersRound className="w-8 h-8 text-text-white"/>
                     </div>
                     <div
-                        className="px-3 py-1 font-[400] text-xs text-white bg-white/[0.025] border border-white/5 rounded-full">
+                        className="px-3 py-1 font-[400] text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
                         Testimonials
                     </div>
                 </div>
-                <div className="w-full flex flex-col gap-4 overflow-hidden rounded-custom">
+                <div className="w-full flex flex-col gap-4 overflow-hidden rounded-outer-card">
                     <Marquee ref={marqueRef} onPositionChange={setCurrentPosition}/>
                 </div>
                 <div className="flex justify-between items-center mt-6 md:mt-8">
@@ -182,8 +186,8 @@ const Testimonials: React.FC = () => {
                                 onClick={() => handleDotClick(index)}
                                 className={`h-2 rounded-full transition-all duration-300 
                                     ${index === currentPosition
-                                    ? 'w-8 bg-white'
-                                    : 'w-2 bg-white/20 hover:bg-white/40'}`}
+                                    ? 'w-8 bg-text-white'
+                                    : 'w-2 bg-text-white/20 hover:bg-text-white/40'}`}
                                 aria-label={`Go to testimonial ${index + 1}`}
                             />
                         ))}
@@ -192,7 +196,7 @@ const Testimonials: React.FC = () => {
                         <button
                             ref={buttonRef}
                             onClick={() => handleScroll('left')}
-                            className="p-2 bg-white/[0.025] border border-white/5 rounded-lg"
+                            className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg"
                             aria-label="Previous testimonials"
                         >
                             <ChevronLeft className="w-6 h-6"/>
@@ -200,7 +204,7 @@ const Testimonials: React.FC = () => {
                         <button
                             ref={buttonRef2}
                             onClick={() => handleScroll('right')}
-                            className="p-2 bg-white/[0.025] border border-white/5 rounded-lg"
+                            className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg"
                             aria-label="Next testimonials"
                         >
                             <ChevronRight className="w-6 h-6"/>

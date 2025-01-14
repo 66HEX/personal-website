@@ -11,14 +11,14 @@ export default function HeroSection() {
                 <HeroOverlay/>
             </div>
             <div className="w-full flex flex-col relative bg-white/5 border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">
-                <div className="flex justify-between">
+                <div className="flex justify-end md:justify-between">
                     <div className="mb-6 hidden md:block">
                         <div
                             className="px-4 py-1.5 text-sm font-[400] inline-block text-textGray bg-white/[0.025] border border-white/5 rounded-full">
                             Building Digital Products
                         </div>
                     </div>
-                    <div className="mb-6">
+                    <div className="mb-8">
                         <div
                             className="flex items-center gap-2 px-3 py-1 font-[400] text-xs bg-white/[0.025] border border-white/5 rounded-full">
                             <div className="w-2 h-2 rounded-full bg-green-500"></div>

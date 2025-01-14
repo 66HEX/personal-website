@@ -30,7 +30,7 @@ export default function HeroSection() {
                     <div className="max-w-2xl order-2 md:order-1">
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-[750] tracking-tight leading-tight mb-8">
                             Bringing <span
-                            className="text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-white/40">ideas</span> to
+                            className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-950/40 to-amber-950/40">ideas</span> to
                             life through code
                         </h1>
 

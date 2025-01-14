@@ -162,7 +162,7 @@ const Testimonials: React.FC = () => {
         <section id="testimonials" className="w-screen text-white px-4 lg:px-24 py-12 lg:py-24 flex flex-col justify-center items-start relative">
             <div
                 className="w-full h-full relative bg-white/5 border border-white/5 rounded-custom p-4 md:p-8 backdrop-blur-sm">
-                <div className="flex items-start justify-between w-full mb-8">
+                <div className="flex items-start justify-between w-full mb-6 xl:mb-8">
                     <div className="p-2 bg-white/[0.025] border border-white/5 rounded-lg">
                         <UsersRound className="w-8 h-8 text-white"/>
                     </div>

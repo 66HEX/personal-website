@@ -79,7 +79,7 @@ export default function SelectedWorks() {
                                         <div className="flex flex-wrap gap-2">
                                             {project.liveLink && (
                                                 <div
-                                                    className="px-3 py-1 text-xs font-[400] bg-green-500/[0.025] border border-green-500/5 text-green-500 rounded-full">
+                                                    className="px-3 py-1 text-xs font-[400] bg-green-500/10 border border-green-500/20 text-green-500 rounded-full">
                                                     Live Project
                                                 </div>
                                             )}

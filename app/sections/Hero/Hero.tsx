@@ -12,7 +12,7 @@ export default function HeroSection() {
             </div>
             <div className="w-full flex flex-col relative">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="max-w-2xl bg-card-outer border border-card-border rounded-outer-card backdrop-blur-sm  p-4 md:p-8">
+                    <div className="max-w-2xl bg-card-outer border border-card-border rounded-outer-card backdrop-blur-sm p-4 md:p-8">
                         <div
                             className="px-4 py-1.5 text-sm font-[400] mb-8 inline-block text-text-gray bg-white/[0.025] border border-card-border rounded-full">
                             Building Digital Products

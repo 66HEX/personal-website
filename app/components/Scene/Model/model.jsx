@@ -12,10 +12,16 @@ export function Model(props) {
     const { nodes, animations } = useGLTF('/models/metal_gear_solid.glb')
     const { actions, names } = useAnimations(animations, group)
 
-    const matcapTexture = useLoader(THREE.TextureLoader, '/matcaps/matcap.png')
-
-    const matcapMaterial = new THREE.MeshMatcapMaterial({
-        matcap: matcapTexture
+    const physicalMaterial = new THREE.MeshPhysicalMaterial({
+        color: '#000000',
+        metalness: 1,
+        roughness: 0,
+        clearcoat: 0,
+        clearcoatRoughness: 0,
+        reflectivity: 1,
+        iridescence: 0.3,
+        iridescenceIOR: 1.1,
+        iridescenceThicknessRange: [100, 400]
     })
 
     useEffect(() => {
@@ -40,7 +46,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_4.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube001_2" position={[3.939, 0, -0.695]}>
@@ -49,7 +55,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_6.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube002_4" position={[3.759, 0, -1.368]}>
@@ -58,7 +64,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_8.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube003_6" position={[3.464, 0, -2]}>
@@ -67,7 +73,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_10.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube004_8" position={[3.064, 0, -2.571]}>
@@ -76,7 +82,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_12.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube005_10" position={[2.571, 0, -3.064]}>
@@ -85,7 +91,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_14.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube006_12" position={[2, 0, -3.464]}>
@@ -94,7 +100,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_16.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube007_14" position={[1.368, 0, -3.759]}>
@@ -103,7 +109,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_18.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube008_16" position={[0.695, 0, -3.939]}>
@@ -112,7 +118,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_20.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube009_18" position={[0, 0, -4]}>
@@ -121,7 +127,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_22.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube010_20" position={[-0.695, 0, -3.939]}>
@@ -130,7 +136,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_24.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube011_22" position={[-1.368, 0, -3.759]}>
@@ -139,7 +145,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_26.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube012_24" position={[-2, 0, -3.464]}>
@@ -148,7 +154,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_28.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube013_26" position={[-2.571, 0, -3.064]}>
@@ -157,7 +163,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_30.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube014_28" position={[-3.064, 0, -2.571]}>
@@ -166,7 +172,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_32.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube015_30" position={[-3.464, 0, -2]}>
@@ -175,7 +181,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_34.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube016_32" position={[-3.759, 0, -1.368]}>
@@ -184,7 +190,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_36.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube017_34" position={[-3.939, 0, -0.695]}>
@@ -193,7 +199,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_38.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube018_36" position={[-4, 0, 0]}>
@@ -202,7 +208,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_40.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube019_38" position={[-3.939, 0, 0.695]}>
@@ -211,7 +217,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_42.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube020_40" position={[-3.759, 0, 1.368]}>
@@ -220,7 +226,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_44.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube021_42" position={[-3.464, 0, 2]}>
@@ -229,7 +235,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_46.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube022_44" position={[-3.064, 0, 2.571]}>
@@ -238,7 +244,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_48.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube023_46" position={[-2.571, 0, 3.064]}>
@@ -247,7 +253,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_50.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube024_48" position={[-2, 0, 3.464]}>
@@ -256,7 +262,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_52.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube025_50" position={[-1.368, 0, 3.759]}>
@@ -265,7 +271,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_54.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube026_52" position={[-0.695, 0, 3.939]}>
@@ -274,7 +280,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_56.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube027_54" position={[0, 0, 4]}>
@@ -283,7 +289,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_58.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube028_56" position={[0.695, 0, 3.939]}>
@@ -292,7 +298,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_60.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube029_58" position={[1.368, 0, 3.759]}>
@@ -301,7 +307,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_62.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube030_60" position={[2, 0, 3.464]}>
@@ -310,7 +316,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_64.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube031_62" position={[2.571, 0, 3.064]}>
@@ -319,7 +325,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_66.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube032_64" position={[3.064, 0, 2.571]}>
@@ -328,7 +334,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_68.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube033_66" position={[3.464, 0, 2]}>
@@ -337,7 +343,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_70.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube034_68" position={[3.759, 0, 1.368]}>
@@ -346,7 +352,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_72.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                             <group name="Cube035_70" position={[3.939, 0, 0.695]}>
@@ -355,7 +361,7 @@ export function Model(props) {
                                     castShadow
                                     receiveShadow
                                     geometry={nodes.Object_74.geometry}
-                                    material={matcapMaterial}
+                                    material={physicalMaterial}
                                 />
                             </group>
                         </group>

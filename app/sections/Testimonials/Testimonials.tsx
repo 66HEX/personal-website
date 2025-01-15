@@ -48,7 +48,7 @@ const Marquee = forwardRef((props: { onPositionChange?: (position: number) => vo
                     id="${refId}" 
                     class="testimonial-card flex-shrink-0 group overflow-hidden" 
                     style="width: ${calculateCardWidth()}px">
-                    <div class="relative h-full bg-card-inner border border-card-border rounded-outer-card overflow-hidden">               
+                    <div class="relative  h-full bg-card-inner border border-card-border rounded-outer-card overflow-hidden">               
                         <div class="relative flex flex-col h-full p-4 md:p-8">
                             <div class="flex justify-between items-start mb-6 xl:mb-8">
                                 <div class="p-2 bg-card-inner border border-card-border rounded-lg">

@@ -9,10 +9,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0A0A0A',
+        background: '#090806',
         "card-outer": 'rgba(255,255,255,0.025)',
         "card-inner": 'rgba(255,255,255,0.015)',
-        "card-border": 'rgba(255,255,255,0.05)',
+        "card-border": 'rgba(255,255,255,0.1)',
         "text-white": '#dcdcdc',
         "text-gray": '#808080',
       },

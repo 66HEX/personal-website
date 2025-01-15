@@ -23,6 +23,11 @@ export default function Scene() {
                     preserveDrawingBuffer: true
                 }}
                 shadows>
+
+                <ambientLight intensity={0.5}/>
+                <directionalLight position={[-10, 10, -5]} intensity={1} castShadow/>
+                <directionalLight position={[10, 10, 10]} intensity={0.3} castShadow/>
+
                 <PerspectiveCamera
                     makeDefault
                     fov={130}
@@ -31,11 +36,11 @@ export default function Scene() {
                     far={1000}
                 />
 
-                <CameraController />
+                <CameraController/>
 
                 <Suspense fallback={null}>
                     <Environment preset={"apartment"}/>
-                    <Model />
+                    <Model/>
                 </Suspense>
             </Canvas>
         </div>

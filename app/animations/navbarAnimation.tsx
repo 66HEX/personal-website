@@ -72,14 +72,16 @@ export const navbarAnimation = ({
                 rotate: 45,
                 top: "50%",
                 left: "50%",
-                ease: "power3.inOut"
+                transformOrigin: "center center",
+                ease: "customEase"
             }, 0)
             .to(toggleButtonLine2Ref.current, {
                 duration: 0.3,
                 rotate: -45,
                 top: "50%",
                 left: "50%",
-                ease: "power3.inOut"
+                transformOrigin: "center center",
+                ease: "customEase"
             }, 0)
             .to(menuRef.current, {
                 xPercent: 0,

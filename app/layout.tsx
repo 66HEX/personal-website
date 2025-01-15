@@ -260,7 +260,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={lausanne.variable}>
-      <body className="bg-black">
+      <body className="bg-background">
       <SmoothScrolling>
           <Navbar/>
           <main id="page-transition">

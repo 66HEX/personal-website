@@ -86,13 +86,12 @@ export default function Navbar() {
             <nav className="absolute inset-0 mx-auto px-4" aria-label="Main navigation">
                 <div className="w-full flex items-center justify-between md:justify-start relative">
                     <TransitionLink href={"/"}>
-                        <div className="p-2 bg-card-outer border border-card-border rounded-lg backdrop-blur-3xl">
+                        <div className="p-2 bg-card-outer  border border-card-border rounded-lg backdrop-blur-3xl">
                             <Image
                                 src="/logo/hex-logo.svg"
                                 alt="Logo"
                                 width={32}
                                 height={32}
-                                className="invert"
                             />
                         </div>
                     </TransitionLink>

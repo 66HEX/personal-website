@@ -25,8 +25,8 @@ export default function Scene() {
                 shadows>
                 <PerspectiveCamera
                     makeDefault
-                    fov={40}
-                    position={[0, 0, 10]}
+                    fov={130}
+                    position={[0, 0, 2.5]}
                     near={0.1}
                     far={1000}
                 />

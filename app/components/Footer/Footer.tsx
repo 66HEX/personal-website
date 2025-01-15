@@ -53,7 +53,6 @@ export default function Footer() {
                                                 alt="Logo"
                                                 width={32}
                                                 height={32}
-                                                className="invert"
                                             />
                                         </div>
                                         <h2 className="text-xl font-[750] tracking-tight leading-none text-text-white">

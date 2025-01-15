@@ -12,7 +12,7 @@ export function Model(props) {
     const { nodes, animations } = useGLTF('/models/metal_gear_solid.glb')
     const { actions, names } = useAnimations(animations, group)
 
-    const matcapTexture = useLoader(THREE.TextureLoader, '/matcaps/matcap2.png')
+    const matcapTexture = useLoader(THREE.TextureLoader, '/matcaps/matcap.png')
 
     const matcapMaterial = new THREE.MeshMatcapMaterial({
         matcap: matcapTexture

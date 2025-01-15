@@ -12,21 +12,21 @@ export default function WorksPage() {
                 <BackgroundOverlay/>
             </div>
             <div
-                className="w-full h-full relative bg-text-white/[0.05] border border-text-white/5 rounded-outer-card p-4 md:p-8">
+                className="w-full h-full relative bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8">
                 <div className="flex items-center justify-between w-full mb-8">
                     <div className="flex w-full justify-between items-center">
-                        <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                        <div className="p-2 bg-card-inner border border-card-border rounded-lg">
                             <Folder className="w-8 h-8 text-text-white"/>
                         </div>
                         <div className="flex items-center gap-4">
                             <div
-                                className="px-3 py-1 font-[400] text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                                className="px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                                 All Works
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr className="border-t border-text-white/5"/>
+                <hr className="border-t border-card-border"/>
 
                 <div>
                     {works.map((project, index) => (
@@ -52,17 +52,17 @@ export default function WorksPage() {
                                                 </div>
                                             )}
                                             <div
-                                                className="hidden md:block px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-text-white/5 rounded-full backdrop-blur-sm text-whitespace-nowrap">
+                                                className="hidden md:block px-3 py-1 text-xs font-[400] bg-card-inner border border-card-border rounded-full backdrop-blur-sm text-whitespace-nowrap">
                                                 {project.type}
                                             </div>
                                             <div
-                                                className="px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-text-white/5 rounded-full backdrop-blur-sm text-whitespace-nowrap">
+                                                className="px-3 py-1 text-xs font-[400] bg-card-inner border border-card-border rounded-full backdrop-blur-sm text-whitespace-nowrap">
                                                 View Details →
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {index < works.length - 1 && <hr className="border-t border-text-white/5"/>}
+                                {index < works.length - 1 && <hr className="border-t border-card-border"/>}
                             </div>
                         </TransitionLink>
                     ))}

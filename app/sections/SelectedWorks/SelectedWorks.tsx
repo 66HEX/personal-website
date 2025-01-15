@@ -26,14 +26,14 @@ export default function SelectedWorks() {
                 <BackgroundOverlay/>
             </div>
             <div
-                className="w-full h-full relative bg-white/5 border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                className="w-full h-full relative bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
                 <div className="flex items-center justify-between w-full mb-8">
                     <div className="flex w-full justify-between items-start">
-                        <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                        <div className="p-2 bg-card-inner border border-card-border rounded-lg">
                             <Folder className="w-8 h-8 text-text-white"/>
                         </div>
                         <div
-                            className="px-3 py-1 font-[400] text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                            className="px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                             Selected Works
                         </div>
                     </div>
@@ -47,20 +47,20 @@ export default function SelectedWorks() {
                             className="group"
                         >
                             <div
-                                className="relative h-full bg-white/[0.025] border border-text-white/5 rounded-outer-card overflow-hidden">
+                                className="relative h-full bg-card-inner border border-card-border rounded-outer-card overflow-hidden">
                                 <div className="relative flex flex-col h-full p-4 md:p-8">
                                     <div className="flex justify-between items-start mb-6">
-                                        <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                                        <div className="p-2 bg-card-inner border border-card-border rounded-lg">
                                             <File className="w-5 h-5 text-text-white"/>
                                         </div>
                                         <div
-                                            className="px-3 py-1 font-[400] text-xs text-text-gray bg-white/[0.025] border border-text-white/5 rounded-full">
+                                            className="px-3 py-1 font-[400] text-xs text-text-gray bg-card-inner border border-card-border rounded-full">
                                             {project.type}
                                         </div>
                                     </div>
 
                                     <div
-                                        className="relative w-full rounded-lg border border-text-white/5 overflow-hidden mb-6"
+                                        className="relative w-full rounded-outer-card border border-card-border overflow-hidden mb-6"
                                     >
                                         <Image
                                             src={project.mainImage}
@@ -89,11 +89,11 @@ export default function SelectedWorks() {
                                                 </div>
                                             )}
                                             <div
-                                                className="px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-text-white/5 rounded-full">
+                                                className="px-3 py-1 text-xs font-[400] bg-card-inner border border-card-border rounded-full">
                                                 {project.client}
                                             </div>
                                             <div
-                                                className="px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-text-white/5 rounded-full">
+                                                className="px-3 py-1 text-xs font-[400] bg-card-inner border border-card-border rounded-full">
                                                 {project.year}
                                             </div>
                                         </div>

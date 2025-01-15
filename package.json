@@ -12,6 +12,7 @@
     "@gsap/react": "^2.1.1",
     "@react-three/drei": "^9.120.8",
     "@react-three/fiber": "^8.17.12",
+    "@react-three/postprocessing": "^2.16.6",
     "@studio-freight/react-lenis": "^0.0.47",
     "@types/three": "^0.171.0",
     "framer-motion": "^11.17.0",
@@ -23,7 +24,8 @@
     "react-dom": "18",
     "readme-md-generator": "^1.0.0",
     "resend": "^4.0.1",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "three": "^0.172.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

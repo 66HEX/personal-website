@@ -38,7 +38,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white border-t border-text-white/5 bg-white/[0.05] backdrop-blur-sm">
+        <footer className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white border-t border-card-border bg-card-outer backdrop-blur-sm">
             <div className="w-full h-full relative">
                 <div className="relative mb-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
@@ -47,7 +47,7 @@ export default function Footer() {
                                 <TransitionLink href={"/"}>
                                     <div className="flex items-center gap-4 md:gap-6">
                                         <div
-                                            className="p-2 w-fit bg-white/[0.025] border border-text-white/5 rounded-lg ">
+                                            className="p-2 w-fit bg-card-inner border border-card-border rounded-lg ">
                                             <Image
                                                 src="/logo/hex-logo.svg"
                                                 alt="Logo"
@@ -110,7 +110,7 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 justify-between items-center border-t border-text-white/5 pt-8">
+                <div className="flex flex-wrap gap-2 justify-between items-center border-t border-card-border pt-8">
                     <div className="text-xs font-[400]">
                         ©{currentYear} Marek Jóźwiak
                     </div>

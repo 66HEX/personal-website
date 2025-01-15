@@ -69,19 +69,17 @@ export const navbarAnimation = ({
         menuTimeline.current
             .to(toggleButtonLine1Ref.current, {
                 duration: 0.3,
-                rotate: 45,
+                rotation: 45,
                 top: "50%",
-                left: "50%",
-                transformOrigin: "center center",
-                ease: "customEase"
+                ease: "customEase",
+                transformOrigin: "center center"
             }, 0)
             .to(toggleButtonLine2Ref.current, {
                 duration: 0.3,
-                rotate: -45,
+                rotation: -45,
                 top: "50%",
-                left: "50%",
-                transformOrigin: "center center",
-                ease: "customEase"
+                ease: "customEase",
+                transformOrigin: "center center"
             }, 0)
             .to(menuRef.current, {
                 xPercent: 0,
@@ -92,17 +90,17 @@ export const navbarAnimation = ({
                 xPercent: 0,
                 duration: 0.6,
                 ease: "customEase"
-            }, ">-0.525")
+            }, ">-0.575")
             .to(socialMenuContainerRef.current, {
                 xPercent: 0,
-                duration: 0.6,
+                duration: 0.625,
                 ease: "customEase"
-            }, ">-0.5125")
+            }, ">-0.55")
             .to(contactMenuContainerRef.current, {
                 xPercent: 0,
-                duration: 0.6,
+                duration: 0.65,
                 ease: "customEase"
-            }, ">-0.5");
+            }, ">-0.525");
 
         return menuTimeline.current;
     };

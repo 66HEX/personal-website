@@ -48,10 +48,10 @@ const Marquee = forwardRef((props: { onPositionChange?: (position: number) => vo
                     id="${refId}" 
                     class="testimonial-card flex-shrink-0 group overflow-hidden" 
                     style="width: ${calculateCardWidth()}px">
-                    <div class="relative h-full bg-white/[0.025] border border-text-white/5 rounded-outer-card overflow-hidden">               
+                    <div class="relative h-full bg-card-inner border border-card-border rounded-outer-card overflow-hidden">               
                         <div class="relative flex flex-col h-full p-4 md:p-8">
                             <div class="flex justify-between items-start mb-6 xl:mb-8">
-                                <div class="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                                <div class="p-2 bg-card-inner border border-card-border rounded-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>
                                         <path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>
@@ -59,7 +59,7 @@ const Marquee = forwardRef((props: { onPositionChange?: (position: number) => vo
                                 </div> 
                                 <div class="flex items-end gap-4">
                                     <div
-                                        class="px-3 py-1 font-[400] text-xs text-text-gray bg-white/[0.025] border border-text-white/5 rounded-full">
+                                        class="px-3 py-1 font-[400] text-xs text-text-gray bg-card-inner border border-card-border rounded-full">
                                         Testimonial
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@ const Marquee = forwardRef((props: { onPositionChange?: (position: number) => vo
                             
                             <div class="mt-auto flex items-center gap-4">
                                 <div class="relative">
-                                    <div class="w-14 h-14 rounded-lg border border-text-white/5 overflow-hidden">
+                                    <div class="w-14 h-14 rounded-lg border border-card-border overflow-hidden">
                                         <img src="${testimonial.src}" alt="${testimonial.author}" class="w-full h-full object-cover" />
                                     </div>
                                 </div>
@@ -138,15 +138,13 @@ const Testimonials: React.FC = () => {
     const handleDotClick = (index: number) => {
         if (index === currentPosition) return;
 
-        // Calculate how many steps we need to take
         const stepsNeeded = Math.abs(index - currentPosition);
         const shouldGoRight = index > currentPosition;
 
-        // Create array of steps and execute them sequentially
         Array.from({ length: stepsNeeded }).forEach((_, i) => {
             setTimeout(() => {
                 handleScroll(shouldGoRight ? 'right' : 'left');
-            }, i * 500); // 500ms matches our animation duration
+            }, i * 500);
         });
     };
 
@@ -165,13 +163,13 @@ const Testimonials: React.FC = () => {
                 <BackgroundOverlay/>
             </div>
             <div
-                className="w-full h-full relative bg-white/5 border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                className="w-full h-full relative bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
                 <div className="flex items-start justify-between w-full mb-8">
-                    <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                    <div className="p-2 bg-card-inner border border-card-border rounded-lg">
                         <UsersRound className="w-8 h-8 text-text-white"/>
                     </div>
                     <div
-                        className="px-3 py-1 font-[400] text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                        className="px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                         Testimonials
                     </div>
                 </div>
@@ -196,7 +194,7 @@ const Testimonials: React.FC = () => {
                         <button
                             ref={buttonRef}
                             onClick={() => handleScroll('left')}
-                            className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg"
+                            className="p-2 bg-card-inner border border-card-border rounded-lg"
                             aria-label="Previous testimonials"
                         >
                             <ChevronLeft className="w-6 h-6"/>
@@ -204,7 +202,7 @@ const Testimonials: React.FC = () => {
                         <button
                             ref={buttonRef2}
                             onClick={() => handleScroll('right')}
-                            className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg"
+                            className="p-2 bg-card-inner border border-card-border rounded-lg"
                             aria-label="Next testimonials"
                         >
                             <ChevronRight className="w-6 h-6"/>

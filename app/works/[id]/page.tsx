@@ -55,15 +55,15 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                         <div className="col-span-1 md:col-span-8">
                             <div
-                                className="bg-text-white/[0.05] border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                                className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
                                 <div className="flex justify-between items-start mb-8">
                                     <div
-                                        className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg w-fit h-fit">
+                                        className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
                                         <File className="w-8 h-8 text-text-white"/>
                                     </div>
                                     <div className="flex items-end gap-4">
                                         <div
-                                            className="px-3 py-1 text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                                            className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                                             {project.type}
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
                                 <div className="flex flex-col gap-6">
                                     <div
-                                        className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-text-white/5">
+                                        className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-card-border">
                                         <div className="flex items-center gap-2">
                                             <span
                                                 className="text-sm font-[750] tracking-tight leading-none text-text-white">
@@ -124,7 +124,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                                             key={platform}
                                                             onClick={() => window.open(link, '_blank', 'noopener,noreferrer')}
                                                             ref={el => buttonRefs.current[index] = el}
-                                                            className="group flex items-center gap-3 p-3 bg-white/[0.025] border border-text-white/5 rounded-lg"
+                                                            className="group flex items-center gap-3 p-3 bg-card-inner border border-card-border rounded-lg"
                                                         >
                                                             <SocialIcon className="w-5 h-5"/>
                                                         </button>
@@ -135,7 +135,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                                 <button
                                                     onClick={() => window.open(project.liveLink, '_blank', 'noopener,noreferrer')}
                                                     ref={buttonRef}
-                                                    className="group flex items-center gap-3 p-3 bg-white/[0.025] border border-text-white/5 rounded-lg"
+                                                    className="group flex items-center gap-3 p-3 bg-card-inner border border-card-border rounded-lg"
                                                 >
                                                     <span className="text-sm font-[400] tracking-tight text-text-white">
                                                         Visit Website
@@ -151,7 +151,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
                         <div className="col-span-1 md:col-span-4 order-first md:order-last">
                             <div
-                                className="relative w-full min-h-[400px] h-full rounded-outer-card overflow-hidden border border-text-white/5">
+                                className="relative w-full min-h-[400px] h-full rounded-outer-card overflow-hidden border border-card-border">
                                 <Image
                                     src={project.mainImage}
                                     alt="Project Image"
@@ -166,7 +166,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                         {project.images?.map((image, index) => (
                             <div key={index}
-                                 className="col-span-1 md:col-span-6 relative w-full h-auto rounded-outer-card overflow-hidden border border-text-white/5">
+                                 className="col-span-1 md:col-span-6 relative w-full h-auto rounded-outer-card overflow-hidden border border-card-border">
                                 <Image
                                     src={image}
                                     alt={`Project Image ${index + 1}`}

@@ -73,15 +73,15 @@ export default function AboutMePage() {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                         <div className="col-span-1 md:col-span-8">
                             <div
-                                className="bg-text-white/[0.05] border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                                className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
                                 <div className="flex justify-between items-start mb-8">
                                     <div
-                                        className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg w-fit h-fit">
+                                        className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
                                         <UserRound className="w-8 h-8 text-text-white"/>
                                     </div>
                                     <div className="flex">
                                         <div
-                                            className="px-3 py-1 text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                                            className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                                             Profile
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@ export default function AboutMePage() {
                                 <div className="flex flex-col">
                                     <div className="flex flex-col gap-8">
                                         <div
-                                            className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-text-white/5">
+                                            className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-card-border">
                                             <div className="flex items-center gap-2">
                                                 <span
                                                     className="text-sm font-[750] tracking-tight leading-none text-text-white">
@@ -149,7 +149,7 @@ export default function AboutMePage() {
 
                         <div className="col-span-1 md:col-span-4 order-first md:order-last">
                             <div
-                                className="relative w-full min-h-[400px] h-full rounded-outer-card overflow-hidden border border-text-white/5">
+                                className="relative w-full min-h-[400px] h-full rounded-outer-card overflow-hidden border border-card-border">
                                 <Image
                                     src="/images/about-photo.webp"
                                     alt="About Me Image"
@@ -164,14 +164,14 @@ export default function AboutMePage() {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                         <div className="col-span-1 md:col-span-8">
                             <div
-                                className="bg-text-white/[0.05] border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                                className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
                                 <div className="flex justify-between items-start mb-8">
                                     <div
-                                        className="p-2 bg-text-white/[0.05] border border-text-white/5 rounded-lg w-fit h-fit">
+                                        className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
                                         <Briefcase className="w-8 h-8 text-text-white"/>
                                     </div>
                                     <div
-                                        className="px-3 py-1 text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                                        className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                                         Experience
                                     </div>
                                 </div>
@@ -179,7 +179,7 @@ export default function AboutMePage() {
                                 <div className="flex flex-col gap-6">
                                     {experience.map((exp, index) => (
                                         <div key={index}
-                                             className="flex justify-between items-start pb-6 border-b border-text-white/5 last:border-0 last:pb-0">
+                                             className="flex justify-between items-start pb-6 border-b border-card-border last:border-0 last:pb-0">
                                             <div>
                                                 <h3 className="text-lg font-[750] tracking-tight leading-none mb-2">
                                                     {exp.title}
@@ -193,7 +193,7 @@ export default function AboutMePage() {
                                                     {exp.period}
                                                 </p>
                                                 <span
-                                                    className="px-2 py-1 text-xs md:text-sm font-[400] bg-white/[0.025] border border-text-white/5 rounded-full">
+                                                    className="px-2 py-1 text-xs md:text-sm font-[400] bg-white/[0.025] border border-card-border rounded-full">
                                                     {exp.type}
                                                 </span>
                                             </div>
@@ -205,14 +205,14 @@ export default function AboutMePage() {
 
                         <div className="col-span-1 md:col-span-4">
                             <div
-                                className="h-full bg-text-white/[0.05] border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                                className="h-full bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
                                 <div className="flex justify-between items-start mb-8">
                                     <div
-                                        className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg w-fit h-fit">
+                                        className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
                                         <Share2 className="w-8 h-8 text-text-white"/>
                                     </div>
                                     <div
-                                        className="px-3 py-1 text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                                        className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                                         Socials
                                     </div>
                                 </div>
@@ -229,7 +229,7 @@ export default function AboutMePage() {
                                                     key={index}
                                                     onClick={handleClick}
                                                     ref={el => buttonRefs.current[index] = el}
-                                                    className="group flex items-center justify-center gap-3 p-3 bg-white/[0.025] border border-text-white/5 rounded-lg"
+                                                    className="group flex items-center justify-center gap-3 p-3 bg-card-inner border border-card-border rounded-lg"
                                                 >
                                                     <link.icon className="w-5 h-5"/>
                                                     <span

@@ -88,12 +88,12 @@ const ContactForm = () => {
     };
 
     return (
-        <div className="bg-text-white/[0.05] border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+        <div className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
             <div className="flex justify-between items-start mb-8">
-                <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg w-fit h-fit">
+                <div className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
                     <Mail className="w-8 h-8 text-text-white" />
                 </div>
-                <div className="px-3 py-1 text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                <div className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                     Send Message
                 </div>
             </div>
@@ -103,7 +103,7 @@ const ContactForm = () => {
                     <span className="text-sm font-[750] tracking-tight leading-none text-text-gray">
                         Name:
                     </span>
-                    <div className="bg-white/[0.025] border border-text-white/5 rounded-lg p-3">
+                    <div className="bg-card-inner border border-card-border rounded-lg p-3">
                         <input
                             type="text"
                             name="name"
@@ -121,7 +121,7 @@ const ContactForm = () => {
                     <span className="text-sm font-[750] tracking-tight leading-none text-text-gray">
                         Email:
                     </span>
-                    <div className="bg-white/[0.025] border border-text-white/5 rounded-lg p-3">
+                    <div className="bg-card-inner border border-card-border rounded-lg p-3">
                         <input
                             type="email"
                             name="email"
@@ -139,7 +139,7 @@ const ContactForm = () => {
                     <span className="text-sm font-[750] tracking-tight leading-none text-text-gray">
                         Message:
                     </span>
-                    <div className="bg-white/[0.025] border border-text-white/5 rounded-lg p-3">
+                    <div className="bg-card-inner border border-card-border rounded-lg p-3">
                         <textarea
                             name="message"
                             value={formData.message}
@@ -157,7 +157,7 @@ const ContactForm = () => {
                     ref={buttonRef}
                     type="submit"
                     disabled={isSubmitting}
-                    className="group flex items-center justify-center gap-3 mt-4 w-full p-3 bg-white/[0.025] border border-text-white/5 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="group flex items-center justify-center gap-3 mt-4 w-full p-3 bg-card-inner border border-card-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <span className="text-sm font-[400] tracking-tight text-text-white">
                         {isSubmitting ? "Sending..." : "Send Message"}
@@ -198,13 +198,13 @@ export default function Contact() {
 
                     <div className="col-span-1 md:col-span-4 order-1 md:order-2">
                         <div
-                            className="bg-text-white/[0.05] border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                            className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
                             <div className="flex justify-between items-start mb-8">
-                                <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg w-fit h-fit">
+                                <div className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
                                     <Info className="w-8 h-8 text-text-white"/>
                                 </div>
                                 <div
-                                    className="px-3 py-1 text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                                    className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                                     Contact Info
                                 </div>
                             </div>

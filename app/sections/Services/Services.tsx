@@ -22,13 +22,13 @@ const ServiceCard = ({ service, className = "" }: ServiceCardProps) => {
     return (
         <div
 
-            className={`group bg-white/[0.025] border border-text-white/5 rounded-outer-card p-4 md:p-8 flex flex-col ${className}`}
+            className={`group bg-card-inner border border-card-border rounded-outer-card p-4 md:p-8 flex flex-col ${className}`}
         >
             <div className="flex justify-between items-start mb-8">
-                <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                <div className="p-2 bg-card-inner border border-card-border rounded-lg">
                     {service.icon}
                 </div>
-                <div className="px-3 py-1 font-[400] text-xs text-text-gray bg-white/[0.025] border border-text-white/5 rounded-full">
+                <div className="px-3 py-1 font-[400] text-xs text-text-gray bg-card-inner border border-card-border rounded-full">
                     {service.shortDescription}
                 </div>
             </div>
@@ -48,7 +48,7 @@ const ServiceCard = ({ service, className = "" }: ServiceCardProps) => {
                             {service.features.map((feature, index) => (
                                 <span
                                     key={index}
-                                    className="px-3 py-1 text-xs font-[400] bg-white/[0.025] border border-text-white/5 rounded-full"
+                                    className="px-3 py-1 text-xs font-[400] bg-card-inner border border-card-border rounded-full"
                                 >
                                     {feature}
                                 </span>
@@ -67,14 +67,14 @@ export default function Services() {
             <div className="absolute inset-0">
                 <BackgroundOverlay/>
             </div>
-            <div className="bg-white/5 border border-text-white/5 rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+            <div className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-md">
                 <div className="flex justify-between items-start mb-8">
-                    <div className="p-2 bg-white/[0.025] border border-text-white/5 rounded-lg">
+                    <div className="p-2 bg-card-inner border border-card-border rounded-lg">
                         <Hammer className="w-8 h-8 text-text-white"/>
                     </div>
                     <div className="flex items-center gap-4">
                         <div
-                            className="px-3 py-1 font-[400] text-xs text-text-white bg-white/[0.025] border border-text-white/5 rounded-full">
+                            className="px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                             Services
                         </div>
                     </div>

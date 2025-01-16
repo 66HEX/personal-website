@@ -150,7 +150,7 @@ export default function Navbar() {
                     {/* Navigation Links */}
                     <div
                         ref={menuItemsContainerRef}
-                        className="flex flex-col items-start justify-start gap-6 p-4 border border-card-border bg-card-inner backdrop-blur-sm rounded-lg"
+                        className="flex flex-col items-start justify-start gap-6 p-4 border border-card-border bg-card-inner backdrop-blur-sm rounded-outer-card"
                         aria-label="Mobile navigation links"
                     >
                         <h3
@@ -174,7 +174,7 @@ export default function Navbar() {
 
                     <div
                         ref={socialMenuContainerRef}
-                        className="flex flex-col items-start justify-start gap-6 p-4 border bg-card-inner border-card-border backdrop-blur-sm rounded-lg">
+                        className="flex flex-col items-start justify-start gap-6 p-4 border bg-card-inner border-card-border backdrop-blur-sm rounded-outer-card">
                         <h3
                             className="ml-auto px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                             Socials
@@ -198,7 +198,7 @@ export default function Navbar() {
 
                     <div
                         ref={contactMenuContainerRef}
-                        className="p-4 flex flex-col gap-6 border bg-card-inner border-card-border backdrop-blur-sm rounded-lg">
+                        className="p-4 flex flex-col gap-6 border bg-card-inner border-card-border backdrop-blur-sm rounded-outer-card">
                         <h3
                             className="ml-auto px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
                             Contact

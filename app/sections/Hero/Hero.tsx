@@ -1,54 +1,79 @@
 'use client';
 
+import { useRef, useEffect } from "react";
+import { Code, ArrowRight } from "lucide-react";
+import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
-import Scene from "@/app/components/Scene/scene";
-import HeroOverlay from "@/app/components/HeroOverlay/heroOverlay";
+import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
+import OuterCard from "@/app/components/OuterCard/outerCard";
 
-export default function HeroSection() {
+export default function Hero() {
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
+    const buttonRef2 = useRef<HTMLButtonElement | null>(null);
+
+    useEffect(() => {
+        const cleanup = initializeButtonAnimation({
+            buttonRef: buttonRef.current,
+            buttonRef2: buttonRef2.current
+        });
+
+        return cleanup;
+    }, []);
+
     return (
-        <section className="w-screen px-4 lg:px-24 pb-12 pt-24 lg:py-24 text-text-white relative flex items-center overflow-hidden">
-            <div className="absolute inset-0">
-                <HeroOverlay/>
-            </div>
-            <div className="w-full flex flex-col relative">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="max-w-2xl bg-card-outer border border-card-border rounded-outer-card backdrop-blur-sm p-4 md:p-8">
-                        <div
-                            className="px-4 py-1.5 text-sm font-[400] mb-8 inline-block text-text-gray bg-white/[0.025] border border-card-border rounded-full">
-                            Building Digital Products
-                        </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-[750] tracking-tight leading-tight mb-8">
-                            Bringing <span
-                            className="text-transparent bg-clip-text bg-gradient-to-r from-text-white/90 to-text-white/40">ideas</span> to
-                            life through code
-                        </h1>
-
-                        <p className="text-lg font-[400] tracking-tight leading-relaxed text-text-gray mb-12">
-                            Specialized in creating engaging web experiences that combine clean design with smooth
-                            interactions. Let's transform your vision into reality.
-                        </p>
-
-                        <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                            <TransitionLink
-                                href="/works"
-                                className="inline-flex items-center justify-center px-8 py-4 text-sm font-[500] bg-text-white/[0.05] hover:bg-text-white/[0.08] border border-text-white/10 rounded-full transition-all duration-200"
-                            >
-                                Explore Work
-                            </TransitionLink>
-
-                            <TransitionLink
-                                href="/contact"
-                                className="inline-flex items-center justify-center px-8 py-4 text-sm font-[500] bg-transparent hover:bg-white/[0.025] border border-text-white/10 rounded-full transition-all duration-200"
-                            >
-                                Contact
-                            </TransitionLink>
-                        </div>
+        <section className="w-screen min-h-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white relative flex items-center justify-center">
+            <OuterCard>
+                <div className="flex items-start justify-between w-full mb-4">
+                    <div className="p-2 bg-icon border border-border-inner rounded-icon">
+                        <Code className="w-8 h-8 text-text-white"/>
                     </div>
-                    <div className="w-full h-full min-h-[300px] aspect-square md:aspect-auto">
-                        <Scene/>
+                    <div className="px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                        Frontend Developer
                     </div>
                 </div>
-            </div>
+                <div className="max-w-4xl mx-auto text-center tracking-tight">
+                    <h1 className="text-4xl sm:text-6xl lg:text-7xl font-[750] tracking-tight mb-6">
+                        Creating modern
+                        <br/>
+                        <span className="bg-gradient-to-r from-text-white to-text-gray text-transparent bg-clip-text">
+                            digital experiences
+                        </span>
+                    </h1>
+                    <p className="text-base lg:text-lg font-[500] tracking-tight text-text-gray leading-relaxed mb-8 lg:mb-12 max-w-2xl mx-auto">
+                        Specializing in crafting intuitive and performant web applications
+                        with clean code and pixel-perfect design implementation
+                    </p>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <TransitionLink href="/works" className="group">
+                            <button
+                                ref={buttonRef}
+                                className="px-6 py-3 bg-icon border border-border-inner rounded-xl font-[500] flex items-center gap-2 w-full sm:w-auto justify-center"
+                            >
+                                View Projects
+                                <ArrowRight className="w-4 h-4"/>
+                            </button>
+                        </TransitionLink>
+                        <TransitionLink href="/contact" className="group">
+                            <button
+                                ref={buttonRef2}
+                                className="px-6 py-3 bg-transparent border border-border-inner rounded-xl font-[500] flex items-center gap-2 w-full sm:w-auto justify-center hover:bg-icon transition-colors"
+                            >
+                                Get in Touch
+                            </button>
+                        </TransitionLink>
+                    </div>
+                    <div className="mt-12 lg:mt-16 flex flex-wrap justify-center gap-3">
+                        {['TypeScript', 'React', 'Next.js', 'Node.js', 'Tailwind'].map((tech, index) => (
+                            <div
+                                key={index}
+                                className="px-3 py-1 text-xs font-[500] bg-icon border border-border-inner rounded-full"
+                            >
+                                {tech}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </OuterCard>
         </section>
     );
 }

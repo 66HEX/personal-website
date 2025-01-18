@@ -86,7 +86,7 @@ export default function Navbar() {
             <nav className="absolute inset-0 mx-auto px-4" aria-label="Main navigation">
                 <div className="w-full flex items-center justify-between md:justify-start relative">
                     <TransitionLink href={"/"}>
-                        <div className="p-2 bg-card-outer  border border-card-border rounded-lg backdrop-blur-3xl">
+                        <div className="p-2 bg-icon  border border-border-inner rounded-icon backdrop-blur-3xl">
                             <Image
                                 src="/logo/hex-logo.svg"
                                 alt="Logo"
@@ -98,7 +98,7 @@ export default function Navbar() {
 
                     <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center flex-1">
                         <div
-                            className="flex items-center gap-8 px-6 py-3 bg-card-outer border border-card-border backdrop-blur-3xl rounded-full"
+                            className="flex items-center gap-8 px-6 py-3 bg-icon border border-border-inner backdrop-blur-3xl rounded-full"
                             aria-label="Desktop navigation"
                         >
                             {menuItems.map((item) => (
@@ -118,7 +118,7 @@ export default function Navbar() {
                     <button
                         ref={toggleButtonRef}
                         onClick={handleToggleMenu}
-                        className="md:hidden relative h-12 w-12 text-text-gray p-4 bg-card-outer border border-card-border rounded-lg backdrop-blur-3xl z-50"
+                        className="md:hidden relative h-12 w-12 text-text-gray p-4 bg-icon border border-border-inner rounded-icon backdrop-blur-3xl z-50"
                         aria-expanded={isMenuOpen}
                         aria-label="Toggle navigation menu"
                         aria-controls="mobile-menu"
@@ -150,11 +150,11 @@ export default function Navbar() {
                     {/* Navigation Links */}
                     <div
                         ref={menuItemsContainerRef}
-                        className="flex flex-col items-start justify-start gap-6 p-4 border border-card-border bg-card-inner backdrop-blur-sm rounded-lg"
+                        className="flex flex-col items-start justify-start gap-6 p-4 border border-border-outer bg-icon backdrop-blur-sm rounded-icon"
                         aria-label="Mobile navigation links"
                     >
                         <h3
-                            className="ml-auto px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
+                            className="ml-auto px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-outer rounded-full">
                             Navigation
                         </h3>
                         <div className="flex flex-col gap-2">
@@ -174,9 +174,9 @@ export default function Navbar() {
 
                     <div
                         ref={socialMenuContainerRef}
-                        className="flex flex-col items-start justify-start gap-6 p-4 border bg-card-inner border-card-border backdrop-blur-sm rounded-lg">
+                        className="flex flex-col items-start justify-start gap-6 p-4 border bg-icon border-border-outer backdrop-blur-sm rounded-icon">
                         <h3
-                            className="ml-auto px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
+                            className="ml-auto px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-outer rounded-full">
                             Socials
                         </h3>
                         <div className="flex flex-col gap-2">
@@ -198,9 +198,9 @@ export default function Navbar() {
 
                     <div
                         ref={contactMenuContainerRef}
-                        className="p-4 flex flex-col gap-6 border bg-card-inner border-card-border backdrop-blur-sm rounded-lg">
+                        className="p-4 flex flex-col gap-6 border bg-icon border-border-outer backdrop-blur-sm rounded-icon">
                         <h3
-                            className="ml-auto px-3 py-1 font-[400] text-xs text-text-white bg-card-inner border border-card-border rounded-full">
+                            className="ml-auto px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-outer rounded-full">
                             Contact
                         </h3>
                         <Link

@@ -5,7 +5,7 @@ import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation
 import { useEffect, useRef, useState } from "react";
 import {Info, Mail, Send} from "lucide-react";
 import Link from "next/link";
-import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
+import OuterCard from "@/app/components/OuterCard/outerCard";
 
 interface FormData {
     name: string;
@@ -88,12 +88,12 @@ const ContactForm = () => {
     };
 
     return (
-        <div className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+        <OuterCard>
             <div className="flex justify-between items-start mb-8">
-                <div className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
+                <div className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
                     <Mail className="w-8 h-8 text-text-white" />
                 </div>
-                <div className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
+                <div className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
                     Send Message
                 </div>
             </div>
@@ -103,7 +103,7 @@ const ContactForm = () => {
                     <span className="text-sm font-[750] tracking-tight leading-none text-text-gray">
                         Name:
                     </span>
-                    <div className="bg-card-inner border border-card-border rounded-lg p-3">
+                    <div className="bg-icon border border-border-inner rounded-icon p-3">
                         <input
                             type="text"
                             name="name"
@@ -112,7 +112,7 @@ const ContactForm = () => {
                             placeholder="Your name"
                             autoComplete="off"
                             required
-                            className="w-full text-text-white bg-transparent outline-none text-sm font-[400] tracking-tight"
+                            className="w-full text-text-white bg-transparent outline-none text-sm font-[500] tracking-tight"
                         />
                     </div>
                 </div>
@@ -121,7 +121,7 @@ const ContactForm = () => {
                     <span className="text-sm font-[750] tracking-tight leading-none text-text-gray">
                         Email:
                     </span>
-                    <div className="bg-card-inner border border-card-border rounded-lg p-3">
+                    <div className="bg-icon border border-border-inner rounded-icon p-3">
                         <input
                             type="email"
                             name="email"
@@ -130,7 +130,7 @@ const ContactForm = () => {
                             placeholder="Your email address"
                             autoComplete="off"
                             required
-                            className="w-full text-text-white bg-transparent outline-none text-sm font-[400] tracking-tight"
+                            className="w-full text-text-white bg-transparent outline-none text-sm font-[500] tracking-tight"
                         />
                     </div>
                 </div>
@@ -139,7 +139,7 @@ const ContactForm = () => {
                     <span className="text-sm font-[750] tracking-tight leading-none text-text-gray">
                         Message:
                     </span>
-                    <div className="bg-card-inner border border-card-border rounded-lg p-3">
+                    <div className="bg-icon border border-border-inner rounded-icon p-3">
                         <textarea
                             name="message"
                             value={formData.message}
@@ -148,7 +148,7 @@ const ContactForm = () => {
                             autoComplete="off"
                             required
                             rows={4}
-                            className="w-full text-text-white bg-transparent outline-none resize-none text-sm font-[400] tracking-tight"
+                            className="w-full text-text-white bg-transparent outline-none resize-none text-sm font-[500] tracking-tight"
                         />
                     </div>
                 </div>
@@ -157,9 +157,9 @@ const ContactForm = () => {
                     ref={buttonRef}
                     type="submit"
                     disabled={isSubmitting}
-                    className="group flex items-center justify-center gap-3 mt-4 w-full p-3 bg-card-inner border border-card-border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="group flex items-center justify-center gap-3 mt-4 w-full p-3 bg-icon border border-border-inner rounded-icon disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <span className="text-sm font-[400] tracking-tight text-text-white">
+                    <span className="text-sm font-[500] tracking-tight text-text-white">
                         {isSubmitting ? "Sending..." : "Send Message"}
                     </span>
                     <Send className="w-5 h-5 text-text-gray" />
@@ -169,7 +169,7 @@ const ContactForm = () => {
             {status.message && (
                 <div
                     ref={statusRef}
-                    className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-lg border backdrop-blur-sm 
+                    className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-icon border backdrop-blur-sm 
                     ${
                         status.type === "success"
                             ? "border-green-500/5 text-green-500 bg-green-500/5"
@@ -179,7 +179,7 @@ const ContactForm = () => {
                     {status.message}
                 </div>
             )}
-        </div>
+        </OuterCard>
     );
 };
 
@@ -187,9 +187,6 @@ export default function Contact() {
 
     return (
         <section className="w-screen text-text-white relative">
-            <div className="absolute inset-0">
-                <BackgroundOverlay/>
-            </div>
             <div className="px-4 lg:px-24 py-24">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                     <div className="col-span-1 md:col-span-8 order-2 md:order-1">
@@ -197,14 +194,13 @@ export default function Contact() {
                     </div>
 
                     <div className="col-span-1 md:col-span-4 order-1 md:order-2">
-                        <div
-                            className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                        <OuterCard>
                             <div className="flex justify-between items-start mb-8">
-                                <div className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
+                                <div className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
                                     <Info className="w-8 h-8 text-text-white"/>
                                 </div>
                                 <div
-                                    className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
+                                    className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
                                     Contact Info
                                 </div>
                             </div>
@@ -217,7 +213,7 @@ export default function Contact() {
                                 </h2>
                                 <div className="flex flex-col gap-4">
                                     <p
-                                        className="text-sm font-[400] tracking-tight text-text-gray leading-relaxed"
+                                        className="text-sm font-[500] tracking-tight text-text-gray leading-relaxed"
                                     >
                                         Have a project in mind? Get in touch and let's create something extraordinary
                                         together.
@@ -231,7 +227,7 @@ export default function Contact() {
                                     </Link>
                                 </div>
                             </div>
-                        </div>
+                        </OuterCard>
                     </div>
                 </div>
             </div>

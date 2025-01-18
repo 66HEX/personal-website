@@ -38,7 +38,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white border-t border-card-border bg-card-outer backdrop-blur-sm">
+        <footer className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white border-t border-border-outer bg-background">
             <div className="w-full h-full relative">
                 <div className="relative mb-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
@@ -47,7 +47,7 @@ export default function Footer() {
                                 <TransitionLink href={"/"}>
                                     <div className="flex items-center gap-4 md:gap-6">
                                         <div
-                                            className="p-2 w-fit bg-card-inner border border-card-border rounded-lg ">
+                                            className="p-2 w-fit bg-icon border border-border-outer rounded-icon ">
                                             <Image
                                                 src="/logo/hex-logo.svg"
                                                 alt="Logo"
@@ -60,7 +60,7 @@ export default function Footer() {
                                         </h2>
                                     </div>
                                 </TransitionLink>
-                                <p className="font-[400] text-sm text-text-gray leading-relaxed max-w-lg">
+                                <p className="font-[500] text-sm text-text-gray leading-relaxed max-w-lg">
                                     Creative front-end developer with a passion for pushing web technologies to their
                                     limits. Combining modern frameworks, responsive design principles, and creative
                                     problem-solving
@@ -71,10 +71,10 @@ export default function Footer() {
 
                         <div className="md:col-span-6 lg:col-span-4 grid grid-cols-2 gap-8 md:gap-16">
                             <nav aria-label="Main navigation">
-                                <div className="text-sm font-[400] w-fit mb-4">
+                                <div className="text-sm font-[500] w-fit mb-4">
                                     Navigation
                                 </div>
-                                <div className="flex flex-col gap-2 font-[400]">
+                                <div className="flex flex-col gap-2 font-[500]">
                                     {navLinks.map((nav) => (
                                         <TransitionLink
                                             className="text-sm w-fit text-text-gray hover:text-text-white transition-colors"
@@ -88,10 +88,10 @@ export default function Footer() {
                             </nav>
 
                             <div aria-label="Social media links">
-                                <div className="text-sm font-[400] w-fit mb-4">
+                                <div className="text-sm font-[500] w-fit mb-4">
                                     Socials
                                 </div>
-                                <div className="flex flex-col gap-2 font-[400]">
+                                <div className="flex flex-col gap-2 font-[500]">
                                     {socialLinks.map((link) => (
                                         <Link
                                             className="text-sm w-fit text-text-gray hover:text-text-white transition-colors"
@@ -109,11 +109,11 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 justify-between items-center border-t border-card-border pt-8">
-                    <div className="text-xs font-[400]">
+                <div className="flex flex-wrap gap-2 justify-between items-center border-t border-border-outer pt-8">
+                    <div className="text-xs font-[500]">
                         ©{currentYear} Marek Jóźwiak
                     </div>
-                    <div className="text-xs font-[400]">
+                    <div className="text-xs font-[500]">
                         All rights reserved
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import {ExternalLink, Instagram, Github, Facebook, Mail, File} from "lucide-react";
 import {initializeButtonAnimation} from "@/app/animations/buttonHoverAnimation";
-import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
+import OuterCard from "@/app/components/OuterCard/outerCard";
 
 const socialIcons = {
     instagram: Instagram,
@@ -47,23 +47,19 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
     return (
         <section className="w-screen text-text-white relative">
-            <div className="absolute inset-0">
-                <BackgroundOverlay/>
-            </div>
             <div className="px-4 lg:px-24 py-24">
                 <div className="flex flex-col gap-6">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                         <div className="col-span-1 md:col-span-8">
-                            <div
-                                className="bg-card-outer border border-card-border rounded-outer-card p-4 md:p-8 backdrop-blur-sm">
+                            <OuterCard>
                                 <div className="flex justify-between items-start mb-8">
                                     <div
-                                        className="p-2 bg-card-inner border border-card-border rounded-lg w-fit h-fit">
+                                        className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
                                         <File className="w-8 h-8 text-text-white"/>
                                     </div>
                                     <div className="flex items-end gap-4">
                                         <div
-                                            className="px-3 py-1 text-xs text-text-white bg-card-inner border border-card-border rounded-full">
+                                            className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
                                             {project.type}
                                         </div>
                                     </div>
@@ -71,13 +67,13 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
 
                                 <div className="flex flex-col gap-6">
                                     <div
-                                        className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-card-border">
+                                        className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-line">
                                         <div className="flex items-center gap-2">
                                             <span
                                                 className="text-sm font-[750] tracking-tight leading-none text-text-white">
                                                 Client:
                                             </span>
-                                            <span className="text-sm font-[400] tracking-tight text-text-gray">
+                                            <span className="text-sm font-[500] tracking-tight text-text-gray">
                                                 {project.client}
                                             </span>
                                         </div>
@@ -86,7 +82,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                                 className="text-sm font-[750] tracking-tight leading-none text-text-white">
                                                 Year:
                                             </span>
-                                            <span className="text-sm font-[400] tracking-tight text-text-gray">
+                                            <span className="text-sm font-[500] tracking-tight text-text-gray">
                                                 {project.year}
                                             </span>
                                         </div>
@@ -108,7 +104,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                         </span>
                                         {project.description.map((desc, index) => (
                                             <span key={index}
-                                                  className="text-sm font-[400] tracking-tight leading-relaxed text-text-gray">
+                                                  className="text-sm font-[500] tracking-tight leading-relaxed text-text-gray">
                                                 {desc}
                                             </span>
                                         ))}
@@ -124,7 +120,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                                             key={platform}
                                                             onClick={() => window.open(link, '_blank', 'noopener,noreferrer')}
                                                             ref={el => buttonRefs.current[index] = el}
-                                                            className="group flex items-center gap-3 p-3 bg-card-inner border border-card-border rounded-lg"
+                                                            className="group flex items-center gap-3 p-3 bg-icon border border-border-inner rounded-icon"
                                                         >
                                                             <SocialIcon className="w-5 h-5"/>
                                                         </button>
@@ -135,9 +131,9 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                                 <button
                                                     onClick={() => window.open(project.liveLink, '_blank', 'noopener,noreferrer')}
                                                     ref={buttonRef}
-                                                    className="group flex items-center gap-3 p-3 bg-card-inner border border-card-border rounded-lg"
+                                                    className="group flex items-center gap-3 p-3 bg-icon border border-border-inner rounded-icon"
                                                 >
-                                                    <span className="text-sm font-[400] tracking-tight text-text-white">
+                                                    <span className="text-sm font-[500] tracking-tight text-text-white">
                                                         Visit Website
                                                     </span>
                                                     <ExternalLink className="w-5 h-5 text-text-gray"/>
@@ -146,12 +142,12 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </OuterCard>
                         </div>
 
                         <div className="col-span-1 md:col-span-4 order-first md:order-last">
                             <div
-                                className="relative w-full min-h-[400px] h-full rounded-outer-card overflow-hidden border border-card-border">
+                                className="relative w-full min-h-[400px] h-full rounded-outer-card overflow-hidden">
                                 <Image
                                     src={project.mainImage}
                                     alt="Project Image"
@@ -166,7 +162,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                         {project.images?.map((image, index) => (
                             <div key={index}
-                                 className="col-span-1 md:col-span-6 relative w-full h-auto rounded-outer-card overflow-hidden border border-card-border">
+                                 className="col-span-1 md:col-span-6 relative w-full h-auto rounded-outer-card overflow-hidden">
                                 <Image
                                     src={image}
                                     alt={`Project Image ${index + 1}`}

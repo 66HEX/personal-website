@@ -2,7 +2,7 @@
 
 import { useRef, useLayoutEffect, forwardRef, useImperativeHandle, useState } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
-import horizontalLoop from '@/app/utils/HorizontalLoop';
+import horizontalLoop from '@/app/utils/HorizontalLoop.js';
 import gsap from 'gsap';
 import TestimonialCard from "@/app/components/TestimonialCard/testimonialCard";
 

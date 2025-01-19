@@ -10,8 +10,8 @@ export default {
     extend: {
       colors: {
         background: '#000000',
-        "icon": 'rgba(255,255,255,0.0125)',
-        "line": 'rgba(255,255,255,0.05)',
+        "icon": 'rgba(255,255,255,0.00125)',
+        "line": 'rgba(255,255,255,0.1)',
         "border-outer": 'rgba(255,255,255,0.1)',
         "border-inner": 'rgba(255,255,255,0.075)',
         "card-gradient-darker": 'rgba(255,255,255,0.05)',
@@ -27,6 +27,19 @@ export default {
         "inner-card": '0.75rem',
         "icon": '0.75rem',
         "icon-small": '0.5rem',
+      },
+      animation: {
+        ripple: "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",
+      },
+      keyframes: {
+        ripple: {
+          "0%, 100%": {
+            transform: "translate(-50%, -50%) scale(1)",
+          },
+          "50%": {
+            transform: "translate(-50%, -50%) scale(0.9)",
+          },
+        },
       },
     },
   },

@@ -8,6 +8,11 @@ import { File, Folder} from "lucide-react";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import OuterCard from "@/app/components/OuterCard/outerCard";
 import InnerCard from "@/app/components/InnerCard/innerCard";
+import IconCard from "@/app/components/IconCard/iconCard";
+import IconCardSmall from "@/app/components/IconCardSmall/iconCardSmall";
+import Badge from "@/app/components/Badge/badge";
+import BadgeSmall from "@/app/components/BadgeSmall/badgeSmall";
+import GradientHeader from "@/app/components/GradientHeader/gradientHeader";
 
 
 export default function SelectedWorks() {
@@ -24,25 +29,22 @@ export default function SelectedWorks() {
     return (
         <section className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white relative">
             <OuterCard>
-                <div className="flex items-center justify-between w-full mb-4">
+                <div className="flex items-center justify-between w-full mb-6 md:mb-0">
                     <div className="flex w-full justify-between items-start">
-                        <div className="p-2 bg-icon border border-border-inner rounded-xl">
+                        <IconCard>
                             <Folder className="w-8 h-8 text-text-white"/>
-                        </div>
-                        <div
-                            className="px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                        </IconCard>
+                        <Badge
+                            className="">
                             Selected Works
-                        </div>
+                        </Badge>
                     </div>
                 </div>
                 <div className="max-w-2xl mx-auto mb-12 text-center tracking-tight">
-                    <h2
-                        className="text-3xl sm:text-5xl font-[750] tracking-tight mb-4 lg:mb-6">
-                        Featured projects
-                        <br/>
-                        <span
-                            className="bg-gradient-to-r from-text-white to-text-gray text-transparent bg-clip-text">and achievements</span>
-                    </h2>
+                    <GradientHeader
+                        normalText="Featured projects"
+                        gradientText="and achievements"
+                    />
                     <p className="text-base font-[500] tracking-tight text-text-gray leading-relaxed">
                         Showcasing selected web applications and interfaces built with modern technologies,
                         demonstrating
@@ -61,13 +63,13 @@ export default function SelectedWorks() {
                                 className="relative">
                                 <div className="relative flex flex-col h-full">
                                     <div className="flex justify-between items-start mb-6">
-                                        <div className="p-2 bg-icon border border-border-inner rounded-icon-small">
+                                        <IconCardSmall className="">
                                             <File className="w-5 h-5 text-text-white"/>
-                                        </div>
-                                        <div
-                                            className="px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                                        </IconCardSmall>
+                                        <BadgeSmall
+                                            >
                                             {project.type}
-                                        </div>
+                                        </BadgeSmall>
                                     </div>
 
                                     <div
@@ -95,18 +97,16 @@ export default function SelectedWorks() {
                                         <div className="flex flex-wrap gap-2">
                                             {project.liveLink && (
                                                 <div
-                                                    className="px-3 py-1 text-xs font-[500] bg-green-500/10 border border-green-500/20 text-green-500 rounded-full">
+                                                    className="px-3 py-1 text-xs font-[500] bg-green-700/10 border border-green-600/20 text-green-600 rounded-full">
                                                     Live Project
                                                 </div>
                                             )}
-                                            <div
-                                                className="px-3 py-1 text-xs font-[500] bg-icon border border-border-inner rounded-full">
+                                            <BadgeSmall>
                                                 {project.client}
-                                            </div>
-                                            <div
-                                                className="px-3 py-1 text-xs font-[500] bg-icon border border-border-inner rounded-full">
+                                            </BadgeSmall>
+                                            <BadgeSmall>
                                                 {project.year}
-                                            </div>
+                                            </BadgeSmall>
                                         </div>
                                     </div>
                                 </div>

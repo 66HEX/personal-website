@@ -96,7 +96,7 @@ const Marquee = forwardRef((props: { onPositionChange?: (position: number) => vo
     const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];
 
     return (
-        <div className="overflow-hidden">
+        <div className="overflow-hidden px-1">
             <div ref={contentRef} className="flex space-x-4 xl:space-x-8">
                 {items.map((testimonial, index) => (
                     <TestimonialCard

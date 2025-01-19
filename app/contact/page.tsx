@@ -4,6 +4,8 @@ import { Info } from "lucide-react";
 import Link from "next/link";
 import OuterCard from "@/app/components/OuterCard/outerCard";
 import ContactForm from "@/app/components/ContactForm/contactForm";
+import IconCard from "@/app/components/IconCard/iconCard";
+import Badge from "@/app/components/Badge/badge";
 
 export default function Contact() {
 
@@ -18,13 +20,12 @@ export default function Contact() {
                     <div className="col-span-1 md:col-span-4 order-1 md:order-2">
                         <OuterCard>
                             <div className="flex justify-between items-start mb-8">
-                                <div className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
+                                <IconCard className="w-fit h-fit">
                                     <Info className="w-8 h-8 text-text-white"/>
-                                </div>
-                                <div
-                                    className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                                </IconCard>
+                                <Badge>
                                     Contact Info
-                                </div>
+                                </Badge>
                             </div>
 
                             <div className="flex flex-col gap-8">

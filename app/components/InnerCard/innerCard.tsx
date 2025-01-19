@@ -18,12 +18,13 @@ const InnerCard = ({ children, className = '', id, style }: CardProps) => {
             {/* Main card */}
             <div className={`
                 relative 
-                bg-white/[0.00125]
+                bg-black
                 mix-blend-lighten
                 rounded-outer-card
-                p-4 md:p-8 
                 backdrop-blur-sm 
                 overflow-hidden 
+                border
+                border-border-outer
                 ${className}
             `}>
                 {/* Top gradient */}
@@ -38,12 +39,8 @@ const InnerCard = ({ children, className = '', id, style }: CardProps) => {
                 {/* Right gradient */}
                 <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-card-gradient-lighter to-transparent opacity-50"/>
 
-                {/* Neon border glow */}
-                <div className="absolute inset-0 rounded-outer-card border border-white/50 blur-[1px] opacity-30"/>
-                <div className="absolute inset-0 rounded-outer-card border border-white blur-sm opacity-30"/>
-
                 {/* Content container */}
-                <div className="relative z-10 h-full">
+                <div className="relative z-10 h-full p-4 md:p-8">
                     {children}
                 </div>
             </div>

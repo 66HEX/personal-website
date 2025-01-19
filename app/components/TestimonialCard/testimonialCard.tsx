@@ -1,4 +1,6 @@
 import InnerCard from "@/app/components/InnerCard/innerCard";
+import IconCardSmall from "@/app/components/IconCardSmall/iconCardSmall";
+import BadgeSmall from "@/app/components/BadgeSmall/badgeSmall";
 
 interface TestimonialCardProps {
     testimonial: {
@@ -21,16 +23,16 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, width, r
             <InnerCard className="relative h-full overflow-hidden">
                 <div className="relative flex flex-col h-full  min-h-[300px]">
                     <div className="flex justify-between items-start mb-6 xl:mb-8">
-                        <div className="p-2 bg-icon border border-border-inner rounded-icon-small">
+                        <IconCardSmall>
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>
                                 <path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>
                             </svg>
-                        </div>
+                        </IconCardSmall>
                         <div className="flex items-end gap-4">
-                            <div className="px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                            <BadgeSmall>
                                 Testimonial
-                            </div>
+                            </BadgeSmall>
                         </div>
                     </div>
                     <p className="text-sm font-[500] tracking-tight text-text-gray leading-relaxed mb-8">{testimonial.text}</p>

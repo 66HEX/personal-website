@@ -4,6 +4,9 @@ import { works } from "@/app/data/worksData";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import { Folder } from "lucide-react";
 import OuterCard from "@/app/components/OuterCard/outerCard";
+import IconCard from "@/app/components/IconCard/iconCard";
+import Badge from "@/app/components/Badge/badge";
+import BadgeSmall from "@/app/components/BadgeSmall/badgeSmall";
 
 export default function WorksPage() {
     return (
@@ -11,14 +14,13 @@ export default function WorksPage() {
             <OuterCard>
                 <div className="flex items-center justify-between w-full mb-8">
                     <div className="flex w-full justify-between items-center">
-                        <div className="p-2 bg-icon border border-border-inner rounded-icon">
+                        <IconCard>
                             <Folder className="w-8 h-8 text-text-white"/>
-                        </div>
+                        </IconCard>
                         <div className="flex items-center gap-4">
-                            <div
-                                className="px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                            <Badge>
                                 All Works
-                            </div>
+                            </Badge>
                         </div>
                     </div>
                 </div>
@@ -41,18 +43,18 @@ export default function WorksPage() {
                                             className="flex flex-wrap gap-2 lg:justify-end lg:flex-nowrap items-center">
                                             {project.liveLink && (
                                                 <div
-                                                    className="px-3 py-1 text-xs font-[500] bg-green-500/10 border border-green-500/20 text-green-500 backdrop-blur-sm rounded-full">
+                                                    className="px-3 py-1 text-xs font-[500] bg-green-700/10 border border-green-600/20 text-green-600 backdrop-blur-sm rounded-full">
                                                     Live Project
                                                 </div>
                                             )}
-                                            <div
-                                                className="hidden md:block px-3 py-1 text-xs font-[500] bg-icon border border-border-outer rounded-full backdrop-blur-sm text-whitespace-nowrap">
+                                            <BadgeSmall
+                                                className="hidden md:block text-whitespace-nowrap">
                                                 {project.type}
-                                            </div>
-                                            <div
-                                                className="px-3 py-1 text-xs font-[500] bg-icon border border-border-outer rounded-full backdrop-blur-sm text-whitespace-nowrap">
+                                            </BadgeSmall>
+                                            <BadgeSmall
+                                                className="text-whitespace-nowrap">
                                                 View Details →
-                                            </div>
+                                            </BadgeSmall>
                                         </div>
                                     </div>
                                 </div>

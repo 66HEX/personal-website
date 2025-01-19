@@ -5,6 +5,8 @@ import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation
 import { useEffect, useRef, useState } from "react";
 import { Mail, Send } from "lucide-react";
 import OuterCard from "@/app/components/OuterCard/outerCard";
+import IconCard from "@/app/components/IconCard/iconCard";
+import Badge from "@/app/components/Badge/badge";
 
 interface FormData {
     name: string;
@@ -90,12 +92,12 @@ const ContactForm = () => {
         <div className="relative">
             <OuterCard>
                 <div className="flex justify-between items-start mb-8">
-                    <div className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
+                    <IconCard className="w-fit h-fit">
                         <Mail className="w-8 h-8 text-text-white" />
-                    </div>
-                    <div className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                    </IconCard>
+                    <Badge>
                         Send Message
-                    </div>
+                    </Badge>
                 </div>
 
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>

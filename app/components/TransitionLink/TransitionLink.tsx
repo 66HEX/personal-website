@@ -1,9 +1,10 @@
 "use client";
 
 import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import { useEffect, useCallback, useState } from "react";
+import { useLenis } from "@studio-freight/react-lenis";
 
 interface TransitionLinkProps extends LinkProps {
     children: React.ReactNode;
@@ -22,6 +23,8 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
                                                                   ...props
                                                               }) => {
     const router = useRouter();
+    const pathname = usePathname();
+    const lenis = useLenis();
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     const animateOut = useCallback(async () => {
@@ -50,6 +53,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
             y: 0,
             opacity: 1,
             duration: 0.7,
+            delay: 0.4,
             ease: "power3.inOut"
         });
     }, []);
@@ -58,6 +62,15 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
         e.preventDefault();
 
         if (isTransitioning) return;
+
+        const hrefWithoutHash = href.split('#')[0];
+        const isCurrentPage = hrefWithoutHash === pathname;
+
+        if (isCurrentPage && lenis) {
+            lenis.scrollTo(0, { immediate: false });
+            return;
+        }
+
         setIsTransitioning(true);
 
         try {
@@ -67,12 +80,9 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
 
             await animateOut();
 
-            // Tworzymy Promise, który rozwiąże się po załadowaniu nowej strony
             const navigationPromise = new Promise<void>((resolve) => {
-                // Ustawiamy timer jako zabezpieczenie
                 const timeoutId = setTimeout(() => resolve(), 2000);
 
-                // Funkcja sprawdzająca, czy nowa strona jest załadowana
                 const checkForNewContent = () => {
                     const newContent = document.querySelector('main') || document.body.children[0];
                     if (newContent && newContent.children.length > 0) {
@@ -94,7 +104,6 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
         }
     };
 
-    // Resetowanie stanu przy odmontowaniu
     useEffect(() => {
         return () => {
             setIsTransitioning(false);

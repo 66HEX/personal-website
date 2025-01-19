@@ -38,7 +38,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white border-t border-border-outer bg-background">
+        <footer className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white border-t border-line bg-background">
             <div className="w-full h-full relative">
                 <div className="relative mb-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
@@ -60,7 +60,7 @@ export default function Footer() {
                                         </h2>
                                     </div>
                                 </TransitionLink>
-                                <p className="font-[500] text-sm text-text-gray leading-relaxed max-w-lg">
+                                <p className="font-[500] text-xs lg:text-sm text-text-gray leading-relaxed max-w-lg">
                                     Creative front-end developer with a passion for pushing web technologies to their
                                     limits. Combining modern frameworks, responsive design principles, and creative
                                     problem-solving
@@ -77,7 +77,7 @@ export default function Footer() {
                                 <div className="flex flex-col gap-2 font-[500]">
                                     {navLinks.map((nav) => (
                                         <TransitionLink
-                                            className="text-sm w-fit text-text-gray hover:text-text-white transition-colors"
+                                            className="text-sm w-fit text-text-gray hover:text-white transition-colors duration-300"
                                             key={nav.href}
                                             href={nav.href}
                                         >
@@ -94,7 +94,7 @@ export default function Footer() {
                                 <div className="flex flex-col gap-2 font-[500]">
                                     {socialLinks.map((link) => (
                                         <Link
-                                            className="text-sm w-fit text-text-gray hover:text-text-white transition-colors"
+                                            className="text-sm w-fit text-text-gray hover:text-white transition-colors duration-300"
                                             key={link.href}
                                             href={link.href}
                                             target="_blank"
@@ -109,12 +109,12 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 justify-between items-center border-t border-border-outer pt-8">
+                <div className="flex flex-wrap gap-2 justify-between items-center border-t border-line pt-8">
                     <div className="text-xs font-[500]">
                         ©{currentYear} Marek Jóźwiak
                     </div>
                     <div className="text-xs font-[500]">
-                        All rights reserved
+                        All rights reserved.
                     </div>
                 </div>
             </div>

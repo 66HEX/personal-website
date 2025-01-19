@@ -1,13 +1,18 @@
 'use client';
 
-import { useRef, useEffect } from "react";
-import { Code, ArrowRight } from "lucide-react";
-import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
-import BackgroundOverlay from "@/app/components/BackgroundOverlay/backgroundOverlay";
+import Scene from "@/app/components/Scene/scene";
+import SkillCards from "@/app/components/SkillCards/skillCards";
 import OuterCard from "@/app/components/OuterCard/outerCard";
+import Badge from "@/app/components/Badge/badge";
+import { cn } from "@/app/utils/utils";
+import {DotPattern} from "@/app/components/Dot/dotPattern";
+import GradientHeader from "@/app/components/GradientHeader/gradientHeader";
+import {Ripple} from "@/app/components/Ripple/ripple";
+import {useEffect, useRef} from "react";
+import {initializeButtonAnimation} from "@/app/animations/buttonHoverAnimation";
 
-export default function Hero() {
+export default function HeroSection() {
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const buttonRef2 = useRef<HTMLButtonElement | null>(null);
 
@@ -21,59 +26,62 @@ export default function Hero() {
     }, []);
 
     return (
-        <section className="w-screen min-h-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white relative flex items-center justify-center">
-            <OuterCard>
-                <div className="flex items-start justify-between w-full mb-4">
-                    <div className="p-2 bg-icon border border-border-inner rounded-icon">
-                        <Code className="w-8 h-8 text-text-white"/>
-                    </div>
-                    <div className="px-3 py-1 font-[500] text-xs text-text-white bg-icon border border-border-inner rounded-full">
-                        Frontend Developer
+        <section className="w-screen min-h-svh px-4 lg:px-24 pb-12 pt-24 lg:py-24 text-text-white relative flex items-center overflow-hidden">
+            <DotPattern
+                cy={1}
+                cr={1}
+                cx={1}
+                className={cn(
+                    "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
+                )}
+            />
+            <div className="w-full flex flex-col relative">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <OuterCard className="flex flex-col items-start justify-center">
+                        <Badge
+                            className="w-fit ml-auto mb-8">
+                           <div className="h-1.5 w-1.5 bg-green-600 rounded-full"/>
+                            Available for work
+                        </Badge>
+                        <GradientHeader
+                            normalText="Creating modern"
+                            gradientText="digital experiences"
+                            className="text-4xl md:text-5xl lg:text-6xl font-[750] tracking-tight leading-tight mb-8"
+                        />
+
+                        <p className="text-lg font-[500] tracking-tight leading-relaxed text-text-gray mb-12">
+                            Specialized in creating engaging web experiences that combine clean design with smooth
+                            interactions. Let's transform your vision into reality.
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                            <TransitionLink
+                                href="/works"
+                                className="mx-auto md:mx-0"
+                            >
+                                <button
+                                    ref={buttonRef} className="inline-flex items-center justify-center px-8 py-4 text-sm font-[500] bg-icon border border-border-outer rounded-icon">
+                                    Explore Work
+                                </button>
+                            </TransitionLink>
+
+                            <TransitionLink
+                                href="/contact"
+                                className="mx-auto md:mx-0"
+                            >
+                                <button
+                                    ref={buttonRef2} className="inline-flex items-center justify-center px-8 py-4 text-sm font-[500] bg-icon border border-border-outer rounded-icon">
+                                    Contact
+                                </button>
+                            </TransitionLink>
+                        </div>
+                    </OuterCard>
+                    <div
+                        className="relative w-full h-full min-h-[400px]">
+                        <Scene/>
                     </div>
                 </div>
-                <div className="max-w-4xl mx-auto text-center tracking-tight">
-                    <h1 className="text-4xl sm:text-6xl lg:text-7xl font-[750] tracking-tight mb-6">
-                        Creating modern
-                        <br/>
-                        <span className="bg-gradient-to-r from-text-white to-text-gray text-transparent bg-clip-text">
-                            digital experiences
-                        </span>
-                    </h1>
-                    <p className="text-base lg:text-lg font-[500] tracking-tight text-text-gray leading-relaxed mb-8 lg:mb-12 max-w-2xl mx-auto">
-                        Specializing in crafting intuitive and performant web applications
-                        with clean code and pixel-perfect design implementation
-                    </p>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <TransitionLink href="/works" className="group">
-                            <button
-                                ref={buttonRef}
-                                className="px-6 py-3 bg-icon border border-border-inner rounded-xl font-[500] flex items-center gap-2 w-full sm:w-auto justify-center"
-                            >
-                                View Projects
-                                <ArrowRight className="w-4 h-4"/>
-                            </button>
-                        </TransitionLink>
-                        <TransitionLink href="/contact" className="group">
-                            <button
-                                ref={buttonRef2}
-                                className="px-6 py-3 bg-transparent border border-border-inner rounded-xl font-[500] flex items-center gap-2 w-full sm:w-auto justify-center hover:bg-icon transition-colors"
-                            >
-                                Get in Touch
-                            </button>
-                        </TransitionLink>
-                    </div>
-                    <div className="mt-12 lg:mt-16 flex flex-wrap justify-center gap-3">
-                        {['TypeScript', 'React', 'Next.js', 'Node.js', 'Tailwind'].map((tech, index) => (
-                            <div
-                                key={index}
-                                className="px-3 py-1 text-xs font-[500] bg-icon border border-border-inner rounded-full"
-                            >
-                                {tech}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </OuterCard>
+            </div>
         </section>
     );
 }

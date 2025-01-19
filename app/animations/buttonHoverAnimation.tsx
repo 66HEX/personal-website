@@ -39,7 +39,7 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
         const buttonRef2EnterHandler = () => {
             gsap.to(buttonRef2, {
                 color: '#ffffff',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 duration: 0.25,
                 ease: "linear",
             });

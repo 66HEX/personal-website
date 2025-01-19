@@ -7,6 +7,8 @@ import { useEffect, useRef } from "react";
 import {ExternalLink, Instagram, Github, Facebook, Mail, File} from "lucide-react";
 import {initializeButtonAnimation} from "@/app/animations/buttonHoverAnimation";
 import OuterCard from "@/app/components/OuterCard/outerCard";
+import IconCard from "@/app/components/IconCard/iconCard";
+import Badge from "@/app/components/Badge/badge";
 
 const socialIcons = {
     instagram: Instagram,
@@ -53,15 +55,14 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                         <div className="col-span-1 md:col-span-8">
                             <OuterCard>
                                 <div className="flex justify-between items-start mb-8">
-                                    <div
-                                        className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
+                                    <IconCard
+                                        className="w-fit h-fit">
                                         <File className="w-8 h-8 text-text-white"/>
-                                    </div>
+                                    </IconCard>
                                     <div className="flex items-end gap-4">
-                                        <div
-                                            className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                                        <Badge>
                                             {project.type}
-                                        </div>
+                                        </Badge>
                                     </div>
                                 </div>
 

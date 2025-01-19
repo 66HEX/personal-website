@@ -1,10 +1,10 @@
 'use client'
 
 import {Canvas} from '@react-three/fiber'
-import { PerspectiveCamera } from '@react-three/drei'
+import { PerspectiveCamera, Environment } from '@react-three/drei'
 import { Suspense } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
-import {Model} from "@/app/components/Scene/Model/model";
+import RubiksCubeModel from "@/app/components/Scene/Cube/cube";
 
 function CameraController() {
     const { camera } = useThree()
@@ -16,29 +16,29 @@ function CameraController() {
 
 export default function Scene() {
     return (
-        <div className="h-full w-full">
+        <div className="h-full w-full relative">
             <Canvas
                 gl={{
                     antialias: true,
-                    preserveDrawingBuffer: true
-                }}
-                shadows>
+                    preserveDrawingBuffer: true,
+                    powerPreference: 'high-performance',
+                    alpha: true,
+                    toneMapping: 3,
+                    toneMappingExposure: 1.5
+                }}>
 
-                <ambientLight intensity={2}/>
+                <Environment files="/environments/studio_small_09_1k.hdr" intensity={1} />
 
-                <directionalLight
-                    position={[0, 0, 5]}
-                    intensity={10}
-                    castShadow
-                />
-
-                <directionalLight position={[-10, 10, -5]} intensity={0.5} castShadow/>
-                <directionalLight position={[10, 10, 10]} intensity={0.5} castShadow/>
+                <ambientLight intensity={2} />
+                <directionalLight position={[-10, 5, -5]} intensity={8} />
+                <directionalLight position={[10, 5, -5]} intensity={8} />
+                <pointLight position={[5, 5, 5]} intensity={15} />
+                <pointLight position={[-5, -5, 5]} intensity={15} />
 
                 <PerspectiveCamera
                     makeDefault
-                    fov={70}
-                    position={[0, 0, 5]}
+                    fov={50}
+                    position={[0, 0, 7]}
                     near={0.1}
                     far={1000}
                 />
@@ -46,9 +46,8 @@ export default function Scene() {
                 <CameraController/>
 
                 <Suspense fallback={null}>
-                    <Model/>
+                    <RubiksCubeModel position={[0, 0, 0]} scale={1} />
                 </Suspense>
-
             </Canvas>
         </div>
     )

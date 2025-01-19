@@ -2,48 +2,13 @@
 
 import Image from "next/image";
 
-import { Briefcase, Github, Linkedin, Instagram, Mail, Share2, UserRound} from "lucide-react";
+import { Briefcase, Share2, UserRound} from "lucide-react";
 import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import {useEffect, useRef} from "react";
 import OuterCard from "@/app/components/OuterCard/outerCard";
-
-const experience = [
-    {
-        title: "Front-End Developer",
-        company: "Company Name",
-        period: "2023 - Present",
-        type: "Full-time"
-    },
-    {
-        title: "Web Developer",
-        company: "Company Name",
-        period: "2022 - 2023",
-        type: "Contract"
-    }
-];
-
-const socialLinks = [
-    {
-        icon: Instagram,
-        label: "Instagram",
-        href: "https://www.instagram.com/hexthecoder/"
-    },
-    {
-        icon: Linkedin,
-        label: "LinkedIn",
-        href: "https://www.linkedin.com/in/marek-j%C3%B3%C5%BAwiak-29958132a/"
-    },
-    {
-        icon: Github,
-        label: "GitHub",
-        href: "https://github.com/66HEX"
-    },
-    {
-        icon: Mail,
-        label: "Email",
-        href: "mailto:hexthecoder@gmail.com"
-    }
-];
+import IconCard from "@/app/components/IconCard/iconCard";
+import Badge from "@/app/components/Badge/badge";
+import { experience, socialLinks } from "@/app/data/aboutData"
 
 export default function AboutMePage() {
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -71,15 +36,13 @@ export default function AboutMePage() {
                         <div className="col-span-1 md:col-span-8">
                             <OuterCard>
                                 <div className="flex justify-between items-start mb-8">
-                                    <div
-                                        className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
+                                    <IconCard className="w-fit h-fit">
                                         <UserRound className="w-8 h-8 text-text-white"/>
-                                    </div>
+                                    </IconCard>
                                     <div className="flex">
-                                        <div
-                                            className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                                        <Badge>
                                             Profile
-                                        </div>
+                                        </Badge>
                                     </div>
                                 </div>
 
@@ -161,14 +124,13 @@ export default function AboutMePage() {
                         <div className="col-span-1 md:col-span-8">
                             <OuterCard>
                                 <div className="flex justify-between items-start mb-8">
-                                    <div
-                                        className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
+                                    <IconCard
+                                        className="w-fit h-fit">
                                         <Briefcase className="w-8 h-8 text-text-white"/>
-                                    </div>
-                                    <div
-                                        className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                                    </IconCard>
+                                    <Badge>
                                         Experience
-                                    </div>
+                                    </Badge>
                                 </div>
 
                                 <div className="flex flex-col gap-6">
@@ -198,17 +160,16 @@ export default function AboutMePage() {
                             </OuterCard>
                         </div>
 
-                        <div className="col-span-1 md:col-span-4">
+                        <div className="col-span-1 md:col-span-4 h-full">
                             <OuterCard>
                                 <div className="flex justify-between items-start mb-8">
-                                    <div
-                                        className="p-2 bg-icon border border-border-inner rounded-icon w-fit h-fit">
+                                    <IconCard
+                                        className="w-fit h-fit">
                                         <Share2 className="w-8 h-8 text-text-white"/>
-                                    </div>
-                                    <div
-                                        className="px-3 py-1 text-xs text-text-white bg-icon border border-border-inner rounded-full">
+                                    </IconCard>
+                                    <Badge>
                                         Socials
-                                    </div>
+                                    </Badge>
                                 </div>
 
                                 <div className="flex flex-col gap-4">

@@ -2,13 +2,11 @@
 
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import Scene from "@/app/components/Scene/scene";
-import SkillCards from "@/app/components/SkillCards/skillCards";
 import OuterCard from "@/app/components/OuterCard/outerCard";
 import Badge from "@/app/components/Badge/badge";
 import { cn } from "@/app/utils/utils";
 import {DotPattern} from "@/app/components/Dot/dotPattern";
 import GradientHeader from "@/app/components/GradientHeader/gradientHeader";
-import {Ripple} from "@/app/components/Ripple/ripple";
 import {useEffect, useRef} from "react";
 import {initializeButtonAnimation} from "@/app/animations/buttonHoverAnimation";
 

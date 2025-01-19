@@ -32,8 +32,8 @@ export default function Scene() {
                 <ambientLight intensity={2} />
                 <directionalLight position={[-10, 5, -5]} intensity={8} />
                 <directionalLight position={[10, 5, -5]} intensity={8} />
-                <pointLight position={[5, 5, 5]} intensity={15} />
-                <pointLight position={[-5, -5, 5]} intensity={15} />
+                <pointLight position={[5, 5, 5]} intensity={10} />
+                <pointLight position={[-5, -5, 5]} intensity={10} />
 
                 <PerspectiveCamera
                     makeDefault

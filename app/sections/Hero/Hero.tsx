@@ -12,19 +12,19 @@ import {initializeButtonAnimation} from "@/app/animations/buttonHoverAnimation";
 
 export default function HeroSection() {
     const buttonRef = useRef<HTMLButtonElement | null>(null);
-    const buttonRef2 = useRef<HTMLButtonElement | null>(null);
+    const buttonRef3 = useRef<HTMLButtonElement | null>(null);
 
     useEffect(() => {
         const cleanup = initializeButtonAnimation({
             buttonRef: buttonRef.current,
-            buttonRef2: buttonRef2.current
+            buttonRef3: buttonRef3.current
         });
 
         return cleanup;
     }, []);
 
     return (
-        <section className="w-screen min-h-svh px-4 lg:px-24 pb-12 pt-24 lg:py-24 text-text-white relative flex items-center overflow-hidden">
+        <section className="w-screen px-4 lg:px-24 pb-12 pt-24 lg:py-24 text-text-white relative flex items-center overflow-hidden">
             <DotPattern
                 cy={1}
                 cr={1}
@@ -52,23 +52,21 @@ export default function HeroSection() {
                             interactions. Let's transform your vision into reality.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                        <div className="flex flex-row gap-4 mb-12">
                             <TransitionLink
                                 href="/works"
-                                className="mx-auto md:mx-0"
                             >
                                 <button
-                                    ref={buttonRef} className="inline-flex items-center justify-center px-8 py-4 text-sm font-[500] bg-icon border border-border-outer rounded-icon">
+                                    ref={buttonRef3} className="inline-flex items-center justify-center px-6 py-3 text-sm font-[500] bg-text-white text-background border border-border-outer rounded-icon">
                                     Explore Work
                                 </button>
                             </TransitionLink>
 
                             <TransitionLink
                                 href="/contact"
-                                className="mx-auto md:mx-0"
                             >
                                 <button
-                                    ref={buttonRef2} className="inline-flex items-center justify-center px-8 py-4 text-sm font-[500] bg-icon border border-border-outer rounded-icon">
+                                    ref={buttonRef} className="inline-flex items-center justify-center px-6 py-3 text-sm font-[500] bg-icon border border-border-outer rounded-icon">
                                     Contact
                                 </button>
                             </TransitionLink>

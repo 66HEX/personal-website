@@ -3,9 +3,10 @@ import {gsap} from "gsap";
 interface ButtonAnimationRefs {
     buttonRef: HTMLButtonElement | null;
     buttonRef2?: HTMLButtonElement | null;
+    buttonRef3?: HTMLButtonElement | null;
 }
 
-export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnimationRefs) => {
+export const initializeButtonAnimation = ({ buttonRef, buttonRef2, buttonRef3 }: ButtonAnimationRefs) => {
     const cleanupFunctions: (() => void)[] = [];
 
     if (buttonRef) {
@@ -60,6 +61,32 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
         cleanupFunctions.push(() => {
             buttonRef2.removeEventListener('mouseenter', buttonRef2EnterHandler);
             buttonRef2.removeEventListener('mouseleave', buttonRef2LeaveHandler);
+        });
+    }
+
+    if (buttonRef3) {
+        const buttonRef3EnterHandler = () => {
+            gsap.to(buttonRef3, {
+                backgroundColor: 'rgba(247,248,248,0.8)',
+                duration: 0.2,
+                ease: "linear",
+            });
+        };
+
+        const buttonRef3LeaveHandler = () => {
+            gsap.to(buttonRef3, {
+                backgroundColor: '#f7f8f8',
+                duration: 0.2,
+                ease: "linear",
+            });
+        };
+
+        buttonRef3.addEventListener('mouseenter', buttonRef3EnterHandler);
+        buttonRef3.addEventListener('mouseleave', buttonRef3LeaveHandler);
+
+        cleanupFunctions.push(() => {
+            buttonRef3.removeEventListener('mouseenter', buttonRef3EnterHandler);
+            buttonRef3.removeEventListener('mouseleave', buttonRef3LeaveHandler);
         });
     }
 

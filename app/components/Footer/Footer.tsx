@@ -60,7 +60,7 @@ export default function Footer() {
                                         </h2>
                                     </div>
                                 </TransitionLink>
-                                <p className="font-[500] text-xs lg:text-sm text-text-gray leading-relaxed max-w-lg">
+                                <p className="font-[500] text-sm text-text-gray leading-relaxed max-w-lg">
                                     Creative front-end developer with a passion for pushing web technologies to their
                                     limits. Combining modern frameworks, responsive design principles, and creative
                                     problem-solving

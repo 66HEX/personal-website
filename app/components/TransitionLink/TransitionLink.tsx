@@ -3,7 +3,7 @@
 import Link, { LinkProps } from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { gsap } from "gsap";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import { useLenis } from "@studio-freight/react-lenis";
 
 interface TransitionLinkProps extends LinkProps {
@@ -26,42 +26,56 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
     const pathname = usePathname();
     const lenis = useLenis();
     const [isTransitioning, setIsTransitioning] = useState(false);
+    const mainContentRef = useRef<HTMLElement | null>(null);
+    const lastClickedHref = useRef<string>("");
+
+    useEffect(() => {
+        setIsTransitioning(false);
+        lastClickedHref.current = "";
+    }, [pathname]);
 
     const animateOut = useCallback(async () => {
-        const mainContent = document.querySelector('main') || document.body.children[0];
-        gsap.set(mainContent, {
-            transformOrigin: "center center"
-        });
+        const mainContent = document.querySelector('main') as HTMLElement || document.body.children[0] as HTMLElement;
+        mainContentRef.current = mainContent;
 
-        return gsap.to(mainContent, {
-            y: "-25vh",
-            opacity: 0,
-            duration: 0.7,
-            ease: "power3.inOut"
+        return new Promise<void>((resolve) => {
+            gsap.to(mainContent, {
+                y: "-25vh",
+                opacity: 0,
+                duration: 0.7,
+                ease: "power3.inOut",
+                onComplete: resolve
+            });
         });
     }, []);
 
     const animateIn = useCallback(() => {
-        const newContent = document.querySelector('main') || document.body.children[0];
-        gsap.set(newContent, {
-            y: "25vh",
-            opacity: 0,
-            transformOrigin: "center center"
-        });
+        const newContent = document.querySelector('main') as HTMLElement || document.body.children[0] as HTMLElement;
 
-        return gsap.to(newContent, {
-            y: 0,
-            opacity: 1,
-            duration: 0.7,
-            delay: 0.4,
-            ease: "power3.inOut"
+        return new Promise<void>((resolve) => {
+            gsap.set(newContent, {
+                y: "25vh",
+                opacity: 0
+            });
+
+            setTimeout(() => {
+                gsap.to(newContent, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.7,
+                    ease: "power3.inOut",
+                    onComplete: resolve
+                });
+            }, 50);
         });
     }, []);
 
     const handleTransition = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
 
-        if (isTransitioning) return;
+        if (isTransitioning || lastClickedHref.current === href) {
+            return;
+        }
 
         const hrefWithoutHash = href.split('#')[0];
         const isCurrentPage = hrefWithoutHash === pathname;
@@ -72,6 +86,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
         }
 
         setIsTransitioning(true);
+        lastClickedHref.current = href;
 
         try {
             if (onTransitionStart) {
@@ -81,34 +96,40 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
             await animateOut();
 
             const navigationPromise = new Promise<void>((resolve) => {
-                const timeoutId = setTimeout(() => resolve(), 2000);
+                router.push(href);
 
-                const checkForNewContent = () => {
-                    const newContent = document.querySelector('main') || document.body.children[0];
-                    if (newContent && newContent.children.length > 0) {
-                        clearTimeout(timeoutId);
+                let attempts = 0;
+                const maxAttempts = 3;
+
+                const checkContent = () => {
+                    const newContent = document.querySelector('main') as HTMLElement || document.body.children[0] as HTMLElement;
+
+                    if (newContent && newContent !== mainContentRef.current && newContent.children.length > 0) {
                         resolve();
+                    } else if (attempts < maxAttempts) {
+                        attempts++;
+                        setTimeout(checkContent, 50);
                     } else {
-                        requestAnimationFrame(checkForNewContent);
+                        resolve();
                     }
                 };
 
-                router.push(href);
-                requestAnimationFrame(checkForNewContent);
+                checkContent();
             });
 
             await navigationPromise;
             await animateIn();
+        } catch (error) {
+            console.error('Transition error:', error);
+            const content = document.querySelector('main') as HTMLElement || document.body.children[0] as HTMLElement;
+            if (content) {
+                gsap.set(content, { clearProps: "all" });
+            }
         } finally {
             setIsTransitioning(false);
+            lastClickedHref.current = "";
         }
     };
-
-    useEffect(() => {
-        return () => {
-            setIsTransitioning(false);
-        };
-    }, []);
 
     return (
         <Link

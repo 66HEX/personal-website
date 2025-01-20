@@ -4,11 +4,25 @@ import { RoundedBox } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 
 export function RubiksCubeModel(props) {
-    const size = 1;
+    const [size, setSize] = useState(0.8)
     const gap = 0.01;
     const radius = 0.125;
     const animationDuration = 1.2;
     const mainGroupRef = useRef();
+    const isMobile = window.innerWidth < 768;
+
+
+    useEffect(() => {
+        const updateSize = () => {
+            setSize(window.innerWidth >= 768 ? 1 : 0.8)
+        }
+
+        updateSize()
+
+        window.addEventListener('resize', updateSize)
+
+        return () => window.removeEventListener('resize', updateSize)
+    }, [])
 
     const initializeCubes = () => {
         const initial = [];
@@ -229,6 +243,23 @@ export function RubiksCubeModel(props) {
         envMapIntensity: 3.5
     };
 
+    const [smoothness, setSmoothness] = useState(4);
+    const [castShadow, setCastShadow] = useState(true);
+    const [receiveShadow, setReceiveShadow] = useState(true);
+
+    useEffect(() => {
+        const updateDeviceSettings = () => {
+            const isMobile = window.innerWidth < 768;
+            setSmoothness(isMobile ? 2 : 4);
+            setCastShadow(!isMobile);
+            setReceiveShadow(!isMobile);
+        }
+
+        updateDeviceSettings();
+        window.addEventListener('resize', updateDeviceSettings);
+        return () => window.removeEventListener('resize', updateDeviceSettings);
+    }, []);
+
     return (
         <group ref={mainGroupRef} {...props}>
             {cubes.map((cube, index) => (
@@ -244,9 +275,9 @@ export function RubiksCubeModel(props) {
                     <RoundedBox
                         args={[size, size, size]}
                         radius={radius}
-                        smoothness={4}
-                        castShadow
-                        receiveShadow
+                        smoothness={smoothness}
+                        castShadow={castShadow}
+                        receiveShadow={receiveShadow}
                     >
                         <meshPhysicalMaterial {...chromeMaterial} />
                     </RoundedBox>

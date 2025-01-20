@@ -1,8 +1,8 @@
 'use client'
 
-import {Canvas} from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { PerspectiveCamera, Environment } from '@react-three/drei'
-import { Suspense } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
 import RubiksCubeModel from "@/app/components/Scene/Cube/cube";
 
@@ -15,11 +15,26 @@ function CameraController() {
 }
 
 export default function Scene() {
+    const [isDesktop, setIsDesktop] = useState(true)
+
+    useEffect(() => {
+        const checkIsDesktop = () => {
+            setIsDesktop(window.innerWidth >= 768)
+        }
+
+        checkIsDesktop()
+
+        window.addEventListener('resize', checkIsDesktop)
+
+        // Cleanup
+        return () => window.removeEventListener('resize', checkIsDesktop)
+    }, [])
+
     return (
         <div className="h-full w-full relative">
             <Canvas
                 gl={{
-                    antialias: true,
+                    antialias: isDesktop,
                     preserveDrawingBuffer: true,
                     powerPreference: 'high-performance',
                     alpha: true,

@@ -12,8 +12,8 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
         const buttonRefEnterHandler = () => {
             gsap.to(buttonRef, {
                 color: '#ffffff',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                duration: 0.25,
+                backgroundColor: 'rgba(255, 255, 255, 0.075)',
+                duration: 0.2,
                 ease: "linear",
             });
         };
@@ -22,7 +22,7 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
             gsap.to(buttonRef, {
                 color: '#ffffff',
                 backgroundColor: 'rgba(255, 255, 255, 0.025)',
-                duration: 0.25,
+                duration: 0.2,
                 ease: "linear",
             });
         };
@@ -39,8 +39,8 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
         const buttonRef2EnterHandler = () => {
             gsap.to(buttonRef2, {
                 color: '#ffffff',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                duration: 0.25,
+                backgroundColor: 'rgba(255, 255, 255, 0.075)',
+                duration: 0.2,
                 ease: "linear",
             });
         };
@@ -49,7 +49,7 @@ export const initializeButtonAnimation = ({ buttonRef, buttonRef2 }: ButtonAnima
             gsap.to(buttonRef2, {
                 color: '#ffffff',
                 backgroundColor: 'rgba(255, 255, 255, 0.025)',
-                duration: 0.25,
+                duration: 0.2,
                 ease: "linear",
             });
         };

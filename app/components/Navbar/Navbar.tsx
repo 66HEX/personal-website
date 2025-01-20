@@ -100,7 +100,7 @@ export default function Navbar() {
 
                     <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center flex-1">
                         <div
-                            className="relative flex items-center gap-8 px-6 py-3 bg-icon border border-border-outer backdrop-blur-3xl rounded-icon overflow-hidden"
+                            className="relative flex items-center gap-8 px-6 py-3 bg-icon border border-border-outer backdrop-blur-xl rounded-icon overflow-hidden"
                             aria-label="Desktop navigation"
                         >
                             {menuItems.map((item) => (

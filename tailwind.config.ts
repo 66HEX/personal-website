@@ -11,13 +11,13 @@ export default {
       colors: {
         background: '#000000',
         "icon": 'rgba(255,255,255,0.00125)',
-        "line": 'rgba(255,255,255,0.1)',
-        "border-outer": 'rgba(255,255,255,0.1)',
+        "line": 'rgba(255,255,255,0.15)',
+        "border-outer": 'rgba(255,255,255,0.15)',
         "border-inner": 'rgba(255,255,255,0.075)',
-        "card-gradient-darker": 'rgba(255,255,255,0.05)',
-        "card-gradient-lighter": 'rgba(255,255,255,0.025)',
+        "card-gradient-darker": 'rgba(255,255,255,0.075)',
+        "card-gradient-lighter": 'rgba(255,255,255,0.05)',
         "text-white": '#f7f8f8',
-        "text-gray": '#8a8f98',
+        "text-gray": 'rgba(247,248,248,0.5)',
       },
       fontFamily: {
         sans: ['var(--font-lausanne)']

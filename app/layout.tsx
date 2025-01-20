@@ -5,6 +5,7 @@ import Navbar from "@/app/components/Navbar/Navbar";
 import Footer from "@/app/components/Footer/Footer";
 
 import localFont from 'next/font/local'
+import { Viewport } from 'next'
 
 export const metadata: Metadata = {
     title: "Hex - Web Developer + Designer",
@@ -43,6 +44,14 @@ export const metadata: Metadata = {
         description: "Crafting captivating, modern web experiences using cutting-edge technologies. Check out my portfolio.",
         images: "https://hexthecoder.pl/images/about-photo.png",
     },
+};
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    minimumScale: 1,
+    maximumScale: 1,
+    userScalable: false
 };
 
 const lausanne = localFont({
@@ -265,8 +274,8 @@ export default function RootLayout({
           <Navbar/>
           <main id="page-transition">
               {children}
+              <Footer/>
           </main>
-          <Footer/>
       </SmoothScrolling>
       </body>
     </html>

@@ -34,7 +34,7 @@ export default function WorksPage() {
                                 <div className="grid grid-cols-1 tracking-tight py-4 md:py-8">
                                     <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                                         <div className="flex-grow">
-                                            <p className="text-2xl md:text-5xl font-[750] text-text-gray ">
+                                            <p className="text-2xl md:text-5xl font-[750] text-text-white">
                                                 {project.title}
                                             </p>
                                         </div>

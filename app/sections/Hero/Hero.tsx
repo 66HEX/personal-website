@@ -75,7 +75,7 @@ export default function HeroSection() {
                         </div>
                     </OuterCard>
                     <div
-                        className="relative w-full h-full min-h-[400px]">
+                        className="relative w-full h-full min-h-[300px]">
                         <Scene/>
                     </div>
                 </div>

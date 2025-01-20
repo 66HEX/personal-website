@@ -5,7 +5,6 @@ import { works } from "@/app/data/worksData";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import Image from "next/image";
 import { File, Folder} from "lucide-react";
-import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import OuterCard from "@/app/components/OuterCard/outerCard";
 import InnerCard from "@/app/components/InnerCard/innerCard";
 import IconCard from "@/app/components/IconCard/iconCard";
@@ -16,15 +15,6 @@ import GradientHeader from "@/app/components/GradientHeader/gradientHeader";
 
 
 export default function SelectedWorks() {
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
-
-    useEffect(() => {
-        const cleanup = initializeButtonAnimation({
-            buttonRef: buttonRef.current
-        });
-
-        return cleanup;
-    }, []);
 
     return (
         <section className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white relative">

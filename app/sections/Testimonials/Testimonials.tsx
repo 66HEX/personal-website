@@ -1,7 +1,6 @@
 "use client";
 
-import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { testimonialsData } from '@/app/data/testimonialsData';
 import { ChevronLeft, ChevronRight, UsersRound } from "lucide-react";
 import OuterCard from "@/app/components/OuterCard/outerCard";
@@ -9,11 +8,10 @@ import Marquee from "@/app/components/Marquee/marquee";
 import IconCard from "@/app/components/IconCard/iconCard";
 import Badge from "@/app/components/Badge/badge";
 import GradientHeader from "@/app/components/GradientHeader/gradientHeader";
+import Button, { ButtonVariant } from "@/app/components/Button/button";
 
 const Testimonials: React.FC = () => {
     const marqueRef = useRef<any>(null);
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
-    const buttonRef2 = useRef<HTMLButtonElement | null>(null);
     const [currentPosition, setCurrentPosition] = useState(0);
 
     const handleScroll = (direction: 'left' | 'right') => {
@@ -35,15 +33,6 @@ const Testimonials: React.FC = () => {
             setCurrentPosition(index);
         }
     };
-
-    useEffect(() => {
-        const cleanup = initializeButtonAnimation({
-            buttonRef: buttonRef.current,
-            buttonRef2: buttonRef2.current
-        });
-
-        return cleanup;
-    }, []);
 
     return (
         <section id="testimonials" className="w-screen text-text-white px-4 lg:px-24 py-12 lg:py-24 flex flex-col justify-center items-start relative">
@@ -85,22 +74,20 @@ const Testimonials: React.FC = () => {
                             ))}
                         </div>
                         <div className="flex gap-2">
-                            <button
-                                ref={buttonRef}
+                            <Button
+                                variant={ButtonVariant.Testimonial}
                                 onClick={() => handleScroll('left')}
-                                className="p-2 bg-icon border border-border-inner rounded-icon"
                                 aria-label="Previous testimonials"
                             >
                                 <ChevronLeft className="w-6 h-6"/>
-                            </button>
-                            <button
-                                ref={buttonRef2}
+                            </Button>
+                            <Button
+                                variant={ButtonVariant.Testimonial}
                                 onClick={() => handleScroll('right')}
-                                className="p-2 bg-icon border border-border-inner rounded-icon"
                                 aria-label="Next testimonials"
                             >
                                 <ChevronRight className="w-6 h-6"/>
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </OuterCard>

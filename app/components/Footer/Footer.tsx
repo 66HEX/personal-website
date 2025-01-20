@@ -43,7 +43,7 @@ export default function Footer() {
                 <div className="relative mb-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
                         <div className="md:col-span-6 lg:col-span-8">
-                            <div className="space-y-6">
+                            <div className="space-y-6 mb-8">
                                 <TransitionLink href={"/"}>
                                     <div className="flex items-center gap-4 md:gap-6">
                                         <div
@@ -51,8 +51,8 @@ export default function Footer() {
                                             <Image
                                                 src="/logo/hex-logo.svg"
                                                 alt="Logo"
-                                                width={32}
-                                                height={32}
+                                                width={24}
+                                                height={24}
                                             />
                                         </div>
                                         <h2 className="text-xl font-[750] tracking-tight leading-none text-text-white">
@@ -69,7 +69,7 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        <div className="md:col-span-6 lg:col-span-4 grid grid-cols-2 gap-8 md:gap-16">
+                        <div className="md:col-span-6 lg:col-span-4 grid grid-cols-2 gap-8 md:gap-16 mb-8">
                             <nav aria-label="Main navigation">
                                 <div className="text-sm font-[500] w-fit mb-4">
                                     Navigation

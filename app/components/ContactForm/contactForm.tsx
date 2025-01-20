@@ -1,12 +1,12 @@
 "use client";
 
 import { animateStatusMessage } from "@/app/animations/contactPageAnimations";
-import { initializeButtonAnimation } from "@/app/animations/buttonHoverAnimation";
 import { useEffect, useRef, useState } from "react";
 import { Mail, Send } from "lucide-react";
 import OuterCard from "@/app/components/OuterCard/outerCard";
 import IconCard from "@/app/components/IconCard/iconCard";
 import Badge from "@/app/components/Badge/badge";
+import Button, { ButtonVariant } from "@/app/components/Button/button";
 
 interface FormData {
     name: string;
@@ -15,7 +15,6 @@ interface FormData {
 }
 
 const ContactForm = () => {
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
     const statusRef = useRef<HTMLDivElement>(null);
     const [formData, setFormData] = useState<FormData>({
         name: "",
@@ -27,14 +26,6 @@ const ContactForm = () => {
         type: "success" | "error" | "";
     }>({ message: "", type: "" });
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    useEffect(() => {
-        const cleanup = initializeButtonAnimation({
-            buttonRef: buttonRef.current,
-        });
-
-        return cleanup;
-    }, []);
 
     useEffect(() => {
         if (status.message && statusRef.current) {
@@ -155,17 +146,16 @@ const ContactForm = () => {
                         </div>
                     </div>
 
-                    <button
-                        ref={buttonRef}
+                    <Button
+                        variant={ButtonVariant.Contact}
                         type="submit"
                         disabled={isSubmitting}
-                        className="group flex items-center justify-center gap-3 mt-4 w-full p-3 bg-icon border border-border-inner rounded-icon disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <span className="text-sm font-[500] tracking-tight text-text-white">
                             {isSubmitting ? "Sending..." : "Send Message"}
                         </span>
                         <Send className="w-5 h-5 text-text-gray" />
-                    </button>
+                    </Button>
                 </form>
             </OuterCard>
 

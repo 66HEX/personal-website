@@ -72,25 +72,7 @@ const Marquee = forwardRef((props: { onPositionChange?: (position: number) => vo
                 }
             }
         });
-
-        const handleResize = () => {
-            const newWidth = calculateCardWidth();
-            setCardWidth(newWidth);
-
-            if (contentRef.current) {
-                loopInstance.current?.kill();
-                loopInstance.current = horizontalLoop('.testimonial-card', {
-                    paused: true,
-                    paddingRight: getSpacing(),
-                });
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-            loopInstance.current?.kill();
-        };
+        
     }, []);
 
     const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];

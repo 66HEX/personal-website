@@ -38,12 +38,12 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="w-screen px-4 lg:px-24 py-12 lg:py-24 text-text-white border-t border-line bg-background">
+        <footer className="w-screen px-4 lg:px-24 py-8 lg:py-24 text-text-white border-t border-line bg-background">
             <div className="w-full h-full relative">
                 <div className="relative mb-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
                         <div className="md:col-span-6 lg:col-span-8">
-                            <div className="space-y-6 mb-8">
+                            <div className="space-y-6 mb-4">
                                 <TransitionLink href={"/"}>
                                     <div className="flex items-center gap-4 md:gap-6">
                                         <div
@@ -60,7 +60,7 @@ export default function Footer() {
                                         </h2>
                                     </div>
                                 </TransitionLink>
-                                <p className="font-[500] text-sm text-text-gray leading-relaxed max-w-lg">
+                                <p className="font-[500] text-sm text-text-gray leading-relaxed max-w-lg mr-12">
                                     Creative front-end developer with a passion for pushing web technologies to their
                                     limits. Combining modern frameworks, responsive design principles, and creative
                                     problem-solving

@@ -72,7 +72,7 @@ const Marquee = forwardRef((props: { onPositionChange?: (position: number) => vo
                 }
             }
         });
-        
+
     }, []);
 
     const items = [...testimonialsData, ...testimonialsData, ...testimonialsData];

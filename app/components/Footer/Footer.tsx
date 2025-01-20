@@ -42,7 +42,7 @@ export default function Footer() {
             <div className="w-full h-full relative">
                 <div className="relative mb-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
-                        <div className="md:col-span-6 lg:col-span-8">
+                        <div className="md:col-span-6 lg:col-span-6">
                             <div className="space-y-6 mb-4">
                                 <TransitionLink href={"/"}>
                                     <div className="flex items-center gap-4 md:gap-6">
@@ -69,7 +69,7 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        <div className="md:col-span-6 lg:col-span-4 grid grid-cols-2 gap-8 md:gap-16 mb-8">
+                        <div className="md:col-span-6 lg:col-span-6 grid grid-cols-3 gap-8 md:gap-16 mb-8">
                             <nav aria-label="Main navigation">
                                 <div className="text-sm font-[500] w-fit mb-4">
                                     Navigation
@@ -103,6 +103,17 @@ export default function Footer() {
                                             {link.label}
                                         </Link>
                                     ))}
+                                </div>
+                            </div>
+
+                            <div aria-label="Location information">
+                                <div className="text-sm font-[500] w-fit mb-4">
+                                    Location
+                                </div>
+                                <div className="flex flex-col gap-2 font-[500]">
+                                    <span className="text-sm text-text-gray">
+                                        Warsaw, PL
+                                    </span>
                                 </div>
                             </div>
                         </div>

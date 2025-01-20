@@ -99,7 +99,7 @@ export const TransitionLink: React.FC<TransitionLinkProps> = ({
                 router.push(href);
 
                 let attempts = 0;
-                const maxAttempts = 3;
+                const maxAttempts = 5;
 
                 const checkContent = () => {
                     const newContent = document.querySelector('main') as HTMLElement || document.body.children[0] as HTMLElement;

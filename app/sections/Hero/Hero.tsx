@@ -39,7 +39,7 @@ export default function HeroSection() {
                             interactions. Let's transform your vision into reality.
                         </p>
 
-                        <div className="flex flex-row gap-4 mb-12">
+                        <div className="flex flex-row gap-4">
                             <TransitionLink href="/works">
                                 <Button variant={ButtonVariant.Primary}>
                                     Explore Work

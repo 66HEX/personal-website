@@ -17,7 +17,7 @@ export default {
         "card-gradient-darker": 'rgba(255,255,255,0.075)',
         "card-gradient-lighter": 'rgba(255,255,255,0.05)',
         "text-white": '#f7f8f8',
-        "text-gray": 'rgba(247,248,248,0.5)',
+        "text-gray": 'rgba(247,248,248,0.7)',
       },
       fontFamily: {
         sans: ['var(--font-lausanne)']

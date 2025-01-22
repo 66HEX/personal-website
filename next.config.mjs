@@ -1,5 +1,7 @@
+cat > next.config.mjs << 'EOF'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'standalone',
     images: {
         formats: ['image/webp'],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -10,7 +12,6 @@ const nextConfig = {
             test: /\.svg$/,
             use: ['@svgr/webpack']
         });
-
         config.optimization = {
             ...config.optimization,
             moduleIds: 'deterministic',
@@ -50,12 +51,10 @@ const nextConfig = {
                 },
             },
         };
-
         if (!dev && !isServer) {
             config.optimization.minimize = true;
             config.optimization.concatenateModules = true;
         }
-
         return config;
     },
     poweredByHeader: false,
@@ -63,5 +62,5 @@ const nextConfig = {
     compress: true,
     productionBrowserSourceMaps: false,
 };
-
 export default nextConfig;
+EOF

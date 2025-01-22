@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'standalone', // Dodana linia na początku
     images: {
         formats: ['image/webp'],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -10,7 +11,6 @@ const nextConfig = {
             test: /\.svg$/,
             use: ['@svgr/webpack']
         });
-
         config.optimization = {
             ...config.optimization,
             moduleIds: 'deterministic',
@@ -50,12 +50,10 @@ const nextConfig = {
                 },
             },
         };
-
         if (!dev && !isServer) {
             config.optimization.minimize = true;
             config.optimization.concatenateModules = true;
         }
-
         return config;
     },
     poweredByHeader: false,

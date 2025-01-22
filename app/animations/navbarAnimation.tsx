@@ -73,13 +73,19 @@ export const navbarAnimation = ({
                 transformOrigin: "center center"
             }, 0)
             .to(menuRef.current, {
-                height: "auto",
                 opacity: 1,
                 backdropFilter: "blur(16px)",
                 duration: 0.45,
                 border: "1px solid rgba(255,255,255,0.1)",
                 ease: "customEase"
-            }, 0);
+            }, 0)
+            .to(menuRef.current, {
+                height: "auto",
+                duration: 0.45,
+                border: "1px solid rgba(255,255,255,0.1)",
+                ease: "customEase"
+            }, 0.1);
+
 
         return menuTimeline.current;
     };

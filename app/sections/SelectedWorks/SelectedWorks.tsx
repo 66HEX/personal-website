@@ -35,7 +35,7 @@ export default function SelectedWorks() {
                         normalText="Featured projects"
                         gradientText="and achievements"
                     />
-                    <p className="text-base font-[500] tracking-tight text-text-gray leading-relaxed">
+                    <p className="text-base font-[400] tracking-tight text-text-gray leading-relaxed">
                         Showcasing selected web applications and interfaces built with modern technologies,
                         demonstrating
                         creativity and technical expertise in real-world projects
@@ -78,7 +78,7 @@ export default function SelectedWorks() {
                                         <h3 className="text-xl font-[750] tracking-tight leading-none mb-4 text-text-white">
                                             {project.title}
                                         </h3>
-                                        <p className="text-sm font-[500] tracking-tight text-text-gray leading-relaxed">
+                                        <p className="text-sm font-[400] tracking-tight text-text-gray leading-relaxed">
                                             {project.description[0].split('.')[0]}.
                                         </p>
                                     </div>
@@ -87,7 +87,7 @@ export default function SelectedWorks() {
                                         <div className="flex flex-wrap gap-2">
                                             {project.liveLink && (
                                                 <div
-                                                    className="px-3 py-1 text-xs font-[500] bg-green-700/10 border border-green-600/20 text-green-600 rounded-full">
+                                                    className="px-3 py-1 text-xs font-[400] bg-green-700/10 border border-green-600/20 text-green-600 rounded-full">
                                                     Live Project
                                                 </div>
                                             )}

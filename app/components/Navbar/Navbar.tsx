@@ -4,32 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import { navbarAnimation } from '@/app/animations/navbarAnimation';
 import Image from "next/image";
-import Link from "next/link";
 import IconCard from "@/app/components/IconCard/iconCard";
-import Badge from "@/app/components/Badge/badge";
-
-const socialLinks = [
-    {
-        href: "https://www.linkedin.com/in/marek-j%C3%B3%C5%BAwiak-29958132a/",
-        label: "LinkedIn",
-        ariaLabel: "Visit LinkedIn profile"
-    },
-    {
-        href: "https://www.instagram.com/hexthecoder/",
-        label: "Instagram",
-        ariaLabel: "Visit Instagram profile"
-    },
-    {
-        href: "https://github.com/66HEX/",
-        label: "Github",
-        ariaLabel: "Visit Github profile"
-    },
-    {
-        href: "mailto:hexthecoder@gmail.com",
-        label: "Email",
-        ariaLabel: "Send an email"
-    },
-];
 
 const menuItems = [
     { href: "/", label: "Home" },
@@ -44,17 +19,11 @@ export default function Navbar() {
     const toggleButtonRef = useRef(null);
     const toggleButtonLine1Ref = useRef(null);
     const toggleButtonLine2Ref = useRef(null);
-    const menuItemsContainerRef = useRef(null);
-    const socialMenuContainerRef = useRef(null);
-    const contactMenuContainerRef = useRef(null);
 
     const { toggleMenu, initializeAnimation } = navbarAnimation({
         toggleButtonLine1Ref,
         toggleButtonLine2Ref,
         menuRef,
-        menuItemsContainerRef,
-        socialMenuContainerRef,
-        contactMenuContainerRef,
         isMenuOpen
     });
 
@@ -88,7 +57,7 @@ export default function Navbar() {
             <nav className="absolute inset-0 mx-auto px-4" aria-label="Main navigation">
                 <div className="w-full flex items-center justify-between md:justify-start relative">
                     <TransitionLink href={"/"}>
-                        <IconCard className="backdrop-blur-3xl">
+                        <IconCard className="backdrop-blur-3xl z-50">
                             <Image
                                 src="/logo/hex-logo.svg"
                                 alt="Logo"
@@ -107,7 +76,7 @@ export default function Navbar() {
                                 <TransitionLink
                                     key={item.href}
                                     href={item.href}
-                                    className="text-base text-text-gray hover:text-white transition-colors duration-300 font-[500]"
+                                    className="text-base text-text-gray hover:text-white transition-colors duration-300 font-[400]"
                                     aria-label={`Navigate to ${item.label} page`}
                                     onTransitionStart={handleTransitionStart}
                                 >
@@ -128,12 +97,12 @@ export default function Navbar() {
                     >
                         <div
                             ref={toggleButtonLine1Ref}
-                            className="absolute w-6 border-[1.5px] border-text-white top-[40%] left-1/2 transform -translate-x-1/2 rounded-sm origin-center"
+                            className="absolute w-6 border border-text-white top-[40%] left-1/2 transform -translate-x-1/2 rounded-sm origin-center"
                             aria-hidden="true"
                         ></div>
                         <div
                             ref={toggleButtonLine2Ref}
-                            className="absolute w-6 border-[1.5px] border-text-white top-[60%] left-1/2 transform -translate-x-1/2 rounded-sm origin-center"
+                            className="absolute w-6 border border-text-white top-[60%] left-1/2 transform -translate-x-1/2 rounded-sm origin-center"
                             aria-hidden="true"
                         ></div>
                     </button>
@@ -142,95 +111,30 @@ export default function Navbar() {
 
             <div
                 ref={menuRef}
-                style={{opacity: 0}}
-                className="fixed right-0 top-0 w-3/5 min-h-svh h-full py-20 px-4 md:hidden rounded-l-outer-card  bg-background z-30 overflow-y-auto"
+                style={{ height: 0, opacity: 0}}
+                className="fixed right-2 left-2 top-2 px-4 md:hidden  bg-background/40 border border-transparent rounded-icon z-30 overflow-y-auto"
                 aria-modal="true"
                 aria-label="Mobile navigation menu"
                 id="mobile-menu"
             >
-                <div className="absolute inset-0 rounded-l-outer-card">
-                    <div className="absolute w-full h-1/2 rounded-l-outer-card opacity-50 blur-md bg-gradient-to-b from-card-gradient-darker to-transparent"/>
-                </div>
-                <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-darker to-transparent rounded-l-outer-card"/>
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent rounded-l-outer-card"/>
-
                 <div className="flex flex-col gap-4">
                     <div
-                        ref={menuItemsContainerRef}
-                        className="flex flex-col items-start justify-start gap-6 p-4 border border-border-outer bg-icon rounded-outer-card relative"
+                        className="flex flex-col items-start justify-start gap-6 pb-12 pt-24 bg-icon relative"
                         aria-label="Mobile navigation links"
                     >
-                        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-darker to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-                        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent rounded-outer-card pointer-events-none"/>
-                        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-card-gradient-lighter to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-                        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-card-gradient-lighter to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-
-                        <Badge
-                            className="ml-auto">
-                            Navigation
-                        </Badge>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-4">
                             {menuItems.map((item) => (
                                 <TransitionLink
                                     key={item.href}
                                     href={item.href}
                                     onTransitionStart={handleTransitionStart}
-                                    className="text-lg text-text-white font-[300]"
+                                    className="text-sm text-text-gray hover:text-white transition-colors duration-300 font-[400]"
                                     aria-label={`Navigate to ${item.label} page`}
                                 >
                                     {item.label}
                                 </TransitionLink>
                             ))}
                         </div>
-                    </div>
-
-                    <div
-                        ref={socialMenuContainerRef}
-                        className="relative flex flex-col items-start justify-start gap-6 p-4 border bg-icon border-border-outer rounded-outer-card pointer-events-none pointer-events-none">
-                        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-darker to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-                        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent rounded-outer-card pointer-events-none"/>
-                        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-card-gradient-lighter to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-                        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-card-gradient-lighter to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-
-                        <Badge
-                            className="ml-auto w-fit">
-                            Socials
-                        </Badge>
-                        <div className="flex flex-col gap-2">
-                            {socialLinks.map((link) => (
-                                <Link
-                                    key={link.href}
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-lg text-text-white font-[300]"
-                                    aria-label={link.ariaLabel}
-                                >
-                                    {link.label}
-                                </Link>
-                            ))}
-                        </div>
-
-                    </div>
-
-                    <div
-                        ref={contactMenuContainerRef}
-                        className="p-4 flex flex-col gap-6 border bg-icon border-border-outer rounded-outer-card relative">
-                        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-darker to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-                        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent rounded-outer-card pointer-events-none"/>
-                        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-card-gradient-lighter to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-                        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-card-gradient-lighter to-transparent opacity-50 rounded-outer-card pointer-events-none"/>
-
-                        <Badge
-                            className=" w-fit">
-                            Contact
-                        </Badge>
-                        <Link
-                            href="mailto:hexthecoder@gmail.com"
-                            className="text-sm text-text-gray hover:text-text-white transition-colors"
-                        >
-                            hexthecoder@gmail.com
-                        </Link>
                     </div>
                 </div>
             </div>

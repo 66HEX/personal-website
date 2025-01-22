@@ -105,7 +105,7 @@ const ContactForm = () => {
                                 placeholder="Your name"
                                 autoComplete="off"
                                 required
-                                className="w-full text-text-white bg-transparent outline-none text-sm font-[500] tracking-tight"
+                                className="w-full text-text-white bg-transparent outline-none text-sm font-[400] tracking-tight"
                             />
                         </div>
                     </div>
@@ -123,7 +123,7 @@ const ContactForm = () => {
                                 placeholder="Your email address"
                                 autoComplete="off"
                                 required
-                                className="w-full text-text-white bg-transparent outline-none text-sm font-[500] tracking-tight"
+                                className="w-full text-text-white bg-transparent outline-none text-sm font-[400] tracking-tight"
                             />
                         </div>
                     </div>
@@ -141,7 +141,7 @@ const ContactForm = () => {
                                 autoComplete="off"
                                 required
                                 rows={4}
-                                className="w-full text-text-white bg-transparent outline-none resize-none text-sm font-[500] tracking-tight"
+                                className="w-full text-text-white bg-transparent outline-none resize-none text-sm font-[400] tracking-tight"
                             />
                         </div>
                     </div>
@@ -151,7 +151,7 @@ const ContactForm = () => {
                         type="submit"
                         disabled={isSubmitting}
                     >
-                        <span className="text-sm font-[500] tracking-tight text-text-white">
+                        <span className="text-sm font-[400] tracking-tight text-text-white">
                             {isSubmitting ? "Sending..." : "Send Message"}
                         </span>
                         <Send className="w-5 h-5 text-text-gray" />

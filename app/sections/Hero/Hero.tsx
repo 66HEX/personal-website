@@ -22,21 +22,19 @@ export default function HeroSection() {
             />
             <div className="w-full flex flex-col relative">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <OuterCard className="flex flex-col items-start justify-center">
-                        <Badge
-                            className="w-fit ml-auto mb-8">
+                    <OuterCard className="grid grid-cols-1 items-start">
+                        <Badge className="w-fit ml-auto mb-8">
                             <div className="h-1.5 w-1.5 bg-green-600 rounded-full"/>
                             Available for work
                         </Badge>
+
                         <GradientHeader
                             normalText="Creating modern"
                             gradientText="digital experiences"
-                            className="text-4xl md:text-5xl lg:text-6xl font-[750] tracking-tight leading-tight mb-8"
                         />
 
-                        <p className="text-lg font-[500] tracking-tight leading-relaxed text-text-gray mb-12">
-                            Specialized in creating engaging web experiences that combine clean design with smooth
-                            interactions. Let's transform your vision into reality.
+                        <p className="text-base font-[400] tracking-tight leading-relaxed text-text-gray mb-12 max-w-lg">
+                            Specialized in creating engaging web experiences that combine clean design with smooth interactions. Let's transform your vision into reality.
                         </p>
 
                         <div className="flex flex-row gap-4">

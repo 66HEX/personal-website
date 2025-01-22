@@ -43,7 +43,7 @@ export default function WorksPage() {
                                             className="flex flex-wrap gap-2 lg:justify-end lg:flex-nowrap items-center">
                                             {project.liveLink && (
                                                 <div
-                                                    className="px-3 py-1 text-xs font-[500] bg-green-700/10 border border-green-600/20 text-green-600 backdrop-blur-sm rounded-full">
+                                                    className="px-3 py-1 text-xs font-[400] bg-green-700/10 border border-green-600/20 text-green-600 backdrop-blur-sm rounded-full">
                                                     Live Project
                                                 </div>
                                             )}

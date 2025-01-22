@@ -9,7 +9,7 @@ interface GradientHeaderProps {
 const GradientHeader = ({
                             normalText,
                             gradientText,
-                            className = 'text-3xl sm:text-5xl font-[750] tracking-tight mb-4 lg:mb-6 '
+                            className = 'text-3xl sm:text-5xl font-[750] tracking-tight mb-4 lg:mb-6'
                         }: GradientHeaderProps) => {
     return (
         <h2 className={className}>

@@ -15,7 +15,7 @@ const Badge = ({ children, className = '' }: BadgeProps) => {
                 rounded-full
                 backdrop-blur-sm 
                 px-3 py-1 
-                font-[500] 
+                font-[400] 
                 text-xs 
                 text-text-white
                 overflow-hidden 

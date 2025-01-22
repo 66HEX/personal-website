@@ -35,7 +35,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, width, r
                             </BadgeSmall>
                         </div>
                     </div>
-                    <p className="text-sm font-[500] tracking-tight text-text-gray leading-relaxed mb-8">{testimonial.text}</p>
+                    <p className="text-sm font-[400] tracking-tight text-text-gray leading-relaxed mb-8">{testimonial.text}</p>
                     <div className="mt-auto flex items-center gap-4">
                         <div className="relative">
                             <div className="w-14 h-14 rounded-icon border border-border-outer overflow-hidden">
@@ -44,7 +44,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, width, r
                         </div>
                         <div>
                             <p className="font-[750] md:text-lg text-text-white">{testimonial.author}</p>
-                            <p className="text-xs text-text-gray font-[500]">{testimonial.role}</p>
+                            <p className="text-xs text-text-gray font-[400]">{testimonial.role}</p>
                         </div>
                     </div>
                 </div>

@@ -60,7 +60,7 @@ export default function Footer() {
                                         </h2>
                                     </div>
                                 </TransitionLink>
-                                <p className="font-[500] text-sm text-text-gray leading-relaxed max-w-lg mr-12">
+                                <p className="font-[400] text-sm text-text-gray leading-relaxed max-w-lg mr-12">
                                     Creative front-end developer with a passion for pushing web technologies to their
                                     limits. Combining modern frameworks, responsive design principles, and creative
                                     problem-solving
@@ -71,10 +71,10 @@ export default function Footer() {
 
                         <div className="md:col-span-6 lg:col-span-6 grid grid-cols-3 gap-8 md:gap-16 mb-8">
                             <nav aria-label="Main navigation">
-                                <div className="text-sm font-[500] w-fit mb-4">
+                                <div className="text-sm font-[400] w-fit mb-4">
                                     Navigation
                                 </div>
-                                <div className="flex flex-col gap-2 font-[500]">
+                                <div className="flex flex-col gap-2 font-[400]">
                                     {navLinks.map((nav) => (
                                         <TransitionLink
                                             className="text-sm w-fit text-text-gray hover:text-white transition-colors duration-300"
@@ -88,10 +88,10 @@ export default function Footer() {
                             </nav>
 
                             <div aria-label="Social media links">
-                                <div className="text-sm font-[500] w-fit mb-4">
+                                <div className="text-sm font-[400] w-fit mb-4">
                                     Socials
                                 </div>
-                                <div className="flex flex-col gap-2 font-[500]">
+                                <div className="flex flex-col gap-2 font-[400]">
                                     {socialLinks.map((link) => (
                                         <Link
                                             className="text-sm w-fit text-text-gray hover:text-white transition-colors duration-300"
@@ -107,10 +107,10 @@ export default function Footer() {
                             </div>
 
                             <div aria-label="Location information">
-                                <div className="text-sm font-[500] w-fit mb-4">
+                                <div className="text-sm font-[400] w-fit mb-4">
                                     Location
                                 </div>
-                                <div className="flex flex-col gap-2 font-[500]">
+                                <div className="flex flex-col gap-2 font-[400]">
                                     <span className="text-sm text-text-gray">
                                         Warsaw, PL
                                     </span>
@@ -121,10 +121,10 @@ export default function Footer() {
                 </div>
 
                 <div className="flex flex-wrap gap-2 justify-between items-center border-t border-line pt-8">
-                    <div className="text-xs font-[500]">
+                    <div className="text-xs font-[400]">
                         ©{currentYear} Marek Jóźwiak
                     </div>
-                    <div className="text-xs font-[500]">
+                    <div className="text-xs font-[400]">
                         All rights reserved.
                     </div>
                 </div>

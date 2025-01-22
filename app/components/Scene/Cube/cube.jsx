@@ -9,8 +9,6 @@ export function RubiksCubeModel(props) {
     const radius = 0.125;
     const animationDuration = 1.2;
     const mainGroupRef = useRef();
-    const isMobile = window.innerWidth < 768;
-
 
     useEffect(() => {
         const updateSize = () => {

@@ -22,8 +22,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const buttonStyles: Record<ButtonVariant, string> = {
-    [ButtonVariant.Primary]: 'inline-flex items-center justify-center px-6 py-3 text-sm font-[500] bg-text-white text-background border border-border-outer rounded-icon',
-    [ButtonVariant.Secondary]: 'inline-flex items-center justify-center px-6 py-3 text-sm font-[500] bg-icon border border-border-outer rounded-icon',
+    [ButtonVariant.Primary]: 'inline-flex items-center justify-center px-6 py-3 text-sm font-[400] bg-text-white text-background border border-border-outer rounded-icon',
+    [ButtonVariant.Secondary]: 'inline-flex items-center justify-center px-6 py-3 text-sm font-[400] bg-icon border border-border-outer rounded-icon',
     [ButtonVariant.Testimonial]: 'p-2 bg-icon border border-border-inner rounded-icon',
     [ButtonVariant.Works]: 'flex items-center gap-3 p-3 bg-icon border border-border-inner rounded-icon',
     [ButtonVariant.About]: 'flex items-center justify-center gap-3 p-3 bg-icon border border-border-inner rounded-icon',

@@ -1,5 +1,12 @@
-import { Briefcase, Github, Linkedin, Instagram, Mail, Share2, UserRound} from "lucide-react";
+import { Github, Linkedin, Instagram, Mail } from "lucide-react";
 
+export const description = {
+    paragraphs: [
+        "I'm an emerging front-end developer with a passion for crafting engaging web experiences, while also working as an Electronics Technician specializing in critical infrastructure systems. Over the past 1.5 years, I've immersed myself in modern web development, focusing on React.js and Next.js ecosystems, bringing the same precision and attention to detail from my electronics background to frontend development.",
+        "While my commercial experience spans several successful projects, I approach each new challenge with enthusiasm and dedication. I've worked with TypeScript, Tailwind CSS, and various modern development tools, consistently focusing on writing clean, maintainable code. My rapid growth in the field demonstrates my ability to quickly adapt to new technologies and deliver quality results in dynamic environments.",
+        "I'm deeply committed to expanding my skillset and staying current with frontend development trends. My dedication to continuous learning drives me to explore new technologies and best practices, while my attention to detail ensures high-quality deliverables. I approach each project as an opportunity to both contribute value and enhance my expertise in creating exceptional web experiences."
+    ]
+};
 export const experience = [
     {
         title: "Electronics Technician",

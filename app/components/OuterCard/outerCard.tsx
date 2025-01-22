@@ -18,7 +18,6 @@ const OuterCard = ({ children, className = '' }: CardProps) => {
                 relative 
                 bg-black
                 rounded-outer-card 
-                backdrop-blur-sm 
                 overflow-hidden 
                 border
                 border-border-outer

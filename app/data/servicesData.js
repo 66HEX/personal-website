@@ -27,7 +27,7 @@ export const services = [
         title: "Performance Optimization",
         description: "Enhancing application performance through efficient code, lazy loading, and modern web technologies to ensure fast loading times and smooth interactions.",
         shortDescription: "Speed",
-        features: ["Core Web Vitals", "Lazy Loading", "Code Splitting"]
+        features: ["Web Vitals", "Lazy Loading", "Code Splitting"]
     },
     {
         icon: <Wrench className="w-5 h-5 text-text-white"/>,

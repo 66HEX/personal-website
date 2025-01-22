@@ -28,9 +28,6 @@ interface NavbarAnimationProps {
     toggleButtonLine1Ref: RefObject<HTMLDivElement>;
     toggleButtonLine2Ref: RefObject<HTMLDivElement>;
     menuRef: RefObject<HTMLDivElement>;
-    menuItemsContainerRef: RefObject<HTMLDivElement>;
-    socialMenuContainerRef: RefObject<HTMLDivElement>;
-    contactMenuContainerRef: RefObject<HTMLDivElement>;
     isMenuOpen: boolean;
 }
 
@@ -43,9 +40,6 @@ export const navbarAnimation = ({
                                     toggleButtonLine1Ref,
                                     toggleButtonLine2Ref,
                                     menuRef,
-                                    menuItemsContainerRef,
-                                    socialMenuContainerRef,
-                                    contactMenuContainerRef,
                                     isMenuOpen
                                 }: NavbarAnimationProps): NavbarAnimationReturn => {
     const menuTimeline = useRef<GSAPTimeline>(
@@ -53,14 +47,11 @@ export const navbarAnimation = ({
     );
 
     const initializeAnimation = () => {
-        if (!menuRef.current || !socialMenuContainerRef.current || !contactMenuContainerRef.current) {
+        if (!menuRef.current ) {
             return undefined;
         }
 
-        gsap.set(menuRef.current, { xPercent: 100, opacity: 1 });
-        gsap.set(menuItemsContainerRef.current, { xPercent: 100 });
-        gsap.set(socialMenuContainerRef.current, { xPercent: 100 });
-        gsap.set(contactMenuContainerRef.current, { xPercent: 100 });
+        gsap.set(menuRef.current, { height: 0, opacity: 0});
 
         CustomEase.create("customEase", "0.75,0,0.25,1");
 
@@ -82,25 +73,13 @@ export const navbarAnimation = ({
                 transformOrigin: "center center"
             }, 0)
             .to(menuRef.current, {
-                xPercent: 0,
-                duration: 0.6,
+                height: "auto",
+                opacity: 1,
+                backdropFilter: "blur(16px)",
+                duration: 0.45,
+                border: "1px solid rgba(255,255,255,0.1)",
                 ease: "customEase"
-            }, 0)
-            .to(menuItemsContainerRef.current, {
-                xPercent: 0,
-                duration: 0.6,
-                ease: "customEase"
-            }, ">-0.575")
-            .to(socialMenuContainerRef.current, {
-                xPercent: 0,
-                duration: 0.625,
-                ease: "customEase"
-            }, ">-0.55")
-            .to(contactMenuContainerRef.current, {
-                xPercent: 0,
-                duration: 0.65,
-                ease: "customEase"
-            }, ">-0.525");
+            }, 0);
 
         return menuTimeline.current;
     };

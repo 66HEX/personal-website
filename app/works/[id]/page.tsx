@@ -47,7 +47,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                             <span className="text-sm font-[750] tracking-tight leading-none text-text-white">
                                                 Client:
                                             </span>
-                                            <span className="text-sm font-[500] tracking-tight text-text-gray">
+                                            <span className="text-sm font-[400] tracking-tight text-text-gray">
                                                 {project.client}
                                             </span>
                                         </div>
@@ -55,7 +55,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                             <span className="text-sm font-[750] tracking-tight leading-none text-text-white">
                                                 Year:
                                             </span>
-                                            <span className="text-sm font-[500] tracking-tight text-text-gray">
+                                            <span className="text-sm font-[400] tracking-tight text-text-gray">
                                                 {project.year}
                                             </span>
                                         </div>
@@ -74,7 +74,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                             Description:
                                         </span>
                                         {project.description.map((desc, index) => (
-                                            <span key={index} className="text-sm font-[500] tracking-tight leading-relaxed text-text-gray">
+                                            <span key={index} className="text-sm font-[400] tracking-tight leading-relaxed text-text-gray">
                                                 {desc}
                                             </span>
                                         ))}
@@ -101,7 +101,7 @@ export default function WorkDetailsPage({ params }: { params: { id: string } }) 
                                                     variant={ButtonVariant.Works}
                                                     onClick={() => window.open(project.liveLink, '_blank', 'noopener,noreferrer')}
                                                 >
-                                                    <span className="text-sm font-[500] tracking-tight text-text-white">
+                                                    <span className="text-sm font-[400] tracking-tight text-text-white">
                                                         Visit Website
                                                     </span>
                                                     <ExternalLink className="w-5 h-5 text-text-gray"/>

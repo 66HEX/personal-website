@@ -51,7 +51,7 @@ const Testimonials: React.FC = () => {
                             normalText="Client stories"
                             gradientText="and feedback"
                         />
-                        <p className="text-base font-[500] tracking-tight text-text-gray leading-relaxed">
+                        <p className="text-base font-[400] tracking-tight text-text-gray leading-relaxed">
                             Exploring collaboration experiences and project outcomes through the perspective of clients,
                             highlighting successful partnerships and delivered value
                         </p>

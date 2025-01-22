@@ -10,9 +10,9 @@ export default {
     extend: {
       colors: {
         background: '#000000',
-        "icon": 'rgba(255,255,255,0.00125)',
+        "icon": 'rgba(255,255,255,0.0125)',
         "line": 'rgba(255,255,255,0.15)',
-        "border-outer": 'rgba(255,255,255,0.15)',
+        "border-outer": 'rgba(255,255,255,0.1)',
         "border-inner": 'rgba(255,255,255,0.075)',
         "card-gradient-darker": 'rgba(255,255,255,0.075)',
         "card-gradient-lighter": 'rgba(255,255,255,0.05)',

@@ -36,7 +36,7 @@ export default function Contact() {
                                 </h2>
                                 <div className="flex flex-col gap-4">
                                     <p
-                                        className="text-sm font-[500] tracking-tight text-text-gray leading-relaxed"
+                                        className="text-sm font-[400] tracking-tight text-text-gray leading-relaxed"
                                     >
                                         Have a project in mind? Get in touch and let's create something extraordinary
                                         together.

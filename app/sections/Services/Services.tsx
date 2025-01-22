@@ -27,7 +27,7 @@ export default function Services() {
                         normalText="Building modern web"
                         gradientText="experiences"
                     />
-                    <p className="text-base font-[500] tracking-tight text-text-gray leading-relaxed">
+                    <p className="text-base font-[400] tracking-tight text-text-gray leading-relaxed">
                         Crafting responsive and intuitive user interfaces with React ecosystem, focused on performance
                         and accessibility to deliver engaging web applications
                     </p>

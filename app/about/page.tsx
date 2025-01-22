@@ -6,7 +6,7 @@ import OuterCard from "@/app/components/OuterCard/outerCard";
 import IconCard from "@/app/components/IconCard/iconCard";
 import Badge from "@/app/components/Badge/badge";
 import Button, { ButtonVariant } from "@/app/components/Button/button";
-import { experience, socialLinks } from "@/app/data/aboutData";
+import { experience, socialLinks, description } from "@/app/data/aboutData";
 
 export default function AboutMePage() {
     return (
@@ -30,51 +30,34 @@ export default function AboutMePage() {
 
                                 <div className="flex flex-col">
                                     <div className="flex flex-col gap-8">
-                                        <div className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-line">
+                                        <div
+                                            className="flex flex-col md:flex-row gap-2 md:gap-4 pb-4 border-b border-line">
                                             <div className="flex items-center gap-2">
-                                                <span className="text-sm font-[750] tracking-tight leading-none text-text-white">
+                                                <span
+                                                    className="text-sm font-[750] tracking-tight leading-none text-text-white">
                                                     Name:
                                                 </span>
-                                                <span className="text-sm font-[500] tracking-tight text-text-gray">
+                                                <span className="text-sm font-[400] tracking-tight text-text-gray">
                                                     Marek Jóźwiak
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-sm font-[750] tracking-tight leading-none text-text-white">
+                                                <span
+                                                    className="text-sm font-[750] tracking-tight leading-none text-text-white">
                                                     Focus Area:
                                                 </span>
-                                                <span className="text-sm font-[500] tracking-tight text-text-gray">
+                                                <span className="text-sm font-[400] tracking-tight text-text-gray">
                                                     Front-end Development
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="flex flex-col gap-4">
-                                            <span className="text-sm font-[750] tracking-tight leading-none text-text-white">
-                                                Description:
-                                            </span>
-                                            <span className="text-sm font-[500] tracking-tight leading-relaxed text-text-gray">
-                                                I'm an emerging front-end developer with a passion for crafting engaging
-                                                web experiences. Over the past 1.5 years, I've immersed myself in modern
-                                                web development, focusing on React.js and Next.js ecosystems. My journey
-                                                in tech is driven by a constant desire to learn and grow, turning creative
-                                                concepts into clean, functional, and visually appealing interfaces.
-                                            </span>
-                                            <span className="text-sm font-[500] tracking-tight leading-relaxed text-text-gray">
-                                                While my commercial experience spans several successful projects, I
-                                                approach each new challenge with enthusiasm and dedication. I've worked
-                                                with TypeScript, Tailwind CSS, and various modern development tools,
-                                                consistently focusing on writing clean, maintainable code. My rapid growth in
-                                                the field demonstrates my ability to quickly adapt to new technologies and
-                                                deliver quality results in dynamic environments.
-                                            </span>
-                                            <span className="text-sm font-[500] tracking-tight leading-relaxed text-text-gray">
-                                                I'm deeply committed to expanding my skillset and staying current with
-                                                frontend development trends. My dedication to continuous learning drives
-                                                me to explore new technologies and best practices, while my attention to
-                                                detail ensures high-quality deliverables. I approach each project as an
-                                                opportunity to both contribute value and enhance my expertise in creating
-                                                exceptional web experiences.
-                                            </span>
+                                            {description.paragraphs.map((paragraph, index) => (
+                                                <span key={index}
+                                                      className="text-sm font-[400] tracking-tight leading-relaxed text-text-gray">
+                                                    {paragraph}
+                                                </span>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
@@ -113,15 +96,15 @@ export default function AboutMePage() {
                                                 <h3 className="text-lg font-[750] tracking-tight leading-none mb-2">
                                                     {exp.title}
                                                 </h3>
-                                                <p className="text-sm font-[500] tracking-tight text-text-gray">
+                                                <p className="text-sm font-[400] tracking-tight text-text-gray">
                                                     {exp.company}
                                                 </p>
                                             </div>
                                             <div className="text-right">
-                                                <p className="text-sm font-[500] tracking-tight mb-2">
+                                                <p className="text-sm font-[400] tracking-tight mb-2">
                                                     {exp.period}
                                                 </p>
-                                                <span className="px-2 py-1 text-xs md:text-sm font-[500] bg-white/[0.025] border border-border-inner rounded-full">
+                                                <span className="px-2 py-1 text-xs md:text-sm font-[400] bg-white/[0.025] border border-border-inner rounded-full">
                                                     {exp.type}
                                                 </span>
                                             </div>
@@ -151,7 +134,7 @@ export default function AboutMePage() {
                                                 onClick={() => window.open(link.href, '_blank', 'noopener,noreferrer')}
                                             >
                                                 <link.icon className="w-5 h-5"/>
-                                                <span className="text-sm font-[500] tracking-tight text-text-white">
+                                                <span className="text-sm font-[400] tracking-tight text-text-white">
                                                     {link.label}
                                                 </span>
                                             </Button>

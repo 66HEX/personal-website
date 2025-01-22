@@ -26,7 +26,6 @@ export default function Scene() {
 
         window.addEventListener('resize', checkIsDesktop)
 
-        // Cleanup
         return () => window.removeEventListener('resize', checkIsDesktop)
     }, [])
 

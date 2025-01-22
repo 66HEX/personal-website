@@ -1,7 +1,6 @@
-cat > next.config.mjs << 'EOF'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'standalone',
+    output: 'standalone', // Dodana linia na początku
     images: {
         formats: ['image/webp'],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -62,5 +61,5 @@ const nextConfig = {
     compress: true,
     productionBrowserSourceMaps: false,
 };
+
 export default nextConfig;
-EOF

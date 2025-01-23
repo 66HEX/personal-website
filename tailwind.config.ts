@@ -13,7 +13,7 @@ export default {
         "icon": 'rgba(255,255,255,0.0125)',
         "line": 'rgba(255,255,255,0.15)',
         "border-outer": 'rgba(255,255,255,0.1)',
-        "border-inner": 'rgba(255,255,255,0.075)',
+        "border-inner": 'rgba(255,255,255,0.05)',
         "card-gradient-darker": 'rgba(255,255,255,0.075)',
         "card-gradient-lighter": 'rgba(255,255,255,0.05)',
         "text-white": '#f7f8f8',
@@ -25,6 +25,7 @@ export default {
       borderRadius: {
         "outer-card": '1.5rem',
         "inner-card": '0.75rem',
+        "card": '1.6rem',
         "icon": '0.75rem',
         "icon-small": '0.5rem',
       },

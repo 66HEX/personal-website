@@ -2,10 +2,9 @@
 
 import { RefObject, useRef } from 'react';
 import gsap from 'gsap';
-import { SplitText } from "@/app/libs/gsap/SplitText";
 import { CustomEase } from "gsap/CustomEase";
 
-gsap.registerPlugin(SplitText, CustomEase);
+gsap.registerPlugin( CustomEase );
 
 interface GSAPTimeline {
     clear(): gsap.core.Timeline;

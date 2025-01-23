@@ -29,7 +29,7 @@ const InnerCard = ({ children, className = '', id, style }: CardProps) => {
 
                 <Spotlight
                     className='blur-3xl rounded-card'
-                    size={400}
+                    size={450}
                   />
 
                 {/* Content container */}

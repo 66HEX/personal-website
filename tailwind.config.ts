@@ -23,8 +23,8 @@ export default {
         sans: ['var(--font-lausanne)']
       },
       borderRadius: {
-        "outer-card": '1.5rem',
-        "inner-card": '0.75rem',
+        "outer-card": '1.2rem',
+        "inner-card": '0.8rem',
         "card": '1.5rem',
         "icon": '0.55rem',
         "icon-small": '0.5rem',

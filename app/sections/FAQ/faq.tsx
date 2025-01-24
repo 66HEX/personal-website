@@ -40,7 +40,7 @@ export default function FAQ() {
     }, []);
 
     const toggleQuestion = (index: number): void => {
-        const tl = gsap.timeline({ defaults: { duration: 0.3, ease: "power3.inOut" } });
+        const tl = gsap.timeline({ defaults: { duration: 0.3, ease: "power2.inOut" } });
 
         const previousOpenIndex = openStates.findIndex(isOpen => isOpen);
         const isCurrentlyOpen = openStates[index];

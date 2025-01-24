@@ -4,22 +4,25 @@ A modern, animated portfolio website built with Next.js, TypeScript, and GSAP. T
 
 ## Features
 
-- 🎨 Modern and minimalistic design
-- ✨ Smooth page transitions and animations using GSAP
-- 📱 Fully responsive layout
-- 🔄 Dynamic project showcase with grid/list view
-- 📝 Contact form with email handling via Resend API
-- 💌 Automated email notifications with status feedback
-- 🎯 Custom cursor animations
-- 🎭 Interactive hover effects
-- 🔍 SEO friendly
+- 🚀 Next.js 14 with App Router and TypeScript
+- 💫 GSAP powered animations and page transitions
+- 📱 Fully responsive design with Tailwind CSS
+- 🎯 Dynamic project showcase with detailed views
+- 🎨 Modern and minimalistic UI design
+- 🔍 SEO optimized structure
+- 📬 Contact form with Resend API integration
+- 🌟 Interactive 3D scene using Three.js
+- ✨ Custom hover effects and animations
+- 🎭 Glassmorphism design elements
+- 🔄 Smooth scroll implementation
+- 🎪 Custom component library
 
 ## Technologies Used
 
 - **Framework:** Next.js
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
-- **Animations:** GSAP (with SplitText, ScrollTrigger, CustomEase plugins)
+- **Animations:** GSAP (with CustomEase plugins)
 - **Smooth Scrolling:** @studio-freight/react-lenis
 - **Icons:** Lucide React
 
@@ -27,33 +30,61 @@ A modern, animated portfolio website built with Next.js, TypeScript, and GSAP. T
 
 ```
 src/
-├── app/
-│   ├── about/        # About page components and logic
-│   ├── animations/   # GSAP animation logic and configurations
-│   ├── api/          # API route handlers (contact form, etc.)
-│   ├── components/   # Reusable UI components
-│   ├── contact/      # Contact page components and logic
-│   ├── data/         # Static data and content configuration
-│   ├── fonts/        # Custom font imports
-│   ├── libs/         # Third-party libraries
-│   └── sections/     # Reusable page sections and layouts   
-│   └── works/        # Works page components and logic  
-│       └── [id]/     # Dynamic routes for individual work items
+├── app/                        # Main application directory
+│   ├── about/                 # About page components and routes
+│   ├── animations/            # GSAP animations and transitions
+│   ├── api/                   # API route handlers
+│   │   └── contact/          # Contact form API endpoint
+│   ├── components/           # Reusable UI components
+│   │   ├── Badge/           # Label components
+│   │   ├── BadgeSmall/      # Compact label variant
+│   │   ├── Button/          # Button component with variants
+│   │   ├── ContactForm/     # Form with validation
+│   │   ├── Dot/            # Dot pattern backgrounds
+│   │   ├── FAQItem/        # FAQ accordion items
+│   │   ├── Footer/         # Site footer
+│   │   ├── GradientHeader/ # Gradient text headers
+│   │   ├── HeroOverlay/    # Hero section overlay effects
+│   │   ├── IconCard/       # Icon container cards
+│   │   ├── IconCardSmall/  # Compact icon cards
+│   │   ├── InnerCard/      # Inner content cards
+│   │   ├── Marquee/        # Scrolling content
+│   │   ├── Navbar/         # Navigation bar
+│   │   ├── OuterCard/      # Outer container cards
+│   │   ├── Scene/          # 3D scene components
+│   │   │   └── Cube/       # 3D cube model
+│   │   ├── ServiceCard/    # Service display cards
+│   │   ├── SmoothScrolling/# Smooth scroll wrapper
+│   │   ├── TestimonialCard/# Testimonial components
+│   │   └── TransitionLink/ # Animated page transitions
+│   ├── contact/             # Contact page routes
+│   ├── data/               # Static data and content
+│   ├── fonts/              # Custom font configurations
+│   ├── sections/           # Main page sections
+│   │   ├── FAQ/           # FAQ section
+│   │   ├── Hero/          # Hero section
+│   │   ├── SelectedWorks/ # Featured works
+│   │   ├── Services/      # Services section
+│   │   └── Testimonials/  # Testimonials section
+│   ├── utils/             # Utility functions
+│   │   ├── horizontalLoop.js  # GSAP horizontal scroll animation
+│   │   ├── spotlight.tsx     # Mouse-following spotlight effect
+│   │   └── utils.ts         # Common utility functions
+│   └── works/             # Works page components
+│       └── [id]/          # Dynamic work detail routes
+├── node_modules/          # Project dependencies
+└── public/               # Static assets
+    ├── environments/     # Environment maps
+    ├── images/          # Image assets
+    │   └── works/       # Project images
+    └── logo/            # Logo assets
 ```
-
-## Key Components
-
-- **Navbar:** Responsive navigation with mobile menu
-- **AnimatedLink:** Custom animated link component
-- **TransitionLink:** Page transition handler
-- **SmoothScrolling:** Smooth scroll implementation
-- **Footer:** Site-wide footer with social links
 
 ## Animation Features
 
+- Interactive 3D scene with Three.js
 - Page transition effects
-- Text reveal animations
-- Image hover effects
+- Mouse following spotlight effect
 - Smooth scrolling
 - Interactive button animations
 - Status message animations

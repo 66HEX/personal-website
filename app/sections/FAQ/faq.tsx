@@ -50,7 +50,7 @@ export default function FAQ() {
             const previousFaq = faqRefs.current[previousOpenIndex];
 
             if (previousContent) {
-                tl.to(previousContent, { height: 0 }, 0);
+                tl.to(previousContent, { height: 0, force3D: true }, 0);
             }
 
             if (previousFaq) {
@@ -75,6 +75,7 @@ export default function FAQ() {
         if (currentContent) {
             tl.to(currentContent, {
                 height: isCurrentlyOpen ? 0 : contentHeights.current[index],
+                force3D: true,
             }, 0);
         }
 
@@ -123,7 +124,7 @@ export default function FAQ() {
                         >
                             <button
                                 onClick={() => toggleQuestion(index)}
-                                className="w-full p-6 flex justify-between items-center z-50"
+                                className="w-full p-4 md:p-8 flex justify-between items-center z-50"
                                 aria-expanded={openStates[index]}
                                 aria-controls={`faq-content-${index}`}
                             >
@@ -141,7 +142,7 @@ export default function FAQ() {
                                 style={{height: 0}}
                                 id={`faq-content-${index}`}
                             >
-                                <div className="p-6 pt-0 text-text-gray text-sm">
+                                <div className="p-4 md:px-8 md:pb-8 text-text-gray text-sm">
                                     {item.answer}
                                 </div>
                             </div>

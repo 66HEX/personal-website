@@ -7,7 +7,8 @@ export enum ButtonVariant {
     Testimonial = 'testimonial',
     Works = 'works',
     About = 'about',
-    Contact = 'contact'
+    Contact = 'contact',
+    FAQ = 'faq'
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -27,7 +28,8 @@ const buttonStyles: Record<ButtonVariant, string> = {
     [ButtonVariant.Testimonial]: 'p-2 bg-icon border border-border-inner rounded-icon',
     [ButtonVariant.Works]: 'flex items-center gap-3 p-3 bg-icon border border-border-inner rounded-icon',
     [ButtonVariant.About]: 'flex items-center justify-center gap-3 p-3 bg-icon border border-border-inner rounded-icon',
-    [ButtonVariant.Contact]: 'flex items-center justify-center gap-3 mt-4 w-full p-3 bg-icon border border-border-inner rounded-icon disabled:opacity-50 disabled:cursor-not-allowed'
+    [ButtonVariant.Contact]: 'flex items-center justify-center gap-3 mt-4 w-full p-3 bg-icon border border-border-inner rounded-icon disabled:opacity-50 disabled:cursor-not-allowed',
+    [ButtonVariant.FAQ]: 'inline-flex items-center justify-center px-6 py-3 text-sm font-[400] bg-icon border border-border-outer rounded-icon z-30'
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
@@ -42,7 +44,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
                                                            }, ref) => {
     const internalRef = useRef<HTMLButtonElement>(null);
 
-    // Używamy useImperativeHandle do bezpiecznego przekazania referencji
     useImperativeHandle(ref, () => internalRef.current!, []);
 
     useEffect(() => {
@@ -72,7 +73,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
             enterAnimation = () => {
                 gsap.to(button, {
                     color: '#ffffff',
-                    backgroundColor: 'rgba(255, 255, 255, 0.075)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
                     duration: 0.2,
                     ease: "linear",
                 });

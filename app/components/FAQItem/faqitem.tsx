@@ -1,17 +1,19 @@
 import { Spotlight } from "@/app/utils/spotlight";
-import {CSSProperties, ReactNode, forwardRef, Ref} from "react";
+import {CSSProperties, ReactNode, forwardRef} from "react";
 
-interface CardProps {
+interface FAQItemProps {
     children: ReactNode;
     className?: string;
     id?: string;
     style?: CSSProperties;
-    ref?: Ref<HTMLDivElement>;
 }
 
-const InnerCard = forwardRef<HTMLDivElement, Omit<CardProps, 'ref'>>((props, ref) => {
-    const { children, className = '', id, style } = props;
-
+const FAQItem = forwardRef<HTMLDivElement, FAQItemProps>(({
+    children,
+    className = '',
+    id,
+    style
+}, ref) => {
     return (
         <div
             ref={ref}
@@ -21,11 +23,11 @@ const InnerCard = forwardRef<HTMLDivElement, Omit<CardProps, 'ref'>>((props, ref
         >
             {/* Main card */}
             <div className={`
-                relative 
+                relative
                 bg-black
                 mix-blend-lighten
                 rounded-card
-                overflow-hidden 
+                overflow-hidden
                 p-[1px]
                 ${className}
             `}>
@@ -34,12 +36,12 @@ const InnerCard = forwardRef<HTMLDivElement, Omit<CardProps, 'ref'>>((props, ref
                     size={450}
                   />
                 {/* Content container */}
-                <div className="relative z-0 h-full p-4 md:p-8 bg-black overflow-hidden border border-border-inner rounded-card">
+                <div className="relative z-0 h-full bg-black overflow-hidden border border-border-inner rounded-card">
                     {/* Top gradient */}
-                    <div className="-z-10 absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-lighter to-transparent opacity-80"/>
+                    <div className="-z-10 absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-card-gradient-lighter to-transparent opacity-70"/>
                     {/* Bottom gradient */}
-                    <div className="-z-10 absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent opacity-80"/>
-                    <div className="z-40">
+                    <div className="-z-10 absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-card-gradient-lighter to-transparent opacity-70"/>
+                    <div className="z-20">
                         {children}
                     </div>
                 </div>
@@ -48,6 +50,6 @@ const InnerCard = forwardRef<HTMLDivElement, Omit<CardProps, 'ref'>>((props, ref
     );
 });
 
-InnerCard.displayName = 'InnerCard';
+FAQItem.displayName = 'FAQItem';
 
-export default InnerCard;
+export default FAQItem;

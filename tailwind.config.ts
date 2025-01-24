@@ -11,21 +11,21 @@ export default {
       colors: {
         background: '#000000',
         "icon": 'rgba(255,255,255,0.0125)',
-        "line": 'rgba(255,255,255,0.15)',
+        "line": 'rgba(255,255,255,0.05)',
         "border-outer": 'rgba(255,255,255,0.1)',
-        "border-inner": 'rgba(255,255,255,0.05)',
+        "border-inner": 'rgba(255,255,255,0.075)',
         "card-gradient-darker": 'rgba(255,255,255,0.075)',
         "card-gradient-lighter": 'rgba(255,255,255,0.05)',
         "text-white": '#f7f8f8',
-        "text-gray": 'rgba(247,248,248,0.7)',
+        "text-gray": 'rgba(247,248,248,0.6)',
       },
       fontFamily: {
         sans: ['var(--font-lausanne)']
       },
       borderRadius: {
         "outer-card": '1.5rem',
-        "inner-card": '0.75rem',
-        "card": '1.6rem',
+        "inner-card": '1.6rem',
+        "card": '1.5rem',
         "icon": '0.75rem',
         "icon-small": '0.5rem',
       },

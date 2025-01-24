@@ -1,27 +1,27 @@
 export const works = [
     {
         id: "1",
-        title: "Gym Platform",
-        mainImage: "/images/works/leanbulls1.webp",
-        images: ["/images/works/leanbulls2.webp", "/images/works/leanbulls3.webp"],
-        client: "Lean Bulls Gym",
+        title: "Training Platform",
+        mainImage: "/images/works/nexus1.webp",
+        images: ["/images/works/nexus2.webp", "/images/works/nexus3.webp"],
+        client: "Personal Project",
         year: 2024,
         type: "Front-End Development",
         role: "Front-End Developer",
-        liveLink: "https://www.leanbulls.pl/",
+        liveLink: "https://nexus-eta-six.vercel.app/",
         description: [
-            "The Lean Bulls Gym website provides an engaging and user-friendly platform to explore everything this powerlifting gym has to offer. With detailed information on coaching team, membership options and services, the site serves as a central hub for current and prospective members.",
-            "Built with user convenience at its core, the website features an intuitive design and high-quality visuals that make it effortless to explore membership options, learn about coaching services, and connect with the Lean Bulls community. It acts as an online gateway to the Lean Bulls Gym experience, reflecting its spirit of strength and camaraderie."
+            "Nexus is a premium digital platform concept that combines sophisticated aesthetics with functional design for powerlifting coaching. The project showcases modern web design principles through carefully crafted dark themes, cyan-to-slate gradients, and innovative glassmorphism effects. The interface features striking 3D animated background, interactive progress charts, and custom Three.js animations that add depth and movement to the user experience.",
+            "The design system emphasizes responsive layouts and seamless adaptability across devices. Through its comprehensive feature set including custom preloaders, animated data visualizations, and premium card designs, Nexus demonstrates contemporary web capabilities while maintaining an emphasis on accessible and intuitive user interfaces for the powerlifting community."
         ],
         clientContact: {
-            instagram: "https://www.instagram.com/leanbullsgym/",
-            facebook: "https://www.facebook.com/leanbullsgym/",
-            website: "https://www.leanbulls.pl"
+            github: "https://github.com/66HEX",
+            instagram: "https://instagram.com/hexthecoder",
+            website: "https://www.hexthecoder.pl"
         }
     },
     {
         id: "2",
-        title: "VPN SaaS",
+        title: "VPN Platform",
         mainImage: "/images/works/netguard1.webp",
         images: ["/images/works/netguard2.webp", "/images/works/netguard3.webp"],
         client: "Personal Project",
@@ -41,27 +41,27 @@ export const works = [
     },
     {
         id: "3",
-        title: "Powerlifting SaaS",
-        mainImage: "/images/works/nexus1.webp",
-        images: ["/images/works/nexus2.webp", "/images/works/nexus3.webp"],
-        client: "Personal Project",
+        title: "Gym Website",
+        mainImage: "/images/works/leanbulls1.webp",
+        images: ["/images/works/leanbulls2.webp", "/images/works/leanbulls3.webp"],
+        client: "Lean Bulls Gym",
         year: 2024,
         type: "Front-End Development",
         role: "Front-End Developer",
-        liveLink: "https://nexus-eta-six.vercel.app/",
+        liveLink: "https://www.leanbulls.pl/",
         description: [
-            "Nexus is a premium digital platform concept that combines sophisticated aesthetics with functional design for powerlifting coaching. The project showcases modern web design principles through carefully crafted dark themes, cyan-to-slate gradients, and innovative glassmorphism effects. The interface features striking 3D animated background, interactive progress charts, and custom Three.js animations that add depth and movement to the user experience.",
-            "The design system emphasizes responsive layouts and seamless adaptability across devices. Through its comprehensive feature set including custom preloaders, animated data visualizations, and premium card designs, Nexus demonstrates contemporary web capabilities while maintaining an emphasis on accessible and intuitive user interfaces for the powerlifting community."
+            "The Lean Bulls Gym website provides an engaging and user-friendly platform to explore everything this powerlifting gym has to offer. With detailed information on coaching team, membership options and services, the site serves as a central hub for current and prospective members.",
+            "Built with user convenience at its core, the website features an intuitive design and high-quality visuals that make it effortless to explore membership options, learn about coaching services, and connect with the Lean Bulls community. It acts as an online gateway to the Lean Bulls Gym experience, reflecting its spirit of strength and camaraderie."
         ],
         clientContact: {
-            github: "https://github.com/66HEX",
-            instagram: "https://instagram.com/hexthecoder",
-            website: "https://www.hexthecoder.pl"
+            instagram: "https://www.instagram.com/leanbullsgym/",
+            facebook: "https://www.facebook.com/leanbullsgym/",
+            website: "https://www.leanbulls.pl"
         }
     },
     {
         id: "4",
-        title: "Logo Redesign",
+        title: "Brand Design",
         mainImage: "/images/works/logo1.webp",
         images: ["/images/works/logo2.webp", "/images/works/logo3.webp"],
         client: "Natalia Jasińska",
@@ -136,24 +136,6 @@ export const works = [
             github: "https://github.com/66HEX",
             instagram: "https://instagram.com/hexthecoder",
             website: "https://www.hexthecoder.pl"
-        }
-    },
-    {
-        id: "8",
-        title: "Sponsorship Offer",
-        mainImage: "/images/works/sponsor1.webp",
-        client: "Lean Bulls Gdynia",
-        year: 2024,
-        type: "Marketing Design",
-        role: "Graphic Designer",
-        description: [
-            "This project involved creating a detailed sponsorship offer for the Powerlifting Club, aimed at securing support and partnerships from local and national businesses. The offer highlights the benefits of sponsoring the club, including exposure at competitions, events, and training sessions.",
-            "The document was designed to be visually appealing and informative, showcasing the club's achievements, key members, and its community-driven approach. The sponsorship proposal also outlines various support options, including event-specific and long-term partnerships, ensuring that potential sponsors have clear and flexible options to get involved."
-        ],
-        clientContact: {
-            instagram: "https://www.instagram.com/leanbullsgym/",
-            facebook: "https://www.facebook.com/leanbullsgym/",
-            website: "https://www.leanbulls.pl"
         }
     }
 ];

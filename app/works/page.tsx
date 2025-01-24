@@ -30,7 +30,7 @@ export default function WorksPage() {
                     {works.map((project, index) => (
                         <TransitionLink key={project.id} href={`/works/${project.id}`}>
                             <div
-                                className="project-container cursor-pointer opacity-70 hover:opacity-100 ransition-colors duration-300">
+                                className="project-container cursor-pointer opacity-60 hover:opacity-100 ransition-colors duration-300">
                                 <div className="grid grid-cols-1 tracking-tight py-4 md:py-8">
                                     <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                                         <div className="flex-grow">

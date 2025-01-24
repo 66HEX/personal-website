@@ -11,7 +11,7 @@ import Button, { ButtonVariant } from "@/app/components/Button/button";
 
 export default function HeroSection() {
     return (
-        <section className="w-screen px-4 lg:px-24 pb-12 pt-24 lg:py-24 text-text-white relative flex items-center overflow-hidden">
+        <section className="w-screen min-h-svh px-4 lg:px-24 pb-12 pt-24 lg:py-24 text-text-white relative flex items-center overflow-hidden">
             <DotPattern
                 cy={1}
                 cr={1}

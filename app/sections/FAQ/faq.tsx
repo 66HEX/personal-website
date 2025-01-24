@@ -141,7 +141,7 @@ export default function FAQ() {
                                 style={{height: 0}}
                                 id={`faq-content-${index}`}
                             >
-                                <div className="p-6 pt-0 text-text-gray">
+                                <div className="p-6 pt-0 text-text-gray text-sm">
                                     {item.answer}
                                 </div>
                             </div>
@@ -160,13 +160,13 @@ export default function FAQ() {
                     >
                         <h3
                             className="text-xl text-text-white font-[750] mb-2">Still have questions?</h3>
-                        <p className="text-text-gray font-[400] mb-6 mx-auto max-w-md text-base">
+                        <p className="text-text-gray font-[400] mb-6 mx-auto max-w-md text-sm">
                             Can&apos;t find the answer you&apos;re looking for? We&apos;re here to help with any
                             questions you may have.
                         </p>
                         <TransitionLink className="z-30" href="/contact">
                             <Button variant={ButtonVariant.FAQ}>
-                                Contact Support
+                                Contact Me
                             </Button>
                         </TransitionLink>
                     </InnerCard>

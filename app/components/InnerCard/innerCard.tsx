@@ -15,7 +15,7 @@ const InnerCard = forwardRef<HTMLDivElement, Omit<CardProps, 'ref'>>((props, ref
     return (
         <div
             ref={ref}
-            className="relative overflow-hidden rounded-card"
+            className="relative overflow-hidden rounded-inner-card"
             id={id}
             style={style}
         >
@@ -24,17 +24,17 @@ const InnerCard = forwardRef<HTMLDivElement, Omit<CardProps, 'ref'>>((props, ref
                 relative 
                 bg-black
                 mix-blend-lighten
-                rounded-card
+                rounded-inner-card
                 overflow-hidden 
                 p-[1px]
                 ${className}
             `}>
                 <Spotlight
-                    className='blur-3xl rounded-card hidden md:block'
+                    className='blur-3xl rounded-inner-card hidden md:block'
                     size={450}
                   />
                 {/* Content container */}
-                <div className="relative z-0 h-full p-4 md:p-8 bg-black overflow-hidden border border-border-inner rounded-card">
+                <div className="relative z-0 h-full p-4 md:p-8 bg-black overflow-hidden border border-border-inner rounded-inner-card">
                     {/* Top gradient */}
                     <div className="-z-10 absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-lighter to-transparent opacity-80"/>
                     {/* Bottom gradient */}

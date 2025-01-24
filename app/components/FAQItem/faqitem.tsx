@@ -17,7 +17,7 @@ const FAQItem = forwardRef<HTMLDivElement, FAQItemProps>(({
     return (
         <div
             ref={ref}
-            className="relative overflow-hidden rounded-card"
+            className="relative overflow-hidden rounded-inner-card"
             id={id}
             style={style}
         >
@@ -26,7 +26,7 @@ const FAQItem = forwardRef<HTMLDivElement, FAQItemProps>(({
                 relative
                 bg-black
                 mix-blend-lighten
-                rounded-card
+                rounded-inner-card
                 overflow-hidden
                 p-[1px]
                 ${className}
@@ -36,7 +36,7 @@ const FAQItem = forwardRef<HTMLDivElement, FAQItemProps>(({
                     size={450}
                   />
                 {/* Content container */}
-                <div className="relative z-0 h-full bg-black overflow-hidden border border-border-inner rounded-card">
+                <div className="relative z-0 h-full bg-black overflow-hidden border border-border-inner rounded-inner-card">
                     {/* Top gradient */}
                     <div className="-z-10 absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-card-gradient-lighter to-transparent opacity-70"/>
                     {/* Bottom gradient */}

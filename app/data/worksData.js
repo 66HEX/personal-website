@@ -80,7 +80,7 @@ export const works = [
     },
     {
         id: "5",
-        title: "Trainer's Website",
+        title: "Trainer Website",
         mainImage: "/images/works/angelika1.webp",
         images: ["/images/works/angelika2.webp", "/images/works/angelika3.webp"],
         client: "Angelika Grzejdziak",
@@ -100,7 +100,7 @@ export const works = [
     },
     {
         id: "6",
-        title: "Nutritionist's Website",
+        title: "Nutritionist Website",
         mainImage: "/images/works/natalia1.webp",
         images: ["/images/works/natalia2.webp", "/images/works/natalia3.webp"],
         client: "Natalia Jasińska",

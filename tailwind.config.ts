@@ -11,7 +11,7 @@ export default {
       colors: {
         background: '#000000',
         "icon": 'rgba(255,255,255,0.0125)',
-        "line": 'rgba(255,255,255,0.05)',
+        "line": 'rgba(255,255,255,0.075)',
         "border-outer": 'rgba(255,255,255,0.1)',
         "border-inner": 'rgba(255,255,255,0.075)',
         "card-gradient-darker": 'rgba(255,255,255,0.075)',
@@ -24,9 +24,9 @@ export default {
       },
       borderRadius: {
         "outer-card": '1.5rem',
-        "inner-card": '1.6rem',
+        "inner-card": '0.75rem',
         "card": '1.5rem',
-        "icon": '0.75rem',
+        "icon": '0.55rem',
         "icon-small": '0.5rem',
       },
       animation: {

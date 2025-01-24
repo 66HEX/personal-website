@@ -12,6 +12,11 @@ import InnerCard from "@/app/components/InnerCard/innerCard";
 import { TransitionLink } from "@/app/components/TransitionLink/TransitionLink";
 import { faqData } from "@/app/data/faqData";
 
+interface FAQItem {
+    question: string;
+    answer: string;
+}
+
 export default function FAQ() {
     const [faqItems] = useState<FAQItem[]>(faqData);
     const [openStates, setOpenStates] = useState<boolean[]>(new Array(faqData.length).fill(false));

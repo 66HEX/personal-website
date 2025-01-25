@@ -27,7 +27,7 @@ const OuterCard = ({ children, className = '' }: CardProps) => {
                 <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-darker to-transparent" />
 
                 {/* Bottom gradient */}
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent " />
+                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent" />
 
                 {/* Content container */}
                 <div className="relative z-10 p-4 md:p-8 ">

@@ -36,9 +36,9 @@ const InnerCard = forwardRef<HTMLDivElement, Omit<CardProps, 'ref'>>((props, ref
                 {/* Content container */}
                 <div className="relative z-0 h-full p-4 md:p-8 bg-black overflow-hidden border border-border-inner rounded-inner-card">
                     {/* Top gradient */}
-                    <div className="-z-10 absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-lighter to-transparent opacity-80"/>
+                    <div className="-z-10 absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-card-gradient-lighter to-transparent opacity-50"/>
                     {/* Bottom gradient */}
-                    <div className="-z-10 absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent opacity-80"/>
+                    <div className="-z-10 absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-card-gradient-lighter to-transparent opacity-50"/>
                     <div className="z-40">
                         {children}
                     </div>

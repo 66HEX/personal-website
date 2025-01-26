@@ -30,54 +30,54 @@ A modern, animated portfolio website built with Next.js, TypeScript, and GSAP. T
 
 ```
 src/
-├── app/                        # Main application directory
+├── app/                       # Main application directory
 │   ├── about/                 # About page components and routes
 │   ├── animations/            # GSAP animations and transitions
 │   ├── api/                   # API route handlers
-│   │   └── contact/          # Contact form API endpoint
-│   ├── components/           # Reusable UI components
-│   │   ├── Badge/           # Label components
-│   │   ├── BadgeSmall/      # Compact label variant
-│   │   ├── Button/          # Button component with variants
-│   │   ├── ContactForm/     # Form with validation
-│   │   ├── Dot/            # Dot pattern backgrounds
-│   │   ├── FAQItem/        # FAQ accordion items
-│   │   ├── Footer/         # Site footer
-│   │   ├── GradientHeader/ # Gradient text headers
-│   │   ├── HeroOverlay/    # Hero section overlay effects
-│   │   ├── IconCard/       # Icon container cards
-│   │   ├── IconCardSmall/  # Compact icon cards
-│   │   ├── InnerCard/      # Inner content cards
-│   │   ├── Marquee/        # Scrolling content
-│   │   ├── Navbar/         # Navigation bar
-│   │   ├── OuterCard/      # Outer container cards
-│   │   ├── Scene/          # 3D scene components
-│   │   │   └── Cube/       # 3D cube model
-│   │   ├── ServiceCard/    # Service display cards
-│   │   ├── SmoothScrolling/# Smooth scroll wrapper
-│   │   ├── TestimonialCard/# Testimonial components
-│   │   └── TransitionLink/ # Animated page transitions
-│   ├── contact/             # Contact page routes
-│   ├── data/               # Static data and content
-│   ├── fonts/              # Custom font configurations
-│   ├── sections/           # Main page sections
-│   │   ├── FAQ/           # FAQ section
-│   │   ├── Hero/          # Hero section
-│   │   ├── SelectedWorks/ # Featured works
-│   │   ├── Services/      # Services section
-│   │   └── Testimonials/  # Testimonials section
-│   ├── utils/             # Utility functions
+│   │   └── contact/           # Contact form API endpoint
+│   ├── components/            # Reusable UI components
+│   │   ├── Badge/             # Label components
+│   │   ├── BadgeSmall/        # Compact label variant
+│   │   ├── Button/            # Button component with variants
+│   │   ├── ContactForm/       # Form with validation
+│   │   ├── Dot/               # Dot pattern backgrounds
+│   │   ├── FAQItem/           # FAQ accordion items
+│   │   ├── Footer/            # Site footer
+│   │   ├── GradientHeader/    # Gradient text headers
+│   │   ├── HeroOverlay/       # Hero section overlay effects
+│   │   ├── IconCard/          # Icon container cards
+│   │   ├── IconCardSmall/     # Compact icon cards
+│   │   ├── InnerCard/         # Inner content cards
+│   │   ├── Marquee/           # Scrolling content
+│   │   ├── Navbar/            # Navigation bar
+│   │   ├── OuterCard/         # Outer container cards
+│   │   ├── Scene/             # 3D scene components
+│   │   │   └── Cube/          # 3D cube model
+│   │   ├── ServiceCard/       # Service display cards
+│   │   ├── SmoothScrolling/   # Smooth scroll wrapper
+│   │   ├── TestimonialCard/   # Testimonial components
+│   │   └── TransitionLink/    # Animated page transitions
+│   ├── contact/               # Contact page routes
+│   ├── data/                  # Static data and content
+│   ├── fonts/                 # Custom font configurations
+│   ├── sections/              # Main page sections
+│   │   ├── FAQ/               # FAQ section
+│   │   ├── Hero/              # Hero section
+│   │   ├── SelectedWorks/     # Featured works
+│   │   ├── Services/          # Services section
+│   │   └── Testimonials/      # Testimonials section
+│   ├── utils/                 # Utility functions
 │   │   ├── horizontalLoop.js  # GSAP horizontal scroll animation
-│   │   ├── spotlight.tsx     # Mouse-following spotlight effect
-│   │   └── utils.ts         # Common utility functions
-│   └── works/             # Works page components
-│       └── [id]/          # Dynamic work detail routes
-├── node_modules/          # Project dependencies
-└── public/               # Static assets
-    ├── environments/     # Environment maps
-    ├── images/          # Image assets
-    │   └── works/       # Project images
-    └── logo/            # Logo assets
+│   │   ├── spotlight.tsx      # Mouse-following spotlight effect
+│   │   └── utils.ts           # Common utility functions
+│   └── works/                 # Works page components
+│       └── [id]/              # Dynamic work detail routes
+├── node_modules/              # Project dependencies
+└── public/                    # Static assets
+    ├── environments/          # Environment maps
+    ├── images/                # Image assets
+    │   └── works/             # Project images
+    └── logo/                  # Logo assets
 ```
 
 ## Animation Features

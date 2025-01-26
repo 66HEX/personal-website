@@ -2,8 +2,8 @@ export const works = [
     {
         id: "1",
         title: "Training Platform",
-        mainImage: "/images/works/nexus1.webp",
-        images: ["/images/works/nexus2.webp", "/images/works/nexus3.webp"],
+        mainImage: "/images/works/nexus/nexus1.webp",
+        images: ["/images/works/nexus/nexus2.webp", "/images/works/nexus/nexus3.webp"],
         client: "Personal Project",
         year: 2024,
         type: "Front-End Development",
@@ -22,8 +22,8 @@ export const works = [
     {
         id: "2",
         title: "VPN Platform",
-        mainImage: "/images/works/netguard1.webp",
-        images: ["/images/works/netguard2.webp", "/images/works/netguard3.webp"],
+        mainImage: "/images/works/netguard/netguard1.webp",
+        images: ["/images/works/netguard/netguard2.webp", "/images/works/netguard/netguard3.webp"],
         client: "Personal Project",
         year: 2024,
         type: "Front-End Development",
@@ -41,9 +41,29 @@ export const works = [
     },
     {
         id: "3",
+        title: "Personal Portfolio",
+        mainImage: "/images/works/portfolio/portfolio1.webp",
+        images: ["/images/works/portfolio/portfolio2.webp", "/images/works/portfolio/portfolio3.webp"],
+        client: "Personal Project",
+        year: 2024,
+        type: "Full-Stack Development",
+        role: "Full-Stack Developer",
+        liveLink: "https://hexthecoder.pl",
+        description: [
+            "A modern portfolio website built with Next, TypeScript, and GSAP, featuring smooth page transitions and interactive animations. The site showcases a responsive design with dynamic project displays and custom cursor animations that enhance user experience.",
+            "The platform includes features like automated email handling via Resend API, custom hover effects, and a thoughtfully organized project structure. Built with performance and aesthetics in mind, it demonstrates technical expertise while maintaining a clean, minimalistic design that puts the focus on the showcased work."
+        ],
+        clientContact: {
+            github: "https://github.com/66HEX",
+            instagram: "https://instagram.com/hexthecoder",
+            website: "https://www.hexthecoder.pl"
+        }
+    },
+    {
+        id: "4",
         title: "Gym Website",
-        mainImage: "/images/works/leanbulls1.webp",
-        images: ["/images/works/leanbulls2.webp", "/images/works/leanbulls3.webp"],
+        mainImage: "/images/works/leanbulls/leanbulls1.webp",
+        images: ["/images/works/leanbulls/leanbulls2.webp", "/images/works/leanbulls/leanbulls3.webp"],
         client: "Lean Bulls Gym",
         year: 2024,
         type: "Front-End Development",
@@ -60,49 +80,10 @@ export const works = [
         }
     },
     {
-        id: "4",
-        title: "Brand Design",
-        mainImage: "/images/works/logo1.webp",
-        images: ["/images/works/logo2.webp", "/images/works/logo3.webp"],
-        client: "Natalia Jasińska",
-        year: 2024,
-        type: "Brand Identity",
-        role: "Graphic Designer",
-        description: [
-            "The logo redesign for Natalia is a modern, bold monogram combining the initials 'NJ' in a powerful, athletic style. The design reflects Natalia's expertise in working with powerlifters and strength athletes, emphasizing strength, precision, and professionalism.",
-            "Moving away from the previous delicate and feminine script style, the new logo is strong and dynamic, representing the sport of powerlifting and Natalia's commitment to helping athletes achieve their best physical performance. The monogram is designed to be versatile, working seamlessly across various platforms and applications, from websites to gym apparel."
-        ],
-        clientContact: {
-            instagram: "https://www.instagram.com/nat.jasinska",
-            facebook: "https://www.facebook.com/nat.jasinska",
-            website: "https://nataliajasinska.pl"
-        }
-    },
-    {
         id: "5",
-        title: "Trainer Website",
-        mainImage: "/images/works/angelika1.webp",
-        images: ["/images/works/angelika2.webp", "/images/works/angelika3.webp"],
-        client: "Angelika Grzejdziak",
-        year: 2024,
-        type: "E-Commerce Development",
-        role: "Shopify Developer",
-        liveLink: "https://angelikagrzejdziak.pl/",
-        description: [
-            "Angelika Grzejdziak's website is an inviting and informative platform tailored to individuals looking to elevate their fitness and nutrition. Showcasing a range of services from personalized meal plans to custom workout routines, the site is a one-stop shop for health enthusiasts.",
-            "Through vibrant visuals and user-friendly features, visitors can easily explore Angelika's coaching philosophy and schedule sessions. The site reflects her commitment to excellence and accessibility, making it an essential tool for anyone ready to transform their lifestyle with expert guidance."
-        ],
-        clientContact: {
-            instagram: "https://www.instagram.com/angelika_grzejdziak/",
-            facebook: "https://www.facebook.com/angelikagrzejdziaktrenerpersonalny/",
-            website: "https://angelikagrzejdziak.pl"
-        }
-    },
-    {
-        id: "6",
         title: "Nutritionist Website",
-        mainImage: "/images/works/natalia1.webp",
-        images: ["/images/works/natalia2.webp", "/images/works/natalia3.webp"],
+        mainImage: "/images/works/natalia/natalia1.webp",
+        images: ["/images/works/natalia/natalia2.webp", "/images/works/natalia/natalia3.webp"],
         client: "Natalia Jasińska",
         year: 2024,
         type: "E-Commerce Development",
@@ -119,23 +100,42 @@ export const works = [
         }
     },
     {
-        id: "7",
-        title: "Personal Portfolio",
-        mainImage: "/images/works/portfolio1.webp",
-        images: ["/images/works/portfolio2.webp", "/images/works/portfolio3.webp"],
-        client: "Personal Project",
+        id: "6",
+        title: "Trainer Website",
+        mainImage: "/images/works/angelika/angelika1.webp",
+        images: ["/images/works/angelika/angelika2.webp", "/images/works/angelika/angelika3.webp"],
+        client: "Angelika Grzejdziak",
         year: 2024,
-        type: "Full-Stack Development",
-        role: "Full-Stack Developer",
-        liveLink: "https://hexthecoder.pl",
+        type: "E-Commerce Development",
+        role: "Shopify Developer",
+        liveLink: "https://angelikagrzejdziak.pl/",
         description: [
-            "A modern portfolio website built with Next.js, TypeScript, and GSAP, featuring smooth page transitions and interactive animations. The site showcases a responsive design with dynamic project displays and custom cursor animations that enhance user experience.",
-            "The platform includes features like automated email handling via Resend API, custom hover effects, and a thoughtfully organized project structure. Built with performance and aesthetics in mind, it demonstrates technical expertise while maintaining a clean, minimalistic design that puts the focus on the showcased work."
+            "Angelika Grzejdziak's website is an inviting and informative platform tailored to individuals looking to elevate their fitness and nutrition. Showcasing a range of services from personalized meal plans to custom workout routines, the site is a one-stop shop for health enthusiasts.",
+            "Through vibrant visuals and user-friendly features, visitors can easily explore Angelika's coaching philosophy and schedule sessions. The site reflects her commitment to excellence and accessibility, making it an essential tool for anyone ready to transform their lifestyle with expert guidance."
         ],
         clientContact: {
-            github: "https://github.com/66HEX",
-            instagram: "https://instagram.com/hexthecoder",
-            website: "https://www.hexthecoder.pl"
+            instagram: "https://www.instagram.com/angelika_grzejdziak/",
+            facebook: "https://www.facebook.com/angelikagrzejdziaktrenerpersonalny/",
+            website: "https://angelikagrzejdziak.pl"
         }
-    }
+    },
+    {
+        id: "7",
+        title: "Brand Design",
+        mainImage: "/images/works/logo/logo1.webp",
+        images: ["/images/works/logo/logo2.webp", "/images/works/logo/logo3.webp"],
+        client: "Natalia Jasińska",
+        year: 2024,
+        type: "Brand Identity",
+        role: "Graphic Designer",
+        description: [
+            "The logo redesign for Natalia is a modern, bold monogram combining the initials 'NJ' in a powerful, athletic style. The design reflects Natalia's expertise in working with powerlifters and strength athletes, emphasizing strength, precision, and professionalism.",
+            "Moving away from the previous delicate and feminine script style, the new logo is strong and dynamic, representing the sport of powerlifting and Natalia's commitment to helping athletes achieve their best physical performance. The monogram is designed to be versatile, working seamlessly across various platforms and applications, from websites to gym apparel."
+        ],
+        clientContact: {
+            instagram: "https://www.instagram.com/nat.jasinska",
+            facebook: "https://www.facebook.com/nat.jasinska",
+            website: "https://nataliajasinska.pl"
+        }
+    },
 ];
